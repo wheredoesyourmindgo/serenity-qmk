@@ -82,8 +82,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 	[WNDW] = LAYOUT_ortho_2x2u(
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_NO   , WNDW_RSTR, LCA(KC_U)   ,               WNDW_TOP_HLF , LCA(KC_I), KC_NO, KC_NO ,KC_NO, KC_NO, KC_NO , WNDW_SMLLR , WNDW_LRGR, KC_NO, KC_NO,
-        DF(BASE), WNDW_CNTR, WNDW_LFT_HLF,               WNDW_CNTR_HLF, WNDW_RGHT_HLF       , KC_NO, KC_NO    ,KC_NO, WNDW_MAX , WNDW_MV_LFT, WNDW_MV_DWN, WNDW_MV_UP, WNDW_MV_RGHT, KC_NO,
+        KC_NO   , KC_NO, LCA(KC_U)   ,               WNDW_TOP_HLF , LCA(KC_I), KC_NO, KC_NO ,KC_NO, KC_NO, KC_NO , WNDW_SMLLR , WNDW_LRGR, KC_NO, KC_NO,
+        DF(BASE), WNDW_RSTR, WNDW_LFT_HLF,               WNDW_CNTR_HLF, WNDW_RGHT_HLF       , KC_NO, KC_NO    ,KC_NO, WNDW_MAX , WNDW_MV_LFT, WNDW_MV_DWN, WNDW_MV_UP, WNDW_MV_RGHT, WNDW_CNTR,
         KC_NO   , KC_NO    , LCA(KC_J)   ,               WNDW_BTTM_HLF, LCA(KC_K), KC_NO, KC_NO, KC_NO    ,LCA(KC_F), LCA(KC_D)  ,LCA(KC_E)   , LCA(KC_T), LCA(KC_G),     KC_NO,
         KC_NO, KC_NO , KC_NO , KC_NO, KC_NO, WNDW_VRT_MAX , WNDW_ALMST_MAX , KC_NO, KC_NO, KC_NO  , KC_NO      , KC_NO
     )

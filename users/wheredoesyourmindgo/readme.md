@@ -15,9 +15,9 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 - Easy and flexible capslock; Capslock can be toggled on/off with a Higher+r press. Additionally,
   - Caps-word can be toggled with a double left shift tap. Capslock will disable at the first occurrence of a space, comma, semi-colon, colon, period(dot), escape, tab, or enter tap.
   - Caps-sentence can be toggled with a double right shift tap. Capslock will disable at the first occurrence of a period(dot), escape, tab, or enter tap.
-- (macOS) An additional shortcut within the Higher layer on the "b" key doubles as a word, line, all select when single, double, and triple tapped respectively. This functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
-- (macOS) Additional Layer for OS shortcuts, activated with escape key press and hold. See keymap.c
 - Media/Keyboard Function layer contains a hotkey for hiding active window and muting volume in one single keypress. 💍
+- (macOS) An additional shortcut within the Higher layer on the "b" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
+- (macOS) Additional Layer for OS shortcuts, activated with escape key press and hold. See keymap.c
 - (macOS) Additional Layer for Window Management shortcuts using [Rectangle](https://rectangleapp.com/), activated with backspace key press on the OS_layer. Revert back to Base_layer using "esc" key. See keymap.c
 - (macOS) Shortcuts for quick access to word & line backspace and word & line delete forward. These are activated from Lower, Lowest, Higher, and Highest layers respectively. Delete forward key is located at tab position on High, Higher, and Highest layers.
 

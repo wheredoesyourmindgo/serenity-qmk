@@ -23,7 +23,7 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 
 ## Approach
 
-There are a couple of ways to appoach this layout.
+There are a couple of ways to approach this layout.
 
 ### Without Home Row Mods (default)
 

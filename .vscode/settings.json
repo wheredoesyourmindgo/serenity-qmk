@@ -24,4 +24,7 @@
         "files.trimTrailingWhitespace": false
     },
     "git.detectSubmodules": false,
+    "cSpell.words": [
+        "karabiner"
+    ],
 }

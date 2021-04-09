@@ -239,6 +239,7 @@ static tap sft_rctl_state = {
 
 
 
+bool caps_active = false;
 bool caps_word_active = false;
 bool caps_sentence_active = false;
 void caps_word_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -247,7 +248,8 @@ void caps_word_finished(qk_tap_dance_state_t *state, void *user_data) {
         case DOUBLE_TAP:
         case TRIPLE_TAP:
         case QUADRUPLE_TAP:
-            if (!caps_word_active && !caps_sentence_active) {
+            if (!caps_active && !caps_word_active && !caps_sentence_active) {
+                caps_active = true;
                 caps_word_active = true;
                 tap_code(KC_CAPSLOCK);
             }
@@ -278,7 +280,8 @@ void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data) {
         case DOUBLE_TAP:
         case TRIPLE_TAP:
         case QUADRUPLE_TAP:
-            if (!caps_sentence_active && !caps_word_active) {
+            if (!caps_active && !caps_sentence_active && !caps_word_active) {
+                caps_active = true;
                 caps_sentence_active = true;
                 tap_code(KC_CAPSLOCK);
             }
@@ -614,6 +617,7 @@ uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 
 void cancel_quick_caps(void) {
    if (caps_sentence_active || caps_word_active) {
+        caps_active = false;
         caps_sentence_active = false;
         caps_word_active = false;
         tap_code(KC_CAPSLOCK);
@@ -622,6 +626,7 @@ void cancel_quick_caps(void) {
 
 void cancel_caps_word(void) {
    if (caps_word_active) {
+        caps_active = false;
         caps_word_active = false;
         tap_code(KC_CAPSLOCK);
     }
@@ -629,6 +634,7 @@ void cancel_caps_word(void) {
 
 void cancel_caps_sentence(void) {
    if (caps_sentence_active) {
+        caps_active = false;
         caps_sentence_active = false;
         tap_code(KC_CAPSLOCK);
     }
@@ -648,6 +654,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //     clear_oneshot_mods();
     // }
     switch (keycode) {
+        case KC_CAPSLOCK:
+            if (record->event.pressed) {
+                if (caps_active) {
+                    caps_active = false;
+                } else {
+                    caps_active = true;
+                }
+            }
+            break;
         case XOSM_LSFT:
             if (record->event.pressed) {
                 register_mods(MOD_BIT(KC_LSFT));

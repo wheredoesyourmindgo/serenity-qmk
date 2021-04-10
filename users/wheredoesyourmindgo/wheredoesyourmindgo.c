@@ -656,6 +656,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_CAPSLOCK:
             if (record->event.pressed) {
+                caps_sentence_active = false;
+                caps_word_active = false;
                 if (caps_active) {
                     caps_active = false;
                 } else {

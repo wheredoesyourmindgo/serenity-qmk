@@ -1114,11 +1114,11 @@ void matrix_scan_user(void) {
     leading = false;
     leader_end();
 
-    SEQ_ONE_KEY(KC_S) {
+    SEQ_ONE_KEY(KC_A) {
       // Alfred
       tap_code16(LALT(KC_SPC));
     }
-    SEQ_ONE_KEY(KC_SPC) {
+    SEQ_ONE_KEY(KC_T) {
       // iTerm
       tap_code16(LCTL(KC_SPC));
     }

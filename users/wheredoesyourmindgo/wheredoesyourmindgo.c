@@ -1134,6 +1134,13 @@ void matrix_scan_user(void) {
   }
 }
 
+void leader_start(void) {
+    layer_off(HIGHER);
+}
+void leader_end(void) {
+    tap_code(KC_BSPC);
+}
+
 
 // Allow Permissive Hold on thumb keys
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {

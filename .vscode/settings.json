@@ -27,4 +27,5 @@
     "cSpell.words": [
         "karabiner"
     ],
+    "cmake.configureOnOpen": false,
 }

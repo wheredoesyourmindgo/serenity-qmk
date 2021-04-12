@@ -1134,12 +1134,6 @@ void matrix_scan_user(void) {
   }
 }
 
-void leader_start(void) {
-    layer_off(HIGHER);
-}
-void leader_end(void) {
-    tap_code(KC_BSPC);
-}
 
 
 // Allow Permissive Hold on thumb keys

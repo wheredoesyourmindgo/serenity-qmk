@@ -1114,7 +1114,7 @@ void matrix_scan_user(void) {
     leading = false;
     leader_end();
 
-    SEQ_ONE_KEY(KC_A) {
+    SEQ_ONE_KEY(KC_L) {
       // Alfred
       tap_code16(LALT(KC_SPC));
     }

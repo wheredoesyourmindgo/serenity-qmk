@@ -56,9 +56,12 @@
 #define OS_SIRI HYPR(KC_S) // Siri
 #define OS_LNCHPD HYPR(KC_L) // Launchpad
 #define OS_SDBR HYPR(KC_N) // Sidebar
-#define OS_APP1 LALT(KC_SPC) // App Shortcut
-#define OS_APP2 LCTL(KC_SPC) // App Shortcut
-#define OS_APP3 KC_NO // App Shortcut
+
+// App Shortcuts
+#define APP1 LALT(KC_SPC) // App Shortcut
+#define APP2 LCTL(KC_SPC) // App Shortcut
+#define APP3 KC_NO // App Shortcut
+#define APP4 KC_NO // App Shortcut
 
 
 // Layer declarations

@@ -4,14 +4,6 @@
 #define TAPPING_TD_TERM 250
 #define TAPPING_TERM_PER_KEY
 
-// Auto Shift and Retro Shift (Auto Shift for Tap Hold).
-// #define AUTO_SHIFT_TIMEOUT TAPPING_TERM
-// #define AUTO_SHIFT_NO_SETUP
-// #define RETRO_SHIFT 500
-
-// Recommended for heavy chording.
-// #define QMK_KEYS_PER_SCAN 4
-
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY
 #define MOUSEKEY_DELAY          0
@@ -25,10 +17,6 @@
 #define MOUSEKEY_TIME_TO_MAX    64
 
 // #define DEBUG_ACTION
-
-// Combos
-// #define COMBO_COUNT 1
-// #define COMBO_ALLOW_ACTION_KEYS
 
 // Prevent normal rollover on alphas from accidentally triggering mods (only with alpha keys).
 #define IGNORE_MOD_TAP_INTERRUPT_PER_KEY

@@ -23,6 +23,7 @@
 #define PERMISSIVE_HOLD_PER_KEY
 // Enable per key rapid switch from tap to hold, disables double tap hold auto-repeat.
 #define TAPPING_FORCE_HOLD_PER_KEY
+#define RETRO_TAPPING_PER_KEY
 
 #define LEADER_PER_KEY_TIMING
 #define LEADER_TIMEOUT 250

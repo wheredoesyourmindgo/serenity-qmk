@@ -14,7 +14,7 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 - Layers can be held/stuck using the "g" & "m" keys (right and left of Shift mod respectively) while activating a layer. Use cases include persistence of the Keyboard Mouse, or performing numerical data entry with the Lower_layer active for extended periods. Un-stick layers by tapping the respective layer key again.
 - Easy and flexible capslock; Capslock can be toggled on/off with a Higher+r press. Additionally,
   - Caps-word can be toggled with a double left shift tap. Capslock will disable at the first occurrence of a space, comma, semi-colon, colon, period(dot), escape, tab, or enter tap.
-  - Caps-sentence can be toggled with a double right shift tap. Capslock will disable at the first occurrence of a period(dot), escape, tab, or enter tap.
+  - Caps-sentence can be toggled with a double right shift tap. Capslock will disable at the first occurrence of a period(dot), escape, or enter tap.
 - Media/Keyboard Function layer contains a hotkey for hiding active window and muting volume in one single keypress. 💍
 - (macOS) An additional shortcut within the Higher layer on the "b" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
 - (macOS) Additional Layer for OS shortcuts, activated with escape key press and hold. See keymap.c

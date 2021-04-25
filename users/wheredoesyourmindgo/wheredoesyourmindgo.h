@@ -66,9 +66,9 @@
 
 // Layer declarations
 #if defined HOME_ROW_MODS
-    enum layers { BASE_HRM, BASE, SFT_BASE, LOWER, MOUR, MEDR_HRM, MEDR, NSL, NSSL, FUNL, OS, WNDW };
+    enum layers { BASE_HRM, BASE, LOWER, MOUR, MEDR_HRM, MEDR, NSL, NSSL, FUNL, OS, WNDW };
 #else
-    enum layers { BASE, BASE_HRM, SFT_BASE, LOWER, LOW, LOWEST, HIGHER, HIGHER_HRM, HIGH, HIGHEST, OS, WNDW };
+    enum layers { BASE, BASE_HRM, LOWER, LOW, LOWEST, HIGHER, HIGHER_HRM, HIGH, HIGHEST, OS, WNDW };
 #endif
 
 
@@ -96,46 +96,7 @@ enum planck_keycodes {
 enum {
     TD_TGL_SEL, // Toggle Select (similar to double, triple, and quadruple mouse click)
     TD_CAPS_WORD,
-    TD_CAPS_SENTENCE,
-    TD_LGUI,
-    TD_SFT_LGUI,
-    TD_RGUI,
-    TD_SFT_RGUI,
-    TD_LALT,
-    TD_SFT_LALT,
-    TD_RALT,
-    TD_SFT_RALT,
-    TD_LCTL,
-    TD_SFT_LCTL,
-    TD_RCTL,
-    TD_SFT_RCTL,
-    // TD_G_DOT
+    TD_CAPS_SENTENCE
 };
-
-// For use with cur_dance()
-enum {
-    SINGLE_TAP = 1,
-    SINGLE_HOLD,
-    DOUBLE_TAP,
-    DOUBLE_HOLD,
-    TRIPLE_TAP,
-    TRIPLE_HOLD,
-    QUADRUPLE_TAP,
-    QUADRUPLE_HOLD,
-    TAP,
-    HOLD,
-    ABORT,
-    OTHER
-};
-
-// Combos
-// enum combos {
-//   COMBO_OSHR
-// };
-
-// enum combo_events {
-//   COMBO_OSHR,
-//   COMBO_OOPS
-// };
 
 #endif

@@ -675,6 +675,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // case RALT_T(KC_UP):
         // case RCTL_T(KC_RIGHT):
         //     return TAPPING_TD_FAST_TERM;
+        // Using retro tapping with the following
+        case LT(LOW,KC_SPC):
+        case LT(HIGH,KC_ENT):
+        case LT(OS,KC_ESC):
+            return TAPPING_FAST_TERM;
         default:
             return TAPPING_TERM;
     }
@@ -685,6 +690,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(LOW,KC_SPC):
         case LT(HIGH,KC_ENT):
+        case LT(OS,KC_ESC):
         case LT(HIGHEST,KC_LEFT):
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):

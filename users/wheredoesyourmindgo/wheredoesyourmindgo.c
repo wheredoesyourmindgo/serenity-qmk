@@ -4,7 +4,7 @@
     #include "print.h"
 #endif
 
-// const uint16_t PROGMEM oshr_combo[] = {MO(LOWEST), MO(HIGHEST), COMBO_END};
+// const uint16_t PROGMEM oshr_combo[] = {MO(LOWEST), LT(HIGHEST,KC_LEFT), COMBO_END};
 // const uint16_t PROGMEM oops_combo[] = {TD(TD_LCTL), TD(TD_RCTL), COMBO_END};
 
 // combo_t key_combos[COMBO_COUNT] = {
@@ -41,6 +41,7 @@ typedef struct {
 } tap;
 
 uint8_t cur_dance(qk_tap_dance_state_t *state);
+uint8_t cur_dance_greedy_hold(qk_tap_dance_state_t *state);
 // uint8_t grv_esc_dance(qk_tap_dance_state_t *state);
 
 // Functions associated with individual tap dances
@@ -71,6 +72,7 @@ void lctl_finished(qk_tap_dance_state_t *state, void *user_data);
 void lctl_reset(qk_tap_dance_state_t *state, void *user_data);
 void sft_lctl_finished(qk_tap_dance_state_t *state, void *user_data);
 void sft_lctl_reset(qk_tap_dance_state_t *state, void *user_data);
+// void rctl_each(qk_tap_dance_state_t *state, void *user_data);
 void rctl_finished(qk_tap_dance_state_t *state, void *user_data);
 void rctl_reset(qk_tap_dance_state_t *state, void *user_data);
 void sft_rctl_finished(qk_tap_dance_state_t *state, void *user_data);
@@ -100,6 +102,13 @@ uint8_t cur_dance(qk_tap_dance_state_t *state) {
     }
     // else return ABORT;
     else return OTHER;
+}
+
+uint8_t cur_dance_greedy_hold(qk_tap_dance_state_t *state) {
+    if (!state->pressed && !state->interrupted) {
+        return TAP;
+    }
+    else return HOLD;
 }
 
 // uint8_t grv_esc_dance(qk_tap_dance_state_t *state) {
@@ -365,18 +374,27 @@ void sft_lgui_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void rgui_finished(qk_tap_dance_state_t *state, void *user_data) {
-    rgui_state.state = cur_dance(state);
+    rgui_state.state = cur_dance_greedy_hold(state);
     switch (rgui_state.state) {
-        case SINGLE_HOLD:
+        case HOLD: {
             register_mods(MOD_BIT(KC_RGUI));
             layer_on(SFT_BASE);
             break;
+        }
+        case TAP: {
+            int i;
+            int c = state->count;
+            for (i = 1; i <= c; ++i) {
+                tap_code(KC_DOWN);
+            }
+            break;
+        }
     }
 }
 
 void rgui_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (rgui_state.state) {
-        case SINGLE_HOLD:
+        case HOLD:
             unregister_mods(MOD_BIT(KC_RGUI));
             layer_off(SFT_BASE);
             break;
@@ -447,18 +465,27 @@ void sft_lalt_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void ralt_finished(qk_tap_dance_state_t *state, void *user_data) {
-    ralt_state.state = cur_dance(state);
+    ralt_state.state = cur_dance_greedy_hold(state);
     switch (ralt_state.state) {
-        case SINGLE_HOLD:
+        case HOLD: {
             register_mods(MOD_BIT(KC_RALT));
             layer_on(SFT_BASE);
             break;
+        }
+        case TAP: {
+            int i;
+            int c = state->count;
+            for (i = 1; i <= c; ++i) {
+                tap_code(KC_UP);
+            }
+            break;
+        }
     }
 }
 
 void ralt_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (ralt_state.state) {
-        case SINGLE_HOLD:
+        case HOLD:
             unregister_mods(MOD_BIT(KC_RALT));
             layer_off(SFT_BASE);
             break;
@@ -528,25 +555,44 @@ void sft_lctl_reset(qk_tap_dance_state_t *state, void *user_data) {
     sft_lctl_state.state = 0;
 }
 
+// void rctl_each(qk_tap_dance_state_t *state, void *user_data) {
+    // tap_code(KC_RIGHT);
+// }
+
 void rctl_finished(qk_tap_dance_state_t *state, void *user_data) {
-    rctl_state.state = cur_dance(state);
+    rctl_state.state = cur_dance_greedy_hold(state);
     switch (rctl_state.state) {
-        case SINGLE_HOLD:
+        case HOLD: {
+            // int i;
+            // int c = state->count;
+            // for (i = 1; i <= c; ++i) {
+            //     tap_code(KC_LEFT);
+            // }
             register_mods(MOD_BIT(KC_RCTL));
             layer_on(SFT_BASE);
             break;
+        }
+        case TAP: {
+            int i;
+            int c = state->count;
+            for (i = 1; i <= c; ++i) {
+                tap_code(KC_RIGHT);
+            }
+            break;
+        }
     }
 }
 
 void rctl_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (rctl_state.state) {
-        case SINGLE_HOLD:
+        case HOLD:
             unregister_mods(MOD_BIT(KC_RCTL));
             layer_off(SFT_BASE);
             break;
     }
     rctl_state.state = 0;
 }
+
 
 void sft_rctl_finished(qk_tap_dance_state_t *state, void *user_data) {
     sft_rctl_state.state = cur_dance(state);
@@ -1065,40 +1111,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        // case MO(LOWEST):
-        // case MO(LOWER):
-        // case MO(HIGHER):
-        // case MO(HIGHEST):
-        // case LT(LOW,KC_SPC):
-        // case LT(HIGH,KC_ENT):
-        case LT(OS,KC_ESC):
-            return TAPPING_SLOW_TERM;
-        case TD(TD_TGL_SEL):
-        case TD(TD_CAPS_WORD):
-        case TD(TD_CAPS_SENTENCE):
-            return TAPPING_TD_TERM;
-        case TD(TD_LGUI):
-        case TD(TD_RGUI):
-        case TD(TD_SFT_LGUI):
-        case TD(TD_SFT_RGUI):
-        case TD(TD_LALT):
-        case TD(TD_RALT):
-        case TD(TD_SFT_LALT):
-        case TD(TD_SFT_RALT):
-        case TD(TD_LCTL):
-        case TD(TD_RCTL):
-        case TD(TD_SFT_LCTL):
-        case TD(TD_SFT_RCTL):
-            return 0;
-        // case TD(TD_ESC_GRAVE):
-        //     return 180;
-        default:
-            return TAPPING_TERM;
-    }
-}
-
 LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
@@ -1134,11 +1146,47 @@ void matrix_scan_user(void) {
   }
 }
 
-
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // case MO(LOWEST):
+        // case MO(LOWER):
+        // case MO(HIGHER):
+        // case LT(HIGHEST,KC_LEFT):
+        // case LT(LOW,KC_SPC):
+        // case LT(HIGH,KC_ENT):
+        // case LT(OS,KC_ESC):
+            // return TAPPING_SLOW_TERM;
+        case TD(TD_TGL_SEL):
+        case TD(TD_CAPS_WORD):
+        case TD(TD_CAPS_SENTENCE):
+            return TAPPING_TD_SLOW_TERM;
+        case TD(TD_LGUI):
+        // case TD(TD_RGUI):
+        case TD(TD_SFT_LGUI):
+        case TD(TD_SFT_RGUI):
+        case TD(TD_LALT):
+        // case TD(TD_RALT):
+        // case TD(TD_RCTL):
+        case TD(TD_SFT_LALT):
+        case TD(TD_SFT_RALT):
+        case TD(TD_LCTL):
+        case TD(TD_SFT_LCTL):
+        case TD(TD_SFT_RCTL):
+            return 0;
+        case LT(HIGHEST,KC_LEFT):
+        case TD(TD_RGUI):
+        case TD(TD_RALT):
+        case TD(TD_RCTL):
+            return TAPPING_TD_FAST_TERM;
+        default:
+            return TAPPING_TERM;
+    }
+}
 
 // Allow Permissive Hold on thumb keys
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case LT(HIGHEST,KC_LEFT):
         case LT(LOW,KC_SPC):
         case LT(HIGH,KC_ENT):
             return true;
@@ -1160,29 +1208,26 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
 }
 
 // Allow per key spamming
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
-      switch (keycode) {
-        // case LT(LOW,KC_SPC):
-        // case LT(HIGH,KC_ENT):
-        case LT(OS,KC_ESC):
-        case TD(TD_TGL_SEL): // required for proper toggle select behavior
-        case TD(TD_CAPS_WORD):
-        case TD(TD_CAPS_SENTENCE):
-        case TD(TD_LGUI):
-        case TD(TD_SFT_LGUI):
-        case TD(TD_RGUI):
-        case TD(TD_SFT_RGUI):
-        case TD(TD_LALT):
-        case TD(TD_SFT_LALT):
-        case TD(TD_RALT):
-        case TD(TD_SFT_RALT):
-        case TD(TD_LCTL):
-        case TD(TD_SFT_LCTL):
-        case TD(TD_RCTL):
-        case TD(TD_SFT_RCTL):
-        // case TD(TD_G_DOT):
-            return false;
-        default:
-            return true;
-    }
-}
+// bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+//       switch (keycode) {
+//         case LT(OS,KC_ESC):
+//         case TD(TD_TGL_SEL): // required for proper toggle select behavior
+//         case TD(TD_CAPS_WORD):
+//         case TD(TD_CAPS_SENTENCE):
+//         case TD(TD_LGUI):
+//         case TD(TD_SFT_LGUI):
+//         case TD(TD_RGUI):
+//         case TD(TD_SFT_RGUI):
+//         case TD(TD_LALT):
+//         case TD(TD_SFT_LALT):
+//         case TD(TD_RALT):
+//         case TD(TD_SFT_RALT):
+//         case TD(TD_LCTL):
+//         case TD(TD_SFT_LCTL):
+//         case TD(TD_RCTL):
+//         case TD(TD_SFT_RCTL):
+//             return false;
+//         default:
+//             return true;
+//     }
+// }

@@ -720,3 +720,14 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
             return true;
         }
 }
+
+bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(LOW,KC_SPC):
+        case LT(HIGH,KC_ENT):
+        case LT(OS,KC_ESC):
+            return true;
+        default:
+            return false;
+    }
+}

@@ -1,6 +1,7 @@
 #pragma once
 
 #define TAPPING_TERM 200
+#define TAPPING_FAST_TERM 180
 #define TAPPING_TD_TERM 250
 #define TAPPING_TERM_PER_KEY
 

@@ -9,6 +9,8 @@
         "**/*.bin": true
     },
     "files.associations": {
+        "*.html": "html",
+        ".vimrc": "viml",
         "*.h": "c",
         "*.c": "c",
         "*.inc": "c",
@@ -17,7 +19,9 @@
         "xstddef": "c",
         "type_traits": "c",
         "utility": "c",
-        "ranges": "c"
+        "ranges": "c",
+        "chrono": "c",
+        "unordered_map": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,

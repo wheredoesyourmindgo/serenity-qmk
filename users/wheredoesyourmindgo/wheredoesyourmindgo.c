@@ -565,54 +565,111 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case MO(LOWEST):
-            if (record->event.pressed) {
+           if (record->event.pressed) {
                 if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
+                    layer_on(BASE);
                     register_mods(MOD_BIT(KC_LSFT));
+                } else {
+                    return true;
                 }
-            }
-            else {
+            } else {
                 if (MODS_LSFT) {
                     unregister_mods(MOD_BIT(KC_LSFT));
                 }
+                if (IS_LAYER_ON(LOWEST)) {
+                    layer_off(LOWEST);
+                }
             }
+            return false;
             break;
         case KC_LGUI:
+            if (record->event.pressed) {
+                if (IS_LAYER_ON(LOWEST)) {
+                    layer_off(LOWEST);
+                    register_mods(MOD_BIT(KC_LSFT));
+                }
+            } else {
+                if (MODS_LSFT && !MODS_LCTRL && !MODS_LALT && MODS_LGUI) {
+                    unregister_mods(MOD_BIT(KC_LSFT));
+                    layer_on(LOWEST);
+                }
+            }
+            break;
         case KC_LALT:
+            if (record->event.pressed) {
+                if (IS_LAYER_ON(LOWEST)) {
+                    layer_off(LOWEST);
+                    register_mods(MOD_BIT(KC_LSFT));
+                }
+            } else {
+                if (MODS_LSFT && !MODS_LCTRL && MODS_LALT && !MODS_LGUI) {
+                    unregister_mods(MOD_BIT(KC_LSFT));
+                    layer_on(LOWEST);
+                }
+            }
+            break;
         case KC_LCTL:
             if (record->event.pressed) {
                 if (IS_LAYER_ON(LOWEST)) {
+                    layer_off(LOWEST);
                     register_mods(MOD_BIT(KC_LSFT));
                 }
-            }
-            else {
-                if (MODS_LSFT && !MODS_LCTRL && !MODS_LALT && !MODS_LGUI) {
+            } else {
+                if (MODS_LSFT && MODS_LCTRL && !MODS_LALT && !MODS_LGUI) {
                     unregister_mods(MOD_BIT(KC_LSFT));
+                    layer_on(LOWEST);
                 }
             }
             break;
         case LT(HIGHEST,KC_LEFT):
             if (record->event.pressed) {
                 if (MODS_RCTRL || MODS_RALT || MODS_RGUI) {
+                    layer_on(BASE);
                     register_mods(MOD_BIT(KC_RSFT));
+                } else {
+                    return true;
                 }
-            }
-            else {
+            } else {
                 if (MODS_RSFT) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                 }
+                if (IS_LAYER_ON(HIGHEST)) {
+                    layer_off(HIGHEST);
+                }
             }
+            return false;
             break;
         case KC_RGUI:
         case KC_RALT:
         case KC_RCTL:
             if (record->event.pressed) {
                 if (IS_LAYER_ON(HIGHEST)) {
+                    layer_off(HIGHEST);
                     register_mods(MOD_BIT(KC_RSFT));
                 }
             }
-            else {
-                if (MODS_RSFT && !MODS_RCTRL && !MODS_RALT && !MODS_RGUI) {
-                    unregister_mods(MOD_BIT(KC_LSFT));
+            break;
+        case RGUI_T(KC_DOWN):
+            if (!record->event.pressed) {
+                if (MODS_RSFT && !MODS_RCTRL && !MODS_RALT && MODS_RGUI) {
+                    unregister_mods(MOD_BIT(KC_RSFT));
+                    layer_on(HIGHEST);
+                }
+            }
+            break;
+        case RALT_T(KC_UP):
+            if (!record->event.pressed) {
+                if (MODS_RSFT && !MODS_RCTRL && MODS_RALT && !MODS_RGUI) {
+                    unregister_mods(MOD_BIT(KC_RSFT));
+                    layer_on(HIGHEST);
+                }
+            }
+            break;
+        case RCTL_T(KC_RIGHT):
+            if (!record->event.pressed) {
+                if (MODS_RSFT && MODS_RCTRL && !MODS_RALT && !MODS_RGUI) {
+                    unregister_mods(MOD_BIT(KC_RSFT));
+                    layer_on(HIGHEST);
                 }
             }
             break;

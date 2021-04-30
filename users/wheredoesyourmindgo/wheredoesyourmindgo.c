@@ -160,16 +160,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_CAPSLOCK:
             if (record->event.pressed) {
-                if (caps_sentence_active || caps_word_active) {
+                if ((caps_sentence_active || caps_word_active) && caps_active) {
                     cancel_quick_caps();
                 } else {
                     if (caps_active) {
                         caps_active = false;
+                        tap_code(KC_CAPSLOCK);
                     } else {
                         caps_active = true;
+                        tap_code(KC_CAPSLOCK);
                     }
                }
             }
+            return false;
             break;
         case XOSM_LSFT:
             if (record->event.pressed) {

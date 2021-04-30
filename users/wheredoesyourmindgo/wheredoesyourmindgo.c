@@ -162,14 +162,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (caps_sentence_active || caps_word_active) {
                     cancel_quick_caps();
-                    return false;
                 } else {
                     if (caps_active) {
                         caps_active = false;
-                        return true;
                     } else {
                         caps_active = true;
-                        return true;
                     }
                }
             }

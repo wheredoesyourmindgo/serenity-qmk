@@ -160,7 +160,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_CAPSLOCK:
             if (record->event.pressed) {
-                if ((caps_sentence_active || caps_word_active) && caps_active) {
+                if (caps_sentence_active || caps_word_active)  {
                     cancel_quick_caps();
                 } else {
                     if (caps_active) {

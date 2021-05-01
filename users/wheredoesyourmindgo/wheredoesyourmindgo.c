@@ -638,11 +638,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 if (MODS_RSFT) {
                     unregister_mods(MOD_BIT(KC_RSFT));
+                    return false;
                 }
                 if (IS_LAYER_ON(HIGHEST)) {
                     layer_off(HIGHEST);
+                    return false;
                 }
-                return false;
             }
             break;
         case KC_RGUI:

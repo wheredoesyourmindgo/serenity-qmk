@@ -575,8 +575,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     layer_on(BASE);
                     register_mods(MOD_BIT(KC_LSFT));
                     return false;
-                } else {
-                    return true;
                 }
             } else {
                 if (MODS_LSFT) {

@@ -574,18 +574,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
                     layer_on(BASE);
                     register_mods(MOD_BIT(KC_LSFT));
+                    return false;
                 } else {
                     return true;
                 }
             } else {
                 if (MODS_LSFT) {
                     unregister_mods(MOD_BIT(KC_LSFT));
+                    return false;
                 }
                 if (IS_LAYER_ON(LOWEST)) {
                     layer_off(LOWEST);
+                    return false;
                 }
             }
-            return false;
             break;
         case KC_LGUI:
             if (record->event.pressed) {

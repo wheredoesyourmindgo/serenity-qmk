@@ -631,6 +631,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (MODS_RCTRL || MODS_RALT || MODS_RGUI) {
                     layer_on(BASE);
                     register_mods(MOD_BIT(KC_RSFT));
+                    return false;
                 } else {
                     return true;
                 }
@@ -641,8 +642,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (IS_LAYER_ON(HIGHEST)) {
                     layer_off(HIGHEST);
                 }
+                return false;
             }
-            return false;
             break;
         case KC_RGUI:
         case KC_RALT:

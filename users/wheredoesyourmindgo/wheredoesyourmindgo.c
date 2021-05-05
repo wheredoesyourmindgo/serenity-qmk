@@ -148,7 +148,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (ONESHOT_LYR_ACTIVE && IS_LAYER_ON(BASE_HRM) && !record->event.pressed) {
         switch (keycode) {
             case KC_ESC:
-            case LT(OS,KC_ESC):
+            case LT(LOWER,KC_ESC):
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
                 clear_oneshot_layer_state(ONESHOT_PRESSED);
         }
@@ -492,7 +492,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case KC_ESC:
-        case LT(OS,KC_ESC):
+        case LT(LOWER,KC_ESC):
             if (record->event.pressed) {
                 // Cancel One Shot Mods (if active)
                 if (ONESHOT_MODS_ACTIVE) {
@@ -510,6 +510,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         // Tab, space, colon, semi-colon, comma cancel caps word
         case KC_TAB:
+        case LT(HIGHER,KC_TAB):
         case KC_SPC:
         case LT(LOW,KC_SPC):
         case KC_COLN:
@@ -723,12 +724,12 @@ void matrix_scan_user(void) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // case MO(LOWEST):
-        // case MO(LOWER):
-        // case MO(HIGHER):
+        // case LT(LOWER,KC_ESC):
+        // case LT(HIGHER,KC_TAB):
         // case LT(HIGHEST,KC_LEFT):
         // case LT(LOW,KC_SPC):
         // case LT(HIGH,KC_ENT):
-        // case LT(OS,KC_ESC):
+        // case LT(OS,KC_GRV):
             // return TAPPING_SLOW_TERM;
         case TD(TD_TGL_SEL):
         case TD(TD_CAPS_WORD):
@@ -741,8 +742,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         //     return TAPPING_TD_FAST_TERM;
         // Using retro tapping with the following
         case LT(LOW,KC_SPC):
+        case LT(LOWER,KC_ESC):
         case LT(HIGH,KC_ENT):
-        case LT(OS,KC_ESC):
+        case LT(HIGHER,KC_TAB):
+        case LT(OS,KC_GRV):
             return TAPPING_FAST_TERM;
         default:
             return TAPPING_TERM;
@@ -753,8 +756,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(LOW,KC_SPC):
+        case LT(LOWER,KC_ESC):
         case LT(HIGH,KC_ENT):
-        case LT(OS,KC_ESC):
+        case LT(HIGHER,KC_TAB):
+        case LT(OS,KC_GRV):
         case LT(HIGHEST,KC_LEFT):
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):
@@ -769,8 +774,10 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(LOW,KC_SPC):
+        case LT(LOWER,KC_ESC):
         case LT(HIGH,KC_ENT):
-        case LT(OS,KC_ESC):
+        case LT(HIGHER,KC_TAB):
+        case LT(OS,KC_GRV):
             return false;
         default:
             return true;
@@ -779,7 +786,7 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // Allow per key spamming (return false, default behaviour)
+        // Allow per key spamming for arrow keys (return false, default behaviour)
         case LT(HIGHEST,KC_LEFT):
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):
@@ -794,8 +801,10 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(LOW,KC_SPC):
+        case LT(LOWER,KC_ESC):
         case LT(HIGH,KC_ENT):
-        case LT(OS,KC_ESC):
+        case LT(HIGHER,KC_TAB):
+        case LT(OS,KC_GRV):
             return true;
         default:
             return false;

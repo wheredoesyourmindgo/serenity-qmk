@@ -63,6 +63,9 @@
 #define APP3 KC_NO // App Shortcut
 #define APP4 KC_NO // App Shortcut
 
+// Placeholder for bailing out of retro tap
+#define VOID KC_NO
+
 
 // Layer declarations
 #if defined HOME_ROW_MODS
@@ -73,7 +76,7 @@
 
 
 
-enum planck_keycodes {
+enum keycodes {
   CMD_TAB_PRV = SAFE_RANGE,
   CMD_TAB_NXT,
   PRV_APP,

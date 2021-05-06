@@ -754,13 +754,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // Using super low retro tap w/ the following so this is un-necessary
-        // case LT(LOW,KC_SPC):
-        // case LT(LOWER,KC_ESC):
-        // case LT(HIGH,KC_ENT):
-        // case LT(HIGHER,KC_TAB):
-        // case LT(OS,KC_GRV):
-        // end of retro taps
+        case LT(LOW,KC_SPC):
+        case LT(LOWER,KC_ESC):
+        case LT(HIGH,KC_ENT):
+        case LT(HIGHER,KC_TAB):
+        case LT(OS,KC_GRV):
         case LT(HIGHEST,KC_LEFT):
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):

@@ -723,7 +723,6 @@ void matrix_scan_user(void) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case MO(LOWEST):
         // case LT(LOWER,KC_ESC):
         // case LT(HIGHER,KC_TAB):
         // case LT(HIGHEST,KC_LEFT):
@@ -746,7 +745,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LT(HIGH,KC_ENT):
         case LT(HIGHER,KC_TAB):
         case LT(OS,KC_GRV):
-            return TAPPING_FAST_TERM;
+            return TAPPING_RETRO_TERM;
         default:
             return TAPPING_TERM;
     }
@@ -755,11 +754,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOW,KC_SPC):
-        case LT(LOWER,KC_ESC):
-        case LT(HIGH,KC_ENT):
-        case LT(HIGHER,KC_TAB):
-        case LT(OS,KC_GRV):
+        // Using super low retro tap w/ the following so this is un-necessary
+        // case LT(LOW,KC_SPC):
+        // case LT(LOWER,KC_ESC):
+        // case LT(HIGH,KC_ENT):
+        // case LT(HIGHER,KC_TAB):
+        // case LT(OS,KC_GRV):
+        // end of retro taps
         case LT(HIGHEST,KC_LEFT):
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):

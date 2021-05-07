@@ -15,6 +15,9 @@ void caps_word_reset(qk_tap_dance_state_t *state, void *user_data);
 void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data);
 void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
 
+#if defined MENU_FUNCTION
+    bool func_lyr_active = false;
+#endif
 
 bool caps_active = false;
 bool caps_word_active = false;
@@ -633,18 +636,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     layer_on(BASE);
                     register_mods(MOD_BIT(KC_RSFT));
                     return false;
-                } else {
-                    return true;
                 }
             } else {
                 if (MODS_RSFT) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                     return false;
                 }
-                if (IS_LAYER_ON(HIGHEST)) {
-                    layer_off(HIGHEST);
-                    return false;
-                }
+                #if defined MENU_FUNCTION
+                    if (func_lyr_active) {
+                        func_lyr_active = false;
+                        unregister_code(KC_MENU);
+                    }
+                #endif
             }
             break;
         case KC_RGUI:
@@ -655,6 +658,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     layer_off(HIGHEST);
                     register_mods(MOD_BIT(KC_RSFT));
                 }
+                #if defined MENU_FUNCTION
+                    if (func_lyr_active) {
+                        func_lyr_active = false;
+                        unregister_code(KC_MENU);
+                    }
+                #endif
             }
             break;
         case RGUI_T(KC_DOWN):
@@ -689,13 +698,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
-  if (is_cmd_tab_active) {
-    if (timer_elapsed(cmd_tab_timer) > cmd_tab_timer_timeout && !is_cmd_tab_held) {
-        unregister_mods(MOD_BIT(KC_LGUI));
-        is_cmd_tab_active = false;
-        cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+    if (is_cmd_tab_active) {
+        if (timer_elapsed(cmd_tab_timer) > cmd_tab_timer_timeout && !is_cmd_tab_held) {
+            unregister_mods(MOD_BIT(KC_LGUI));
+            is_cmd_tab_active = false;
+            cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+        }
     }
-  }
+    #if defined MENU_FUNCTION
+        if (IS_LAYER_ON(HIGHEST) && !func_lyr_active) {
+            func_lyr_active = true;
+            register_code(KC_MENU);
+        }
+    #endif
   // Leaders
    LEADER_DICTIONARY() {
     leading = false;

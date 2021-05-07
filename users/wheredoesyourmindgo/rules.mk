@@ -27,3 +27,7 @@ SRC += wheredoesyourmindgo.c
 ifeq ($(strip $(HOME_ROW_MODS)), yes)
   OPT_DEFS += -DHOME_ROW_MODS
 endif
+
+ifeq ($(strip $(MENU_FUNCTION)), yes)
+  OPT_DEFS += -DMENU_FUNCTION
+endif

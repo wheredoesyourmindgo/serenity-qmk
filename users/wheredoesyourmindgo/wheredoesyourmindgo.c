@@ -151,7 +151,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (ONESHOT_LYR_ACTIVE && IS_LAYER_ON(BASE_HRM) && !record->event.pressed) {
         switch (keycode) {
             case KC_ESC:
-            case LT(LOWER,KC_ESC):
+                case LT(LOW,KC_ESC):
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
                 clear_oneshot_layer_state(ONESHOT_PRESSED);
         }
@@ -495,7 +495,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case KC_ESC:
-        case LT(LOWER,KC_ESC):
+        case LT(LOW,KC_ESC):
             if (record->event.pressed) {
                 // Cancel One Shot Mods (if active)
                 if (ONESHOT_MODS_ACTIVE) {
@@ -515,7 +515,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_TAB:
         case LT(HIGHER,KC_TAB):
         case KC_SPC:
-        case LT(LOW,KC_SPC):
+        case LT(LOWER,KC_SPC):
         case KC_COLN:
         case KC_SCLN:
         case KC_COMM:
@@ -738,10 +738,10 @@ void matrix_scan_user(void) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LT(LOWER,KC_ESC):
+        // case LT(LOWER,KC_SPC):
         // case LT(HIGHER,KC_TAB):
         // case LT(HIGHEST,KC_LEFT):
-        // case LT(LOW,KC_SPC):
+        // case LT(LOW,KC_ESC):
         // case LT(HIGH,KC_ENT):
         // case LT(OS,KC_GRV):
             // return TAPPING_SLOW_TERM;
@@ -755,8 +755,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // case RCTL_T(KC_RIGHT):
         //     return TAPPING_TD_FAST_TERM;
         // Using retro tapping with the following
-        case LT(LOW,KC_SPC):
-        case LT(LOWER,KC_ESC):
+        case LT(LOW,KC_ESC):
+        case LT(LOWER,KC_SPC):
         case LT(HIGH,KC_ENT):
         case LT(HIGHER,KC_TAB):
         case LT(OS,KC_GRV):
@@ -769,8 +769,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOW,KC_SPC):
-        case LT(LOWER,KC_ESC):
+        case LT(LOW,KC_ESC):
+        case LT(LOWER,KC_SPC):
         case LT(HIGH,KC_ENT):
         case LT(HIGHER,KC_TAB):
         case LT(OS,KC_GRV):
@@ -787,8 +787,8 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 // We won't be rolling through all the Layer-tap keys
 bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOW,KC_SPC):
-        case LT(LOWER,KC_ESC):
+        case LT(LOW,KC_ESC):
+        case LT(LOWER,KC_SPC):
         case LT(HIGH,KC_ENT):
         case LT(HIGHER,KC_TAB):
         case LT(OS,KC_GRV):
@@ -814,8 +814,8 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 
 bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOW,KC_SPC):
-        case LT(LOWER,KC_ESC):
+        case LT(LOW,KC_ESC):
+        case LT(LOWER,KC_SPC):
         case LT(HIGH,KC_ENT):
         case LT(HIGHER,KC_TAB):
         case LT(OS,KC_GRV):

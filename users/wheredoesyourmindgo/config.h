@@ -9,7 +9,11 @@
 #undef MOUSEKEY_DELAY
 #define MOUSEKEY_DELAY          0
 #undef MOUSEKEY_INTERVAL
-#define MOUSEKEY_INTERVAL       16
+#if defined HALF_MOUSE_INTERVAL
+    #define MOUSEKEY_INTERVAL       26
+#else
+    #define MOUSEKEY_INTERVAL       16
+#endif
 #undef MOUSEKEY_WHEEL_DELAY
 #define MOUSEKEY_WHEEL_DELAY    0
 #undef MOUSEKEY_MAX_SPEED

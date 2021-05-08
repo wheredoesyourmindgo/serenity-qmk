@@ -22,6 +22,10 @@ ifeq ($(strip $(KEYBOARD)), boardwalk)
 	LTO_ENABLE = yes
 endif
 
+ifeq ($(strip $(KEYBOARD)), signum/3_0/elitec)
+	OPT_DEFS += -DHALF_MOUSE_INTERVAL
+endif
+
 SRC += wheredoesyourmindgo.c
 
 ifeq ($(strip $(HOME_ROW_MODS)), yes)

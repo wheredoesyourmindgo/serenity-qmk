@@ -19,11 +19,12 @@ endif
 # endif
 
 ifeq ($(strip $(KEYBOARD)), boardwalk)
+	OPT_DEFS += -DBOARDWALK_KEYBOARD
 	LTO_ENABLE = yes
 endif
 
 ifeq ($(strip $(KEYBOARD)), signum/3_0/elitec)
-	OPT_DEFS += -DHALF_MOUSE_INTERVAL
+	OPT_DEFS += -DSIGNUM_KEYBOARD
 endif
 
 SRC += wheredoesyourmindgo.c

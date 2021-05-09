@@ -9,12 +9,14 @@
 #undef MOUSEKEY_DELAY
 #define MOUSEKEY_DELAY          0
 #undef MOUSEKEY_INTERVAL
+#define MOUSEKEY_INTERVAL       16
 #if defined SIGNUM_KEYBOARD
-    #define MOUSEKEY_INTERVAL       26
+    #undef MOUSEKEY_MOVE_DELTA
+    #define MOUSEKEY_MOVE_DELTA       5
 #elif defined BOARDWALK_KEYBOARD
-    #define MOUSEKEY_INTERVAL       12
+    // #define MOUSEKEY_INTERVAL       12
 #else
-    #define MOUSEKEY_INTERVAL       16
+    // #define MOUSEKEY_INTERVAL       16
 #endif
 #undef MOUSEKEY_WHEEL_DELAY
 #define MOUSEKEY_WHEEL_DELAY    0

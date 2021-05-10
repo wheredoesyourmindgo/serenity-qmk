@@ -100,7 +100,8 @@ enum keycodes {
 enum {
     TD_TGL_SEL, // Toggle Select (similar to double, triple, and quadruple mouse click)
     TD_CAPS_WORD,
-    TD_CAPS_SENTENCE
+    TD_CAPS_SENTENCE,
+    TD_OOPSY
 };
 
 #endif

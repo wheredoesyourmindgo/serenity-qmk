@@ -29,7 +29,8 @@
     },
     "git.detectSubmodules": false,
     "cSpell.words": [
-        "karabiner"
+        "karabiner",
+        "oopsy"
     ],
     "cmake.configureOnOpen": false,
 }

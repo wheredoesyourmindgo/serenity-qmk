@@ -14,9 +14,9 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 -   Two dual use keys. The Lowest_Layer and Highest_layer keys can be used as Shift keys for improved dexterity and better ergonomics. When using a multi-key combo with mods the inner adjacent key that is used for activating the Lowest (left) and Highest layer (right) can be used as a Shift mod key. It doesn't matter which order you press the sequence of mod keys. As long as 1 or more mod keys is pressed in conjunction with the adjacent Lowest/Highest Layer key, adjacent the Lowest/Highest Layer key will immediately become a Shift mod press until the key is released. See below for use case.
 -   Layers can be held/stuck using the "g" & "m" keys (right and left of Shift mod respectively) while activating a layer. Use cases include persistence of the Keyboard Mouse, or performing numerical data entry with the Lower_layer active for extended periods. Un-stick layers by tapping the respective layer key again.
 -   Easy and flexible capslock; Capslock can be toggled on/off with a Higher+r press. Additionally,
-    -   Caps-word can be toggled with a double left shift tap. Capslock will disable at the first occurrence of a space, comma, semi-colon, colon, period(dot), escape, tab, or enter tap.
-    -   Caps-sentence can be toggled with a double right shift tap. Capslock will disable at the first occurrence of a period(dot), escape, or enter tap.
--   Media/Keyboard Function layer contains a hotkey for hiding active window and muting volume in one single keypress. 💍
+    -   Caps-word can be toggled with a double left shift tap. Capslock will disable at the first occurrence of a space, comma, semi-colon, colon, period(dot), escape, tab, or enter tap. Left shift is greedy in regard to interruption.
+    -   Caps-sentence can be toggled with a double right shift tap. Capslock will disable at the first occurrence of a period(dot), escape, or enter tap. Right shift is greedy in regard to interruption.
+-   (macOS) Double left control tap hides active window and mutes volume. Left control is greedy in regard to interruption.
 -   (macOS) An additional shortcut within the Higher layer on the "b" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
 -   (macOS) Additional Layer for OS shortcuts, activated with escape key press and hold. See keymap.c
 -   (macOS) Additional Layer for Window Management shortcuts using [Rectangle](https://rectangleapp.com/), activated with backspace key press on the OS_layer. Revert back to Base_layer using "esc" key. See keymap.c
@@ -44,6 +44,12 @@ This approach is suitable for a 42+ key layout, eg. Corne. Use home row mods wit
 #### Suggested Use w/ Home Row Mods
 
 Use the dedicated Shift keys on the right and left for shifting alpha keys. For novice-intermediate (home row mod) users this can yield a faster typing experience when typing in mixed case. Since shift keys mirrored on both the right and left use opposite hand to press shifted key. Use the shift keys located on the home rows for keyboard shortcuts and multi-combo mod presses. For a more focused typing experience, or when typing for extended periods of time (ex. Emails or Typing Speed Test) consider toggling home row mods off to prevent accidental mod presses.
+
+### Case for Right Handed Space
+
+1. I'm right handed; and that's not uncommon.
+2. It is useful to be able to use space while using the navigation arrows without having to release the layer hold to re-press the same
+   key, especially when returning to the lower layer repeatedly.
 
 ## Tips
 

@@ -20,7 +20,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[LOWER] = LAYOUT_ortho_2x2u(
         KC_NO  , KC_NO        , KC_NO        , KC_NO        , KC_NO        , KC_NO    ,         KC_NO, KC_NO, KC_NO         , KC_NO  , KC_NO , KC_NO, KC_NO, KC_NO,
         KC_DEL , KC_1         , KC_2         , KC_3         , KC_4         , KC_5     ,         KC_NO, KC_NO, KC_6          , KC_7   , KC_8 , KC_9, KC_0, LALT(KC_BSPC),
-        KC_NO,  XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT, DF(LOWER),         KC_NO, KC_NO, KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_NO,
+        KC_NO,  XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT, DF(LOWER),         KC_NO, KC_NO, KC_DEL, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_BSPC,
         KC_LSFT, KC_NO        , OSM(MOD_RALT)      , KC_NO        , KC_NO        , KC_NO    ,         KC_NO, KC_NO,       KC_NO  , KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_RSFT,
         KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT        , DF(BASE)     , KC_ENT   , KC_TAB, LT(HIGHER,KC_SPC),  KC_RSFT, KC_RGUI, KC_RALT, KC_RCTL
     ),

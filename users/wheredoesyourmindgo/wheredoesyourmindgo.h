@@ -67,6 +67,8 @@
 // Placeholder for bailing out of retro tap
 #define VOID KC_NO
 
+#define PRV_APP LGUI(KC_TAB)
+
 
 // Layer declarations
 // #if defined HOME_ROW_MODS
@@ -80,7 +82,6 @@ enum layers { BASE, BASE_HRM, LOWER, LOW, LOWEST, HIGHER, HIGHER_HRM, HIGH, HIGH
 enum keycodes {
   CMD_TAB_PRV = SAFE_RANGE,
   CMD_TAB_NXT,
-  PRV_APP,
   OOPS,
   DISP_FDIM,
   DISP_FBRI,
@@ -101,7 +102,8 @@ enum {
     TD_TGL_SEL, // Toggle Select (similar to double, triple, and quadruple mouse click)
     TD_CAPS_WORD,
     TD_CAPS_SENTENCE,
-    TD_OOPSY
+    TD_OOPSY,
+    TD_OS_GRV_OSHR
 };
 
 #endif

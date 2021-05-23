@@ -30,7 +30,8 @@
     "git.detectSubmodules": false,
     "cSpell.words": [
         "karabiner",
-        "oopsy"
+        "oopsy",
+        "oshr"
     ],
     "cmake.configureOnOpen": false,
 }

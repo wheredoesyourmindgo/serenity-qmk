@@ -141,15 +141,19 @@ void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
 void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
         case 1:
+            // right once fixes toggle select on word/line beginnings
+            tap_code(KC_RIGHT);
             tap_code16(LALT(KC_LEFT));
             tap_code16(LALT(LSFT(KC_RGHT)));
             break;
         case 2:
+            tap_code(KC_RIGHT);
             tap_code16(LGUI(KC_LEFT));
             tap_code16(LGUI(LSFT(KC_RGHT)));
             break;
         case 3:
         case 4:
+            tap_code(KC_RIGHT);
             tap_code16(LGUI(KC_UP));
             tap_code16(LGUI(LSFT(KC_DOWN)));
             break;
@@ -806,7 +810,8 @@ void matrix_scan_user(void) {
             register_code(KC_MENU);
         }
     #endif
-  // Leaders
+
+// Leaders
 //    LEADER_DICTIONARY() {
 //     leading = false;
 //     leader_end();

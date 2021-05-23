@@ -530,7 +530,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case CMD_TAB_NXT:
             if (record->event.pressed || xtap_state.state == TD_INTERRUPTED) {
-                dprint("command tab next\n");
                 if (!is_cmd_tab_active) {
                     is_cmd_tab_active = true;
                     register_mods(MOD_BIT(KC_LGUI));
@@ -547,7 +546,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     xtap_state.state = TD_NONE;
                 }
             } else {
-                dprint("released\n");
                 cmd_tab_timer = timer_read();
                 is_cmd_tab_held = false;
                 // unregister_code(KC_TAB);

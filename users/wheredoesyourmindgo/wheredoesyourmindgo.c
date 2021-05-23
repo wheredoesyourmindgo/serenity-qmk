@@ -4,8 +4,13 @@
     #include "print.h"
 #endif
 
+typedef struct {
+    bool is_press_action;
+    uint8_t state;
+} td_tap_t;
 
 // Functions associated with individual tap dances
+td_state_t cur_dance(qk_tap_dance_state_t *state);
 void os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
 void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
 void caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
@@ -26,7 +31,22 @@ uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
     bool func_lyr_active = false;
 #endif
 
+// Create an instance of 'td_tap_t' for the 'os_grave_oshr' tap dance.
+static td_tap_t xtap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
+};
+
+td_state_t cur_dance(qk_tap_dance_state_t *state) {
+    if (state->interrupted) {
+       return TD_INTERRUPTED;
+    } else  {
+       return TD_NOT_INTERRUPTED;
+    }
+}
+
 void os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data) {
+    xtap_state.state = cur_dance(state);
     if (!state->pressed && !state->interrupted && state->count >= 2) {
         set_oneshot_layer(BASE_HRM, ONESHOT_START);
     } else if (!state->pressed && !state->interrupted && state->count == 1) {
@@ -49,6 +69,7 @@ void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data) {
             cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
         }
     }
+    xtap_state.state = TD_NONE;
 }
 
 bool caps_active = false;
@@ -495,15 +516,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case OS_PRV_SPC:
         case OS_NXT_SPC:
-            if (record->event.pressed) {
+            if (record->event.pressed || xtap_state.state == TD_INTERRUPTED) {
                 is_cmd_tab_held = true;
+
+                // reset tap dance state associated w/ OS layer
+                if (xtap_state.state == TD_INTERRUPTED) {
+                    xtap_state.state = TD_NONE;
+                }
             } else {
                 cmd_tab_timer = timer_read();
                 is_cmd_tab_held = false;
             }
             break;
         case CMD_TAB_NXT:
-            if (record->event.pressed) {
+            if (record->event.pressed || xtap_state.state == TD_INTERRUPTED) {
+                dprint("command tab next\n");
                 if (!is_cmd_tab_active) {
                     is_cmd_tab_active = true;
                     register_mods(MOD_BIT(KC_LGUI));
@@ -513,15 +540,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 is_cmd_tab_held = true;
                 // cmd_tab_timer = timer_read(); // Start the timer when the key is released, not pressed
-                register_code(KC_TAB);
+                tap_code(KC_TAB);
+
+                // reset tap dance state associated w/ OS layer
+                if (xtap_state.state == TD_INTERRUPTED) {
+                    xtap_state.state = TD_NONE;
+                }
             } else {
+                dprint("released\n");
                 cmd_tab_timer = timer_read();
                 is_cmd_tab_held = false;
-                unregister_code(KC_TAB);
+                // unregister_code(KC_TAB);
             }
             break;
         case CMD_TAB_PRV:
-            if (record->event.pressed) {
+            if (record->event.pressed || xtap_state.state == TD_INTERRUPTED) {
                 if (!is_cmd_tab_active) {
                     is_cmd_tab_active = true;
                     register_code(KC_LGUI);
@@ -530,14 +563,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     cmd_tab_timer_timeout = cmd_tab_timer_fast_dur;
                 }
                 register_mods(MOD_BIT(KC_LSFT));
-                register_code(KC_TAB);
+                tap_code(KC_TAB);
                 is_cmd_tab_held = true;
                 // cmd_tab_timer = timer_read();
+
+                // reset tap dance state associated w/ OS layer
+                if (xtap_state.state == TD_INTERRUPTED) {
+                    xtap_state.state = TD_NONE;
+                }
             } else {
                 cmd_tab_timer = timer_read();
                 is_cmd_tab_held = false;
                 unregister_mods(MOD_BIT(KC_LSFT));
-                unregister_code(KC_TAB);
+                // unregister_code(KC_TAB);
             }
             break;
         case KC_ESC:

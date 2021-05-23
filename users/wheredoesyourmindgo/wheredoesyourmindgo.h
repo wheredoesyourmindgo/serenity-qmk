@@ -106,4 +106,10 @@ enum {
     TD_OS_GRV_OSHR
 };
 
+typedef enum {
+    TD_NONE,
+    TD_INTERRUPTED,
+    TD_NOT_INTERRUPTED
+} td_state_t;
+
 #endif

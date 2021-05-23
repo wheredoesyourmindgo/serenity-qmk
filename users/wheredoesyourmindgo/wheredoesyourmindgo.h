@@ -63,6 +63,10 @@
 #define APP2 LCTL(KC_SPC) // App Shortcut
 #define APP3 KC_NO // App Shortcut
 #define APP4 KC_NO // App Shortcut
+#define APP5 KC_NO // App Shortcut
+#define APP6 KC_NO // App Shortcut
+#define APP7 KC_NO // App Shortcut
+#define APP8 KC_NO // App Shortcut
 
 // Placeholder for bailing out of retro tap
 #define VOID KC_NO

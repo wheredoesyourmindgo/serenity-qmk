@@ -790,7 +790,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
-LEADER_EXTERNS();
+// LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
     if (is_cmd_tab_active) {
@@ -807,28 +807,28 @@ void matrix_scan_user(void) {
         }
     #endif
   // Leaders
-   LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
+//    LEADER_DICTIONARY() {
+//     leading = false;
+//     leader_end();
 
-    SEQ_ONE_KEY(KC_L) {
-      // Alfred
-      tap_code16(LALT(KC_SPC));
-    }
-    SEQ_ONE_KEY(KC_T) {
-      // iTerm
-      tap_code16(LCTL(KC_SPC));
-    }
-    SEQ_TWO_KEYS(KC_Y, KC_D) {
-      SEND_STRING("yarn dev");
-    }
-    SEQ_TWO_KEYS(KC_Y, KC_I) {
-      SEND_STRING("yarn install");
-    }
-    SEQ_TWO_KEYS(KC_G, KC_P) {
-      SEND_STRING("git pull");
-    }
-  }
+//     SEQ_ONE_KEY(KC_L) {
+//       // Alfred
+//       tap_code16(LALT(KC_SPC));
+//     }
+//     SEQ_ONE_KEY(KC_T) {
+//       // iTerm
+//       tap_code16(LCTL(KC_SPC));
+//     }
+//     SEQ_TWO_KEYS(KC_Y, KC_D) {
+//       SEND_STRING("yarn dev");
+//     }
+//     SEQ_TWO_KEYS(KC_Y, KC_I) {
+//       SEND_STRING("yarn install");
+//     }
+//     SEQ_TWO_KEYS(KC_G, KC_P) {
+//       SEND_STRING("git pull");
+//     }
+//   }
 }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {

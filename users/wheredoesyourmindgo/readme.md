@@ -7,13 +7,13 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 ## Features
 
 -   6+ layers inspired from the Miryoku and Foostan layouts: Lower (Numbers/Navigation), Low (Symbols), Lowest (Mouse Mode), Higher (Cut-copy-paste/Special), High (Media/Keyboard), and Highest (Function). See below for 2 additional macOS layers.
--   Home Row Mods that can be toggled on/off with a Higher+a press. Home row mods are available on all Layers for the same hand that triggers the Layer.
--   One Shot Home Row Mods that can be toggled on/off with a Higher+t press. Bail out of One-shot by tapping Esc key.
--   One Shot Mods on Home Row when activating any of the 6 principle layers. These are particularly useful for same hand mod presses (eg. "Command + 1..5").
+-   Home Row Mods that can be toggled on/off with a Higher+` press. Home row mods are available on all Layers for the same hand that triggers the Layer.
+-   One Shot Home Row Mods that can be toggled on/off with a double ` tap press. Bail out of One-shot by tapping Esc key.
+-   One Shot Mods on Home Row when activating any of the 6 principle layers. These are particularly useful for same hand mod presses (eg. "Command + 1..5") that require use of the same hand.
 -   Control, Alt, GUI, and Shift Mods on both sides. Arrow keys on bottom right double as Layer and Mod toggle when held. All four arrow keys can be spammed.
 -   Two dual use keys. The Lowest_Layer and Highest_layer keys can be used as Shift keys for improved dexterity and better ergonomics. When using a multi-key combo with mods the inner adjacent key that is used for activating the Lowest (left) and Highest layer (right) can be used as a Shift mod key. It doesn't matter which order you press the sequence of mod keys. As long as 1 or more mod keys is pressed in conjunction with the adjacent Lowest/Highest Layer key, adjacent the Lowest/Highest Layer key will immediately become a Shift mod press until the key is released. See below for use case.
 -   Layers can be held/stuck using the "g" & "m" keys (right and left of Shift mod respectively) while activating a layer. Use cases include persistence of the Keyboard Mouse, or performing numerical data entry with the Lower_layer active for extended periods. Un-stick layers by tapping the respective layer key again.
--   Easy and flexible capslock; Capslock can be toggled on/off with a Higher+r press. Additionally,
+-   Easy and flexible capslock; Capslock can be toggled on/off with a Lower/Higher+shift (opposite shift) press. Additionally,
     -   Caps-word can be toggled with a double left shift tap. Capslock will disable at the first occurrence of a space, comma, semi-colon, colon, period(dot), escape, tab, or enter tap. Left shift is greedy in regard to interruption.
     -   Caps-sentence can be toggled with a double right shift tap. Capslock will disable at the first occurrence of a period(dot), escape, or enter tap. Right shift is greedy in regard to interruption.
 -   (macOS) Double left control tap hides active window and mutes volume. Left control is greedy in regard to interruption.

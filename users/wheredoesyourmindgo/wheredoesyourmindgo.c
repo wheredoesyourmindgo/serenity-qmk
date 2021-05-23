@@ -40,7 +40,7 @@ static td_tap_t os_grave_oshr_t = {
 td_state_t cur_dance(qk_tap_dance_state_t *state) {
     if (state->interrupted) {
        return TD_INTERRUPTED;
-    } else  {
+    } else {
        return TD_NOT_INTERRUPTED;
     }
 }

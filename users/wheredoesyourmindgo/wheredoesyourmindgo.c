@@ -32,7 +32,7 @@ uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 #endif
 
 // Create an instance of 'td_tap_t' for the 'os_grave_oshr' tap dance.
-static td_tap_t xtap_state = {
+static td_tap_t os_grave_oshr_t = {
     .is_press_action = true,
     .state = TD_NONE
 };
@@ -46,7 +46,7 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
 }
 
 void os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data) {
-    xtap_state.state = cur_dance(state);
+    os_grave_oshr_t.state = cur_dance(state);
     if (!state->pressed && !state->interrupted && state->count >= 2) {
         set_oneshot_layer(BASE_HRM, ONESHOT_START);
     } else if (!state->pressed && !state->interrupted && state->count == 1) {
@@ -69,7 +69,7 @@ void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data) {
             cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
         }
     }
-    xtap_state.state = TD_NONE;
+    os_grave_oshr_t.state = TD_NONE;
 }
 
 bool caps_active = false;
@@ -516,12 +516,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case OS_PRV_SPC:
         case OS_NXT_SPC:
-            if (record->event.pressed || xtap_state.state == TD_INTERRUPTED) {
+            if (record->event.pressed || os_grave_oshr_t.state == TD_INTERRUPTED) {
                 is_cmd_tab_held = true;
 
                 // reset tap dance state associated w/ OS layer
-                if (xtap_state.state == TD_INTERRUPTED) {
-                    xtap_state.state = TD_NONE;
+                if (os_grave_oshr_t.state == TD_INTERRUPTED) {
+                    os_grave_oshr_t.state = TD_NONE;
                 }
             } else {
                 cmd_tab_timer = timer_read();
@@ -529,7 +529,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case CMD_TAB_NXT:
-            if (record->event.pressed || xtap_state.state == TD_INTERRUPTED) {
+            if (record->event.pressed || os_grave_oshr_t.state == TD_INTERRUPTED) {
                 if (!is_cmd_tab_active) {
                     is_cmd_tab_active = true;
                     register_mods(MOD_BIT(KC_LGUI));
@@ -542,8 +542,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_TAB);
 
                 // reset tap dance state associated w/ OS layer
-                if (xtap_state.state == TD_INTERRUPTED) {
-                    xtap_state.state = TD_NONE;
+                if (os_grave_oshr_t.state == TD_INTERRUPTED) {
+                    os_grave_oshr_t.state = TD_NONE;
                 }
             } else {
                 cmd_tab_timer = timer_read();
@@ -552,7 +552,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case CMD_TAB_PRV:
-            if (record->event.pressed || xtap_state.state == TD_INTERRUPTED) {
+            if (record->event.pressed || os_grave_oshr_t.state == TD_INTERRUPTED) {
                 if (!is_cmd_tab_active) {
                     is_cmd_tab_active = true;
                     register_code(KC_LGUI);
@@ -566,8 +566,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // cmd_tab_timer = timer_read();
 
                 // reset tap dance state associated w/ OS layer
-                if (xtap_state.state == TD_INTERRUPTED) {
-                    xtap_state.state = TD_NONE;
+                if (os_grave_oshr_t.state == TD_INTERRUPTED) {
+                    os_grave_oshr_t.state = TD_NONE;
                 }
             } else {
                 cmd_tab_timer = timer_read();

@@ -1,4 +1,4 @@
-LEADER_ENABLE = yes 		# + Leaders
+# LEADER_ENABLE = yes 		# + Leaders
 TAP_DANCE_ENABLE = yes 		# + Tap Dance
 MOUSEKEY_ENABLE = yes 		# + Mouse keys
 EXTRAKEY_ENABLE = yes 		# + Audio control and System control

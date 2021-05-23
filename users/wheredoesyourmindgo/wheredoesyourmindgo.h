@@ -57,11 +57,12 @@
 #define OS_LNCHPD HYPR(KC_L) // Launchpad
 #define OS_SDBR HYPR(KC_N) // Sidebar
 #define OS_DRKMD_TGL HYPR(KC_D) // Toggle Dark Mode via AppleScript
+#define OS_MAIL HYPR(KC_J) // Show Mail via Service
 
 // App Shortcuts
 #define APP1 LALT(KC_SPC) // App Shortcut
 #define APP2 LCTL(KC_SPC) // App Shortcut
-#define APP3 KC_NO // App Shortcut
+#define APP3 OS_MAIL // App Shortcut
 #define APP4 KC_NO // App Shortcut
 #define APP5 KC_NO // App Shortcut
 #define APP6 KC_NO // App Shortcut

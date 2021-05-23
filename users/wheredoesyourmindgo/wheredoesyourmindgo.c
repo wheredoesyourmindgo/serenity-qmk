@@ -4,12 +4,10 @@
     #include "print.h"
 #endif
 
-typedef struct {
-    bool is_press_action;
-    uint8_t state;
-} tap;
 
 // Functions associated with individual tap dances
+void os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
+void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
 void caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
 void caps_word_reset(qk_tap_dance_state_t *state, void *user_data);
 void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data);
@@ -17,9 +15,41 @@ void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
 void oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
 void oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
 
+bool is_cmd_tab_active = false;
+bool is_cmd_tab_held = false;
+uint16_t cmd_tab_timer = 0;
+#define cmd_tab_timer_default_dur 1000;
+#define cmd_tab_timer_fast_dur 600;
+uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+
 #if defined MENU_FUNCTION
     bool func_lyr_active = false;
 #endif
+
+void os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (!state->pressed && !state->interrupted && state->count >= 2) {
+        set_oneshot_layer(BASE_HRM, ONESHOT_START);
+    } else if (!state->pressed && !state->interrupted && state->count == 1) {
+        tap_code(KC_GRAVE);
+    } else {
+        layer_on(OS);
+    }
+}
+void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data) {
+    if (IS_LAYER_ON(OS)) {
+        layer_off(OS);
+        // Emulate retro tapping when key held was held and not interrupted. This if must be nested in outer if statement or KC_GRAVE will fire twice.
+        if (!state->pressed && !state->interrupted && state->count == 1) {
+            tap_code(KC_GRAVE);
+        }
+        // Immediately end cmd+tab when OS Layer is released
+        if (is_cmd_tab_active) {
+            unregister_mods(MOD_BIT(KC_LGUI));
+            is_cmd_tab_active = false;
+            cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+        }
+    }
+}
 
 bool caps_active = false;
 bool caps_word_active = false;
@@ -112,16 +142,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_word_finished, caps_word_reset),
     [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_sentence_finished, caps_sentence_reset),
     [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
+    [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_oshr_finished, os_grave_oshr_reset),
 };
 // end of Tap Dance config
 
-/* Macros */
-bool is_cmd_tab_active = false;
-bool is_cmd_tab_held = false;
-uint16_t cmd_tab_timer = 0;
-#define cmd_tab_timer_default_dur 1000;
-#define cmd_tab_timer_fast_dur 600;
-uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+
 
 // #define MODS_SFT (get_mods() & MOD_BIT(KC_LSFT) || get_mods() & MOD_BIT(KC_RSFT))
 #define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
@@ -172,6 +197,7 @@ void cancel_caps_sentence(void) {
     }
 }
 
+/* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (ONESHOT_LYR_ACTIVE && IS_LAYER_ON(BASE_HRM) && !record->event.pressed) {
         switch (keycode) {
@@ -467,11 +493,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_mods(MOD_BIT(KC_RCTL));
             }
             break;
-        case PRV_APP:
-            if (record->event.pressed) {
-                tap_code16(LGUI(KC_TAB));
-            }
-            break;
         case OS_PRV_SPC:
         case OS_NXT_SPC:
             if (record->event.pressed) {
@@ -520,41 +541,59 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case KC_ESC:
-        case LT(LOWER,KC_ESC):
             if (record->event.pressed) {
                 // Cancel One Shot Mods (if active)
                 if (ONESHOT_MODS_ACTIVE) {
                     clear_oneshot_mods();
                 }
                 cancel_quick_caps();
-            } else {
-                // Immediately end cmd+tab when OS Layer-tap is released
-                if (is_cmd_tab_active) {
-                    unregister_mods(MOD_BIT(KC_LGUI));
-                    is_cmd_tab_active = false;
-                    cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+            }
+            break;
+        case LT(LOWER,KC_ESC):
+            if (record->event.pressed) {
+                // Only when KC_ESC
+                if (record->tap.count > 0) {
+                    // Cancel One Shot Mods (if active)
+                    if (ONESHOT_MODS_ACTIVE) {
+                        clear_oneshot_mods();
+                    }
+                    cancel_quick_caps();
                 }
             }
             break;
         // Tab, space, colon, semi-colon, comma cancel caps word
-        case KC_TAB:
-        case LT(HIGH,KC_TAB):
-        case KC_SPC:
-        case LT(HIGHER,KC_SPC):
         case KC_COLN:
         case KC_SCLN:
         case KC_COMM:
+        case KC_TAB:
+        case KC_SPC:
             if (record->event.pressed) {
                 cancel_caps_word();
             }
             break;
+        case LT(HIGH,KC_TAB):
+        case LT(HIGHER,KC_SPC):
+            if (record->event.pressed) {
+                // Only on tap (ie. Not during LT(HIGH) and LT(HIGHER))
+                if (record->tap.count > 0) {
+                    cancel_caps_word();
+                }
+            }
+            break;
         // Enter, period (and escape) cancel caps word and caps sentence
         case KC_ENT:
-        case LT(LOW,KC_ENT):
         case KC_DOT:
-        case ALGR_T(KC_DOT):
             if (record->event.pressed) {
                 cancel_quick_caps();
+            }
+            break;
+        case LT(LOW,KC_ENT):
+        case ALGR_T(KC_DOT):
+            if (record->event.pressed) {
+                // Only on tap (ie. Not during LT(LOW) and alt)
+                if (record->tap.count > 0) {
+                    cancel_quick_caps();
+                }
             }
             break;
         case DISP_FDIM:
@@ -580,11 +619,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     // tap_code(KC_VOLU) doesn't work w/ Planck
                     tap_code(KC__VOLUP);
                 }
-            }
-            break;
-        case OSHR:
-            if (record->event.pressed) {
-                set_oneshot_layer(BASE_HRM, ONESHOT_START);
             }
             break;
         case OOPS:
@@ -770,6 +804,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // case LT(HIGH,KC_TAB):
         // case LT(OS,KC_GRV):
             // return TAPPING_SLOW_TERM;
+        case TD(TD_OS_GRV_OSHR):
         case TD(TD_TGL_SEL):
         case TD(TD_CAPS_WORD):
         case TD(TD_CAPS_SENTENCE):
@@ -785,7 +820,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LT(LOWER,KC_ESC):
         case LT(HIGH,KC_TAB):
         case LT(HIGHER,KC_SPC):
-        case LT(OS,KC_GRV):
+        // case LT(OS,KC_GRV):
             return TAPPING_RETRO_TERM;
         default:
             return TAPPING_TERM;
@@ -799,7 +834,8 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         case LT(LOWER,KC_ESC):
         case LT(HIGH,KC_TAB):
         case LT(HIGHER,KC_SPC):
-        case LT(OS,KC_GRV):
+        // case LT(OS,KC_GRV):
+        // case TD(TD_OS_GRV_OSHR):
         case LT(HIGHEST,KC_LEFT):
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):
@@ -817,7 +853,7 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
         case LT(LOWER,KC_ESC):
         case LT(HIGH,KC_TAB):
         case LT(HIGHER,KC_SPC):
-        case LT(OS,KC_GRV):
+        // case LT(OS,KC_GRV):
             return false;
         default:
             return true;
@@ -844,7 +880,7 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
         case LT(LOWER,KC_ESC):
         case LT(HIGH,KC_TAB):
         case LT(HIGHER,KC_SPC):
-        case LT(OS,KC_GRV):
+        // case LT(OS,KC_GRV):
             return true;
         default:
             return false;

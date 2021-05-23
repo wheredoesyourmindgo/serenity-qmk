@@ -110,6 +110,7 @@ enum {
     TD_OS_GRV_OSHR
 };
 
+// Tap dance state
 typedef enum {
     TD_NONE,
     TD_INTERRUPTED,

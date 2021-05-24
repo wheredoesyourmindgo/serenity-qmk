@@ -1,47 +1,44 @@
 #include "wheredoesyourmindgo.h"
 
 #ifdef CONSOLE_ENABLE
-    #include "print.h"
+#    include "print.h"
 #endif
 
 typedef struct {
-    bool is_press_action;
+    bool    is_press_action;
     uint8_t state;
 } td_tap_t;
 
 // Functions associated with individual tap dances
 td_state_t cur_dance(qk_tap_dance_state_t *state);
-void os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
-void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
-void caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
-void caps_word_reset(qk_tap_dance_state_t *state, void *user_data);
-void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data);
-void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
-void oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
-void oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
+void       os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
+void       os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
+void       caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
+void       caps_word_reset(qk_tap_dance_state_t *state, void *user_data);
+void       caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data);
+void       caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
+void       oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
+void       oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
 
-bool is_cmd_tab_active = false;
-bool is_cmd_tab_held = false;
-uint16_t cmd_tab_timer = 0;
+bool     is_cmd_tab_active = false;
+bool     is_cmd_tab_held   = false;
+uint16_t cmd_tab_timer     = 0;
 #define cmd_tab_timer_default_dur 1000;
 #define cmd_tab_timer_fast_dur 600;
 uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 
 #if defined MENU_FUNCTION
-    bool func_lyr_active = false;
+bool        func_lyr_active = false;
 #endif
 
 // Create an instance of 'td_tap_t' for the 'os_grave_oshr' tap dance.
-static td_tap_t os_grave_oshr_t = {
-    .is_press_action = true,
-    .state = TD_NONE
-};
+static td_tap_t os_grave_oshr_t = {.is_press_action = true, .state = TD_NONE};
 
 td_state_t cur_dance(qk_tap_dance_state_t *state) {
     if (state->interrupted) {
-       return TD_INTERRUPTED;
+        return TD_INTERRUPTED;
     } else {
-       return TD_NOT_INTERRUPTED;
+        return TD_NOT_INTERRUPTED;
     }
 }
 
@@ -65,20 +62,20 @@ void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data) {
         // Immediately end cmd+tab when OS Layer is released
         if (is_cmd_tab_active) {
             unregister_mods(MOD_BIT(KC_LGUI));
-            is_cmd_tab_active = false;
+            is_cmd_tab_active     = false;
             cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
         }
     }
     os_grave_oshr_t.state = TD_NONE;
 }
 
-bool caps_active = false;
-bool caps_word_active = false;
+bool caps_active          = false;
+bool caps_word_active     = false;
 bool caps_sentence_active = false;
 void caps_word_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count >= 2) {
         if (!caps_active && !caps_word_active && !caps_sentence_active) {
-            caps_active = true;
+            caps_active      = true;
             caps_word_active = true;
             tap_code(KC_CAPSLOCK);
         }
@@ -95,11 +92,10 @@ void caps_word_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-
 void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count >= 2) {
         if (!caps_active && !caps_sentence_active && !caps_word_active) {
-            caps_active = true;
+            caps_active          = true;
             caps_sentence_active = true;
             tap_code(KC_CAPSLOCK);
         }
@@ -118,12 +114,12 @@ void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data) {
 
 void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count >= 2) {
-        tap_code16(LGUI(KC_H)); // Hide Active Window
+        tap_code16(LGUI(KC_H));  // Hide Active Window
         // KC_MUTE will toggle on double tap which isn't ideal here
         int i;
         for (i = 1; i <= 20; ++i) {
             // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
-            tap_code(KC__VOLDOWN); // Mute audio (needed for Planck, not sure why)
+            tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
         }
     } else {
         register_mods(MOD_BIT(KC_LCTL));
@@ -160,18 +156,11 @@ void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-
 // Tap once for Word Select, twice for Line Select, three times for all
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
-    [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_word_finished, caps_word_reset),
-    [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_sentence_finished, caps_sentence_reset),
-    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
-    [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_oshr_finished, os_grave_oshr_reset),
+    [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL), [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_word_finished, caps_word_reset), [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_sentence_finished, caps_sentence_reset), [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset), [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_oshr_finished, os_grave_oshr_reset),
 };
 // end of Tap Dance config
-
-
 
 // #define MODS_SFT (get_mods() & MOD_BIT(KC_LSFT) || get_mods() & MOD_BIT(KC_RSFT))
 #define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
@@ -198,25 +187,25 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define ONESHOT_MODS_RCTL (get_oneshot_mods() & MOD_BIT(KC_RCTL))
 
 void cancel_quick_caps(void) {
-   if (caps_sentence_active || caps_word_active) {
-        caps_active = false;
+    if (caps_sentence_active || caps_word_active) {
+        caps_active          = false;
         caps_sentence_active = false;
-        caps_word_active = false;
+        caps_word_active     = false;
         tap_code(KC_CAPSLOCK);
     }
 }
 
 void cancel_caps_word(void) {
-   if (caps_word_active) {
-        caps_active = false;
+    if (caps_word_active) {
+        caps_active      = false;
         caps_word_active = false;
         tap_code(KC_CAPSLOCK);
     }
 }
 
 void cancel_caps_sentence(void) {
-   if (caps_sentence_active) {
-        caps_active = false;
+    if (caps_sentence_active) {
+        caps_active          = false;
         caps_sentence_active = false;
         tap_code(KC_CAPSLOCK);
     }
@@ -227,7 +216,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (ONESHOT_LYR_ACTIVE && IS_LAYER_ON(BASE_HRM) && !record->event.pressed) {
         switch (keycode) {
             case KC_ESC:
-                case LT(LOWER,KC_ESC):
+            case LT(LOWER, KC_ESC):
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
                 clear_oneshot_layer_state(ONESHOT_PRESSED);
         }
@@ -237,9 +226,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //     clear_oneshot_mods();
     // }
     switch (keycode) {
+        case RSFT_T(KC_CAPS):
+        case LSFT_T(KC_CAPS):
+            if (record->event.pressed) {
+                // Only when KC_CAPS
+                if (record->tap.count > 0) {
+                    if (caps_sentence_active || caps_word_active) {
+                        cancel_quick_caps();
+                    } else {
+                        if (caps_active) {
+                            caps_active = false;
+                            tap_code(KC_CAPSLOCK);
+                        } else {
+                            caps_active = true;
+                            tap_code(KC_CAPSLOCK);
+                        }
+                    }
+                }
+            }
+            return false;
+            break;
         case KC_CAPSLOCK:
             if (record->event.pressed) {
-                if (caps_sentence_active || caps_word_active)  {
+                if (caps_sentence_active || caps_word_active) {
                     cancel_quick_caps();
                 } else {
                     if (caps_active) {
@@ -249,7 +258,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         caps_active = true;
                         tap_code(KC_CAPSLOCK);
                     }
-               }
+                }
             }
             return false;
             break;
@@ -528,7 +537,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     os_grave_oshr_t.state = TD_NONE;
                 }
             } else {
-                cmd_tab_timer = timer_read();
+                cmd_tab_timer   = timer_read();
                 is_cmd_tab_held = false;
             }
             break;
@@ -550,7 +559,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     os_grave_oshr_t.state = TD_NONE;
                 }
             } else {
-                cmd_tab_timer = timer_read();
+                cmd_tab_timer   = timer_read();
                 is_cmd_tab_held = false;
                 // unregister_code(KC_TAB);
             }
@@ -574,7 +583,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     os_grave_oshr_t.state = TD_NONE;
                 }
             } else {
-                cmd_tab_timer = timer_read();
+                cmd_tab_timer   = timer_read();
                 is_cmd_tab_held = false;
                 unregister_mods(MOD_BIT(KC_LSFT));
                 // unregister_code(KC_TAB);
@@ -589,7 +598,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 cancel_quick_caps();
             }
             break;
-        case LT(LOWER,KC_ESC):
+        case LT(LOWER, KC_ESC):
             if (record->event.pressed) {
                 // Only when KC_ESC
                 if (record->tap.count > 0) {
@@ -611,8 +620,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 cancel_caps_word();
             }
             break;
-        case LT(HIGH,KC_TAB):
-        case LT(HIGHER,KC_SPC):
+        case LT(HIGH, KC_TAB):
+        case LT(HIGHER, KC_SPC):
             if (record->event.pressed) {
                 // Only on tap (ie. Not during LT(HIGH) and LT(HIGHER))
                 if (record->tap.count > 0) {
@@ -627,7 +636,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 cancel_quick_caps();
             }
             break;
-        case LT(LOW,KC_ENT):
+        case LT(LOW, KC_ENT):
         case ALGR_T(KC_DOT):
             if (record->event.pressed) {
                 // Only on tap (ie. Not during LT(LOW) and alt)
@@ -663,17 +672,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case OOPS:
             if (record->event.pressed) {
-                tap_code16(LGUI(KC_H)); // Hide Active Window
+                tap_code16(LGUI(KC_H));  // Hide Active Window
                 // KC_MUTE will toggle on double tap which isn't ideal here
                 int i;
                 for (i = 1; i <= 20; ++i) {
                     // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
-                    tap_code(KC__VOLDOWN); // Mute audio (needed for Planck, not sure why)
+                    tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
                 }
             }
             break;
         case MO(LOWEST):
-           if (record->event.pressed) {
+            if (record->event.pressed) {
                 if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
                     layer_on(BASE);
                     register_mods(MOD_BIT(KC_LSFT));
@@ -729,7 +738,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case LT(HIGHEST,KC_LEFT):
+        case LT(HIGHEST, KC_LEFT):
             if (record->event.pressed) {
                 if (MODS_RCTRL || MODS_RALT || MODS_RGUI) {
                     layer_on(BASE);
@@ -741,12 +750,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                     return false;
                 }
-                #if defined MENU_FUNCTION
-                    if (func_lyr_active) {
-                        func_lyr_active = false;
-                        unregister_code(KC_MENU);
-                    }
-                #endif
+#if defined MENU_FUNCTION
+                if (func_lyr_active) {
+                    func_lyr_active = false;
+                    unregister_code(KC_MENU);
+                }
+#endif
             }
             break;
         case KC_RGUI:
@@ -757,12 +766,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     layer_off(HIGHEST);
                     register_mods(MOD_BIT(KC_RSFT));
                 }
-                #if defined MENU_FUNCTION
-                    if (func_lyr_active) {
-                        func_lyr_active = false;
-                        unregister_code(KC_MENU);
-                    }
-                #endif
+#if defined MENU_FUNCTION
+                if (func_lyr_active) {
+                    func_lyr_active = false;
+                    unregister_code(KC_MENU);
+                }
+#endif
             }
             break;
         case RGUI_T(KC_DOWN):
@@ -793,47 +802,46 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-
 // LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
     if (is_cmd_tab_active) {
         if (timer_elapsed(cmd_tab_timer) > cmd_tab_timer_timeout && !is_cmd_tab_held) {
             unregister_mods(MOD_BIT(KC_LGUI));
-            is_cmd_tab_active = false;
+            is_cmd_tab_active     = false;
             cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
         }
     }
-    #if defined MENU_FUNCTION
-        if (IS_LAYER_ON(HIGHEST) && !func_lyr_active) {
-            func_lyr_active = true;
-            register_code(KC_MENU);
-        }
-    #endif
+#if defined MENU_FUNCTION
+    if (IS_LAYER_ON(HIGHEST) && !func_lyr_active) {
+        func_lyr_active = true;
+        register_code(KC_MENU);
+    }
+#endif
 
-// Leaders
-//    LEADER_DICTIONARY() {
-//     leading = false;
-//     leader_end();
+    // Leaders
+    //    LEADER_DICTIONARY() {
+    //     leading = false;
+    //     leader_end();
 
-//     SEQ_ONE_KEY(KC_L) {
-//       // Alfred
-//       tap_code16(LALT(KC_SPC));
-//     }
-//     SEQ_ONE_KEY(KC_T) {
-//       // iTerm
-//       tap_code16(LCTL(KC_SPC));
-//     }
-//     SEQ_TWO_KEYS(KC_Y, KC_D) {
-//       SEND_STRING("yarn dev");
-//     }
-//     SEQ_TWO_KEYS(KC_Y, KC_I) {
-//       SEND_STRING("yarn install");
-//     }
-//     SEQ_TWO_KEYS(KC_G, KC_P) {
-//       SEND_STRING("git pull");
-//     }
-//   }
+    //     SEQ_ONE_KEY(KC_L) {
+    //       // Alfred
+    //       tap_code16(LALT(KC_SPC));
+    //     }
+    //     SEQ_ONE_KEY(KC_T) {
+    //       // iTerm
+    //       tap_code16(LCTL(KC_SPC));
+    //     }
+    //     SEQ_TWO_KEYS(KC_Y, KC_D) {
+    //       SEND_STRING("yarn dev");
+    //     }
+    //     SEQ_TWO_KEYS(KC_Y, KC_I) {
+    //       SEND_STRING("yarn install");
+    //     }
+    //     SEQ_TWO_KEYS(KC_G, KC_P) {
+    //       SEND_STRING("git pull");
+    //     }
+    //   }
 }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -844,7 +852,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // case LT(LOW,KC_ENT):
         // case LT(HIGH,KC_TAB):
         // case LT(OS,KC_GRV):
-            // return TAPPING_SLOW_TERM;
+        // return TAPPING_SLOW_TERM;
         case TD(TD_OS_GRV_OSHR):
         case TD(TD_TGL_SEL):
         case TD(TD_CAPS_WORD):
@@ -857,11 +865,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // case RCTL_T(KC_RIGHT):
         //     return TAPPING_TD_FAST_TERM;
         // Using retro tapping with the following
-        case LT(LOW,KC_ENT):
-        case LT(LOWER,KC_ESC):
-        case LT(HIGH,KC_TAB):
-        case LT(HIGHER,KC_SPC):
-        // case LT(OS,KC_GRV):
+        case LT(LOW, KC_ENT):
+        case LT(LOWER, KC_ESC):
+        case LT(HIGH, KC_TAB):
+        case LT(HIGHER, KC_SPC):
+            // case LT(OS,KC_GRV):
             return TAPPING_RETRO_TERM;
         default:
             return TAPPING_TERM;
@@ -871,13 +879,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOW,KC_ENT):
-        case LT(LOWER,KC_ESC):
-        case LT(HIGH,KC_TAB):
-        case LT(HIGHER,KC_SPC):
+        case LT(LOW, KC_ENT):
+        case LT(LOWER, KC_ESC):
+        case LT(HIGH, KC_TAB):
+        case LT(HIGHER, KC_SPC):
         // case LT(OS,KC_GRV):
         // case TD(TD_OS_GRV_OSHR):
-        case LT(HIGHEST,KC_LEFT):
+        case LT(HIGHEST, KC_LEFT):
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):
         case RCTL_T(KC_RIGHT):
@@ -890,11 +898,11 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 // We won't be rolling through all the Layer-tap keys
 bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOW,KC_ENT):
-        case LT(LOWER,KC_ESC):
-        case LT(HIGH,KC_TAB):
-        case LT(HIGHER,KC_SPC):
-        // case LT(OS,KC_GRV):
+        case LT(LOW, KC_ENT):
+        case LT(LOWER, KC_ESC):
+        case LT(HIGH, KC_TAB):
+        case LT(HIGHER, KC_SPC):
+            // case LT(OS,KC_GRV):
             return false;
         default:
             return true;
@@ -904,7 +912,7 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Allow per key spamming for arrow keys (return false, default behaviour)
-        case LT(HIGHEST,KC_LEFT):
+        case LT(HIGHEST, KC_LEFT):
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):
         case RCTL_T(KC_RIGHT):
@@ -912,16 +920,16 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         // Force hold by default
         default:
             return true;
-        }
+    }
 }
 
 bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOW,KC_ENT):
-        case LT(LOWER,KC_ESC):
-        case LT(HIGH,KC_TAB):
-        case LT(HIGHER,KC_SPC):
-        // case LT(OS,KC_GRV):
+        case LT(LOW, KC_ENT):
+        case LT(LOWER, KC_ESC):
+        case LT(HIGH, KC_TAB):
+        case LT(HIGHER, KC_SPC):
+            // case LT(OS,KC_GRV):
             return true;
         default:
             return false;

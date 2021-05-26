@@ -4,9 +4,9 @@
 
 Gasket mounted 40% column staggered keyboard manufactured by Yushakobo
 
-* Keyboard Maintainer: [foostan](https://github.com/foostan/)
-* Hardware Supported: Cornelius PCBs
-* Hardware Availability: http://github.com/foostan
+-   Keyboard Maintainer: [foostan](https://github.com/foostan/)
+-   Hardware Supported: Cornelius PCBs
+-   Hardware Availability: http://github.com/foostan
 
 Make example for this keyboard (after setting up your build environment):
 
@@ -25,10 +25,6 @@ See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_to
 Make firmware (after setting up your build environment):
 
     make foostan/cornelius:wheredoesyourmindgo
-
-alternatively, with home row mods enabled:
-
-    make foostan/cornelius:wheredoesyourmindgo HOME_ROW_MODS=yes
 
 Install:
 

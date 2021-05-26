@@ -78,14 +78,7 @@
 #define PRV_APP LGUI(KC_TAB)
 
 
-// Layer declarations
-// #if defined HOME_ROW_MODS
-//     enum layers { BASE_HRM, BASE, LOWER, MOUR, MEDR_HRM, MEDR, NSL, NSSL, FUNL, OS, WNDW };
-// #else
 enum layers { BASE, BASE_HRM, LOWER, LOW, LOWEST, HIGHER, HIGHER_HRM, HIGH, HIGHEST, OS, WNDW };
-// #endif
-
-
 
 enum keycodes {
   CMD_TAB_PRV = SAFE_RANGE,

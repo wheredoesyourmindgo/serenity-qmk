@@ -8,7 +8,6 @@ Keyboard Maintainer: [Jack Humbert](https://github.com/jackhumbert)
 Hardware Supported: Planck PCB rev1, rev2, rev3, rev4, rev5, rev6; Planck Light, Planck EZ  
 Hardware Availability: [OLKB.com](https://olkb.com), [Massdrop](https://www.massdrop.com/buy/planck-mechanical-keyboard?mode=guest_open), [Ergodox (Planck EZ)](https://ergodox-ez.com/pages/planck)
 
-
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
 
 ## Build & Install
@@ -16,10 +15,6 @@ See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_to
 Make firmware (after setting up your build environment):
 
     make planck/rev6:wheredoesyourmindgo
-
-alternatively, with home row mods enabled:
-
-    make planck/rev6:wheredoesyourmindgo HOME_ROW_MODS=yes
 
 Install:
 

@@ -27,23 +27,15 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 
 There are a couple of ways to approach this layout.
 
-### Without Home Row Mods (default)
+### Without Home Row Mods
 
-This approach is suitable for a 48+ key layout, eg. Planck Grid layout (MIT layout would require some tweaking). Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and right. As stated above, home row mods can be toggled on.
-
-#### Suggested Use w/o Home Row Mods
-
-When activating a multi-combo mod press, either move your hand in the same fashion as you would if there were an arrow cluster there towards the bottom corner. Effectively, this in turn should feel very reminiscent to using home row mods. Since mods are mirrored on both the bottom right and left use opposite hand to press key, or, use One-shot Home Row Mods feature by triggering combo using Higher+t key.
+Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and right. As stated above, home row mods can be toggled on. When activating a multi-combo mod press, either move your hand in the same fashion as you would if there were an arrow cluster there towards the bottom corner. Effectively, this in turn should feel very reminiscent to using home row mods. Since mods are mirrored on both the bottom right and left use opposite hand to press key, or, use One-shot Home Row Mods feature by triggering combo using Higher+t key.
 
 When activating single mod presses, leave your hand above the home row and lower the corresponding finger down 2 rows to activate the press and hold. This is done identically to how mods are typically activated with a standard ANSI layout. Again, since mods are mirrored on both the bottom right and left use opposite hand to press key.
 
 ### With Row Mods
 
-This approach is suitable for a 42+ key layout, eg. Corne. Use home row mods with the added benefit of having dedicated shift keys on both the left and right.
-
-#### Suggested Use w/ Home Row Mods
-
-Use the dedicated Shift keys on the right and left for shifting alpha keys. For novice-intermediate (home row mod) users this can yield a faster typing experience when typing in mixed case. Since shift keys mirrored on both the right and left use opposite hand to press shifted key. Use the shift keys located on the home rows for keyboard shortcuts and multi-combo mod presses. For a more focused typing experience, or when typing for extended periods of time (ex. Emails or Typing Speed Test) consider toggling home row mods off to prevent accidental mod presses.
+Use home row mods with the added benefit of having dedicated shift keys on both the left and right. Use the dedicated Shift keys on the right and left for shifting alpha keys. For novice-intermediate (home row mod) users this can yield a faster typing experience when typing in mixed case. Since shift keys mirrored on both the right and left use opposite hand to press shifted key. Use the shift keys located on the home rows for keyboard shortcuts and multi-combo mod presses. For a more focused typing experience, or when typing for extended periods of time (ex. Emails or Typing Speed Test) consider toggling home row mods off to prevent accidental mod presses.
 
 ### Case for Right Handed Space
 

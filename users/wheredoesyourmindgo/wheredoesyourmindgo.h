@@ -58,14 +58,17 @@
 #define OS_SDBR HYPR(KC_N) // Sidebar
 #define OS_DRKMD_TGL HYPR(KC_D) // Toggle Dark Mode via AppleScript
 #define OS_MAIL HYPR(KC_J) // Show Mail via Service
+#define OS_WEB HYPR(KC_W) // Show Web Browser via Service
+#define OS_CODE HYPR(KC_V) // Show VSCode via Service
+#define OS_WEB_DEV HYPR(KC_F) // Show Firefox Developer Edition via Service
 
 // App Shortcuts
 #define APP1 LALT(KC_SPC) // App Shortcut
 #define APP2 LCTL(KC_SPC) // App Shortcut
-#define APP3 KC_NO // App Shortcut
+#define APP3 OS_WEB // App Shortcut
 #define APP4 OS_MAIL // App Shortcut
-#define APP5 KC_NO // App Shortcut
-#define APP6 KC_NO // App Shortcut
+#define APP5 OS_WEB_DEV // App Shortcut
+#define APP6 OS_CODE // App Shortcut
 #define APP7 KC_NO // App Shortcut
 #define APP8 KC_NO // App Shortcut
 

@@ -810,6 +810,7 @@ void matrix_scan_user(void) {
             unregister_mods(MOD_BIT(KC_LGUI));
             is_cmd_tab_active     = false;
             cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+            unregister_mods(MOD_BIT(KC_LSFT));
         }
     }
 #if defined MENU_FUNCTION

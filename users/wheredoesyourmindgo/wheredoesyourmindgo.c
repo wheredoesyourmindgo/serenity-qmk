@@ -902,9 +902,10 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
         case LT(LOW, KC_ENT):
         case LT(LOWER, KC_ESC):
         case LT(HIGH, KC_TAB):
-        case LT(HIGHER, KC_SPC):
-            // case LT(OS,KC_GRV):
+        // case LT(OS,KC_GRV):
             return false;
+        // Might roll through space
+        // case LT(HIGHER, KC_SPC):
         default:
             return true;
     }

@@ -104,7 +104,9 @@ enum {
     TD_CAPS_WORD,
     TD_CAPS_SENTENCE,
     TD_OOPSY,
-    TD_OS_GRV_OSHR
+    TD_OS_GRV_OSHR,
+    TD_LSFT_T_CAPS,
+    TD_RSFT_T_CAPS
 };
 
 // Tap dance state

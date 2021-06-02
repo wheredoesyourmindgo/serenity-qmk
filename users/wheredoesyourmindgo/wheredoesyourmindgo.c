@@ -9,8 +9,36 @@ typedef struct {
     uint8_t state;
 } td_tap_t;
 
+// #define MODS_SFT (get_mods() & MOD_BIT(KC_LSFT) || get_mods() & MOD_BIT(KC_RSFT))
+#define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
+#define MODS_LSFT (get_mods() & MOD_BIT(KC_LSFT))
+// #define MODS_CTRL (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTRL))
+#define MODS_RCTRL (get_mods() & MOD_BIT(KC_RCTRL))
+#define MODS_LCTRL (get_mods() & MOD_BIT(KC_LCTRL))
+// #define MODS_ALT (get_mods() & MOD_BIT(KC_LALT) || get_mods() & MOD_BIT(KC_RALT))
+#define MODS_RALT (get_mods() & MOD_BIT(KC_RALT))
+#define MODS_LALT (get_mods() & MOD_BIT(KC_LALT))
+// #define MODS_GUI (get_mods() & MOD_BIT(KC_LGUI) || get_mods() & MOD_BIT(KC_RGUI))
+#define MODS_RGUI (get_mods() & MOD_BIT(KC_RGUI))
+#define MODS_LGUI (get_mods() & MOD_BIT(KC_LGUI))
+// #define ACTIVE_MODS (get_mods())
+#define ONESHOT_LYR_ACTIVE (is_oneshot_layer_active())
+#define ONESHOT_MODS_ACTIVE (get_oneshot_mods())
+#define ONESHOT_MODS_LSFT (get_oneshot_mods() & MOD_BIT(KC_LSFT))
+#define ONESHOT_MODS_LGUI (get_oneshot_mods() & MOD_BIT(KC_LGUI))
+#define ONESHOT_MODS_LALT (get_oneshot_mods() & MOD_BIT(KC_LALT))
+#define ONESHOT_MODS_LCTL (get_oneshot_mods() & MOD_BIT(KC_LCTL))
+#define ONESHOT_MODS_RSFT (get_oneshot_mods() & MOD_BIT(KC_RSFT))
+#define ONESHOT_MODS_RGUI (get_oneshot_mods() & MOD_BIT(KC_RGUI))
+#define ONESHOT_MODS_RALT (get_oneshot_mods() & MOD_BIT(KC_RALT))
+#define ONESHOT_MODS_RCTL (get_oneshot_mods() & MOD_BIT(KC_RCTL))
+
 // Functions associated with individual tap dances
 td_state_t cur_dance(qk_tap_dance_state_t *state);
+void       lsft_t_caps_finished(qk_tap_dance_state_t *state, void *user_data);
+void       lsft_t_caps_reset(qk_tap_dance_state_t *state, void *user_data);
+void       rsft_t_caps_finished(qk_tap_dance_state_t *state, void *user_data);
+void       rsft_t_caps_reset(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
 void       caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
@@ -69,6 +97,35 @@ void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data) {
     os_grave_oshr_t.state = TD_NONE;
 }
 
+// LSFT_T(KC_CAPS) and RSFT_T(KC_CAPS) don't work. These tap dance functions do.
+void lsft_t_caps_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (!state->pressed && !state->interrupted) {
+        tap_code(KC_CAPS);
+    } else {
+        register_mods(MOD_BIT(KC_LSFT));
+    }
+}
+
+void lsft_t_caps_reset(qk_tap_dance_state_t *state, void *user_data) {
+    if (MODS_LSFT) {
+        unregister_mods(MOD_BIT(KC_LSFT));
+    }
+}
+
+void rsft_t_caps_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (!state->pressed && !state->interrupted) {
+        tap_code(KC_CAPS);
+    } else {
+        register_mods(MOD_BIT(KC_RSFT));
+    }
+}
+
+void rsft_t_caps_reset(qk_tap_dance_state_t *state, void *user_data) {
+    if (MODS_RSFT) {
+        unregister_mods(MOD_BIT(KC_RSFT));
+    }
+}
+
 bool caps_active          = false;
 bool caps_word_active     = false;
 bool caps_sentence_active = false;
@@ -85,9 +142,7 @@ void caps_word_finished(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void caps_word_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (!state->pressed && !state->interrupted && state->count >= 2) {
-        // return
-    } else {
+    if (MODS_LSFT) {
         unregister_mods(MOD_BIT(KC_LSFT));
     }
 }
@@ -105,9 +160,7 @@ void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (!state->pressed && !state->interrupted && state->count >= 2) {
-        // return
-    } else {
+    if (MODS_RSFT) {
         unregister_mods(MOD_BIT(KC_RSFT));
     }
 }
@@ -122,15 +175,13 @@ void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
             tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
         }
     } else {
-        register_mods(MOD_BIT(KC_LCTL));
+        register_mods(MOD_BIT(KC_LCTRL));
     }
 }
 
 void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (!state->pressed && !state->interrupted && state->count >= 2) {
-        // return
-    } else {
-        unregister_mods(MOD_BIT(KC_LCTL));
+    if (MODS_LCTRL) {
+        unregister_mods(MOD_BIT(KC_LCTRL));
     }
 }
 
@@ -158,33 +209,16 @@ void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
 
 // Tap once for Word Select, twice for Line Select, three times for all
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL), [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_word_finished, caps_word_reset), [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_sentence_finished, caps_sentence_reset), [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset), [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_oshr_finished, os_grave_oshr_reset),
+    [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
+    [TD_LSFT_T_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lsft_t_caps_finished, lsft_t_caps_reset),
+    [TD_RSFT_T_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rsft_t_caps_finished, rsft_t_caps_reset),
+    [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_word_finished, caps_word_reset),
+    [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_sentence_finished, caps_sentence_reset),
+    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
+    [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_oshr_finished, os_grave_oshr_reset),
 };
 // end of Tap Dance config
 
-// #define MODS_SFT (get_mods() & MOD_BIT(KC_LSFT) || get_mods() & MOD_BIT(KC_RSFT))
-#define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
-#define MODS_LSFT (get_mods() & MOD_BIT(KC_LSFT))
-// #define MODS_CTRL (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTRL))
-#define MODS_RCTRL (get_mods() & MOD_BIT(KC_RCTRL))
-#define MODS_LCTRL (get_mods() & MOD_BIT(KC_LCTRL))
-// #define MODS_ALT (get_mods() & MOD_BIT(KC_LALT) || get_mods() & MOD_BIT(KC_RALT))
-#define MODS_RALT (get_mods() & MOD_BIT(KC_RALT))
-#define MODS_LALT (get_mods() & MOD_BIT(KC_LALT))
-// #define MODS_GUI (get_mods() & MOD_BIT(KC_LGUI) || get_mods() & MOD_BIT(KC_RGUI))
-#define MODS_RGUI (get_mods() & MOD_BIT(KC_RGUI))
-#define MODS_LGUI (get_mods() & MOD_BIT(KC_LGUI))
-// #define ACTIVE_MODS (get_mods())
-#define ONESHOT_LYR_ACTIVE (is_oneshot_layer_active())
-#define ONESHOT_MODS_ACTIVE (get_oneshot_mods())
-#define ONESHOT_MODS_LSFT (get_oneshot_mods() & MOD_BIT(KC_LSFT))
-#define ONESHOT_MODS_LGUI (get_oneshot_mods() & MOD_BIT(KC_LGUI))
-#define ONESHOT_MODS_LALT (get_oneshot_mods() & MOD_BIT(KC_LALT))
-#define ONESHOT_MODS_LCTL (get_oneshot_mods() & MOD_BIT(KC_LCTL))
-#define ONESHOT_MODS_RSFT (get_oneshot_mods() & MOD_BIT(KC_RSFT))
-#define ONESHOT_MODS_RGUI (get_oneshot_mods() & MOD_BIT(KC_RGUI))
-#define ONESHOT_MODS_RALT (get_oneshot_mods() & MOD_BIT(KC_RALT))
-#define ONESHOT_MODS_RCTL (get_oneshot_mods() & MOD_BIT(KC_RCTL))
 
 void cancel_quick_caps(void) {
     if (caps_sentence_active || caps_word_active) {

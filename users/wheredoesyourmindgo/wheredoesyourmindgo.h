@@ -52,6 +52,10 @@
 #define OS_PRVS_APP_WNDW LGUI(KC_TILD) // Previous (Same)App Window
 #define OS_FLLSCRN LCTL(LGUI(KC_F)) // Fullscreen
 #define OS_SPTLGHT LGUI(KC_SPC) // Spotlight
+#define OS_BCK LGUI(KC_LBRC) // Back
+#define OS_FWD LGUI(KC_RBRC) // Forward
+#define OS_BCK_FLDR LGUI(KC_UP) // Back Folder
+#define OS_FWD_FLDR LGUI(KC_DOWN) // Forward Folder
 // custom (non-default) in OS
 #define OS_SIRI HYPR(KC_S) // Siri
 #define OS_LNCHPD HYPR(KC_L) // Launchpad
@@ -78,7 +82,7 @@
 #define PRV_APP LGUI(KC_TAB)
 
 
-enum layers { BASE, BASE_HRM, LOWER, LOW, LOWEST, HIGHER, HIGHER_HRM, HIGH, HIGHEST, OS, WNDW };
+enum layers { BASE, BASE_HRM, LOWER, LOWER_ALT, LOW, LOWEST, HIGHER, HIGHER_HRM, HIGH, HIGHEST, OS, WNDW };
 
 enum keycodes {
   CMD_TAB_PRV = SAFE_RANGE,

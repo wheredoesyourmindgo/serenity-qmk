@@ -21,8 +21,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO  , KC_NO        , KC_NO        , KC_NO        , KC_NO        , KC_NO    ,         KC_NO, KC_NO, KC_NO         , KC_NO  , KC_NO , KC_NO, KC_NO, KC_NO,
         KC_DOT , KC_1         , KC_2         , KC_3         , KC_4         , KC_5     ,         KC_NO, KC_NO, KC_6          , KC_7   , KC_8 , KC_9, KC_0, LALT(KC_BSPC),
         KC_GRV,  XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT, DF(LOWER),         KC_NO, KC_NO, KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_QUOT,
-        KC_LSFT, KC_NO        , OSM(MOD_RALT)      , KC_NO        , KC_NO        , KC_NO    ,         KC_NO, KC_NO,       KC_NO  , KC_HOME, KC_PGDN, KC_PGUP, KC_END, RSFT_T(KC_CAPS),
+        MO(LOWER_ALT), KC_NO        , OSM(MOD_RALT)      , KC_NO        , KC_NO        , KC_NO    ,         KC_NO, KC_NO,       KC_NO  , KC_HOME, KC_PGDN, KC_PGUP, KC_END, RSFT_T(KC_CAPS),
         KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT        , DF(BASE)     , KC_ENT   , KC_TAB, LT(HIGHER,KC_SPC),  KC_RSFT, KC_RGUI, KC_RALT, KC_RCTL
+    ),
+	[LOWER_ALT] = LAYOUT_ortho_2x2u(
+        KC_TRNS  , KC_TRNS        , KC_TRNS        , KC_TRNS        , KC_TRNS        , KC_TRNS    ,         KC_TRNS, KC_TRNS, KC_TRNS         , KC_TRNS  , KC_TRNS , KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS , KC_TRNS         , KC_TRNS         , KC_TRNS         , KC_TRNS         , KC_TRNS     ,         KC_TRNS, KC_TRNS, KC_TRNS          , KC_TRNS   , KC_TRNS , KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, DF(LOWER_ALT),         KC_TRNS, KC_TRNS, KC_TRNS, OS_BCK, OS_FWD_FLDR, OS_BCK_FLDR, OS_FWD, KC_TRNS,
+        KC_TRNS, KC_TRNS        , KC_TRNS      , KC_TRNS        , KC_TRNS        , KC_TRNS    ,         KC_TRNS, KC_TRNS,       KC_TRNS  , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS        , DF(BASE)     , KC_TRNS   , KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     ),
 	[LOW] = LAYOUT_ortho_2x2u(
         KC_NO, KC_NO        , KC_NO        , KC_NO        , KC_NO        , KC_NO   ,                  KC_NO, KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO, KC_NO, KC_NO,

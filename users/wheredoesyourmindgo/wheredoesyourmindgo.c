@@ -549,6 +549,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     cmd_tab_timer_timeout = cmd_tab_timer_fast_dur;
                 }
                 is_cmd_tab_held = true;
+                unregister_mods(MOD_BIT(KC_LSFT));
                 // cmd_tab_timer = timer_read(); // Start the timer when the key is released, not pressed
                 tap_code(KC_TAB);
 
@@ -806,9 +807,9 @@ void matrix_scan_user(void) {
     if (is_cmd_tab_active) {
         if (timer_elapsed(cmd_tab_timer) > cmd_tab_timer_timeout && !is_cmd_tab_held) {
             unregister_mods(MOD_BIT(KC_LGUI));
+            unregister_mods(MOD_BIT(KC_LSFT));
             is_cmd_tab_active     = false;
             cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-            unregister_mods(MOD_BIT(KC_LSFT));
         }
     }
 #if defined MENU_FUNCTION

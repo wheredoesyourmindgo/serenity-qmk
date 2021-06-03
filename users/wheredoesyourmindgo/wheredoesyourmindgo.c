@@ -35,10 +35,6 @@ typedef struct {
 
 // Functions associated with individual tap dances
 td_state_t cur_dance(qk_tap_dance_state_t *state);
-void       lsft_t_caps_finished(qk_tap_dance_state_t *state, void *user_data);
-void       lsft_t_caps_reset(qk_tap_dance_state_t *state, void *user_data);
-void       rsft_t_caps_finished(qk_tap_dance_state_t *state, void *user_data);
-void       rsft_t_caps_reset(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
 void       caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
@@ -95,35 +91,6 @@ void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data) {
         }
     }
     os_grave_oshr_t.state = TD_NONE;
-}
-
-// LSFT_T(KC_CAPS) and RSFT_T(KC_CAPS) don't work. These tap dance functions do.
-void lsft_t_caps_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (!state->pressed && !state->interrupted) {
-        tap_code(KC_CAPS);
-    } else {
-        register_mods(MOD_BIT(KC_LSFT));
-    }
-}
-
-void lsft_t_caps_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (MODS_LSFT) {
-        unregister_mods(MOD_BIT(KC_LSFT));
-    }
-}
-
-void rsft_t_caps_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (!state->pressed && !state->interrupted) {
-        tap_code(KC_CAPS);
-    } else {
-        register_mods(MOD_BIT(KC_RSFT));
-    }
-}
-
-void rsft_t_caps_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (MODS_RSFT) {
-        unregister_mods(MOD_BIT(KC_RSFT));
-    }
 }
 
 bool caps_active          = false;
@@ -210,8 +177,6 @@ void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
 // Tap once for Word Select, twice for Line Select, three times for all
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
-    [TD_LSFT_T_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lsft_t_caps_finished, lsft_t_caps_reset),
-    [TD_RSFT_T_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rsft_t_caps_finished, rsft_t_caps_reset),
     [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_word_finished, caps_word_reset),
     [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_sentence_finished, caps_sentence_reset),
     [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
@@ -276,9 +241,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                             tap_code(KC_CAPSLOCK);
                         }
                     }
+                    return false;
                 }
             }
-            return false;
             break;
         case KC_CAPSLOCK:
             if (record->event.pressed) {
@@ -294,7 +259,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
                 }
             }
-            return false;
             break;
         case XOSM_LSFT:
             if (record->event.pressed) {

@@ -21,6 +21,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          KC_LSFT, KC_NO        , OSM(MOD_RALT)      , KC_NO        , VOID        , KC_NO    ,          KC_NO  , KC_HOME, KC_PGDN, KC_PGUP, KC_END, RSFT_T(KC_CAPS),
         KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT        , DF(BASE)     , KC_ENT   , KC_TAB, LT(HIGHER,KC_SPC),  KC_RSFT, KC_RGUI, KC_RALT, KC_RCTL
     ),
+	[LOWER_ALT] = LAYOUT_ortho_4x12(
+        KC_TRNS , KC_TRNS         , KC_TRNS         , KC_TRNS         ,   KC_TRNS, KC_TRNS, KC_TRNS          , KC_TRNS   , KC_TRNS , KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, DF(LOWER_ALT),    KC_TRNS, OS_BCK, OS_FWD_FLDR, OS_BCK_FLDR, OS_FWD, KC_TRNS,
+        KC_TRNS, KC_TRNS        , KC_TRNS      , KC_TRNS        ,          KC_TRNS, KC_TRNS,       KC_TRNS  , KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS        , DF(BASE)     , KC_TRNS   , KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+    ),
 	[LOW] = LAYOUT_ortho_4x12(
         KC_DEL, KC_EXLM      , KC_AT        , KC_HASH      , KC_DLR       , KC_PERC ,                  KC_CIRC, KC_AMPR, KC_LPRN, KC_RPRN, KC_ASTR, KC_BSPC,
         KC_NO, XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT, DF(LOW),                  KC_MINS, KC_EQL , KC_LCBR, KC_RCBR, KC_PIPE, KC_QUOT,

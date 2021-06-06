@@ -44,9 +44,9 @@ void       caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
 void       oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
 void       oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
 
-bool     is_cmd_tab_active = false;
-bool     is_cmd_tab_held   = false;
-uint16_t cmd_tab_timer     = 0;
+bool is_cmd_tab_active = false;
+bool is_cmd_tab_held = false;
+uint16_t cmd_tab_timer = 0;
 #define cmd_tab_timer_default_dur 1000;
 #define cmd_tab_timer_fast_dur 600;
 uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
@@ -96,13 +96,14 @@ void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data) {
     os_grave_oshr_t.state = TD_NONE;
 }
 
-bool caps_active          = false;
-bool caps_word_active     = false;
+bool caps_active = false;
+bool caps_word_active = false;
 bool caps_sentence_active = false;
+
 void caps_word_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count >= 2) {
         if (!caps_active && !caps_word_active && !caps_sentence_active) {
-            caps_active      = true;
+            caps_active = true;
             caps_word_active = true;
             tap_code(KC_CAPSLOCK);
         }
@@ -120,7 +121,7 @@ void caps_word_reset(qk_tap_dance_state_t *state, void *user_data) {
 void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count >= 2) {
         if (!caps_active && !caps_sentence_active && !caps_word_active) {
-            caps_active          = true;
+            caps_active = true;
             caps_sentence_active = true;
             tap_code(KC_CAPSLOCK);
         }
@@ -189,35 +190,29 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 
 void cancel_quick_caps(void) {
-    if (caps_sentence_active || caps_word_active) {
-        caps_sentence_active = false;
-        caps_word_active     = false;
-        if (caps_active) {
-            caps_active = false;
-            tap_code(KC_CAPSLOCK);
-        }
+    caps_sentence_active = false;
+    caps_word_active = false;
+    if (caps_active) {
+        caps_active = false;
+        tap_code(KC_CAPSLOCK);
     }
 }
 
 void cancel_caps_word(void) {
-    if (caps_word_active) {
-        caps_word_active = false;
-        if (caps_active) {
-            caps_active = false;
-            tap_code(KC_CAPSLOCK);
-        }
+    caps_word_active = false;
+    if (caps_active) {
+        caps_active = false;
+        tap_code(KC_CAPSLOCK);
     }
 }
 
-void cancel_caps_sentence(void) {
-    if (caps_sentence_active) {
-        caps_sentence_active = false;
-        if (caps_active) {
-            caps_active = false;
-            tap_code(KC_CAPSLOCK);
-        }
-    }
-}
+// void cancel_caps_sentence(void) {
+//     caps_sentence_active = false;
+//     if (caps_active) {
+//         caps_active = false;
+//         tap_code(KC_CAPSLOCK);
+//     }
+// }
 
 void cancel_cmd_shift(void) {
     layer_off(OS);
@@ -225,7 +220,7 @@ void cancel_cmd_shift(void) {
     if (MODS_LSFT) {
         unregister_mods(MOD_BIT(KC_LSFT));
     }
-    is_cmd_tab_active     = false;
+    is_cmd_tab_active = false;
     cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 }
 
@@ -619,7 +614,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (ONESHOT_MODS_ACTIVE) {
                     clear_oneshot_mods();
                 }
-                cancel_quick_caps();
+                if (caps_sentence_active || caps_word_active) {
+                    cancel_quick_caps();
+                }
             }
             break;
         case LT(LOWER, KC_ESC):
@@ -630,7 +627,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     if (ONESHOT_MODS_ACTIVE) {
                         clear_oneshot_mods();
                     }
-                    cancel_quick_caps();
+                    if (caps_sentence_active || caps_word_active) {
+                        cancel_quick_caps();
+                    }
                 }
             }
             break;
@@ -641,7 +640,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_TAB:
         case KC_SPC:
             if (record->event.pressed) {
-                cancel_caps_word();
+                if (caps_word_active) {
+                    cancel_caps_word();
+                }
             }
             break;
         case LT(HIGH, KC_TAB):
@@ -649,7 +650,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 // Only on tap (ie. Not during LT(HIGH) and LT(HIGHER))
                 if (record->tap.count > 0) {
-                    cancel_caps_word();
+                    if (caps_word_active) {
+                        cancel_caps_word();
+                    }
                 }
             }
             break;
@@ -657,7 +660,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_ENT:
         case KC_DOT:
             if (record->event.pressed) {
-                cancel_quick_caps();
+                if (caps_sentence_active || caps_word_active) {
+                    cancel_quick_caps();
+                }
             }
             break;
         case LT(LOW, KC_ENT):
@@ -665,7 +670,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 // Only on tap (ie. Not during LT(LOW) and alt)
                 if (record->tap.count > 0) {
-                    cancel_quick_caps();
+                    if (caps_sentence_active || caps_word_active) {
+                        cancel_quick_caps();
+                    }
                 }
             }
             break;

@@ -252,7 +252,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                             tap_code(KC_CAPSLOCK);
                         } else {
                             caps_active = true;
-                            tap_code(KC_CAPSLOCK);
+                            return true;
                         }
                     }
                     return false;
@@ -269,9 +269,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         tap_code(KC_CAPSLOCK);
                     } else {
                         caps_active = true;
-                        tap_code(KC_CAPSLOCK);
+                        return true;
                     }
                 }
+                return false;
             }
             break;
         case XOSM_LSFT:

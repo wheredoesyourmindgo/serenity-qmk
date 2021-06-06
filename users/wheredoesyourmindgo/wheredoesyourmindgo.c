@@ -78,16 +78,19 @@ void os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data) {
 }
 void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data) {
     if (IS_LAYER_ON(OS)) {
-        layer_off(OS);
         // Emulate retro tapping when key held was held and not interrupted. This if must be nested in outer if statement or KC_GRAVE will fire twice.
         if (!state->pressed && !state->interrupted && state->count == 1) {
             tap_code(KC_GRAVE);
         }
         // Immediately end cmd+tab when OS Layer is released
-        if (is_cmd_tab_active) {
-            unregister_mods(MOD_BIT(KC_LGUI));
-            is_cmd_tab_active     = false;
-            cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+        // if (is_cmd_tab_active) {
+        //     unregister_mods(MOD_BIT(KC_LGUI));
+        //     is_cmd_tab_active     = false;
+        //     cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+        // }
+        // Don't turn off OS layer if cmd+tab is active. Instead, wait for timeout or base layer switch.
+        if (!is_cmd_tab_active) {
+            layer_off(OS);
         }
     }
     os_grave_oshr_t.state = TD_NONE;
@@ -214,6 +217,16 @@ void cancel_caps_sentence(void) {
             tap_code(KC_CAPSLOCK);
         }
     }
+}
+
+void cancel_cmd_shift(void) {
+    layer_off(OS);
+    unregister_mods(MOD_BIT(KC_LGUI));
+    if (MODS_LSFT) {
+        unregister_mods(MOD_BIT(KC_LSFT));
+    }
+    is_cmd_tab_active     = false;
+    cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 }
 
 /* Macros */
@@ -594,6 +607,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // unregister_code(KC_TAB);
             }
             break;
+        case DF(BASE):
+            // Immediately end cmd+tab when base layer is set
+            if (is_cmd_tab_active) {
+                cancel_cmd_shift();
+            }
+            break;
         case KC_ESC:
             if (record->event.pressed) {
                 // Cancel One Shot Mods (if active)
@@ -812,10 +831,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void matrix_scan_user(void) {
     if (is_cmd_tab_active) {
         if (timer_elapsed(cmd_tab_timer) > cmd_tab_timer_timeout && !is_cmd_tab_held) {
-            unregister_mods(MOD_BIT(KC_LGUI));
-            unregister_mods(MOD_BIT(KC_LSFT));
-            is_cmd_tab_active     = false;
-            cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+            cancel_cmd_shift();
         }
     }
 #if defined MENU_FUNCTION

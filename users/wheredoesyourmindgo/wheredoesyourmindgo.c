@@ -187,26 +187,32 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 void cancel_quick_caps(void) {
     if (caps_sentence_active || caps_word_active) {
-        caps_active          = false;
         caps_sentence_active = false;
         caps_word_active     = false;
-        tap_code(KC_CAPSLOCK);
+        if (caps_active) {
+            caps_active = false;
+            tap_code(KC_CAPSLOCK);
+        }
     }
 }
 
 void cancel_caps_word(void) {
     if (caps_word_active) {
-        caps_active      = false;
         caps_word_active = false;
-        tap_code(KC_CAPSLOCK);
+        if (caps_active) {
+            caps_active = false;
+            tap_code(KC_CAPSLOCK);
+        }
     }
 }
 
 void cancel_caps_sentence(void) {
     if (caps_sentence_active) {
-        caps_active          = false;
         caps_sentence_active = false;
-        tap_code(KC_CAPSLOCK);
+        if (caps_active) {
+            caps_active = false;
+            tap_code(KC_CAPSLOCK);
+        }
     }
 }
 

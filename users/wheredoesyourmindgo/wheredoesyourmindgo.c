@@ -102,10 +102,13 @@ bool caps_sentence_active = false;
 
 void caps_word_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count >= 2) {
+        dprintf("caps_active: %s\n", caps_active ? "true" : "false");
+        dprintf("caps_word_active: %s\n", caps_word_active ? "true" : "false");
+        dprintf("caps_sentence_active: %s\n", caps_sentence_active ? "true" : "false");
         if (!caps_active && !caps_word_active && !caps_sentence_active) {
-            caps_active = true;
+            // caps_active = true;
             caps_word_active = true;
-            tap_code(KC_CAPSLOCK);
+            tap_code(KC_CAPS);
         }
     } else {
         register_mods(MOD_BIT(KC_LSFT));
@@ -120,10 +123,13 @@ void caps_word_reset(qk_tap_dance_state_t *state, void *user_data) {
 
 void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count >= 2) {
+        dprintf("caps_active: %s\n", caps_active ? "true" : "false");
+        dprintf("caps_word_active: %s\n", caps_word_active ? "true" : "false");
+        dprintf("caps_sentence_active: %s\n", caps_sentence_active ? "true" : "false");
         if (!caps_active && !caps_sentence_active && !caps_word_active) {
-            caps_active = true;
+            // caps_active = true;
             caps_sentence_active = true;
-            tap_code(KC_CAPSLOCK);
+            tap_code(KC_CAPS);
         }
     } else {
         register_mods(MOD_BIT(KC_RSFT));
@@ -190,20 +196,18 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 
 void cancel_quick_caps(void) {
+    dprint("cancelling quick caps\n");
     caps_sentence_active = false;
     caps_word_active = false;
-    if (caps_active) {
-        caps_active = false;
-        tap_code(KC_CAPSLOCK);
-    }
+    dprint("caps is active in cancel_quick_caps so toggling that off\n");
+    tap_code(KC_CAPSLOCK);
 }
 
 void cancel_caps_word(void) {
+    dprint("cancelling caps word\n");
     caps_word_active = false;
-    if (caps_active) {
-        caps_active = false;
-        tap_code(KC_CAPSLOCK);
-    }
+    dprint("caps is active in cancel_caps_word so toggling that off\n");
+    tap_code(KC_CAPSLOCK);
 }
 
 // void cancel_caps_sentence(void) {
@@ -242,37 +246,45 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RSFT_T(KC_CAPS):
         case LSFT_T(KC_CAPS):
             if (record->event.pressed) {
+                dprintf("d1 beg, caps_active: %s\n", caps_active ? "true" : "false");
                 // Only when KC_CAPS
                 if (record->tap.count > 0) {
                     if (caps_sentence_active || caps_word_active) {
+                        dprint("will cancel quickcaps due to capslock\n");
                         cancel_quick_caps();
+                        caps_active = false;
+                        return false;
                     } else {
+                        dprint("will toggle capslock\n");
                         if (caps_active) {
                             caps_active = false;
-                            tap_code(KC_CAPSLOCK);
                         } else {
                             caps_active = true;
-                            return true;
                         }
+                        return true;
                     }
-                    return false;
                 }
+            } else {
+                dprintf("d1 end, caps_active: %s\n", caps_active ? "true" : "false");
             }
             break;
         case KC_CAPSLOCK:
             if (record->event.pressed) {
+                dprintf("d2 beg, caps_active: %s\n", caps_active ? "true" : "false");
                 if (caps_sentence_active || caps_word_active) {
+                    dprint("will cancel quickcaps due to capslock\n");
                     cancel_quick_caps();
+                    return false;
                 } else {
+                    dprint("will toggle capslock\n");
                     if (caps_active) {
                         caps_active = false;
-                        tap_code(KC_CAPSLOCK);
                     } else {
                         caps_active = true;
-                        return true;
                     }
                 }
-                return false;
+            } else {
+                dprintf("d2 end, caps_active: %s\n", caps_active ? "true" : "false");
             }
             break;
         case XOSM_LSFT:
@@ -604,9 +616,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case DF(BASE):
-            // Immediately end cmd+tab when base layer is set
-            if (is_cmd_tab_active) {
-                cancel_cmd_shift();
+            // Waiting for release will prevent key from firing. eg. prevent extra Enter keypress
+            if (!record->event.pressed) {
+                // Immediately end cmd+tab when base layer is set
+                if (is_cmd_tab_active) {
+                    cancel_cmd_shift();
+                }
             }
             break;
         case KC_ESC:

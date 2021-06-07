@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,    OS_SCRN_SHT_OPT,  OS_LNCHPD, OS_SPTLGHT,               OS_SIRI,            OS_SDBR,        OS_DRKMD_TGL,
         DF(BASE), VOID, KC_NO, KC_NO, KC_NO, KC_NO,    PRV_APP,       OS_PRV_SPC,     CMD_TAB_PRV,        CMD_TAB_NXT,        OS_NXT_SPC,     OS_FLLSCRN,
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,    OS_DSKTP,         OS_MSN_CNTRL,   OS_PRVS_APP_WNDW,   OS_NXT_APP_WNDW,    OS_APP_WNDWS,   KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, DF(BASE), KC_NO,  DF(WNDW),           KC_NO,          KC_NO,              KC_NO,              KC_NO,          KC_NO
+        KC_NO, KC_NO, KC_NO, KC_NO, DF(BASE), DF(BASE),  DF(WNDW),           KC_NO,          KC_NO,              KC_NO,              KC_NO,          KC_NO
     ),
 	[WNDW] = LAYOUT_ortho_4x12(
         KC_NO, KC_NO, LCA(KC_U), WNDW_TOP_HLF , LCA(KC_I), KC_NO, KC_NO, KC_NO , WNDW_SMLLR , WNDW_LRGR, KC_NO, KC_NO,

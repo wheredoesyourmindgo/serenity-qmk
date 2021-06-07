@@ -108,7 +108,8 @@ void caps_word_finished(qk_tap_dance_state_t *state, void *user_data) {
         if (!caps_active && !caps_word_active && !caps_sentence_active) {
             caps_active = true;
             caps_word_active = true;
-            tap_code(KC_CAPS);
+            // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
+            tap_code_delay(KC_CAPS, 300);
         }
     } else {
         register_mods(MOD_BIT(KC_LSFT));
@@ -129,7 +130,8 @@ void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data) {
         if (!caps_active && !caps_sentence_active && !caps_word_active) {
             caps_active = true;
             caps_sentence_active = true;
-            tap_code(KC_CAPS);
+            // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
+            tap_code_delay(KC_CAPS, 200);
         }
     } else {
         register_mods(MOD_BIT(KC_RSFT));

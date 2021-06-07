@@ -106,7 +106,7 @@ void caps_word_finished(qk_tap_dance_state_t *state, void *user_data) {
         dprintf("caps_word_active: %s\n", caps_word_active ? "true" : "false");
         dprintf("caps_sentence_active: %s\n", caps_sentence_active ? "true" : "false");
         if (!caps_active && !caps_word_active && !caps_sentence_active) {
-            // caps_active = true;
+            caps_active = true;
             caps_word_active = true;
             tap_code(KC_CAPS);
         }
@@ -127,7 +127,7 @@ void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data) {
         dprintf("caps_word_active: %s\n", caps_word_active ? "true" : "false");
         dprintf("caps_sentence_active: %s\n", caps_sentence_active ? "true" : "false");
         if (!caps_active && !caps_sentence_active && !caps_word_active) {
-            // caps_active = true;
+            caps_active = true;
             caps_sentence_active = true;
             tap_code(KC_CAPS);
         }
@@ -199,14 +199,14 @@ void cancel_quick_caps(void) {
     dprint("cancelling quick caps\n");
     caps_sentence_active = false;
     caps_word_active = false;
-    dprint("caps is active in cancel_quick_caps so toggling that off\n");
+    caps_active = false;
     tap_code(KC_CAPSLOCK);
 }
 
 void cancel_caps_word(void) {
     dprint("cancelling caps word\n");
     caps_word_active = false;
-    dprint("caps is active in cancel_caps_word so toggling that off\n");
+    caps_active = false;
     tap_code(KC_CAPSLOCK);
 }
 
@@ -252,7 +252,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     if (caps_sentence_active || caps_word_active) {
                         dprint("will cancel quickcaps due to capslock\n");
                         cancel_quick_caps();
-                        caps_active = false;
                         return false;
                     } else {
                         dprint("will toggle capslock\n");

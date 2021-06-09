@@ -551,6 +551,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // reset tap dance state associated w/ OS layer
                 if (os_grave_oshr_t.state == TD_INTERRUPTED) {
                     os_grave_oshr_t.state = TD_NONE;
+                    // Necessary. Assume the the key release in if(record->event.pressed) else{...} is applicable
+                    cmd_tab_timer = timer_read();
+                    is_cmd_tab_held = false;
                 }
             } else {
                 cmd_tab_timer = timer_read();
@@ -574,6 +577,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // reset tap dance state associated w/ OS layer
                 if (os_grave_oshr_t.state == TD_INTERRUPTED) {
                     os_grave_oshr_t.state = TD_NONE;
+                    // Necessary. Assume the the key release in if(record->event.pressed) else{...} is applicable
+                    cmd_tab_timer = timer_read();
+                    is_cmd_tab_held = false;
                 }
             } else {
                 cmd_tab_timer = timer_read();
@@ -598,6 +604,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // reset tap dance state associated w/ OS layer
                 if (os_grave_oshr_t.state == TD_INTERRUPTED) {
                     os_grave_oshr_t.state = TD_NONE;
+                    // Necessary. Assume the the key release in if(record->event.pressed) else{...} is applicable
+                    cmd_tab_timer = timer_read();
+                    is_cmd_tab_held = false;
+                    unregister_mods(MOD_BIT(KC_LSFT));
                 }
             } else {
                 cmd_tab_timer = timer_read();

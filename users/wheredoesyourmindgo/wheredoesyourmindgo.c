@@ -248,15 +248,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RSFT_T(KC_CAPS):
         case LSFT_T(KC_CAPS):
             if (record->event.pressed) {
-                dprintf("d1 beg, caps_active: %s\n", caps_active ? "true" : "false");
                 // Only when KC_CAPS
                 if (record->tap.count > 0) {
                     if (caps_sentence_active || caps_word_active) {
-                        dprint("will cancel quickcaps due to capslock\n");
                         cancel_quick_caps();
                         return false;
                     } else {
-                        dprint("will toggle capslock\n");
                         if (caps_active) {
                             caps_active = false;
                         } else {
@@ -265,27 +262,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         return true;
                     }
                 }
-            } else {
-                dprintf("d1 end, caps_active: %s\n", caps_active ? "true" : "false");
             }
             break;
         case KC_CAPSLOCK:
             if (record->event.pressed) {
-                dprintf("d2 beg, caps_active: %s\n", caps_active ? "true" : "false");
                 if (caps_sentence_active || caps_word_active) {
-                    dprint("will cancel quickcaps due to capslock\n");
                     cancel_quick_caps();
                     return false;
                 } else {
-                    dprint("will toggle capslock\n");
                     if (caps_active) {
                         caps_active = false;
                     } else {
                         caps_active = true;
                     }
                 }
-            } else {
-                dprintf("d2 end, caps_active: %s\n", caps_active ? "true" : "false");
             }
             break;
         case XOSM_LSFT:
@@ -563,7 +553,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     os_grave_oshr_t.state = TD_NONE;
                 }
             } else {
-                cmd_tab_timer   = timer_read();
+                cmd_tab_timer = timer_read();
                 is_cmd_tab_held = false;
             }
             break;
@@ -586,7 +576,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     os_grave_oshr_t.state = TD_NONE;
                 }
             } else {
-                cmd_tab_timer   = timer_read();
+                cmd_tab_timer = timer_read();
                 is_cmd_tab_held = false;
                 // unregister_code(KC_TAB);
             }
@@ -610,14 +600,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     os_grave_oshr_t.state = TD_NONE;
                 }
             } else {
-                cmd_tab_timer   = timer_read();
+                cmd_tab_timer = timer_read();
                 is_cmd_tab_held = false;
                 unregister_mods(MOD_BIT(KC_LSFT));
                 // unregister_code(KC_TAB);
             }
             break;
         case DF(BASE):
-            // Waiting for release will prevent key from firing. eg. prevent extra Enter keypress
+            // Waiting for release will prevent key from firing. eg. prevent extra Enter keypress when using Enter to return to Base layer
             if (!record->event.pressed) {
                 // Immediately end cmd+tab when base layer is set
                 if (is_cmd_tab_active) {

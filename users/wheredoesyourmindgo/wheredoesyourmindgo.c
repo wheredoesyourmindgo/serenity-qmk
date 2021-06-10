@@ -918,6 +918,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             // case LT(OS,KC_GRV):
             return TAPPING_RETRO_TERM;
         case TD(TD_OS_GRV_OSHR):
+            return 180;
         default:
             return TAPPING_TERM;
     }

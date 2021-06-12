@@ -4,6 +4,7 @@
 #define TAPPING_RETRO_TERM 170
 #define TAPPING_TD_TERM 225
 #define TAPPING_TERM_PER_KEY
+#define TOGGLE_TAP 2
 
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY

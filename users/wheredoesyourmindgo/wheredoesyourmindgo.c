@@ -102,9 +102,6 @@ bool caps_sentence_active = false;
 
 void caps_word_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count >= 2) {
-        dprintf("caps_active: %s\n", caps_active ? "true" : "false");
-        dprintf("caps_word_active: %s\n", caps_word_active ? "true" : "false");
-        dprintf("caps_sentence_active: %s\n", caps_sentence_active ? "true" : "false");
         if (!caps_active && !caps_word_active && !caps_sentence_active) {
             caps_active = true;
             caps_word_active = true;
@@ -124,9 +121,6 @@ void caps_word_reset(qk_tap_dance_state_t *state, void *user_data) {
 
 void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count >= 2) {
-        dprintf("caps_active: %s\n", caps_active ? "true" : "false");
-        dprintf("caps_word_active: %s\n", caps_word_active ? "true" : "false");
-        dprintf("caps_sentence_active: %s\n", caps_sentence_active ? "true" : "false");
         if (!caps_active && !caps_sentence_active && !caps_word_active) {
             caps_active = true;
             caps_sentence_active = true;

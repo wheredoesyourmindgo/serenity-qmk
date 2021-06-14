@@ -898,6 +898,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_CAPS_WORD):
         case TD(TD_CAPS_SENTENCE):
         case TD(TD_OOPSY):
+        case TD(TD_OS_GRV_OSHR):
             return TAPPING_TD_TERM;
         // case LT(HIGHEST,KC_LEFT):
         // case RGUI_T(KC_DOWN):
@@ -911,7 +912,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LT(HIGHER, KC_SPC):
             // case LT(OS,KC_GRV):
             return TAPPING_RETRO_TERM;
-        case TD(TD_OS_GRV_OSHR):
         default:
             return TAPPING_TERM;
     }

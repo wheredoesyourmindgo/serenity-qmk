@@ -34,4 +34,5 @@
         "oshr"
     ],
     "cmake.configureOnOpen": false,
+    "python.formatting.provider": "yapf"
 }

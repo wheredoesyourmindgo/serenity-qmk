@@ -18,6 +18,8 @@
 #define WNDW_MV_DWN HYPR(KC_I) // Move down
 #define WNDW_MV_LFT HYPR(KC_E) // Move left
 #define WNDW_MV_RGHT HYPR(KC_O) // Move right
+#define WNDW_LFT_TTHRD LCA(KC_E) // Left two-thirds
+#define WNDW_RGHT_TTHRD LCA(KC_T) // Right two-thirds
 #define WNDW_LFT_HLF LCA(KC_LEFT) // Left half
 #define WNDW_CNTR_HLF HYPR(KC_C) // Center
 #define WNDW_RGHT_HLF LCA(KC_RGHT) // Right half

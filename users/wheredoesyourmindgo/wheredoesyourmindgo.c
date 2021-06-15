@@ -229,7 +229,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (ONESHOT_LYR_ACTIVE && IS_LAYER_ON(BASE_HRM) && !record->event.pressed) {
         switch (keycode) {
             case KC_ESC:
-            case LT(LOWER, KC_ESC):
+            case LT(HIGHER, KC_ESC):
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
                 clear_oneshot_layer_state(ONESHOT_PRESSED);
         }
@@ -630,7 +630,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case LT(LOWER, KC_ESC):
+        case LT(HIGHER, KC_ESC):
             if (record->event.pressed) {
                 // Only when KC_ESC
                 if (record->tap.count > 0) {
@@ -656,8 +656,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case LT(HIGH, KC_TAB):
-        case LT(HIGHER, KC_SPC):
+        case LT(LOW, KC_TAB):
+        case LT(LOWER, KC_SPC):
             if (record->event.pressed) {
                 // Only on tap (ie. Not during LT(HIGH) and LT(HIGHER))
                 if (record->tap.count > 0) {
@@ -676,7 +676,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case LT(LOW, KC_ENT):
+        case LT(HIGH, KC_ENT):
         case ALGR_T(KC_DOT):
             if (record->event.pressed) {
                 // Only on tap (ie. Not during LT(LOW) and alt)
@@ -886,11 +886,11 @@ void matrix_scan_user(void) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LT(LOWER,KC_ESC):
-        // case LT(HIGHER,KC_SPC):
+        // case LT(LOWER,KC_SPC):
+        // case LT(HIGHER,KC_ESC):
         // case LT(HIGHEST,KC_LEFT):
-        // case LT(LOW,KC_ENT):
-        // case LT(HIGH,KC_TAB):
+        // case LT(LOW,KC_TAB):
+        // case LT(HIGH,KC_ENT):
         // case LT(OS,KC_GRV):
         // return TAPPING_SLOW_TERM;
         // case TD(TD_OS_GRV_OSHR):
@@ -906,10 +906,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // case RCTL_T(KC_RIGHT):
         //     return TAPPING_TD_FAST_TERM;
         // Using retro tapping with the following
-        case LT(LOW, KC_ENT):
-        case LT(LOWER, KC_ESC):
-        case LT(HIGH, KC_TAB):
-        case LT(HIGHER, KC_SPC):
+        case LT(LOW, KC_TAB):
+        case LT(LOWER, KC_SPC):
+        case LT(HIGH, KC_ENT):
+        case LT(HIGHER, KC_ESC):
             // case LT(OS,KC_GRV):
             return TAPPING_RETRO_TERM;
         default:
@@ -920,10 +920,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOW, KC_ENT):
-        case LT(LOWER, KC_ESC):
-        case LT(HIGH, KC_TAB):
-        case LT(HIGHER, KC_SPC):
+        case LT(LOW, KC_TAB):
+        case LT(LOWER, KC_SPC):
+        case LT(HIGH, KC_ENT):
+        case LT(HIGHER, KC_ESC):
         // case LT(OS,KC_GRV):
         // case TD(TD_OS_GRV_OSHR):
         case LT(HIGHEST, KC_LEFT):
@@ -939,13 +939,13 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 // We won't be rolling through all the Layer-tap keys
 bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOW, KC_ENT):
-        case LT(LOWER, KC_ESC):
-        case LT(HIGH, KC_TAB):
+        case LT(LOW, KC_TAB):
+        case LT(HIGHER, KC_ESC):
+        case LT(HIGH, KC_ENT):
         // case LT(OS,KC_GRV):
             return false;
         // Might roll through space
-        // case LT(HIGHER, KC_SPC):
+        // case LT(LOWER, KC_SPC):
         default:
             return true;
     }
@@ -967,10 +967,10 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 
 bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOW, KC_ENT):
-        case LT(LOWER, KC_ESC):
-        case LT(HIGH, KC_TAB):
-        case LT(HIGHER, KC_SPC):
+        case LT(LOW, KC_TAB):
+        case LT(LOWER, KC_SPC):
+        case LT(HIGH, KC_ENT):
+        case LT(HIGHER, KC_ESC):
             // case LT(OS,KC_GRV):
             return true;
         default:

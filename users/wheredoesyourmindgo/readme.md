@@ -42,6 +42,8 @@ Use home row mods with the added benefit of having dedicated shift keys on both 
 1. I'm right handed; and that's not uncommon.
 2. It is useful to be able to use space while using the navigation arrows without having to release the layer hold to re-press the same
    key, especially when returning to the lower layer repeatedly.
+3. The Lower & Low layers are used for numbers and symbols. It is easier to follow these layer presses by tapping space with the opposite hand.
+4. There are more letters on the left side of the keyboard that are used with word endings; it's easier to use the opposite hand when tapping space after word ending.
 
 ## Tips
 

@@ -37,6 +37,12 @@ When activating single mod presses, leave your hand above the home row and lower
 
 Use home row mods with the added benefit of having dedicated shift keys on both the left and right. Use the dedicated Shift keys on the right and left for shifting alpha keys. For novice-intermediate (home row mod) users this can yield a faster typing experience when typing in mixed case. Since shift keys mirrored on both the right and left use opposite hand to press shifted key. Use the shift keys located on the home rows for keyboard shortcuts and multi-combo mod presses. For a more focused typing experience, or when typing for extended periods of time (ex. Emails or Typing Speed Test) consider toggling home row mods off to prevent accidental mod presses.
 
+### Case for Right Handed Space
+
+1. I'm right handed; and that's not uncommon.
+2. It is useful to be able to use space while using the navigation arrows without having to release the layer hold to re-press the same
+   key, especially when returning to the lower layer repeatedly.
+
 ## Tips
 
 -   For more information on home row mods see an extensive write-up at [https://precondition.github.io/home-row-mods](https://precondition.github.io/home-row-mods)

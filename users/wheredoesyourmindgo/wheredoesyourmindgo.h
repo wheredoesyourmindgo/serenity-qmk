@@ -5,11 +5,14 @@
 
 
 // Keycodes
-#define BSPC_PRV_WRD LALT(KC_BSPC)
-#define BSPC_PRV_LN LGUI(KC_BSPC)
+#define BSPC_PRV_WRD LALT(KC_BSPC) // Backspace previous word
+#define BSPC_PRV_LN LGUI(KC_BSPC) // Backspace previous line
 #define MAC_MSTP KC_MPLY // KC_MSTP does't work on macOS
-#define DISP_DIM KC_F18
-#define DISP_BRI KC_F19
+#define DISP_DIM KC_F18 // Dim Display
+#define DISP_BRI KC_F19 // Brighten Display
+#define ZOOM_IN LGUI(KC_PLUS) // Zoom In
+#define ZOOM_OUT LGUI(KC_MINUS) // Zoom Out
+#define ZOOM_RESET LGUI(KC_P0) // Zoom Reset
 
 // Window Management (Rectangle)
 #define WNDW_SMLLR LCA(KC_MINS) // Smaller

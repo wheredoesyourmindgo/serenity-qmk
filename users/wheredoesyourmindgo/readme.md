@@ -44,6 +44,7 @@ Use home row mods with the added benefit of having dedicated shift keys on both 
    key, especially when returning to the lower layer repeatedly.
 3. The Lower & Low layers are used for numbers and symbols. It is easier to follow these layer presses by tapping space with the opposite hand.
 4. There are more letters on the left side of the keyboard that are used with word endings; R,D,G,S on the left vs. E,N on the right. It's easier to use the opposite hand when tapping space after word ending.
+5. Related, having enter key next to space is not ideal due to the chance of miss-tap resulting from the proximity; thus, tab joins space on right side, enter with escape on left.
 
 ## Tips
 

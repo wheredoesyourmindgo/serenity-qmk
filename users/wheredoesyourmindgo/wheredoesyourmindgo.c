@@ -44,9 +44,9 @@ void       caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
 void       oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
 void       oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
 
-bool is_cmd_tab_active = false;
-bool is_cmd_tab_held = false;
-uint16_t cmd_tab_timer = 0;
+bool     is_cmd_tab_active = false;
+bool     is_cmd_tab_held   = false;
+uint16_t cmd_tab_timer     = 0;
 #define cmd_tab_timer_default_dur 1000;
 #define cmd_tab_timer_fast_dur 600;
 uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
@@ -96,14 +96,14 @@ void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data) {
     os_grave_oshr_t.state = TD_NONE;
 }
 
-bool caps_active = false;
-bool caps_word_active = false;
+bool caps_active          = false;
+bool caps_word_active     = false;
 bool caps_sentence_active = false;
 
 void caps_word_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count >= 2) {
         if (!caps_active && !caps_word_active && !caps_sentence_active) {
-            caps_active = true;
+            caps_active      = true;
             caps_word_active = true;
             // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
             tap_code_delay(KC_CAPS, 300);
@@ -122,7 +122,7 @@ void caps_word_reset(qk_tap_dance_state_t *state, void *user_data) {
 void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count >= 2) {
         if (!caps_active && !caps_sentence_active && !caps_word_active) {
-            caps_active = true;
+            caps_active          = true;
             caps_sentence_active = true;
             // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
             tap_code_delay(KC_CAPS, 200);
@@ -182,27 +182,22 @@ void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
 
 // Tap once for Word Select, twice for Line Select, three times for all
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
-    [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_word_finished, caps_word_reset),
-    [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_sentence_finished, caps_sentence_reset),
-    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
-    [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_oshr_finished, os_grave_oshr_reset),
+    [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL), [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_word_finished, caps_word_reset), [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_sentence_finished, caps_sentence_reset), [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset), [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_oshr_finished, os_grave_oshr_reset),
 };
 // end of Tap Dance config
-
 
 void cancel_quick_caps(void) {
     dprint("cancelling quick caps\n");
     caps_sentence_active = false;
-    caps_word_active = false;
-    caps_active = false;
+    caps_word_active     = false;
+    caps_active          = false;
     tap_code(KC_CAPSLOCK);
 }
 
 void cancel_caps_word(void) {
     dprint("cancelling caps word\n");
     caps_word_active = false;
-    caps_active = false;
+    caps_active      = false;
     tap_code(KC_CAPSLOCK);
 }
 
@@ -220,7 +215,7 @@ void cancel_cmd_shift(void) {
     if (MODS_LSFT) {
         unregister_mods(MOD_BIT(KC_LSFT));
     }
-    is_cmd_tab_active = false;
+    is_cmd_tab_active     = false;
     cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 }
 
@@ -546,11 +541,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (os_grave_oshr_t.state == TD_INTERRUPTED) {
                     os_grave_oshr_t.state = TD_NONE;
                     // Necessary. Assume the the key release in if(record->event.pressed) else{...} is applicable
-                    cmd_tab_timer = timer_read();
+                    cmd_tab_timer   = timer_read();
                     is_cmd_tab_held = false;
                 }
             } else {
-                cmd_tab_timer = timer_read();
+                cmd_tab_timer   = timer_read();
                 is_cmd_tab_held = false;
             }
             break;
@@ -572,11 +567,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (os_grave_oshr_t.state == TD_INTERRUPTED) {
                     os_grave_oshr_t.state = TD_NONE;
                     // Necessary. Assume the the key release in if(record->event.pressed) else{...} is applicable
-                    cmd_tab_timer = timer_read();
+                    cmd_tab_timer   = timer_read();
                     is_cmd_tab_held = false;
                 }
             } else {
-                cmd_tab_timer = timer_read();
+                cmd_tab_timer   = timer_read();
                 is_cmd_tab_held = false;
                 // unregister_code(KC_TAB);
             }
@@ -599,12 +594,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (os_grave_oshr_t.state == TD_INTERRUPTED) {
                     os_grave_oshr_t.state = TD_NONE;
                     // Necessary. Assume the the key release in if(record->event.pressed) else{...} is applicable
-                    cmd_tab_timer = timer_read();
+                    cmd_tab_timer   = timer_read();
                     is_cmd_tab_held = false;
                     unregister_mods(MOD_BIT(KC_LSFT));
                 }
             } else {
-                cmd_tab_timer = timer_read();
+                cmd_tab_timer   = timer_read();
                 is_cmd_tab_held = false;
                 unregister_mods(MOD_BIT(KC_LSFT));
                 // unregister_code(KC_TAB);
@@ -908,6 +903,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // Using retro tapping with the following
         case LT(LOW, KC_ENT):
         case LT(LOWER, KC_ESC):
+            return 0;
         case LT(HIGH, KC_TAB):
         case LT(HIGHER, KC_SPC):
             // case LT(OS,KC_GRV):
@@ -942,7 +938,7 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
         case LT(LOW, KC_ENT):
         case LT(LOWER, KC_ESC):
         case LT(HIGH, KC_TAB):
-        // case LT(OS,KC_GRV):
+            // case LT(OS,KC_GRV):
             return false;
         // Might roll through space
         // case LT(HIGHER, KC_SPC):

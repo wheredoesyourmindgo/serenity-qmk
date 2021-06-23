@@ -12,9 +12,7 @@
 #define ZOOM_IN LGUI(KC_PLUS)       // Zoom In
 #define ZOOM_OUT LGUI(KC_MINUS)     // Zoom Out
 #define ZOOM_RESET LGUI(KC_P0)      // Zoom Reset
-// Remapping paste in Karabiner
-// #define PASTE LGUI(KC_V)
-#define PASTE LGUI(KC_D)
+#define PASTE LGUI(KC_V)
 #define COPY LGUI(KC_C)
 #define CUT LGUI(KC_X)
 #define UNDO LGUI(KC_Z)

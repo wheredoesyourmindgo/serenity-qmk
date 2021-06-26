@@ -104,7 +104,11 @@ void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
     // lower_esc_t.state = cur_dance(state);
     layer_off(LOWER);
     if (!state->interrupted) {
-        tap_code(KC_ESC);
+        // Only fire escape if keypress was not interrupted AND special mode is not active
+        if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active
+                && !ONESHOT_LYR_ACTIVE) {
+            tap_code(KC_ESC);
+        }
         //  Cancel One Shot Mods (if active)
         if (ONESHOT_MODS_ACTIVE) {
             clear_oneshot_mods();

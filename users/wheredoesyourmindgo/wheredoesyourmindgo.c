@@ -37,6 +37,8 @@ typedef struct {
 td_state_t cur_dance(qk_tap_dance_state_t *state);
 void       lower_esc_finished(qk_tap_dance_state_t *state, void *user_data);
 void       lower_esc_reset(qk_tap_dance_state_t *state, void *user_data);
+void       low_ent_finished(qk_tap_dance_state_t *state, void *user_data);
+void       low_ent_reset(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
 void       caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
@@ -121,6 +123,23 @@ void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
         }
     }
     // lower_esc_t.state = TD_NONE;
+}
+
+void low_ent_finished(qk_tap_dance_state_t *state, void *user_data) {
+    // low_ent_t.state = cur_dance(state);
+    layer_on(LOW);
+}
+void low_ent_reset(qk_tap_dance_state_t *state, void *user_data) {
+    // low_ent_t.state = cur_dance(state);
+    layer_off(LOW);
+    if (!state->interrupted) {
+        // Always fire enter
+        tap_code(KC_ENT);
+        if (caps_sentence_active || caps_word_active) {
+            cancel_quick_caps();
+        }
+    }
+    // low_ent_t.state = TD_NONE;
 }
 
 void os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -237,6 +256,7 @@ void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
 // Tap once for Word Select, twice for Line Select, three times for all
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_LOWER_ESC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lower_esc_finished, lower_esc_reset),
+    [TD_LOW_ENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, low_ent_finished, low_ent_reset),
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
     [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_word_finished, caps_word_reset),
     [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_sentence_finished, caps_sentence_reset),
@@ -718,7 +738,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case LT(LOW, KC_ENT):
+        // See low_ent tap dance reset function. That tap dance was setup because tap.count will always be 0 when a 0 value is used with Tapping Term.
+        // case LT(LOW, KC_ENT):
         case ALGR_T(KC_DOT):
             if (record->event.pressed) {
                 // Only on tap (ie. Not during LT(LOW) and alt)
@@ -940,7 +961,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // case RCTL_T(KC_RIGHT):
         //     return TAPPING_TD_FAST_TERM;
         // Using retro tapping with the following
-        case LT(LOW, KC_ENT):
+        // case LT(LOW, KC_ENT):
+        case TD(TD_LOW_ENT):
         // case LT(LOWER, KC_ESC):
         case TD(TD_LOWER_ESC):
             return 0;
@@ -955,7 +977,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOW, KC_ENT):
+        // case LT(LOW, KC_ENT):
         // case LT(LOWER, KC_ESC):
         case LT(HIGH, KC_TAB):
         case LT(HIGHER, KC_SPC):
@@ -976,7 +998,7 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // case LT(OS,KC_GRV):
         // case LT(LOWER, KC_ESC):
-        case LT(LOW, KC_ENT):
+        // case LT(LOW, KC_ENT):
         case LT(HIGH, KC_TAB):
             return false;
         // Might roll through space
@@ -1004,7 +1026,7 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // case LT(OS,KC_GRV):
         // case LT(LOWER, KC_ESC):
-        case LT(LOW, KC_ENT):
+        // case LT(LOW, KC_ENT):
         case LT(HIGH, KC_TAB):
         case LT(HIGHER, KC_SPC):
             return true;

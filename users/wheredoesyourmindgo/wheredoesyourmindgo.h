@@ -99,6 +99,7 @@ enum keycodes { CMD_TAB_PRV = SAFE_RANGE, CMD_TAB_NXT, OOPS, DISP_FDIM, DISP_FBR
 enum {
     TD_TGL_SEL,  // Toggle Select (similar to double, triple, and quadruple mouse click)
     TD_LOWER_ESC,
+    TD_LOW_ENT,
     TD_CAPS_WORD,
     TD_CAPS_SENTENCE,
     TD_OOPSY,

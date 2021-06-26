@@ -34,5 +34,8 @@
         "oshr"
     ],
     "cmake.configureOnOpen": false,
-    "python.formatting.provider": "yapf"
+    "python.formatting.provider": "yapf",
+    "[json]": {
+	    "editor.formatOnSave": false
+    }
 }

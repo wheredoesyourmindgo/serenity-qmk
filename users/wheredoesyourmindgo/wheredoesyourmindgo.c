@@ -260,14 +260,16 @@ void cancel_cmd_shift(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (ONESHOT_LYR_ACTIVE && IS_LAYER_ON(BASE_HRM) && !record->event.pressed) {
         switch (keycode) {
-            case KC_ESC:
+            case KC_ESC: {
+                clear_oneshot_layer_state(ONESHOT_PRESSED);
+                // Don't emit Escape key
+                return false;
+            }
             // See lower_esc tap dance reset function
             // case LT(LOWER, KC_ESC):
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
                 clear_oneshot_layer_state(ONESHOT_PRESSED);
         }
-        // Don't emit Escape key
-        return false;
     }
     // This fixes issue where two shifted alphas occur (instead of one) after using sentence_end tap function
     // if (ONESHOT_MODS_ACTIVE & MOD_BIT(KC_LSFT) && record->event.pressed) {

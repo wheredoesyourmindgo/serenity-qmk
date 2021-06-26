@@ -266,6 +266,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             case QK_MOD_TAP ... QK_MOD_TAP_MAX:
                 clear_oneshot_layer_state(ONESHOT_PRESSED);
         }
+        // Don't emit Escape key
+        return false;
     }
     // This fixes issue where two shifted alphas occur (instead of one) after using sentence_end tap function
     // if (ONESHOT_MODS_ACTIVE & MOD_BIT(KC_LSFT) && record->event.pressed) {
@@ -660,6 +662,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 if (caps_sentence_active || caps_word_active) {
                     cancel_quick_caps();
+                }
+                // Only fire escape special mode is not active
+                if (ONESHOT_MODS_ACTIVE || caps_sentence_active || caps_word_active) {
+                    return false;
                 }
             }
             break;

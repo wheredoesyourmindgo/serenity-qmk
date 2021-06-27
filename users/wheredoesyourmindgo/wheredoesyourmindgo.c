@@ -100,11 +100,22 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
 
 void lower_esc_finished(qk_tap_dance_state_t *state, void *user_data) {
     // lower_esc_t.state = cur_dance(state);
-    layer_on(LOWER);
+    // In case shift is held down prior to Lower hold use Lower-alt layer. Without this block Lower must be held first, followed by a shift hold.
+    if (MODS_LSFT) {
+        layer_on(LOWER_ALT);
+        unregister_mods(MOD_BIT(KC_LSFT));
+    } else {
+        layer_on(LOWER);
+    }
 }
 void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
     // lower_esc_t.state = cur_dance(state);
-    layer_off(LOWER);
+    if (IS_LAYER_ON(LOWER)) {
+        layer_off(LOWER);
+    }
+    if (IS_LAYER_ON(LOWER_ALT)) {
+        layer_off(LOWER_ALT);
+    }
     if (!state->interrupted) {
         // Only fire escape if keypress was not interrupted AND special mode is not active
         if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active

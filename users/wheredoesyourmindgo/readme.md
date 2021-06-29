@@ -16,6 +16,7 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 -   Easy and flexible capslock; Capslock can be toggled on/off with a Lower/Higher+shift (opposite shift) press. Additionally,
     -   Caps-word can be toggled with a double left shift tap. Capslock will disable at the first occurrence of a space, comma, semi-colon, colon, period(dot), escape, tab, or enter tap. Left shift is greedy in regard to interruption.
     -   Caps-sentence can be toggled with a double right shift tap. Capslock will disable at the first occurrence of a period(dot), escape, or enter tap. Right shift is greedy in regard to interruption.
+-   (macOS) The Lower layer can be shifted using left shift hold (right shift will activate capslock), activating Lower-alt layer. The Lower-alt layer replaces arrow keys with OS back button (commonly used in web browsers and Finder), Finder Navigate elect folder shortcut, Finder Navigate Parent Folder shortcut, and OS forward button (again, commonly used with web browsers and Finder). The Page Down and Page Up shortcuts are replaced with Zoom In and Zoom Out. The Home shortcut is replaced with Zoom Reset.
 -   (macOS) Double left control tap hides active window and mutes volume. Left control is greedy in regard to interruption.
 -   (macOS) An additional shortcut within the Higher layer on the "b" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
 -   (macOS) Additional Layer for OS shortcuts, activated with escape key press and hold. See keymap.c
@@ -46,7 +47,6 @@ Use home row mods with the added benefit of having dedicated shift keys on both 
 4. There are more letters on the left side of the keyboard that are used with word endings; R,D,G,S on the left vs. E,N on the right. It's easier to use the opposite hand when tapping space after word ending.
 5. Allows for setting tapping term much lower (0) on frequently used numbers and symbols layers since those are mapped to Esc and Enter respectively.
 6. Related, having enter key next to space is not ideal due to the chance of miss-tap resulting from the proximity; thus, tab joins space on right side, enter with escape on left.
-
 
 ## Tips
 

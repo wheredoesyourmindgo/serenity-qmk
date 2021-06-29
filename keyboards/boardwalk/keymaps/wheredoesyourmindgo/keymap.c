@@ -78,14 +78,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_NO,     OS_SCRN_SHT_OPT, OS_LNCHPD,     OS_SPTLGHT,           OS_SIRI,            OS_SDBR,        OS_DRKMD_TGL,
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_NO,     PRV_APP,       OS_PRV_SPC,     CMD_TAB_PRV,        CMD_TAB_NXT,        OS_NXT_SPC,     OS_FLLSCRN,
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_NO,     OS_DSKTP,         OS_MSN_CNTRL,   OS_PRVS_APP_WNDW,   OS_NXT_APP_WNDW,    OS_APP_WNDWS,   KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, DF(BASE), DF(BASE), /* <-2U  2U-> */   DF(WNDW),           KC_NO,          KC_NO,              KC_NO,              KC_NO,          KC_NO
+        KC_NO, KC_NO, KC_NO, KC_NO, DF(BASE), DF(BASE), /* <-2U  2U-> */   KC_NO,  DF(WNDW),                   KC_NO,              KC_NO,              KC_NO,          KC_NO
     ),
 	[WNDW] = LAYOUT_ortho_2x2u(
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         KC_NO, KC_NO, LCA(KC_U), WNDW_TOP_HLF , LCA(KC_I), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, WNDW_SMLLR, WNDW_LRGR, KC_NO, KC_NO,
         KC_NO, WNDW_LFT_TTHRD, WNDW_LFT_HLF,  WNDW_CNTR_HLF, WNDW_RGHT_HLF, WNDW_RGHT_TTHRD, KC_NO, KC_NO, WNDW_CNTR, WNDW_MV_LFT, WNDW_MV_DWN, WNDW_MV_UP, WNDW_MV_RGHT, WNDW_MAX,
         KC_NO, WNDW_LFT_THRD, LCA(KC_J), WNDW_BTTM_HLF, LCA(KC_K), WNDW_RGNT_THRD, KC_NO, KC_NO, KC_NO, KC_NO, WNDW_ALMST_MAX, WNDW_VRT_MAX, KC_NO, KC_NO,
-        KC_NO, KC_NO , KC_NO , KC_NO, DF(BASE), DF(BASE), WNDW_RSTR,  KC_NO, KC_NO, KC_NO, KC_NO, KC_NO
+        KC_NO, KC_NO , KC_NO , KC_NO, DF(BASE), DF(BASE),  KC_NO, WNDW_RSTR,  KC_NO, KC_NO, KC_NO, KC_NO
     )
 };
 

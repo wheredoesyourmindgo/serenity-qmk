@@ -6,7 +6,7 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 
 ## Features
 
--   6+ layers inspired from the Miryoku and Foostan layouts: Lower (Numbers/Navigation), Low (Symbols), Lowest (Mouse Mode), Higher (Cut-copy-paste/Special), High (Media/Keyboard), and Highest (Function). See below for 2 additional macOS layers.
+-   6+ layers inspired from the Miryoku and Foostan layouts: Lower (Numbers/Navigation), Low (Symbols), Lowest (Mouse Mode), Higher (Cut-copy-paste/Special), High (Media/Keyboard), and Highest (Function). See below for 3 additional macOS layers.
 -   Home Row Mods that can be toggled on/off with a Higher+` press. Home row mods are available on all Layers for the same hand that triggers the Layer.
 -   One Shot Home Row Mods that can be toggled on/off with a double ` tap press. Bail out of One-shot by tapping Esc key.
 -   One Shot Mods on Home Row when activating any of the 6 principle layers. These are particularly useful for same hand mod presses (eg. "Command + 1..5") that require use of the same hand.
@@ -16,9 +16,9 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 -   Easy and flexible capslock; Capslock can be toggled on/off with a Lower/Higher+shift (opposite shift) press. Additionally,
     -   Caps-word can be toggled with a double left shift tap. Capslock will disable at the first occurrence of a space, comma, semi-colon, colon, period(dot), escape, tab, or enter tap. Left shift is greedy in regard to interruption.
     -   Caps-sentence can be toggled with a double right shift tap. Capslock will disable at the first occurrence of a period(dot), escape, or enter tap. Right shift is greedy in regard to interruption.
--   (macOS) The Lower layer can be shifted using left shift hold (right shift will activate capslock), activating Lower-alt layer. The Lower-alt layer replaces arrow keys with OS back button (commonly used in web browsers and Finder), Finder Navigate elect folder shortcut, Finder Navigate Parent Folder shortcut, and OS forward button (again, commonly used with web browsers and Finder). The Page Down and Page Up shortcuts are replaced with Zoom In and Zoom Out. The Home shortcut is replaced with Zoom Reset.
 -   (macOS) Double left control tap hides active window and mutes volume. Left control is greedy in regard to interruption.
 -   (macOS) An additional shortcut within the Higher layer on the "b" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
+-   (macOS) Additional Layer for alternate OS movements. The Lower layer can be shifted using left shift hold (right shift will activate capslock), activating Lower-alt layer. The Lower-alt layer replaces arrow keys with OS back button (commonly used in web browsers and Finder), Finder Navigate elect folder shortcut, Finder Navigate Parent Folder shortcut, and OS forward button (again, commonly used with web browsers and Finder). The Page Down and Page Up shortcuts are replaced with Zoom In and Zoom Out. The Home shortcut is replaced with Zoom Reset.
 -   (macOS) Additional Layer for OS shortcuts, activated with escape key press and hold. See keymap.c
 -   (macOS) Additional Layer for Window Management shortcuts using [Rectangle](https://rectangleapp.com/), activated with backspace key press on the OS_layer. Revert back to Base_layer using "esc" key. See keymap.c
 -   (macOS) Shortcuts for quick access to word & line backspace and word & line delete forward. These are activated from Lower, Lowest, Higher, and Highest layers respectively. Delete forward key is located at tab position on High, Higher, and Highest layers.

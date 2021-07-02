@@ -39,6 +39,7 @@ void       lower_esc_finished(qk_tap_dance_state_t *state, void *user_data);
 void       lower_esc_reset(qk_tap_dance_state_t *state, void *user_data);
 void       low_ent_finished(qk_tap_dance_state_t *state, void *user_data);
 void       low_ent_reset(qk_tap_dance_state_t *state, void *user_data);
+void       os_grave_oshr_each(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
 void       caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
@@ -153,11 +154,21 @@ void low_ent_reset(qk_tap_dance_state_t *state, void *user_data) {
     // low_ent_t.state = TD_NONE;
 }
 
+void os_grave_oshr_each(qk_tap_dance_state_t *state, void *user_data) {
+    os_grave_oshr_t.state = cur_dance(state);
+    if (state->count == 2) {
+        set_oneshot_layer(BASE_HRM, ONESHOT_START);
+        // it's is unclear if reset_tap_dance() helps in this regard
+        // reset_tap_dance(state);
+    }
+}
 void os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data) {
     os_grave_oshr_t.state = cur_dance(state);
     if (!state->pressed && !state->interrupted && state->count >= 2) {
-        set_oneshot_layer(BASE_HRM, ONESHOT_START);
-    } else if (!state->pressed && !state->interrupted && state->count == 1) {
+        return;
+    }
+    clear_oneshot_layer_state(ONESHOT_PRESSED);
+    if (!state->pressed && !state->interrupted && state->count == 1) {
         tap_code(KC_GRAVE);
     } else {
         layer_on(OS);
@@ -272,7 +283,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_word_finished, caps_word_reset),
     [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_sentence_finished, caps_sentence_reset),
     [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
-    [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_oshr_finished, os_grave_oshr_reset),
+    [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(os_grave_oshr_each, os_grave_oshr_finished, os_grave_oshr_reset),
 };
 // end of Tap Dance config
 

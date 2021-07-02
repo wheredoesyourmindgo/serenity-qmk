@@ -42,9 +42,11 @@ void       low_ent_reset(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_each(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
-void       caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
+void       caps_word_each(qk_tap_dance_state_t *state, void *user_data);
+// void       caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
 void       caps_word_reset(qk_tap_dance_state_t *state, void *user_data);
-void       caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data);
+void       caps_sentence_each(qk_tap_dance_state_t *state, void *user_data);
+// void       caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data);
 void       caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
 void       oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
 void       oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
@@ -195,38 +197,42 @@ void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data) {
     os_grave_oshr_t.state = TD_NONE;
 }
 
-void caps_word_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (!state->pressed && !state->interrupted && state->count >= 2) {
+void caps_word_each(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        register_mods(MOD_BIT(KC_LSFT));
+    } else if (state->count == 2) {
+        unregister_mods(MOD_BIT(KC_LSFT));
         if (!caps_active && !caps_word_active && !caps_sentence_active) {
             caps_active      = true;
             caps_word_active = true;
             // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
             tap_code_delay(KC_CAPS, 300);
         }
-    } else {
-        register_mods(MOD_BIT(KC_LSFT));
+        // it's is unclear if reset_tap_dance() helps in this regard
+        // reset_tap_dance(state);
     }
 }
-
 void caps_word_reset(qk_tap_dance_state_t *state, void *user_data) {
     if (MODS_LSFT) {
         unregister_mods(MOD_BIT(KC_LSFT));
     }
 }
 
-void caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (!state->pressed && !state->interrupted && state->count >= 2) {
+void caps_sentence_each(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        register_mods(MOD_BIT(KC_RSFT));
+    } else if (state->count == 2) {
+        unregister_mods(MOD_BIT(KC_LSFT));
         if (!caps_active && !caps_sentence_active && !caps_word_active) {
             caps_active          = true;
             caps_sentence_active = true;
             // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
             tap_code_delay(KC_CAPS, 200);
         }
-    } else {
-        register_mods(MOD_BIT(KC_RSFT));
+        // it's is unclear if reset_tap_dance() helps in this regard
+        // reset_tap_dance(state);
     }
 }
-
 void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data) {
     if (MODS_RSFT) {
         unregister_mods(MOD_BIT(KC_RSFT));
@@ -280,8 +286,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_LOWER_ESC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lower_esc_finished, lower_esc_reset),
     [TD_LOW_ENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, low_ent_finished, low_ent_reset),
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
-    [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_word_finished, caps_word_reset),
-    [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_sentence_finished, caps_sentence_reset),
+    [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset),
+    [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset),
     [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
     [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(os_grave_oshr_each, os_grave_oshr_finished, os_grave_oshr_reset),
 };

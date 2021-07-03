@@ -44,13 +44,13 @@ void       os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
 void       os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
 void       caps_word_each(qk_tap_dance_state_t *state, void *user_data);
 // void       caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
-void       caps_word_reset(qk_tap_dance_state_t *state, void *user_data);
-void       caps_sentence_each(qk_tap_dance_state_t *state, void *user_data);
+void caps_word_reset(qk_tap_dance_state_t *state, void *user_data);
+void caps_sentence_each(qk_tap_dance_state_t *state, void *user_data);
 // void       caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data);
-void       caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
-void       oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
-void       oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
-void       tgl_select(qk_tap_dance_state_t *state, void *user_data);
+void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
+void oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
+void oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
+void tgl_select(qk_tap_dance_state_t *state, void *user_data);
 
 bool     is_cmd_tab_active = false;
 bool     is_cmd_tab_held   = false;
@@ -83,6 +83,9 @@ void cancel_caps_word(void) {
 //     }
 // }
 
+// track last key pressed to determine if delete word should trigger
+bool dontBspaceWord = false;
+
 #if defined MENU_FUNCTION
 bool        func_lyr_active = false;
 #endif
@@ -99,7 +102,6 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
         return TD_NOT_INTERRUPTED;
     }
 }
-
 
 void lower_esc_finished(qk_tap_dance_state_t *state, void *user_data) {
     // lower_esc_t.state = cur_dance(state);
@@ -121,8 +123,7 @@ void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
     if (!state->interrupted) {
         // Only fire escape if keypress was not interrupted AND special mode is not active
-        if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active
-                && !ONESHOT_LYR_ACTIVE) {
+        if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active && !ONESHOT_LYR_ACTIVE) {
             tap_code(KC_ESC);
         }
         //  Cancel One Shot Mods (if active)
@@ -283,16 +284,9 @@ void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
 
 // Tap once for Word Select, twice for Line Select, three times for all
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_LOWER_ESC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lower_esc_finished, lower_esc_reset),
-    [TD_LOW_ENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, low_ent_finished, low_ent_reset),
-    [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
-    [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset),
-    [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset),
-    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
-    [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(os_grave_oshr_each, os_grave_oshr_finished, os_grave_oshr_reset),
+    [TD_LOWER_ESC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lower_esc_finished, lower_esc_reset), [TD_LOW_ENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, low_ent_finished, low_ent_reset), [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL), [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset), [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset), [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset), [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(os_grave_oshr_each, os_grave_oshr_finished, os_grave_oshr_reset),
 };
 // end of Tap Dance config
-
 
 void cancel_cmd_shift(void) {
     layer_off(OS);
@@ -306,6 +300,12 @@ void cancel_cmd_shift(void) {
 
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!(keycode == TRY_BSPACE_WORD)) {
+        if (record->event.pressed) {
+            dontBspaceWord = false;
+        }
+    }
+
     if (ONESHOT_LYR_ACTIVE && IS_LAYER_ON(BASE_HRM) && !record->event.pressed) {
         switch (keycode) {
             case KC_ESC: {
@@ -764,6 +764,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (caps_sentence_active || caps_word_active) {
                     cancel_quick_caps();
                 }
+                // We don't need to check if kc_dot was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_del).
+                dontBspaceWord = true;
             }
             break;
         // See low_ent tap dance reset function. That tap dance was setup because tap.count will always be 0 when a 0 value is used with Tapping Term.
@@ -928,6 +930,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (MODS_RSFT && MODS_RCTRL && !MODS_RALT && !MODS_RGUI) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                     layer_on(HIGHEST);
+                }
+            }
+            break;
+        // We don't need to check if kc_del was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_dot).
+        case KC_1 ... KC_0:
+        case KC_RIGHT ... KC_UP:
+        case KC_DEL:
+            if (record->event.pressed) {
+                dontBspaceWord = true;
+            }
+            break;
+        case TRY_BSPACE_WORD:
+            if (record->event.pressed) {
+                if (dontBspaceWord) {
+                    tap_code(KC_BSPACE);
+                } else {
+                    tap_code16(BSPC_PRV_WRD);
                 }
             }
             break;

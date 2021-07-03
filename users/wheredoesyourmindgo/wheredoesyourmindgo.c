@@ -977,11 +977,11 @@ void matrix_scan_user(void) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case TD(TD_OOPSY):
         case TD(TD_TGL_SEL):
         case TD(TD_CAPS_WORD):
         case TD(TD_CAPS_SENTENCE):
-        case TD(TD_OOPSY):
-        case TD(TD_OS_GRV_OSHR):
+        // case TD(TD_OS_GRV_OSHR):
             return TAPPING_TD_TERM;
         // case LT(HIGHEST, KC_LEFT):
         // case RGUI_T(KC_DOWN):

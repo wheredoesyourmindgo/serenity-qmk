@@ -308,6 +308,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if (ONESHOT_LYR_ACTIVE && IS_LAYER_ON(BASE_HRM) && !record->event.pressed) {
         switch (keycode) {
+            // Also see lower_esc_reset()
             case KC_ESC: {
                 clear_oneshot_layer_state(ONESHOT_PRESSED);
                 // Don't emit Escape key

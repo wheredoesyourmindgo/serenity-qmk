@@ -23,6 +23,12 @@ ifeq ($(strip $(KEYBOARD)), boardwalk)
 	LTO_ENABLE = yes
 endif
 
+ifeq ($(strip $(KEYBOARD)), boardsource/technik_o)
+	OPT_DEFS += -DTECHNIK_KEYBOARD
+# CONSOLE_ENABLE = no
+	LTO_ENABLE = yes
+endif
+
 ifeq ($(strip $(KEYBOARD)), signum/3_0/elitec)
 	OPT_DEFS += -DSIGNUM_KEYBOARD
 endif

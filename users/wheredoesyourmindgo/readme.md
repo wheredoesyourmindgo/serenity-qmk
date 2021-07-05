@@ -8,7 +8,7 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 
 -   6+ layers inspired from the Miryoku and Foostan layouts: Lower (Numbers/Navigation), Low (Symbols), Lowest (Mouse Mode), Higher (Cut-copy-paste/Special), High (Media/Keyboard), and Highest (Function). See below for 3 additional macOS layers.
 -   Home Row Mods that can be toggled on/off Base (alpha) layer with a Higher+` press. Home row mods are available on all Layers for the same hand that triggers the Layer.
--   One Shot Home Row Mods that can be toggled on/off for Base (alpha) layer with a double ` tap press. Bail out of One-shot by tapping Esc key.
+-   One Shot Home Row Mods that can be toggled on for Base (alpha) layer with a double ` tap press. Bail out of One-shot by tapping Esc key.
 -   One Shot Mods on Home Row when activating any of the 6 principle layers. These are particularly useful for same hand mod presses (eg. "Command + 1..5") that require use of the same hand.
 -   Control, Alt, GUI, and Shift Mods on both sides. Arrow keys on bottom right double as Layer/Mod toggle when held. All four arrow keys can be spammed when tapped twice.
 -   Two dual use keys. The Lowest_Layer and Highest_layer keys can be used as Shift keys for improved dexterity and better ergonomics. When using a multi-key combo with mods the inner adjacent key that is used for activating the Lowest (left) and Highest layer (right) can be used as a Shift mod key. It doesn't matter which order you press the sequence of mod keys. As long as 1 or more mod keys is pressed in conjunction with the adjacent Lowest/Highest Layer key, adjacent the Lowest/Highest Layer key will immediately become a Shift mod press until the key is released. See below for use case.

@@ -963,6 +963,7 @@ void matrix_scan_user(void) {
             cancel_cmd_shift();
         }
     }
+}
 
     // Leaders
     //    LEADER_DICTIONARY() {
@@ -987,7 +988,7 @@ void matrix_scan_user(void) {
     //       SEND_STRING("git pull");
     //     }
     //   }
-}
+// }
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {

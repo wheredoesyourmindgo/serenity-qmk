@@ -891,45 +891,66 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 #endif
             }
             break;
-        case KC_RGUI:
-        case KC_RALT:
-        case KC_RCTL:
+        case RGUI_T(KC_DOWN):
             if (record->event.pressed) {
                 if (IS_LAYER_ON(HIGHEST)) {
                     layer_off(HIGHEST);
+                    #if defined MENU_FUNCTION
+                    unregister_code(KC_MENU);
+                    #endif
                     register_mods(MOD_BIT(KC_RSFT));
                 }
-            }
-            break;
-        case RGUI_T(KC_DOWN):
-            if (!record->event.pressed) {
+            } else {
                 if (MODS_RSFT && !MODS_RCTRL && !MODS_RALT && MODS_RGUI) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                     layer_on(HIGHEST);
                     #if defined MENU_FUNCTION
+                    // unregister mods before registering kc_menu may not be necessary
+                    unregister_mods(MOD_BIT(KC_RGUI));
                     register_code(KC_MENU);
+                    return false;
                     #endif
                 }
             }
             break;
         case RALT_T(KC_UP):
-            if (!record->event.pressed) {
+            if (record->event.pressed) {
+                if (IS_LAYER_ON(HIGHEST)) {
+                    layer_off(HIGHEST);
+                    #if defined MENU_FUNCTION
+                    unregister_code(KC_MENU);
+                    #endif
+                    register_mods(MOD_BIT(KC_RSFT));
+                }
+            } else {
                 if (MODS_RSFT && !MODS_RCTRL && MODS_RALT && !MODS_RGUI) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                     layer_on(HIGHEST);
                     #if defined MENU_FUNCTION
+                    unregister_mods(MOD_BIT(KC_RALT));
                     register_code(KC_MENU);
+                    return false;
                     #endif
                 }
             }
             break;
         case RCTL_T(KC_RIGHT):
-            if (!record->event.pressed) {
+            if (record->event.pressed) {
+                if (IS_LAYER_ON(HIGHEST)) {
+                    layer_off(HIGHEST);
+                    #if defined MENU_FUNCTION
+                    unregister_code(KC_MENU);
+                    #endif
+                    register_mods(MOD_BIT(KC_RSFT));
+                }
+            } else {
                 if (MODS_RSFT && MODS_RCTRL && !MODS_RALT && !MODS_RGUI) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                     layer_on(HIGHEST);
                     #if defined MENU_FUNCTION
+                    unregister_mods(MOD_BIT(KC_RCTL));
                     register_code(KC_MENU);
+                    return false;
                     #endif
                 }
             }

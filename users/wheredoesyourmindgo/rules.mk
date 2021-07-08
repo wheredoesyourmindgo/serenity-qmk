@@ -10,8 +10,10 @@ AUTO_SHIFT_ENABLE = no 		# - Auto Shift
 # WINDOW_MGT = yes
 
 ifeq ($(strip $(KEYBOARD)), planck/rev6)
+	OPT_DEFS += -DPLANCK_KEYBOARD
 	RGBLIGHT_ENABLE = yes
 	# SRC += muse.c
+	SRC += layout_4x12.c
 endif
 
 # ifeq ($(strip $(SWAP_HANDS_ENABLE)), yes)
@@ -27,10 +29,17 @@ ifeq ($(strip $(KEYBOARD)), boardsource/technik_o)
 	OPT_DEFS += -DTECHNIK_KEYBOARD
 # CONSOLE_ENABLE = no
 	LTO_ENABLE = yes
+	SRC += layout_4x12.c
 endif
 
 ifeq ($(strip $(KEYBOARD)), signum/3_0/elitec)
 	OPT_DEFS += -DSIGNUM_KEYBOARD
+	SRC += layout_4x12.c
+endif
+
+ifeq ($(strip $(KEYBOARD)), foostan/cornelius)
+	OPT_DEFS += -DCORNELIUS_KEYBOARD
+	SRC += layout_4x12.c
 endif
 
 SRC += wheredoesyourmindgo.c

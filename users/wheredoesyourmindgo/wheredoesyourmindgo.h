@@ -60,7 +60,6 @@
 // #define OS_PRVS_APP SGUI(KC_TAB) // Previous App Window
 #define OS_NXT_APP_WNDW LGUI(KC_GRV)    // Next (Same)App Window
 #define OS_PRVS_APP_WNDW LGUI(KC_TILD)  // Previous (Same)App Window
-#define OS_FLLSCRN LCTL(LGUI(KC_F))     // Fullscreen
 #define OS_SPTLGHT LGUI(KC_SPC)         // Spotlight
 #define OS_BCK LGUI(KC_LBRC)            // Back
 #define OS_FWD LGUI(KC_RBRC)            // Forward
@@ -75,6 +74,9 @@
 #define OS_WEB HYPR(KC_W)        // Show Web Browser via Service
 #define OS_CODE HYPR(KC_V)       // Show VSCode via Service
 #define OS_WEB_DEV HYPR(KC_F)    // Show Firefox Developer Edition via Service
+#define OS_FLLSCRN LCTL(LGUI(KC_F))     // Fullscreen
+#define OS_MIN LGUI(KC_M)       // Minimize
+#define OS_QUIT LGUI(KC_Q)      // Quit
 
 // App Shortcuts
 #define APP1 LALT(KC_SPC)  // App Shortcut

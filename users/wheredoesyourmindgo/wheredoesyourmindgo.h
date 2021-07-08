@@ -79,12 +79,12 @@
 #define OS_QUIT LGUI(KC_Q)      // Quit
 
 // App Shortcuts
-#define APP1 LALT(KC_SPC)  // App Shortcut
-#define APP2 LCTL(KC_SPC)  // App Shortcut
-#define APP3 OS_WEB        // App Shortcut
-#define APP4 OS_MAIL       // App Shortcut
-#define APP5 OS_WEB_DEV    // App Shortcut
-#define APP6 OS_CODE       // App Shortcut
+#define APP1 OS_MAIL       // App Shortcut
+#define APP2 OS_WEB        // App Shortcut
+#define APP3 LALT(KC_SPC)  // App Shortcut
+#define APP4 LCTL(KC_SPC)  // App Shortcut
+#define APP5 OS_CODE       // App Shortcut
+#define APP6 OS_WEB_DEV    // App Shortcut
 #define APP7 KC_NO         // App Shortcut
 #define APP8 KC_NO         // App Shortcut
 

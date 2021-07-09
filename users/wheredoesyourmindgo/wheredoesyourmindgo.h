@@ -76,7 +76,7 @@
 #define OS_WEB_DEV HYPR(KC_F)    // Show Firefox Developer Edition via Service
 #define OS_FLLSCRN LCTL(LGUI(KC_F))     // Fullscreen
 #define OS_MIN LGUI(KC_M)       // Minimize
-#define OS_CLOSE LGUI(KC_W)      // Close
+#define OS_CLOSE LGUI(LALT(KC_W))      // Close
 
 // App Shortcuts
 #define APP1 OS_MAIL       // App Shortcut

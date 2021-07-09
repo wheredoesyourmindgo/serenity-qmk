@@ -22,7 +22,9 @@ endif
 
 ifeq ($(strip $(KEYBOARD)), boardwalk)
 	OPT_DEFS += -DBOARDWALK_KEYBOARD
+	RGBLIGHT_ENABLE = no
 	LTO_ENABLE = yes
+	SRC += layout_boardwalk_hs.c
 endif
 
 ifeq ($(strip $(KEYBOARD)), boardsource/technik_o)

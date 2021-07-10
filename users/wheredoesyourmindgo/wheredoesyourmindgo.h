@@ -74,9 +74,10 @@
 #define OS_WEB HYPR(KC_W)        // Show Web Browser via Service
 #define OS_CODE HYPR(KC_V)       // Show VSCode via Service
 #define OS_WEB_DEV HYPR(KC_F)    // Show Firefox Developer Edition via Service
-#define OS_FLLSCRN LCTL(LGUI(KC_F))     // Fullscreen
-#define OS_MIN LGUI(KC_M)       // Minimize
-#define OS_CLOSE LGUI(LALT(KC_W))      // Close
+#define OS_FLLSCRN LCTL(LGUI(KC_F))     // Fullscreen (green button)
+#define OS_MIN LGUI(KC_M)       // Minimize (yellow button)
+#define OS_CLOSE LGUI(LSFT(KC_W))      // Close active app (red button)
+#define OS_CLOSE_ALL LGUI(LSFT(LALT(KC_W)))      // Close All App Windows active app
 
 // App Shortcuts
 #define APP1 OS_MAIL       // App Shortcut

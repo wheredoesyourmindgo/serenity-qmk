@@ -9,6 +9,10 @@ typedef struct {
     uint8_t state;
 } td_tap_t;
 
+// Initialize variable holding the binary
+// representation of active modifiers.
+uint8_t mod_state;
+
 // #define MODS_SFT (get_mods() & MOD_BIT(KC_LSFT) || get_mods() & MOD_BIT(KC_RSFT))
 #define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
 #define MODS_LSFT (get_mods() & MOD_BIT(KC_LSFT))
@@ -296,6 +300,7 @@ void cancel_cmd_shift(void) {
 
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
     if (!(keycode == TRY_BSPACE_WORD)) {
         if (record->event.pressed) {
             dontBspaceWord = false;
@@ -972,6 +977,327 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        // case WNDW_M_LFT:
+        //     if (record->event.pressed) {
+        //         // Fourth
+        //         if (MODS_LCTRL) {
+        //             unregister_mods(MOD_BIT(KC_LCTL));
+        //             tap_code16(WNDW_FST_FRTH);
+        //             register_mods(MOD_BIT(KC_LCTL));
+        //         // Third
+        //         } else if (MODS_LALT) {
+        //             unregister_mods(MOD_BIT(KC_LALT));
+        //             tap_code16(WNDW_LFT_THRD);
+        //             register_mods(MOD_BIT(KC_LALT));
+        //         // Half
+        //         } else if (MODS_LGUI) {
+        //             unregister_mods(MOD_BIT(KC_LGUI));
+        //             tap_code16(WNDW_LFT_HLF);
+        //             register_mods(MOD_BIT(KC_LGUI));
+        //         // Two-thirds
+        //         } else if (MODS_LSFT) {
+        //             unregister_mods(MOD_BIT(KC_LSFT));
+        //             tap_code16(WNDW_LFT_TTHRD);
+        //             register_mods(MOD_BIT(KC_LSFT));
+        //         // Three-quarters
+        //         } else if (MODS_LCTRL && MODS_LALT && MODS_LGUI && MODS_LSFT) {
+        //             unregister_mods(MOD_BIT(KC_LCTL));
+        //             unregister_mods(MOD_BIT(KC_LALT));
+        //             unregister_mods(MOD_BIT(KC_LGUI));
+        //             unregister_mods(MOD_BIT(KC_LSFT));
+        //             tap_code16(WNDW_FST_TFRTH);
+        //             register_mods(MOD_BIT(KC_LCTL));
+        //             register_mods(MOD_BIT(KC_LALT));
+        //             register_mods(MOD_BIT(KC_LGUI));
+        //             register_mods(MOD_BIT(KC_LSFT));
+        //         } else {
+        //             tap_code16(WNDW_MV_LFT);
+        //         }
+        //     }
+        //     break;
+        // case WNDW_M_BTM:
+        //      if (record->event.pressed) {
+        //         // Fourth
+        //         if (MODS_LCTRL && MODS_LALT && MODS_LGUI && MODS_LSFT) {
+        //             unregister_mods(MOD_BIT(KC_LCTL));
+        //             unregister_mods(MOD_BIT(KC_LALT));
+        //             unregister_mods(MOD_BIT(KC_LGUI));
+        //             unregister_mods(MOD_BIT(KC_LSFT));
+        //             tap_code16(WNDW_SCND_FRTH);
+        //             register_mods(MOD_BIT(KC_LCTL));
+        //             register_mods(MOD_BIT(KC_LALT));
+        //             register_mods(MOD_BIT(KC_LGUI));
+        //             register_mods(MOD_BIT(KC_LSFT));
+        //         // Third
+        //         } else if (MODS_LCTRL) {
+        //             unregister_mods(MOD_BIT(KC_LCTL));
+        //             tap_code16(WNDW_CNTR_THRD);
+        //             register_mods(MOD_BIT(KC_LCTL));
+        //         // Half
+        //         } else if (MODS_LALT) {
+        //             unregister_mods(MOD_BIT(KC_LALT));
+        //             tap_code16(WNDW_BTTM_HLF);
+        //             register_mods(MOD_BIT(KC_LALT));
+        //         } else {
+        //             tap_code16(WNDW_MV_LFT);
+        //         }
+        //     }
+        // break;
+        // case WNDW_M_TP:
+        //      if (record->event.pressed) {
+        //         // Fourth
+        //         if (MODS_LCTRL && MODS_LALT && MODS_LGUI && MODS_LSFT) {
+        //             unregister_mods(MOD_BIT(KC_LCTL));
+        //             unregister_mods(MOD_BIT(KC_LALT));
+        //             unregister_mods(MOD_BIT(KC_LGUI));
+        //             unregister_mods(MOD_BIT(KC_LSFT));
+        //             tap_code16(WNDW_THRD_FRTH);
+        //             register_mods(MOD_BIT(KC_LCTL));
+        //             register_mods(MOD_BIT(KC_LALT));
+        //             register_mods(MOD_BIT(KC_LGUI));
+        //             register_mods(MOD_BIT(KC_LSFT));
+        //         // Third
+        //         } else if (MODS_LCTRL) {
+        //             unregister_mods(MOD_BIT(KC_LCTL));
+        //             tap_code16(WNDW_CNTR_THRD);
+        //             register_mods(MOD_BIT(KC_LCTL));
+        //         // Half
+        //         } else if (MODS_LALT) {
+        //             unregister_mods(MOD_BIT(KC_LALT));
+        //             tap_code16(WNDW_TOP_HLF);
+        //             register_mods(MOD_BIT(KC_LALT));
+        //         } else {
+        //             tap_code16(WNDW_MV_LFT);
+        //         }
+        //     }
+        //     break;
+        // case WNDW_M_RGHT:
+        //     if (record->event.pressed) {
+        //         // Fourth
+        //         if (MODS_LCTRL) {
+        //             unregister_mods(MOD_BIT(KC_LCTL));
+        //             tap_code16(WNDW_FRTH_FRTH);
+        //             register_mods(MOD_BIT(KC_LCTL));
+        //         // Third
+        //         } else if (MODS_LALT) {
+        //             unregister_mods(MOD_BIT(KC_LALT));
+        //             tap_code16(WNDW_RGNT_THRD);
+        //             register_mods(MOD_BIT(KC_LALT));
+        //         // Half
+        //         } else if (MODS_LGUI) {
+        //             unregister_mods(MOD_BIT(KC_LGUI));
+        //             tap_code16(WNDW_RGHT_HLF);
+        //             register_mods(MOD_BIT(KC_LGUI));
+        //         // Two-thirds
+        //         } else if (MODS_LSFT) {
+        //             unregister_mods(MOD_BIT(KC_LSFT));
+        //             tap_code16(WNDW_RGHT_TTHRD);
+        //             register_mods(MOD_BIT(KC_LSFT));
+        //         // Three-quarters
+        //         } else if (MODS_LCTRL && MODS_LALT && MODS_LGUI && MODS_LSFT) {
+        //             unregister_mods(MOD_BIT(KC_LCTL));
+        //             unregister_mods(MOD_BIT(KC_LALT));
+        //             unregister_mods(MOD_BIT(KC_LGUI));
+        //             unregister_mods(MOD_BIT(KC_LSFT));
+        //             tap_code16(WNDW_LST_TFRTH);
+        //             register_mods(MOD_BIT(KC_LCTL));
+        //             register_mods(MOD_BIT(KC_LALT));
+        //             register_mods(MOD_BIT(KC_LGUI));
+        //             register_mods(MOD_BIT(KC_LSFT));
+        //         } else {
+        //             tap_code16(WNDW_MV_LFT);
+        //         }
+        //     }
+        //     break;
+        // case WNDW_M_CNTR:
+        //     if (record->event.pressed) {
+        //         // Fourth
+        //         if (MODS_LCTRL && MODS_LALT && MODS_LGUI && MODS_LSFT) {
+        //             unregister_mods(MOD_BIT(KC_LCTL));
+        //             unregister_mods(MOD_BIT(KC_LALT));
+        //             unregister_mods(MOD_BIT(KC_LGUI));
+        //             unregister_mods(MOD_BIT(KC_LSFT));
+        //             tap_code16(WNDW_FST_FRTH);
+        //             tap_code16(WNDW_CNTR);
+        //             register_mods(MOD_BIT(KC_LCTL));
+        //             register_mods(MOD_BIT(KC_LALT));
+        //             register_mods(MOD_BIT(KC_LGUI));
+        //             register_mods(MOD_BIT(KC_LSFT));
+        //         // Third
+        //         } else if (MODS_LCTRL) {
+        //             unregister_mods(MOD_BIT(KC_LCTL));
+        //             tap_code16(WNDW_CNTR_THRD);
+        //             register_mods(MOD_BIT(KC_LCTL));
+        //         // Half
+        //         } else if (MODS_LALT) {
+        //             unregister_mods(MOD_BIT(KC_LALT));
+        //             tap_code16(WNDW_CNTR_HLF);
+        //             register_mods(MOD_BIT(KC_LALT));
+        //         } else {
+        //             tap_code16(WNDW_CNTR);
+        //         }
+        //     }
+        //     break;
+        case OS_MIN:
+            if (record->event.pressed) {
+                // Store the current modifier state in the variable for later reference
+                mod_state = get_mods();
+                if (MODS_RSFT) {
+                    del_mods(mod_state);
+                    tap_code16(WNDW_ALMST_MAX);
+                    set_mods(mod_state);
+                } else {
+                    tap_code16(OS_MIN);
+                }
+                return false;
+            }
+            break;
+        case OS_FLLSCRN:
+            if (record->event.pressed) {
+                mod_state = get_mods();
+                if (MODS_RSFT) {
+                    del_mods(mod_state);
+                    tap_code16(WNDW_MAX);
+                    set_mods(mod_state);
+                } else {
+                    tap_code16(OS_FLLSCRN);
+                }
+                return false;
+            }
+            break;
+        case WNDW_CNTR:
+            if (record->event.pressed) {
+                mod_state = get_mods();
+                if (MODS_RSFT) {
+                    del_mods(mod_state);
+                    tap_code16(WNDW_ALMST_MAX);
+                    tap_code16(WNDW_VRT_MAX);
+                    tap_code16(WNDW_CNTR);
+                    register_mods(mod_state);
+                } else {
+                    tap_code16(WNDW_CNTR);
+                }
+                return false;
+            }
+            break;
+        case TLNG_LFT:
+            if (record->event.pressed) {
+                clear_oneshot_mods();
+                mod_state = get_mods();
+                if (MODS_LSFT) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_LYT_BCK);
+                    set_mods(mod_state);
+                } else if (MODS_LGUI) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_SHRNK);
+                    set_mods(mod_state);
+                } else if (MODS_LALT) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_DCR_MN_CT);
+                    set_mods(mod_state);
+                } else if (MODS_LCTRL) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_THRW_LFT);
+                    set_mods(mod_state);
+                } else if (MODS_RSFT) {
+                    del_mods(mod_state);
+                    tap_code16(WNDW_SMLLR);
+                    set_mods(mod_state);
+                } else {
+                    tap_code16(TLNG_MV_FCS_CCLK);
+                }
+            }
+            break;
+        case TLNG_ILFT:
+            if (record->event.pressed) {
+                clear_oneshot_mods();
+                mod_state = get_mods();
+                if (MODS_LSFT) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_FLT);
+                    set_mods(mod_state);
+                } else if (MODS_LGUI) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_LYT_INF);
+                    set_mods(mod_state);
+                } else if (MODS_LALT) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_GLBL_TLNG);
+                    set_mods(mod_state);
+                } else if (MODS_LCTRL) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_RLD);
+                    set_mods(mod_state);
+                } else if (MODS_RSFT) {
+                    del_mods(mod_state);
+                    tap_code16(WNDW_RSTR);
+                    set_mods(mod_state);
+                } else {
+                    tap_code16(TLNG_MV_FCS_MN);
+                }
+            }
+            break;
+        case TLNG_IRGHT:
+            if (record->event.pressed) {
+                clear_oneshot_mods();
+                mod_state = get_mods();
+                if (MODS_LSFT) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_FSCRN);
+                    set_mods(mod_state);
+                } else if (MODS_LGUI) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_TGL_FLT_FCS);
+                    set_mods(mod_state);
+                } else if (MODS_LALT) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_MSE_FCS);
+                    set_mods(mod_state);
+                } else if (MODS_LCTRL) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_RVLT);
+                    set_mods(mod_state);
+                } else if (MODS_RSFT) {
+                    del_mods(mod_state);
+                    tap_code16(WNDW_CNTR);
+                    set_mods(mod_state);
+                } else {
+                    tap_code16(TLNG_SWP_FCS_MN);
+                }
+            }
+            break;
+        case TLNG_RGHT:
+            if (record->event.pressed) {
+                clear_oneshot_mods();
+                mod_state = get_mods();
+                if (MODS_LSFT) {
+                    // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
+                    del_mods(mod_state);
+                    tap_code16(TLNG_LYT_FWD);
+                    // Reapplying modifier state so that the held shift key(s) still work even after having tapped the Backspace/Delete key.
+                    set_mods(mod_state);
+                } else if (MODS_LGUI) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_EXP);
+                    set_mods(mod_state);
+                } else if (MODS_LALT) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_INCR_MN_CT);
+                    set_mods(mod_state);
+                } else if (MODS_LCTRL) {
+                    del_mods(mod_state);
+                    tap_code16(TLNG_THRW_RGHT);
+                    set_mods(mod_state);
+                } else if (MODS_RSFT) {
+                    del_mods(mod_state);
+                    tap_code16(WNDW_LRGR);
+                    set_mods(mod_state);
+                } else {
+                    tap_code16(TLNG_MV_FCS_CLK);
+                }
+            }
+            break;
     }
     return true;
 }
@@ -1043,8 +1369,8 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // case LT(LOW, KC_ENT):
         // case LT(LOWER, KC_ESC):
-        case LT(HIGH, KC_TAB):
-        case LT(HIGHER, KC_SPC):
+        // case LT(HIGH, KC_TAB):
+        // case LT(HIGHER, KC_SPC):
         // case LT(OS,KC_GRV):
         // case TD(TD_OS_GRV_OSHR):
         case LT(HIGHEST, KC_LEFT):

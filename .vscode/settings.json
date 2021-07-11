@@ -28,15 +28,8 @@
         "files.trimTrailingWhitespace": false
     },
     "git.detectSubmodules": false,
-    "cSpell.words": [
-        "karabiner",
-        "oopsy",
-        "oshr"
-    ],
+    "cSpell.words": ["karabiner", "oopsy", "oshr"],
     "cmake.configureOnOpen": false,
     "python.formatting.provider": "yapf",
-    "[json]": {
-	    "editor.formatOnSave": false
-    },
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
 }

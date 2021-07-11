@@ -19,8 +19,9 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 -   (macOS) Double left control tap hides active window and mutes volume. Left control is greedy in regard to interruption.
 -   (macOS) An additional shortcut within the Higher layer on the "b" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
 -   (macOS) Additional Layer for alternate OS movements. The Lower layer can be shifted using left shift hold (right shift will activate capslock), activating Lower-alt layer. The Lower-alt layer replaces arrow keys with OS back button (commonly used in web browsers and Finder), Finder Navigate elect folder shortcut, Finder Navigate Parent Folder shortcut, and OS forward button (again, commonly used with web browsers and Finder). The Page Down and Page Up shortcuts are replaced with Zoom In and Zoom Out. The Home shortcut is replaced with Zoom Reset.
--   (macOS) Additional Layer for OS shortcuts, activated with escape key press and hold. See keymap.c
--   (macOS) Additional Layer for Window Management shortcuts using [Rectangle](https://rectangleapp.com/), activated with space keypress on the OS_layer. Revert back to Base_layer using "esc" key. See keymap.c
+-   (macOS) Additional Layer for macOS shortcuts, activated with escape key-press and hold. See keymap.c
+-   (macOS) Window Tiling/Management shortcuts using [Amethyst](https://ianyh.com/amethyst/)
+& [Rectangle](https://rectangleapp.com/) on the Higher layer. See [Reference](#WindowMgtRef) below for additional info.
 -   (macOS) Shortcuts for quick access to word & line backspace and word & line delete forward. These are activated from Lower, Lowest, Higher, and Highest layers, respectively. For convenience, the word delete will not trigger when entering numbers in Lower layer, which is ideal for using backspace within Lower layer (the side effect is that words that end with a number can't be word-deleted until Lower hold is released and held again).
 -   (macOS) Hold the Menu key (KC_MENU) while holding down the function key. This can be enabled by building firmware with 'MENU_FUNCTION=yes' option. The Menu keycode is not used by MacOS, but it will register, so it can be converted to something else such as the Function "fn" key via a Karabiner-Elements rule which will enable further customization via Karabiner-Elements with additional rules.
 
@@ -47,6 +48,25 @@ Use home row mods with the added benefit of having dedicated shift keys on both 
 4. There are more letters on the left side of the keyboard that are used with word endings; R,D,G,S on the left vs. E,N on the right. It's easier to use the opposite hand when tapping space after word ending.
 5. Allows for setting tapping term much lower (0) on frequently used numbers and symbols layers since those are mapped to Esc and Enter respectively. By using Retro tap, the result is Lower (number) and Low (symbol) are more greedy than Enter presses and Escape presses, while the Space (and Tab) taps can be more greedy on the right side of the keyboard.
 6. Related, having enter key next to space is not ideal due to the chance of miss-tap resulting from the proximity; thus, tab joins space on right side, enter with escape on left.
+
+## Reference
+
+<a id="WindowMgtRef"></a>
+
+### Amethyst & Rectangle
+
+Amethyst and Rectangle shortcuts are arranged on the Higher layer on the left-hand side on home row. Alternate shortcuts can be triggered using the mods on the home row on the right side within the Higher layer. Below is a map of the commands and mod presses.
+
+_Rectangle shortcuts are shown italicized_
+
+| **Mod** | `A` | `R`  | `S` | `T` |
+|--- | --- | --- | --- | ---|
+|**Shift**|Cycle Layout Back|Floating Layout|Fullscreen Layout|Cycle Layout Forward|
+|**Cmd**|Shrink Main|OSD Current Layout|Toggle Float Focused|Expand Main|
+|**Opt**|Decrease Main Count|Toggle Global Tiling|Toggle Focus w/ Mouse|Increase Main Count|
+|**Ctrl**|Throw Focused to Left Space|Reload Amethyst|Re-evaluate Layout|Throw Focused to Right Space|
+|**R. Shift**|_Window Smaller_|_Restore Window_|_Center Window_|_Window Larger_|
+
 
 ## Tips
 

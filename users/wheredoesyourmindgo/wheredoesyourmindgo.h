@@ -20,7 +20,7 @@
 
 // Tiling Management (Amethyst)
 #define TLNG_FLT LALT(LSFT(KC_G))                   // Float windows
-#define TLNG_FSCRN LALT(LSFT(KC_F))                 // Fullscreen windows
+#define TLNG_FSCRN LALT(LSFT(KC_D))                 // Fullscreen layout
 #define TLNG_THRW_RGHT LCTL(LALT(LSFT(KC_RIGHT)))   // Throw window to right space
 #define TLNG_THRW_LFT LCTL(LALT(LSFT(KC_LEFT)))     // Throw window to right space
 #define TLNG_MV_FCS_CLK LALT(LSFT(KC_K))            // Move focus clockwise

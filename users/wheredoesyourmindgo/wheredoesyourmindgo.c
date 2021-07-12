@@ -1315,8 +1315,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_LOWER_ESC):
             return 0;
         case LT(HIGH, KC_TAB):
-        case LT(HIGHER, KC_SPC):
             return TAPPING_RETRO_TERM;
+        // While space key use retro tapping, we don't what to actiate the higher layer quickly with short tapping terms so just use default tapping term. We won't be rolling quickly through tab key so a shorter tapping term can be used with High layer.
+        // case LT(HIGHER, KC_SPC):
         default:
             return TAPPING_TERM;
     }

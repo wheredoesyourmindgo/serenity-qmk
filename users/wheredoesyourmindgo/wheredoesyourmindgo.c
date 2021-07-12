@@ -9,8 +9,7 @@ typedef struct {
     uint8_t state;
 } td_tap_t;
 
-// Initialize variable holding the binary
-// representation of active modifiers.
+// Initialize variable holding the binary representation of active modifiers.
 uint8_t mod_state;
 
 // #define MODS_SFT (get_mods() & MOD_BIT(KC_LSFT) || get_mods() & MOD_BIT(KC_RSFT))
@@ -296,6 +295,18 @@ void cancel_cmd_shift(void) {
     }
     is_cmd_tab_active     = false;
     cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+}
+
+void tap_code16_no_mod(uint16_t code) {
+    // Initialize variable holding the binary representation of active modifiers.
+    uint8_t mod_state;
+    // Store the current modifier state in the variable for later reference
+    mod_state = get_mods();
+    // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
+    del_mods(mod_state);
+    tap_code16(code);
+    // Reapplying modifier state so that the held shift key(s) still work even after having tapped the Backspace/Delete key.
+    set_mods(mod_state);
 }
 
 /* Macros */
@@ -1140,12 +1151,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //     break;
         case OS_MIN:
             if (record->event.pressed) {
-                // Store the current modifier state in the variable for later reference
-                mod_state = get_mods();
                 if (MODS_RSFT) {
-                    del_mods(mod_state);
-                    tap_code16(WNDW_ALMST_MAX);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(WNDW_ALMST_MAX);
                 } else {
                     tap_code16(OS_MIN);
                 }
@@ -1154,11 +1161,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case OS_FLLSCRN:
             if (record->event.pressed) {
-                mod_state = get_mods();
                 if (MODS_RSFT) {
-                    del_mods(mod_state);
-                    tap_code16(WNDW_MAX);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(WNDW_MAX);
                 } else {
                     tap_code16(OS_FLLSCRN);
                 }
@@ -1183,27 +1187,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TLNG_LFT:
             if (record->event.pressed) {
                 clear_oneshot_mods();
-                mod_state = get_mods();
                 if (MODS_LSFT) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_LYT_BCK);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_LYT_BCK);
                 } else if (MODS_LGUI) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_SHRNK);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_SHRNK);
                 } else if (MODS_LALT) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_DCR_MN_CT);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_DCR_MN_CT);
                 } else if (MODS_LCTRL) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_THRW_LFT);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_THRW_LFT);
                 } else if (MODS_RSFT) {
-                    del_mods(mod_state);
-                    tap_code16(WNDW_SMLLR);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(WNDW_SMLLR);
                 } else {
                     tap_code16(TLNG_MV_FCS_CCLK);
                 }
@@ -1212,27 +1205,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TLNG_ILFT:
             if (record->event.pressed) {
                 clear_oneshot_mods();
-                mod_state = get_mods();
                 if (MODS_LSFT) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_FLT);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_FLT);
                 } else if (MODS_LGUI) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_LYT_INF);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_LYT_INF);
                 } else if (MODS_LALT) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_GLBL_TLNG);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_GLBL_TLNG);
                 } else if (MODS_LCTRL) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_RLD);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_RLD);
                 } else if (MODS_RSFT) {
-                    del_mods(mod_state);
-                    tap_code16(WNDW_RSTR);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(WNDW_RSTR);
                 } else {
                     tap_code16(TLNG_MV_FCS_MN);
                 }
@@ -1241,27 +1223,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TLNG_IRGHT:
             if (record->event.pressed) {
                 clear_oneshot_mods();
-                mod_state = get_mods();
                 if (MODS_LSFT) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_FSCRN);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_FSCRN);
                 } else if (MODS_LGUI) {
-                    del_mods(mod_state);
                     tap_code16(TLNG_TGL_FLT_FCS);
-                    set_mods(mod_state);
                 } else if (MODS_LALT) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_MSE_FCS);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_MSE_FCS);
                 } else if (MODS_LCTRL) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_RVLT);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_RVLT);
                 } else if (MODS_RSFT) {
-                    del_mods(mod_state);
-                    tap_code16(WNDW_CNTR);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(WNDW_CNTR);
                 } else {
                     tap_code16(TLNG_SWP_FCS_MN);
                 }
@@ -1270,29 +1241,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case TLNG_RGHT:
             if (record->event.pressed) {
                 clear_oneshot_mods();
-                mod_state = get_mods();
                 if (MODS_LSFT) {
-                    // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
-                    del_mods(mod_state);
-                    tap_code16(TLNG_LYT_FWD);
-                    // Reapplying modifier state so that the held shift key(s) still work even after having tapped the Backspace/Delete key.
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_LYT_FWD);
                 } else if (MODS_LGUI) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_EXP);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_EXP);
                 } else if (MODS_LALT) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_INCR_MN_CT);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_INCR_MN_CT);
                 } else if (MODS_LCTRL) {
-                    del_mods(mod_state);
-                    tap_code16(TLNG_THRW_RGHT);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(TLNG_THRW_RGHT);
                 } else if (MODS_RSFT) {
-                    del_mods(mod_state);
-                    tap_code16(WNDW_LRGR);
-                    set_mods(mod_state);
+                    tap_code16_no_mod(WNDW_LRGR);
                 } else {
                     tap_code16(TLNG_MV_FCS_CLK);
                 }

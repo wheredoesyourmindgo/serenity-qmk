@@ -161,7 +161,7 @@ void os_grave_oshr_each(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 2) {
         set_oneshot_layer(BASE_HRM, ONESHOT_START);
         // it's is unclear if reset_tap_dance() helps in this regard
-        // reset_tap_dance(state);
+        reset_tap_dance(state);
     }
 }
 void os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -209,7 +209,7 @@ void caps_word_each(qk_tap_dance_state_t *state, void *user_data) {
             tap_code_delay(KC_CAPS, 300);
         }
         // it's is unclear if reset_tap_dance() helps in this regard
-        // reset_tap_dance(state);
+        reset_tap_dance(state);
     }
 }
 void caps_word_reset(qk_tap_dance_state_t *state, void *user_data) {
@@ -230,7 +230,7 @@ void caps_sentence_each(qk_tap_dance_state_t *state, void *user_data) {
             tap_code_delay(KC_CAPS, 200);
         }
         // it's is unclear if reset_tap_dance() helps in this regard
-        // reset_tap_dance(state);
+        reset_tap_dance(state);
     }
 }
 void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data) {
@@ -273,17 +273,23 @@ void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
             tap_code16(LGUI(LSFT(KC_RGHT)));
             break;
         case 3:
-        case 4:
             tap_code(KC_RIGHT);
             tap_code16(LGUI(KC_UP));
             tap_code16(LGUI(LSFT(KC_DOWN)));
+            reset_tap_dance(state);
             break;
     }
 }
 
 // Tap once for Word Select, twice for Line Select, three times for all
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_LOWER_ESC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lower_esc_finished, lower_esc_reset), [TD_LOW_ENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, low_ent_finished, low_ent_reset), [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL), [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset), [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset), [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset), [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(os_grave_oshr_each, os_grave_oshr_finished, os_grave_oshr_reset),
+    [TD_LOWER_ESC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lower_esc_finished, lower_esc_reset),
+    [TD_LOW_ENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, low_ent_finished, low_ent_reset),
+    [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
+    [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset),
+    [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset),
+    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
+    [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(os_grave_oshr_each, os_grave_oshr_finished, os_grave_oshr_reset),
 };
 // end of Tap Dance config
 
@@ -1301,7 +1307,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_TGL_SEL):
         case TD(TD_CAPS_WORD):
         case TD(TD_CAPS_SENTENCE):
-        // case TD(TD_OS_GRV_OSHR):
+        case TD(TD_OS_GRV_OSHR):
             return TAPPING_TD_TERM;
         // case LT(HIGHEST, KC_LEFT):
         // case RGUI_T(KC_DOWN):

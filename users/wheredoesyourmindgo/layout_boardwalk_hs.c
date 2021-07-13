@@ -35,8 +35,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[LOW] = LAYOUT_boardwalk_hs(
         KC_NO, KC_NO        , KC_NO        , KC_NO        , KC_NO        , KC_NO   ,                  KC_NO, KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO, KC_NO, KC_NO,
         KC_DEL, KC_EXLM      , KC_AT        , KC_HASH      , KC_DLR       , KC_PERC ,KC_NO, KC_NO,                  KC_CIRC, KC_AMPR, KC_LPRN, KC_RPRN, KC_ASTR, KC_BSPC,
-        KC_NO, XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT, DF(LOW),KC_NO, KC_NO,                  KC_MINS, KC_EQL , KC_LCBR, KC_RCBR, KC_PIPE, KC_QUOT,
-        KC_LSFT, KC_NO, OSM(MOD_RALT), KC_NO        , KC_NO        , VOID   ,KC_NO, KC_NO,                  KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_RSFT,
+        KC_NO, XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT, DF(LOW),KC_NO, KC_NO, KC_EQL, KC_MINS, KC_LCBR, KC_RCBR, KC_PIPE, KC_QUOT,
+        KC_LSFT, KC_NO, OSM(MOD_RALT), KC_NO        , KC_NO        , VOID   ,KC_NO, KC_NO,                  KC_PLUS, KC_UNDS,  KC_LBRC, KC_RBRC, KC_BSLS, KC_RSFT,
         KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT,        KC_NO        , DF(BASE), KC_TAB, KC_SPC,  KC_RSFT, KC_RGUI, KC_RALT, KC_RCTL
     ),
     [LOWEST] = LAYOUT_boardwalk_hs(

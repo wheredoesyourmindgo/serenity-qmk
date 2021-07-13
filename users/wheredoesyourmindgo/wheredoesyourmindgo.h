@@ -34,7 +34,7 @@
 #define TLNG_EXP LALT(LSFT(KC_L))                   // Expand main
 #define TLNG_RVLT LALT(LSFT(KC_Z))                  // Re-evaluate
 #define TLNG_RLD LCTL(LALT(LSFT(KC_Z)))             // Reload Amethyst
-#define TLNG_MSE_FCS LALT(LSFT(LGUI(KC_X)))         // Toggle focus follows mouse
+#define TLNG_MSE_FCS LALT(LSFT(LCTL(KC_X)))         // Toggle focus follows mouse
 #define TLNG_GLBL_TLNG LCTL(LALT(LSFT(KC_T)))       // Toggle global tiling
 #define TLNG_TGL_FLT_FCS LALT(LSFT(KC_T))           // Toggle float focused
 #define TLNG_INCR_MN_CT LALT(LSFT(KC_COMMA))        // Increase main count

@@ -51,7 +51,7 @@ Use home row mods with the added benefit of having dedicated shift keys on both 
 
 ## Reference
 
-<a id="WindowMgtRef"></a>
+<span id="WindowMgtRef" />
 
 ### Amethyst & Rectangle
 

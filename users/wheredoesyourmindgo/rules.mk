@@ -34,7 +34,8 @@ endif
 
 ifeq ($(strip $(KEYBOARD)), ristretto)
 	OPT_DEFS += -DRISTRETTO_KEYBOARD
-	SRC += LAYOUT_4x12_enc.c
+	LTO_ENABLE = yes
+	SRC += layout_4x12_enc.c
 endif
 
 ifeq ($(strip $(KEYBOARD)), boardsource/technik_o)

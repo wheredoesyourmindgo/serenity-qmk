@@ -27,6 +27,16 @@ ifeq ($(strip $(KEYBOARD)), boardwalk)
 	SRC += layout_boardwalk_hs.c
 endif
 
+ifeq ($(strip $(KEYBOARD)), foostan/cornelius)
+	OPT_DEFS += -DCORNELIUS_KEYBOARD
+	SRC += layout_4x12.c
+endif
+
+ifeq ($(strip $(KEYBOARD)), ristretto)
+	OPT_DEFS += -DRISTRETTO_KEYBOARD
+	SRC += LAYOUT_4x12_enc.c
+endif
+
 ifeq ($(strip $(KEYBOARD)), boardsource/technik_o)
 	OPT_DEFS += -DTECHNIK_KEYBOARD
 # CONSOLE_ENABLE = no
@@ -39,10 +49,7 @@ ifeq ($(strip $(KEYBOARD)), signum/3_0/elitec)
 	SRC += layout_4x12.c
 endif
 
-ifeq ($(strip $(KEYBOARD)), foostan/cornelius)
-	OPT_DEFS += -DCORNELIUS_KEYBOARD
-	SRC += layout_4x12.c
-endif
+
 
 SRC += wheredoesyourmindgo.c
 

@@ -27,7 +27,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 	[LOWER_ALT] = LAYOUT_boardwalk_hs(
         KC_TRNS  , KC_TRNS        , KC_TRNS        , KC_TRNS        , KC_TRNS        , KC_TRNS    ,         KC_TRNS, KC_TRNS, KC_TRNS         , KC_TRNS  , KC_TRNS , KC_TRNS, KC_TRNS, KC_TRNS,
-        KC_TRNS , KC_TRNS         , KC_TRNS         ,    KC_TRNS         ,   KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS          , KC_TRNS   , KC_TRNS , KC_TRNS, KC_TRNS, KC_TRNS,
+        KC_TRNS , KC_TRNS         , KC_TRNS         ,    KC_TRNS         ,   KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS          , OS_PRV_TAB, KC_TRNS, KC_TRNS, OS_NXT_TAB, KC_TRNS,
         KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, DF(LOWER_ALT),  KC_TRNS, KC_TRNS,  KC_TRNS, OS_BCK, OS_FWD_FLDR, OS_BCK_FLDR, OS_FWD, KC_TRNS,
         KC_TRNS, KC_TRNS        , KC_TRNS      , KC_TRNS        ,          KC_TRNS, KC_TRNS      , KC_TRNS, KC_TRNS,       KC_TRNS  , ZOOM_RESET, ZOOM_IN, ZOOM_OUT, KC_TRNS, KC_TRNS,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS        , DF(BASE)     , KC_TRNS   , KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS

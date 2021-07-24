@@ -900,7 +900,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 } else {
                     #if defined MENU_FUNCTION
-                    register_code(KC_MENU);
+                    // Only on tap (ie. Not during LT(LOW) and alt)
+                    if (!(record->tap.count > 0)) {
+                        register_code(KC_MENU);
+                    }
                     #endif
                     // return true
                 }
@@ -909,7 +912,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                 }
                 #if defined MENU_FUNCTION
-                unregister_code(KC_MENU);
+                if (!(record->tap.count > 0)) {
+                    unregister_code(KC_MENU);
+                }
                 #endif
             }
             break;

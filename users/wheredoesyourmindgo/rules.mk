@@ -40,7 +40,8 @@ endif
 
 ifeq ($(strip $(KEYBOARD)), boardsource/technik_o)
 	OPT_DEFS += -DTECHNIK_KEYBOARD
-# CONSOLE_ENABLE = no
+# CONSOLE_ENABLE = yes
+# RGB_MATRIX_ENABLE = no
 	LTO_ENABLE = yes
 	SRC += layout_4x12.c
 endif

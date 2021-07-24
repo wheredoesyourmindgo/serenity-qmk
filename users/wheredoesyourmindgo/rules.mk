@@ -55,6 +55,6 @@ endif
 
 SRC += wheredoesyourmindgo.c
 
-ifeq ($(strip $(MENU_FUNCTION)), yes)
-  OPT_DEFS += -DMENU_FUNCTION
+ifeq ($(strip $(MENU_ON_HIGHEST)), yes)
+  OPT_DEFS += -DMENU_ON_HIGHEST
 endif

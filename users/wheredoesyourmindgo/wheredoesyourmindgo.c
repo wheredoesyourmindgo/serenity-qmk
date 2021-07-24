@@ -124,6 +124,7 @@ void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
         // Only fire escape if keypress was not interrupted AND special mode is not active
         if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active && !ONESHOT_LYR_ACTIVE) {
             tap_code(KC_ESC);
+            return;
         }
         //  Cancel One Shot Mods (if active)
         if (ONESHOT_MODS_ACTIVE) {
@@ -845,11 +846,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 if (MODS_LSFT) {
                     unregister_mods(MOD_BIT(KC_LSFT));
-                    return false;
-                }
-                if (IS_LAYER_ON(LOWEST)) {
-                    layer_off(LOWEST);
-                    return false;
                 }
             }
             break;
@@ -899,8 +895,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     register_mods(MOD_BIT(KC_RSFT));
                     return false;
                 } else {
-                    #if defined MENU_FUNCTION
-                    // Only on tap (ie. Not during LT(LOW) and alt)
+                    #if defined MENU_ON_HIGHEST
+                    // Only on hold during LT(HIGHEST)
                     if (!(record->tap.count > 0)) {
                         register_code(KC_MENU);
                     }
@@ -911,7 +907,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (MODS_RSFT) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                 }
-                #if defined MENU_FUNCTION
+                #if defined MENU_ON_HIGHEST
                 if (!(record->tap.count > 0)) {
                     unregister_code(KC_MENU);
                 }
@@ -922,7 +918,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (IS_LAYER_ON(HIGHEST)) {
                     layer_off(HIGHEST);
-                    #if defined MENU_FUNCTION
+                    #if defined MENU_ON_HIGHEST
                     unregister_code(KC_MENU);
                     #endif
                     register_mods(MOD_BIT(KC_RSFT));
@@ -931,7 +927,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (MODS_RSFT && !MODS_RCTRL && !MODS_RALT && MODS_RGUI) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                     layer_on(HIGHEST);
-                    #if defined MENU_FUNCTION
+                    #if defined MENU_ON_HIGHEST
                     // unregister mods before registering kc_menu may not be necessary
                     unregister_mods(MOD_BIT(KC_RGUI));
                     register_code(KC_MENU);
@@ -944,7 +940,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (IS_LAYER_ON(HIGHEST)) {
                     layer_off(HIGHEST);
-                    #if defined MENU_FUNCTION
+                    #if defined MENU_ON_HIGHEST
                     unregister_code(KC_MENU);
                     #endif
                     register_mods(MOD_BIT(KC_RSFT));
@@ -953,7 +949,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (MODS_RSFT && !MODS_RCTRL && MODS_RALT && !MODS_RGUI) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                     layer_on(HIGHEST);
-                    #if defined MENU_FUNCTION
+                    #if defined MENU_ON_HIGHEST
                     unregister_mods(MOD_BIT(KC_RALT));
                     register_code(KC_MENU);
                     return false;
@@ -965,7 +961,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (IS_LAYER_ON(HIGHEST)) {
                     layer_off(HIGHEST);
-                    #if defined MENU_FUNCTION
+                    #if defined MENU_ON_HIGHEST
                     unregister_code(KC_MENU);
                     #endif
                     register_mods(MOD_BIT(KC_RSFT));
@@ -974,7 +970,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (MODS_RSFT && MODS_RCTRL && !MODS_RALT && !MODS_RGUI) {
                     unregister_mods(MOD_BIT(KC_RSFT));
                     layer_on(HIGHEST);
-                    #if defined MENU_FUNCTION
+                    #if defined MENU_ON_HIGHEST
                     unregister_mods(MOD_BIT(KC_RCTL));
                     register_code(KC_MENU);
                     return false;

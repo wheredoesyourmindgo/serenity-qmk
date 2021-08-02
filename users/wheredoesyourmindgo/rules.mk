@@ -58,3 +58,7 @@ SRC += wheredoesyourmindgo.c
 ifeq ($(strip $(MENU_ON_HIGHEST)), yes)
   OPT_DEFS += -DMENU_ON_HIGHEST
 endif
+
+ifeq ($(strip $(COLEMAK_DH_OA)), yes)
+  OPT_DEFS += -DCOLEMAK_DH_OA
+endif

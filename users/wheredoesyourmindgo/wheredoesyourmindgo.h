@@ -130,8 +130,15 @@
 
 // Placeholder for bailing out of retro tap
 #define VOID KC_NO
-
 #define PRV_APP LGUI(KC_TAB)
+
+#if defined COLEMAK_DH_OA
+    #define ALPH_R2C1 KC_O
+    #define ALPH_R2C10 KC_A
+#else
+    #define ALPH_R2C1 KC_A
+    #define ALPH_R2C10 KC_O
+#endif
 
 enum layers { BASE, BASE_HRM, LOWER, LOWER_ALT, LOW, LOWEST, HIGHER, HIGHER_HRM, HIGH, HIGHEST, OS };
 

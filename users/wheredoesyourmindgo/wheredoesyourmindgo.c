@@ -1166,16 +1166,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
-        case OS_FLLSCRN:
-            if (record->event.pressed) {
-                if (MODS_RSFT) {
-                    tap_code16_no_mod(WNDW_MAX);
-                } else {
-                    tap_code16(OS_FLLSCRN);
-                }
-                return false;
-            }
-            break;
+        // case OS_FLLSCRN:
+        //     if (record->event.pressed) {
+        //         if (MODS_RSFT) {
+        //             tap_code16_no_mod(WNDW_MAX);
+        //         } else {
+        //             tap_code16(OS_FLLSCRN);
+        //         }
+        //         return false;
+        //     }
+        //     break;
         case WNDW_CNTR:
             if (record->event.pressed) {
                 mod_state = get_mods();

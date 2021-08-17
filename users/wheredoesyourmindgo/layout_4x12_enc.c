@@ -54,8 +54,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 	[OS] = LAYOUT_4x12_enc(
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,    OS_SCRN_SHT_OPT,  OS_LNCHPD, OS_TRM_VSR,     OS_SIRI,            OS_SDBR,        KC_NO,
-        KC_NO, VOID, KC_NO, KC_NO, KC_NO, KC_NO,    OS_DSKTP,       OS_PRV_SPC,     CMD_TAB_PRV,        CMD_TAB_NXT,        OS_NXT_SPC,     OS_FLLSCRN,
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,    PRV_APP,         OS_MSN_CNTRL,   OS_PRVS_APP_WNDW,   OS_NXT_APP_WNDW,    OS_APP_WNDWS,   KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,    OS_DSKTP,       OS_PRV_SPC,     CMD_TAB_PRV,        CMD_TAB_NXT,        OS_NXT_SPC,     OS_FLLSCRN,
+        KC_NO, KC_NO, KC_NO, KC_NO, VOID, KC_NO,    PRV_APP,         OS_MSN_CNTRL,   OS_PRVS_APP_WNDW,   OS_NXT_APP_WNDW,    OS_APP_WNDWS,   KC_NO,
         KC_NO, KC_NO, KC_NO, KC_NO, DF(BASE), DF(BASE),KC_TRNS, OS_SPTLGHT,  OS_LNCHR,                     KC_NO,              KC_NO,              KC_NO,          KC_NO
     )
 };

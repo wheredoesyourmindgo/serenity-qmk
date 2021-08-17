@@ -4,13 +4,7 @@
 #    include "print.h"
 #endif
 
-typedef struct {
-    bool    is_press_action;
-    uint8_t state;
-} td_tap_t;
 
-// Initialize variable holding the binary representation of active modifiers.
-uint8_t mod_state;
 
 // #define MODS_SFT (get_mods() & MOD_BIT(KC_LSFT) || get_mods() & MOD_BIT(KC_RSFT))
 #define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
@@ -36,24 +30,6 @@ uint8_t mod_state;
 #define ONESHOT_MODS_RALT (get_oneshot_mods() & MOD_BIT(KC_RALT))
 #define ONESHOT_MODS_RCTL (get_oneshot_mods() & MOD_BIT(KC_RCTL))
 
-// Functions associated with individual tap dances
-td_state_t cur_dance(qk_tap_dance_state_t *state);
-void       lower_esc_finished(qk_tap_dance_state_t *state, void *user_data);
-void       lower_esc_reset(qk_tap_dance_state_t *state, void *user_data);
-void       low_ent_finished(qk_tap_dance_state_t *state, void *user_data);
-void       low_ent_reset(qk_tap_dance_state_t *state, void *user_data);
-void       os_grave_oshr_each(qk_tap_dance_state_t *state, void *user_data);
-void       os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
-void       os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
-void       caps_word_each(qk_tap_dance_state_t *state, void *user_data);
-// void       caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
-void caps_word_reset(qk_tap_dance_state_t *state, void *user_data);
-void caps_sentence_each(qk_tap_dance_state_t *state, void *user_data);
-// void       caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data);
-void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
-void oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
-void oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
-void tgl_select(qk_tap_dance_state_t *state, void *user_data);
 
 bool     is_cmd_tab_active = false;
 bool     is_cmd_tab_held   = false;
@@ -65,6 +41,7 @@ uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 bool caps_active          = false;
 bool caps_word_active     = false;
 bool caps_sentence_active = false;
+
 void cancel_quick_caps(void) {
     dprint("cancelling quick caps\n");
     caps_sentence_active = false;
@@ -1301,6 +1278,28 @@ void matrix_scan_user(void) {
     //     }
     //   }
 // }
+
+__attribute__((weak)) bool encoder_update_keymap(uint8_t index, bool clockwise) { return true; }
+
+bool encoder_update_user(uint8_t index, bool clockwise) {
+    if (!encoder_update_keymap(index, clockwise)) { return false; }
+	if(index == 0) {
+		if (clockwise) {
+            if (IS_LAYER_ON(HIGH)) {
+                tap_code(DISP_DIM);
+            } else {
+                tap_code(KC_VOLD);
+            }
+		} else {
+            if (IS_LAYER_ON(HIGH)) {
+                tap_code(DISP_BRI);
+            } else {
+                tap_code(KC_VOLU);
+            }
+		}
+    }
+	return false;
+}
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {

@@ -35,6 +35,8 @@ endif
 ifeq ($(strip $(KEYBOARD)), ristretto)
 	OPT_DEFS += -DRISTRETTO_KEYBOARD
 	LTO_ENABLE = yes
+# CONSOLE_ENABLE = yes
+	ENCODER_ENABLE = yes
 	SRC += layout_4x12_enc.c
 endif
 

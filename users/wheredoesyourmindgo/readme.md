@@ -2,7 +2,7 @@
 
 ## About
 
-This is a QMK layout that includes dedicated right and left shift keys. Optionally home row mods can be toggled on; Home row mods are turned off by default. The Base layer uses the Colemak-DH layout. This layout is configured for use with macOS and would generally be used with a 42+ key layout.
+This is a QMK layout that includes dedicated right and left shift keys. The Base layer uses the Colemak-DH layout. This layout is configured for use with macOS and would generally be used with a 42+ key layout.
 
 ## Features
 
@@ -25,9 +25,7 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 
 ## Mod Usage
 
-Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and right. As stated above, home row mods can be toggled on. When activating a multi-combo mod press, either move your hand in the same fashion as you would if there were an arrow cluster there towards the bottom corner. Effectively, this in turn should feel very reminiscent to using home row mods. Since mods are mirrored on both the bottom right and left use opposite hand to press key.
-
-When activating single mod presses, leave your hand above the home row and lower the corresponding finger down 2 rows to activate the press and hold. This is done identically to how mods are typically activated with a standard ANSI layout. Again, since mods are mirrored on both the bottom right and left use opposite hand to press key.
+Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and right. When activating a multi-combo mod press, move your hand in the same fashion as you would if there were an arrow cluster there towards the bottom corner. Effectively, this in turn should feel very reminiscent to using home row mods. Since mods are mirrored on both the bottom right and left use opposite hand to press key. When activating single mod presses, leave your hand above the home row and lower the corresponding finger down 2 rows to activate the press and hold. This is done identically to how mods are typically activated with a standard ANSI layout. Again, since mods are mirrored on both the bottom right and left use opposite hand to press key.
 
 ### Case for Right Handed Space
 

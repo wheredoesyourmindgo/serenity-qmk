@@ -19,7 +19,7 @@
 #define MODS_RGUI (get_mods() & MOD_BIT(KC_RGUI))
 #define MODS_LGUI (get_mods() & MOD_BIT(KC_LGUI))
 // #define ACTIVE_MODS (get_mods())
-#define ONESHOT_LYR_ACTIVE (is_oneshot_layer_active())
+// #define ONESHOT_LYR_ACTIVE (is_oneshot_layer_active())
 #define ONESHOT_MODS_ACTIVE (get_oneshot_mods())
 #define ONESHOT_MODS_LSFT (get_oneshot_mods() & MOD_BIT(KC_LSFT))
 #define ONESHOT_MODS_LGUI (get_oneshot_mods() & MOD_BIT(KC_LGUI))
@@ -66,8 +66,8 @@ void cancel_caps_word(void) {
 // track last key pressed to determine if delete word should trigger
 bool dontBspaceWord = false;
 
-// Create an instance of 'td_tap_t' for the 'os_grave_oshr' tap dance.
-static td_tap_t os_grave_oshr_t = {.is_press_action = true, .state = TD_NONE};
+// Create an instance of 'td_tap_t' for the 'os_grave' tap dance.
+// static td_tap_t os_grave_t = {.is_press_action = true, .state = TD_NONE};
 // Create an instance of 'td_tap_t' for the 'lower_esc' tap dance.
 // static td_tap_t lower_esc_t = {.is_press_action = true, .state = TD_NONE};
 
@@ -99,7 +99,8 @@ void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
     if (!state->interrupted) {
         // Only fire escape if keypress was not interrupted AND special mode is not active
-        if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active && !ONESHOT_LYR_ACTIVE) {
+        // if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active && !ONESHOT_LYR_ACTIVE) {
+        if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active) {
             tap_code(KC_ESC);
             return;
         }
@@ -110,9 +111,6 @@ void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
         if (caps_sentence_active || caps_word_active) {
             cancel_quick_caps();
         }
-        if (ONESHOT_LYR_ACTIVE && IS_LAYER_ON(BASE_HRM)) {
-            clear_oneshot_layer_state(ONESHOT_PRESSED);
-        }
     }
     // lower_esc_t.state = TD_NONE;
 }
@@ -121,6 +119,7 @@ void low_ent_finished(qk_tap_dance_state_t *state, void *user_data) {
     // low_ent_t.state = cur_dance(state);
     layer_on(LOW);
 }
+
 void low_ent_reset(qk_tap_dance_state_t *state, void *user_data) {
     // low_ent_t.state = cur_dance(state);
     layer_off(LOW);
@@ -134,45 +133,19 @@ void low_ent_reset(qk_tap_dance_state_t *state, void *user_data) {
     // low_ent_t.state = TD_NONE;
 }
 
-void os_grave_oshr_each(qk_tap_dance_state_t *state, void *user_data) {
-    os_grave_oshr_t.state = cur_dance(state);
-    if (state->count == 2) {
-        set_oneshot_layer(BASE_HRM, ONESHOT_START);
-        // it's is unclear if reset_tap_dance() helps in this regard
-        reset_tap_dance(state);
-    }
+void os_grave_finished(qk_tap_dance_state_t *state, void *user_data) {
+    // os_grave_t.state = cur_dance(state);
+    layer_on(OS);
 }
-void os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data) {
-    os_grave_oshr_t.state = cur_dance(state);
-    if (!state->pressed && !state->interrupted && state->count >= 2) {
-        return;
+void os_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
+    // os_grave_t.state = cur_dance(state);
+    // Don't turn off OS layer if cmd+tab is active. Instead, wait for timeout or base layer switch.
+    if (!is_cmd_tab_active) {
+        layer_off(OS);
     }
-    clear_oneshot_layer_state(ONESHOT_PRESSED);
-    if (!state->pressed && !state->interrupted && state->count == 1) {
+    if (!state->interrupted) {
         tap_code(KC_GRAVE);
-    } else {
-        layer_on(OS);
     }
-}
-void os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data) {
-    os_grave_oshr_t.state = cur_dance(state);
-    if (IS_LAYER_ON(OS)) {
-        // Emulate retro tapping when key held was held and not interrupted. This if must be nested in outer if statement or KC_GRAVE will fire twice.
-        if (!state->pressed && !state->interrupted && state->count == 1) {
-            tap_code(KC_GRAVE);
-        }
-        // Immediately end cmd+tab when OS Layer is released
-        // if (is_cmd_tab_active) {
-        //     unregister_mods(MOD_BIT(KC_LGUI));
-        //     is_cmd_tab_active     = false;
-        //     cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-        // }
-        // Don't turn off OS layer if cmd+tab is active. Instead, wait for timeout or base layer switch.
-        if (!is_cmd_tab_active) {
-            layer_off(OS);
-        }
-    }
-    os_grave_oshr_t.state = TD_NONE;
 }
 
 void caps_word_each(qk_tap_dance_state_t *state, void *user_data) {
@@ -267,7 +240,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset),
     [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset),
     [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
-    [TD_OS_GRV_OSHR] = ACTION_TAP_DANCE_FN_ADVANCED(os_grave_oshr_each, os_grave_oshr_finished, os_grave_oshr_reset),
+    [TD_OS_GRV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_finished, os_grave_reset),
 };
 // end of Tap Dance config
 
@@ -302,20 +275,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
     }
 
-    if (ONESHOT_LYR_ACTIVE && IS_LAYER_ON(BASE_HRM) && !record->event.pressed) {
-        switch (keycode) {
-            // Also see lower_esc_reset()
-            case KC_ESC: {
-                clear_oneshot_layer_state(ONESHOT_PRESSED);
-                // Don't emit Escape key
-                return false;
-            }
-            // See lower_esc tap dance reset function
-            // case LT(LOWER, KC_ESC):
-            case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-                clear_oneshot_layer_state(ONESHOT_PRESSED);
-        }
-    }
     // This fixes issue where two shifted alphas occur (instead of one) after using sentence_end tap function
     // if (ONESHOT_MODS_ACTIVE & MOD_BIT(KC_LSFT) && record->event.pressed) {
     //     clear_oneshot_mods();
@@ -621,23 +580,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case OS_PRV_SPC:
         case OS_NXT_SPC:
-            if (record->event.pressed || os_grave_oshr_t.state == TD_INTERRUPTED) {
+            if (record->event.pressed) {
                 is_cmd_tab_held = true;
-
-                // reset tap dance state associated w/ OS layer
-                if (os_grave_oshr_t.state == TD_INTERRUPTED) {
-                    os_grave_oshr_t.state = TD_NONE;
-                    // Necessary. Assume the the key release in if(record->event.pressed) else{...} is applicable
-                    cmd_tab_timer   = timer_read();
-                    is_cmd_tab_held = false;
-                }
             } else {
                 cmd_tab_timer   = timer_read();
                 is_cmd_tab_held = false;
             }
             break;
         case CMD_TAB_NXT:
-            if (record->event.pressed || os_grave_oshr_t.state == TD_INTERRUPTED) {
+            if (record->event.pressed) {
                 if (!is_cmd_tab_active) {
                     is_cmd_tab_active = true;
                     register_mods(MOD_BIT(KC_LGUI));
@@ -649,14 +600,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_mods(MOD_BIT(KC_LSFT));
                 // cmd_tab_timer = timer_read(); // Start the timer when the key is released, not pressed
                 tap_code(KC_TAB);
-
-                // reset tap dance state associated w/ OS layer
-                if (os_grave_oshr_t.state == TD_INTERRUPTED) {
-                    os_grave_oshr_t.state = TD_NONE;
-                    // Necessary. Assume the the key release in if(record->event.pressed) else{...} is applicable
-                    cmd_tab_timer   = timer_read();
-                    is_cmd_tab_held = false;
-                }
             } else {
                 cmd_tab_timer   = timer_read();
                 is_cmd_tab_held = false;
@@ -664,7 +607,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case CMD_TAB_PRV:
-            if (record->event.pressed || os_grave_oshr_t.state == TD_INTERRUPTED) {
+            if (record->event.pressed) {
                 if (!is_cmd_tab_active) {
                     is_cmd_tab_active = true;
                     register_code(KC_LGUI);
@@ -676,15 +619,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_TAB);
                 is_cmd_tab_held = true;
                 // cmd_tab_timer = timer_read();
-
-                // reset tap dance state associated w/ OS layer
-                if (os_grave_oshr_t.state == TD_INTERRUPTED) {
-                    os_grave_oshr_t.state = TD_NONE;
-                    // Necessary. Assume the the key release in if(record->event.pressed) else{...} is applicable
-                    cmd_tab_timer   = timer_read();
-                    is_cmd_tab_held = false;
-                    unregister_mods(MOD_BIT(KC_LSFT));
-                }
             } else {
                 cmd_tab_timer   = timer_read();
                 is_cmd_tab_held = false;
@@ -1307,7 +1241,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_TGL_SEL):
         case TD(TD_CAPS_WORD):
         case TD(TD_CAPS_SENTENCE):
-        case TD(TD_OS_GRV_OSHR):
+        // case TD(TD_OS_GRV):
             return TAPPING_TD_TERM;
         // case LT(HIGHEST, KC_LEFT):
         // case RGUI_T(KC_DOWN):
@@ -1319,6 +1253,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_LOW_ENT):
         // case LT(LOWER, KC_ESC):
         case TD(TD_LOWER_ESC):
+        case TD(TD_OS_GRV):
             return 0;
         case LT(HIGH, KC_TAB):
             return TAPPING_RETRO_TERM;
@@ -1337,7 +1272,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         // case LT(HIGH, KC_TAB):
         // case LT(HIGHER, KC_SPC):
         // case LT(OS,KC_GRV):
-        // case TD(TD_OS_GRV_OSHR):
+        // case TD(TD_OS_GRV):
         case LT(HIGHEST, KC_LEFT):
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):

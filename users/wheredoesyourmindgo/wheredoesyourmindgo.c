@@ -1283,6 +1283,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+/**
 // We won't be rolling through all the Layer-tap keys
 bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -1297,6 +1298,7 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
             return true;
     }
 }
+**/
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {

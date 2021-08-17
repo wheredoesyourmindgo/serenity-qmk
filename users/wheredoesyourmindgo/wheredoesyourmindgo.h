@@ -184,6 +184,8 @@ bool is_cmd_tab_held;
 bool caps_active;
 bool caps_word_active;
 bool caps_sentence_active;
+void cancel_quick_caps(void);
+void cancel_caps_word(void);
 bool encoder_update_keymap(uint8_t index, bool clockwise);
 
 // Initialize variable holding the binary representation of active modifiers.

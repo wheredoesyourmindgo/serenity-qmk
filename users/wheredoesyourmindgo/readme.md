@@ -23,19 +23,11 @@ This is a QMK layout that includes dedicated right and left shift keys. Optional
 -   (macOS) Shortcuts for quick access to word & line backspace and word & line delete forward. These are activated from Lower, Lowest, Higher, and Highest layers, respectively. For convenience, the word delete will not trigger when entering numbers in Lower layer, which is ideal for using backspace within Lower layer (the side effect is that words that end with a number can't be word-deleted until Lower hold is released and held again).
 -   (macOS) Hold the Menu key (KC_MENU) while holding down the function key. This can be enabled by building firmware with 'MENU_ON_HIGHEST=yes' option. The Menu keycode is not used by MacOS, but it will register, so it can be converted to something else such as the Function "fn" key via a Karabiner-Elements rule which will enable further customization via Karabiner-Elements with additional rules.
 
-## Approach
+## Mod Usage
 
-There are a couple of ways to approach this layout.
-
-### Without Home Row Mods
-
-Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and right. As stated above, home row mods can be toggled on. When activating a multi-combo mod press, either move your hand in the same fashion as you would if there were an arrow cluster there towards the bottom corner. Effectively, this in turn should feel very reminiscent to using home row mods. Since mods are mirrored on both the bottom right and left use opposite hand to press key, or, use One-shot Home Row Mods feature by triggering combo using Higher+t key.
+Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and right. As stated above, home row mods can be toggled on. When activating a multi-combo mod press, either move your hand in the same fashion as you would if there were an arrow cluster there towards the bottom corner. Effectively, this in turn should feel very reminiscent to using home row mods. Since mods are mirrored on both the bottom right and left use opposite hand to press key.
 
 When activating single mod presses, leave your hand above the home row and lower the corresponding finger down 2 rows to activate the press and hold. This is done identically to how mods are typically activated with a standard ANSI layout. Again, since mods are mirrored on both the bottom right and left use opposite hand to press key.
-
-### With Row Mods
-
-Use home row mods with the added benefit of having dedicated shift keys on both the left and right. Use the dedicated Shift keys on the right and left for shifting alpha keys. For novice-intermediate (home row mod) users this can yield a faster typing experience when typing in mixed case. Since shift keys mirrored on both the right and left use opposite hand to press shifted key. Use the shift keys located on the home rows for keyboard shortcuts and multi-combo mod presses. For a more focused typing experience, or when typing for extended periods of time (ex. Emails or Typing Speed Test) consider toggling home row mods off to prevent accidental mod presses.
 
 ### Case for Right Handed Space
 

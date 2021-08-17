@@ -158,6 +158,41 @@ enum {
 // Tap dance state
 typedef enum { TD_NONE, TD_INTERRUPTED, TD_NOT_INTERRUPTED } td_state_t;
 
+typedef struct {
+    bool    is_press_action;
+    uint8_t state;
+} td_tap_t;
+
+// Functions associated with individual tap dances
+td_state_t cur_dance(qk_tap_dance_state_t *state);
+void       lower_esc_finished(qk_tap_dance_state_t *state, void *user_data);
+void       lower_esc_reset(qk_tap_dance_state_t *state, void *user_data);
+void       low_ent_finished(qk_tap_dance_state_t *state, void *user_data);
+void       low_ent_reset(qk_tap_dance_state_t *state, void *user_data);
+void       os_grave_oshr_each(qk_tap_dance_state_t *state, void *user_data);
+void       os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
+void       os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
+void       caps_word_each(qk_tap_dance_state_t *state, void *user_data);
+// void       caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
+void caps_word_reset(qk_tap_dance_state_t *state, void *user_data);
+void caps_sentence_each(qk_tap_dance_state_t *state, void *user_data);
+// void       caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data);
+void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
+void oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
+void oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
+void tgl_select(qk_tap_dance_state_t *state, void *user_data);
+
+bool is_cmd_tab_active;
+bool is_cmd_tab_held;
+bool caps_active;
+bool caps_word_active;
+bool caps_sentence_active;
+bool encoder_update_keymap(uint8_t index, bool clockwise);
+
+// Initialize variable holding the binary representation of active modifiers.
+uint8_t mod_state;
+
+
 #if defined PLANCK_KEYBOARD
 #define LAYOUT_4x12(k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, k0a, k0b, k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, k1a, k1b, k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, k2a, k2b, k30, k31, k32, k33, k34, k35, k36, k37, k38, k39, k3a, k3b)      \
         {                                                                                                                                                                                                                                                                    \
@@ -204,5 +239,6 @@ typedef enum { TD_NONE, TD_INTERRUPTED, TD_NOT_INTERRUPTED } td_state_t;
 		{K300, K301, K302, K303, K304, K305, K306 , K307, K308, K309, K310, K311, K312}  \
 }
 #endif
+
 
 #endif

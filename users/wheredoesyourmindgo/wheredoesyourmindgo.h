@@ -140,7 +140,7 @@
     #define ALPH_R2C10 KC_O
 #endif
 
-enum layers { BASE, BASE_HRM, LOWER, LOWER_ALT, LOW, LOWEST, HIGHER, HIGHER_HRM, HIGH, HIGHEST, OS };
+enum layers { BASE, LOWER, LOWER_ALT, LOW, LOWEST, HIGHER, HIGH, HIGHEST, OS };
 
 enum keycodes { CMD_TAB_PRV = SAFE_RANGE, CMD_TAB_NXT, OOPS, DISP_FDIM, DISP_FBRI, OSHR, VOL_JUP, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, TRY_BSPACE_WORD, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, TLNG_ILFT, TLNG_IRGHT };
 
@@ -152,7 +152,7 @@ enum {
     TD_CAPS_WORD,
     TD_CAPS_SENTENCE,
     TD_OOPSY,
-    TD_OS_GRV_OSHR
+    TD_OS_GRV
 };
 
 // Tap dance state
@@ -165,18 +165,15 @@ typedef struct {
 
 // Functions associated with individual tap dances
 td_state_t cur_dance(qk_tap_dance_state_t *state);
-void       lower_esc_finished(qk_tap_dance_state_t *state, void *user_data);
-void       lower_esc_reset(qk_tap_dance_state_t *state, void *user_data);
-void       low_ent_finished(qk_tap_dance_state_t *state, void *user_data);
-void       low_ent_reset(qk_tap_dance_state_t *state, void *user_data);
-void       os_grave_oshr_each(qk_tap_dance_state_t *state, void *user_data);
-void       os_grave_oshr_finished(qk_tap_dance_state_t *state, void *user_data);
-void       os_grave_oshr_reset(qk_tap_dance_state_t *state, void *user_data);
-void       caps_word_each(qk_tap_dance_state_t *state, void *user_data);
-// void       caps_word_finished(qk_tap_dance_state_t *state, void *user_data);
+void lower_esc_finished(qk_tap_dance_state_t *state, void *user_data);
+void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data);
+void low_ent_finished(qk_tap_dance_state_t *state, void *user_data);
+void low_ent_reset(qk_tap_dance_state_t *state, void *user_data);
+void os_grave_finished(qk_tap_dance_state_t *state, void *user_data);
+void os_grave_reset(qk_tap_dance_state_t *state, void *user_data);
+void caps_word_each(qk_tap_dance_state_t *state, void *user_data);
 void caps_word_reset(qk_tap_dance_state_t *state, void *user_data);
 void caps_sentence_each(qk_tap_dance_state_t *state, void *user_data);
-// void       caps_sentence_finished(qk_tap_dance_state_t *state, void *user_data);
 void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
 void oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
 void oopsy_reset(qk_tap_dance_state_t *state, void *user_data);

@@ -61,10 +61,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, KC_NO, KC_NO, KC_NO, KC_NO, DF(BASE), RGUI_T(KC_DOWN), RALT_T(KC_UP), RCTL_T(KC_RIGHT)
     ),
 	[OS] = LAYOUT_boardwalk_hs(
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_NO,     KC_NO,            KC_NO,          KC_NO,              KC_NO,              KC_NO,          KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   OS_SCRN_SHT_OPT,  OS_LNCHPD, OS_SPTLGHT,               OS_SIRI,            OS_SDBR,        KC_NO,
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO, KC_NO,  OS_DSKTP,       OS_PRV_SPC,     CMD_TAB_PRV,        CMD_TAB_NXT,        OS_NXT_SPC,     OS_FLLSCRN,
-        KC_NO, KC_NO, KC_NO, KC_NO, VOID, KC_NO, KC_NO, KC_NO,   PRV_APP,   OS_PRVS_APP_WNDW, OS_MSN_CNTRL,       OS_APP_WNDWS, OS_NXT_APP_WNDW,   KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_NO,     KC_NO,            KC_NO,          KC_NO,              KC_NO,              KC_NO,    KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   OS_SCRN_SHT_OPT,  OS_LNCHPD, OS_SPTLGHT,               OS_SIRI,            OS_SDBR,        OS_DSKTP,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,  KC_NO, KC_NO,  PRV_APP,       OS_PRV_SPC,     CMD_TAB_PRV,        CMD_TAB_NXT,        OS_NXT_SPC,     OS_FLLSCRN,
+        KC_NO, KC_NO, KC_NO, KC_NO, VOID, KC_NO, KC_NO, KC_NO,   KC_NO,   OS_PRVS_APP_WNDW, OS_MSN_CNTRL,       OS_APP_WNDWS, OS_NXT_APP_WNDW,   KC_NO,
         KC_NO, KC_NO, KC_NO, KC_NO, DF(BASE), DF(BASE),  OS_TRM_VSR,  OS_LNCHR,                     KC_NO,              KC_NO,              KC_NO,          KC_NO
     )
 };

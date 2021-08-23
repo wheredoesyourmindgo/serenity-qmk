@@ -12,8 +12,7 @@
 #define ZOOM_IN LGUI(KC_PLUS)       // Zoom In
 #define ZOOM_OUT LGUI(KC_MINUS)     // Zoom Out
 #define ZOOM_RESET LGUI(KC_P0)      // Zoom Reset
-// #define PASTE LGUI(KC_V)         // Paste
-#define PASTE LGUI(KC_D)            // Re-mapped Paste
+#define PASTE LGUI(KC_V)         // Paste
 #define COPY LGUI(KC_C)             // Copy
 #define CUT LGUI(KC_X)              // Cut
 #define UNDO LGUI(KC_Z)             // Undo

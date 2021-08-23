@@ -1179,7 +1179,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 #ifdef RGB_MATRIX_ENABLE
-led_config_t g_led_config = { {
+void matrix_init_user(void) {
+    g_led_config = (led_config_t){ {
   {11,12,13,14,15,16,17,18,19,20,21,22},
     {23,24,25,26,27,28,29,30,31,32,33,34},
     {35,36,37,38,39,40,41,42,43,44,45,46},
@@ -1195,8 +1196,8 @@ led_config_t g_led_config = { {
     1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
     1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-
-} };
+   } };
+};
 #endif
 
 

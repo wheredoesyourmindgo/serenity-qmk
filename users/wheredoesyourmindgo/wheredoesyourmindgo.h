@@ -12,11 +12,12 @@
 #define ZOOM_IN LGUI(KC_PLUS)       // Zoom In
 #define ZOOM_OUT LGUI(KC_MINUS)     // Zoom Out
 #define ZOOM_RESET LGUI(KC_P0)      // Zoom Reset
-#define PASTE LGUI(KC_V)
-#define COPY LGUI(KC_C)
-#define CUT LGUI(KC_X)
-#define UNDO LGUI(KC_Z)
-#define REDO SGUI(KC_Z)
+// #define PASTE LGUI(KC_V)         // Paste
+#define PASTE LGUI(KC_D)            // Re-mapped Paste
+#define COPY LGUI(KC_C)             // Copy
+#define CUT LGUI(KC_X)              // Cut
+#define UNDO LGUI(KC_Z)             // Undo
+#define REDO SGUI(KC_Z)             // Redo
 
 // Tiling Management (Amethyst)
 #define TLNG_FLT LALT(LSFT(KC_G))                   // Floating layout

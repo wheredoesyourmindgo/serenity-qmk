@@ -1174,6 +1174,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        case TGL_LYT:
+            if (record->event.pressed) {
+                layer_off(HIGH);
+                if (IS_LAYER_ON(BASE)) {
+                    // dprint("BASE layer is on prior to switch");
+                    layer_off(BASE);
+                    layer_on(BASE_QWRTY);
+                    default_layer_set(BASE_QWRTY);
+                } else {
+                    // dprint("BASE_QWRTY layer is on prior to switch");
+                    layer_off(BASE_QWRTY);
+                    layer_on(BASE);
+                    default_layer_set(BASE);
+                }
+                return false;
+            }
+            break;
     }
     return true;
 }
@@ -1200,7 +1217,14 @@ void matrix_init_user(void) {
 };
 #endif
 
-
+void keyboard_post_init_user(void) {
+#ifdef QWERTY_BASE
+    // Call the post init code.
+    layer_off(BASE);
+    layer_on(BASE_QWRTY);
+    default_layer_set(BASE_QWRTY);
+#endif
+}
 
 // LEADER_EXTERNS();
 

@@ -9,6 +9,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TD(TD_CAPS_WORD), KC_Z, KC_X, KC_C, KC_D, KC_V, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, TD(TD_CAPS_SENTENCE),
         TD(TD_OOPSY), KC_LALT, KC_LGUI, MO(LOWEST), TD(TD_LOWER_ESC), TD(TD_LOW_ENT), LT(HIGH,KC_TAB), LT(HIGHER,KC_SPC), LT(HIGHEST,KC_LEFT), RGUI_T(KC_DOWN), RALT_T(KC_UP), RCTL_T(KC_RIGHT)
     ),
+    [BASE_QWRTY] = LAYOUT_4x12(
+        KC_DEL, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC,
+        TD(TD_OS_GRV), KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
+        TD(TD_CAPS_WORD), KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(TD_CAPS_SENTENCE),
+        TD(TD_OOPSY), KC_LALT, KC_LGUI, MO(LOWEST), TD(TD_LOWER_ESC), TD(TD_LOW_ENT), LT(HIGH,KC_TAB), LT(HIGHER,KC_SPC), LT(HIGHEST,KC_LEFT), RGUI_T(KC_DOWN), RALT_T(KC_UP), RCTL_T(KC_RIGHT)
+    ),
     // Having LT(HIGHER,KC_SPC) allows quick toggle select when arrowing with Lower layer
 	[LOWER] = LAYOUT_4x12(
         KC_DEL , KC_1         , KC_2         , KC_3         , KC_4         , KC_5     ,         KC_6          , KC_7   , KC_8 , KC_9, KC_0, TRY_BSPACE_WORD,
@@ -53,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, KC_NO, KC_NO, KC_NO, KC_NO, DF(BASE), RGUI_T(KC_DOWN), RALT_T(KC_UP), RCTL_T(KC_RIGHT)
     ),
 	[OS] = LAYOUT_4x12(
-        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,    OS_SCRN_SHT_OPT,  OS_LNCHPD, OS_SPTLGHT,     OS_SIRI,            OS_SDBR,        KC_NO,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,    OS_SCRN_SHT_OPT,  OS_LNCHPD, OS_SPTLGHT,     OS_SIRI,  OS_SDBR,        KC_NO,
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   PRV_APP,        OS_PRV_SPC,     CMD_TAB_PRV,        CMD_TAB_NXT,        OS_NXT_SPC,     OS_FLLSCRN,
         KC_NO, KC_NO, KC_NO, KC_NO, VOID, KC_NO, OS_DSKTP, OS_PRVS_APP_WNDW, OS_MSN_CNTRL, OS_APP_WNDWS,   OS_NXT_APP_WNDW,       KC_NO,
         KC_NO, KC_NO, KC_NO, KC_NO, DF(BASE), DF(BASE),  OS_TRM_VSR, OS_LNCHR,                     KC_NO,              KC_NO,              KC_NO,          KC_NO

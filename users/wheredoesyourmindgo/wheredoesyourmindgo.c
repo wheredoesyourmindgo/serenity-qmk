@@ -747,7 +747,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case MO(LOWEST):
+        case LT(LOWEST, KC_APP):
             if (record->event.pressed) {
                 if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
                     layer_on(BASE);
@@ -1305,6 +1305,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_OS_GRV):
             return 0;
         case LT(HIGH, KC_TAB):
+        case LT(LOWEST, KC_APP):
             return TAPPING_RETRO_TERM;
         // While space key use retro tapping, we don't what to actiate the higher layer quickly with short tapping terms so just use default tapping term. We won't be rolling quickly through tab key so a shorter tapping term can be used with High layer.
         // case LT(HIGHER, KC_SPC):
@@ -1368,6 +1369,7 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
         // case LT(OS,KC_GRV):
         // case LT(LOWER, KC_ESC):
         // case LT(LOW, KC_ENT):
+        case LT(LOWEST, KC_APP):
         case LT(HIGH, KC_TAB):
         case LT(HIGHER, KC_SPC):
             return true;

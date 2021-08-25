@@ -64,3 +64,8 @@ endif
 ifeq ($(strip $(COLEMAK_DH_OA)), yes)
   OPT_DEFS += -DCOLEMAK_DH_OA
 endif
+
+ifeq ($(strip $(QWERTY_BASE)), yes)
+  OPT_DEFS += -DQWERTY_BASE
+endif
+

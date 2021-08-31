@@ -27,5 +27,6 @@
         "editor.trimAutoWhitespace": false,
         "files.trimTrailingWhitespace": false
     },
-    "git.detectSubmodules": false
+    "git.detectSubmodules": false,
+    "editor.formatOnSave": false
 }

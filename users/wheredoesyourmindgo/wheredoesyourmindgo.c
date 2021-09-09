@@ -1191,6 +1191,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
+        case ENC_BTN:
+            if (record->event.pressed) {
+                if (IS_LAYER_ON(HIGH) || MODS_RSFT) {
+                    tap_code16_no_mod(OS_DRKMD_TGL);
+                } else if (MODS_RCTRL) {
+                    tap_code16_no_mod(LGUI(LALT(KC_8)));
+                } else {
+                    tap_code(KC_MUTE);
+                }
+                return false;
+            }
+            break;
     }
     return true;
 }
@@ -1262,24 +1274,31 @@ void matrix_scan_user(void) {
 // }
 #ifdef ENCODER_ENABLE
 __attribute__((weak)) bool encoder_update_keymap(uint8_t index, bool clockwise) { return true; }
+extern int retro_tapping_counter;
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (!encoder_update_keymap(index, clockwise)) { return false; }
 	if(index == 0) {
 		if (clockwise) {
-            if (IS_LAYER_ON(HIGH)) {
-                tap_code(DISP_DIM);
+            if (IS_LAYER_ON(HIGH) || MODS_RSFT) {
+                tap_code16_no_mod(DISP_DIM);
+            } else if (MODS_RCTRL) {
+                tap_code16_no_mod(LGUI(LALT(KC_MINS)));
             } else {
-                tap_code(KC_VOLD);
+                tap_code16(KC_VOLD);
             }
 		} else {
-            if (IS_LAYER_ON(HIGH)) {
-                tap_code(DISP_BRI);
+            if (IS_LAYER_ON(HIGH) || MODS_RSFT) {
+                tap_code16_no_mod(DISP_BRI);
+            } else if (MODS_RCTRL) {
+                tap_code16_no_mod(LGUI(LALT(KC_EQL)));
             } else {
-                tap_code(KC_VOLU);
+                tap_code16(KC_VOLU);
             }
 		}
     }
+    // abort retro tapping
+    retro_tapping_counter++;
 	return false;
 }
 #endif

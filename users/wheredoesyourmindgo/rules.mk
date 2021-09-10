@@ -3,6 +3,7 @@ TAP_DANCE_ENABLE = yes 		# + Tap Dance
 MOUSEKEY_ENABLE = yes 		# + Mouse keys
 EXTRAKEY_ENABLE = yes 		# + Audio control and System control
 AUTO_SHIFT_ENABLE = no 		# - Auto Shift
+KEY_LOCK_ENABLE = yes 		# Key lock
 # LTO_ENABLE = yes
 # CONSOLE_ENABLE = yes
 # COMBO_ENABLE = yes # Combos

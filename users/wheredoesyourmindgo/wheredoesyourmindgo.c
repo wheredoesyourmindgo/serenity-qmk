@@ -5,6 +5,7 @@
 #endif
 
 
+extern int retro_tapping_counter;
 
 // #define MODS_SFT (get_mods() & MOD_BIT(KC_LSFT) || get_mods() & MOD_BIT(KC_RSFT))
 #define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
@@ -83,14 +84,24 @@ void lower_esc_finished(qk_tap_dance_state_t *state, void *user_data) {
     // lower_esc_t.state = cur_dance(state);
     // In case shift is held down prior to Lower hold use Lower-alt layer. Without this block Lower must be held first, followed by a shift hold.
     if (MODS_LSFT) {
+        layer_off(LOWER);
         layer_on(LOWER_ALT);
         unregister_mods(MOD_BIT(KC_LSFT));
     } else {
-        layer_on(LOWER);
+        if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
+            layer_off(LOWER);
+            layer_on(BASE);
+            register_mods(MOD_BIT(KC_LSFT));
+        } else {
+            layer_on(LOWER);
+        }
     }
 }
 void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
     // lower_esc_t.state = cur_dance(state);
+    if (MODS_LSFT) {
+        unregister_mods(MOD_BIT(KC_LSFT));
+    }
     if (IS_LAYER_ON(LOWER)) {
         layer_off(LOWER);
     }
@@ -98,9 +109,9 @@ void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
         layer_off(LOWER_ALT);
     }
     if (!state->interrupted) {
-        // Only fire escape if keypress was not interrupted AND special mode is not active
+        // Only fire escape if keypress was not interrupted AND special mode is not active AND left control, opt, and/or command is not being held
         // if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active && !ONESHOT_LYR_ACTIVE) {
-        if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active) {
+        if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active && !MODS_LCTRL && !MODS_LALT && !MODS_LGUI) {
             tap_code(KC_ESC);
             return;
         }
@@ -191,7 +202,9 @@ void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (!state->pressed && !state->interrupted && state->count >= 2) {
+    if (!state->pressed && !state->interrupted && state->count == 1) {
+        tap_code16(KC_APP);
+    } else if (!state->pressed && !state->interrupted && state->count >= 2) {
         tap_code16(LGUI(KC_H));  // Hide Active Window
         // KC_MUTE will toggle on double tap which isn't ideal here
         int i;
@@ -200,13 +213,16 @@ void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
             tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
         }
     } else {
-        register_mods(MOD_BIT(KC_LCTRL));
+        // register_mods(MOD_BIT(KC_LCTRL));
+        layer_on(LOWEST);
     }
 }
 
 void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (MODS_LCTRL) {
-        unregister_mods(MOD_BIT(KC_LCTRL));
+    // if (MODS_LCTRL) {
+    if (IS_LAYER_ON(LOWEST)) {
+        // unregister_mods(MOD_BIT(KC_LCTRL));
+        layer_off(LOWEST);
     }
 }
 
@@ -678,13 +694,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case LT(HIGH, KC_TAB):
-        case LT(HIGHER, KC_SPC):
             if (record->event.pressed) {
                 // Only on tap (ie. Not during LT(HIGH) and LT(HIGHER))
                 if (record->tap.count > 0) {
                     if (caps_word_active) {
                         cancel_caps_word();
                     }
+                }
+            }
+            break;
+        case LT(HIGHER, KC_SPC):
+            if (record->event.pressed) {
+                if (MODS_RCTRL || MODS_RALT || MODS_RGUI) {
+                    layer_on(BASE);
+                    register_mods(MOD_BIT(KC_RSFT));
+                    // abort retro tapping
+                    retro_tapping_counter++;
+                    return false;
+                }
+                // Only on tap (ie. Not during LT(HIGH) and LT(HIGHER))
+                if (record->tap.count > 0) {
+                    if (caps_word_active) {
+                        cancel_caps_word();
+                    }
+                }
+            } else {
+                if (MODS_RSFT) {
+                    unregister_mods(MOD_BIT(KC_RSFT));
                 }
             }
             break;
@@ -736,88 +772,84 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case OOPS:
-            if (record->event.pressed) {
-                tap_code16(LGUI(KC_H));  // Hide Active Window
-                // KC_MUTE will toggle on double tap which isn't ideal here
-                int i;
-                for (i = 1; i <= 20; ++i) {
-                    // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
-                    tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
-                }
-            }
-            break;
-        case LT(LOWEST, KC_APP):
-            if (record->event.pressed) {
-                if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
-                    layer_on(BASE);
-                    register_mods(MOD_BIT(KC_LSFT));
-                    return false;
-                }
-            } else {
-                if (MODS_LSFT) {
-                    unregister_mods(MOD_BIT(KC_LSFT));
-                }
-            }
-            break;
+
+        // Un-used, see TD_OOPSY
+        // case OOPS:
+        //     if (record->event.pressed) {
+        //         tap_code16(LGUI(KC_H));  // Hide Active Window
+        //         // KC_MUTE will toggle on double tap which isn't ideal here
+        //         int i;
+        //         for (i = 1; i <= 20; ++i) {
+        //             // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
+        //             tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
+        //         }
+        //     }
+        //     break;
+
+        // Old layout, see TD_LOWER_ESC
+        // case LT(LOWEST, KC_APP):
+        //     if (record->event.pressed) {
+        //         if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
+        //             layer_on(BASE);
+        //             register_mods(MOD_BIT(KC_LSFT));
+        //             return false;
+        //         }
+        //     } else {
+        //         if (MODS_LSFT) {
+        //             unregister_mods(MOD_BIT(KC_LSFT));
+        //         }
+        //     }
+        //     break;
+
         case KC_LGUI:
             if (record->event.pressed) {
-                if (IS_LAYER_ON(LOWEST)) {
-                    layer_off(LOWEST);
+                if (IS_LAYER_ON(LOWER)) {
+                    layer_off(LOWER);
                     register_mods(MOD_BIT(KC_LSFT));
                 }
             } else {
                 if (MODS_LSFT && !MODS_LCTRL && !MODS_LALT && MODS_LGUI) {
                     unregister_mods(MOD_BIT(KC_LSFT));
-                    layer_on(LOWEST);
+                    layer_on(LOWER);
                 }
             }
             break;
         case KC_LALT:
             if (record->event.pressed) {
-                if (IS_LAYER_ON(LOWEST)) {
-                    layer_off(LOWEST);
+                if (IS_LAYER_ON(LOWER)) {
+                    layer_off(LOWER);
                     register_mods(MOD_BIT(KC_LSFT));
                 }
             } else {
                 if (MODS_LSFT && !MODS_LCTRL && MODS_LALT && !MODS_LGUI) {
                     unregister_mods(MOD_BIT(KC_LSFT));
-                    layer_on(LOWEST);
+                    layer_on(LOWER);
                 }
             }
             break;
         case KC_LCTL:
             if (record->event.pressed) {
-                if (IS_LAYER_ON(LOWEST)) {
-                    layer_off(LOWEST);
+                if (IS_LAYER_ON(LOWER)) {
+                    layer_off(LOWER);
                     register_mods(MOD_BIT(KC_LSFT));
                 }
             } else {
                 if (MODS_LSFT && MODS_LCTRL && !MODS_LALT && !MODS_LGUI) {
                     unregister_mods(MOD_BIT(KC_LSFT));
-                    layer_on(LOWEST);
+                    layer_on(LOWER);
                 }
             }
             break;
-        case LT(HIGHEST, KC_LEFT):
+        case LT(HIGHEST, KC_RIGHT):
             if (record->event.pressed) {
-                if (MODS_RCTRL || MODS_RALT || MODS_RGUI) {
-                    layer_on(BASE);
-                    register_mods(MOD_BIT(KC_RSFT));
-                    return false;
-                } else {
-                    #if defined MENU_ON_HIGHEST
-                    // Only on hold during LT(HIGHEST)
-                    if (!(record->tap.count > 0)) {
-                        register_code(KC_MENU);
-                    }
-                    #endif
-                    // return true
+                #if defined MENU_ON_HIGHEST
+                // Only on hold during LT(HIGHEST)
+                if (!(record->tap.count > 0)) {
+                    register_code(KC_MENU);
                 }
+                #endif
+                // return true
             } else {
-                if (MODS_RSFT) {
-                    unregister_mods(MOD_BIT(KC_RSFT));
-                }
                 #if defined MENU_ON_HIGHEST
                 if (!(record->tap.count > 0)) {
                     unregister_code(KC_MENU);
@@ -825,67 +857,45 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 #endif
             }
             break;
-        case RGUI_T(KC_DOWN):
+        case KC_RGUI:
+        case RGUI_T(KC_LEFT):
             if (record->event.pressed) {
-                if (IS_LAYER_ON(HIGHEST)) {
-                    layer_off(HIGHEST);
-                    #if defined MENU_ON_HIGHEST
-                    unregister_code(KC_MENU);
-                    #endif
+                if (IS_LAYER_ON(HIGHER)) {
+                    layer_off(HIGHER);
                     register_mods(MOD_BIT(KC_RSFT));
                 }
             } else {
                 if (MODS_RSFT && !MODS_RCTRL && !MODS_RALT && MODS_RGUI) {
                     unregister_mods(MOD_BIT(KC_RSFT));
-                    layer_on(HIGHEST);
-                    #if defined MENU_ON_HIGHEST
-                    // unregister mods before registering kc_menu may not be necessary
-                    unregister_mods(MOD_BIT(KC_RGUI));
-                    register_code(KC_MENU);
-                    return false;
-                    #endif
+                    layer_on(HIGHER);
                 }
             }
             break;
-        case RALT_T(KC_UP):
+        case KC_RALT:
+        case RALT_T(KC_DOWN):
             if (record->event.pressed) {
-                if (IS_LAYER_ON(HIGHEST)) {
-                    layer_off(HIGHEST);
-                    #if defined MENU_ON_HIGHEST
-                    unregister_code(KC_MENU);
-                    #endif
+                if (IS_LAYER_ON(HIGHER)) {
+                    layer_off(HIGHER);
                     register_mods(MOD_BIT(KC_RSFT));
                 }
             } else {
                 if (MODS_RSFT && !MODS_RCTRL && MODS_RALT && !MODS_RGUI) {
                     unregister_mods(MOD_BIT(KC_RSFT));
-                    layer_on(HIGHEST);
-                    #if defined MENU_ON_HIGHEST
-                    unregister_mods(MOD_BIT(KC_RALT));
-                    register_code(KC_MENU);
-                    return false;
-                    #endif
+                    layer_on(HIGHER);
                 }
             }
             break;
-        case RCTL_T(KC_RIGHT):
+        case KC_RCTL:
+        case RCTL_T(KC_UP):
             if (record->event.pressed) {
-                if (IS_LAYER_ON(HIGHEST)) {
-                    layer_off(HIGHEST);
-                    #if defined MENU_ON_HIGHEST
-                    unregister_code(KC_MENU);
-                    #endif
+                if (IS_LAYER_ON(HIGHER)) {
+                    layer_off(HIGHER);
                     register_mods(MOD_BIT(KC_RSFT));
                 }
             } else {
                 if (MODS_RSFT && MODS_RCTRL && !MODS_RALT && !MODS_RGUI) {
                     unregister_mods(MOD_BIT(KC_RSFT));
-                    layer_on(HIGHEST);
-                    #if defined MENU_ON_HIGHEST
-                    unregister_mods(MOD_BIT(KC_RCTL));
-                    register_code(KC_MENU);
-                    return false;
-                    #endif
+                    layer_on(HIGHER);
                 }
             }
             break;
@@ -1274,7 +1284,6 @@ void matrix_scan_user(void) {
 // }
 #ifdef ENCODER_ENABLE
 __attribute__((weak)) bool encoder_update_keymap(uint8_t index, bool clockwise) { return true; }
-extern int retro_tapping_counter;
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (!encoder_update_keymap(index, clockwise)) { return false; }
@@ -1305,12 +1314,13 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case TD(TD_OOPSY):
         case TD(TD_TGL_SEL):
         case TD(TD_CAPS_WORD):
         case TD(TD_CAPS_SENTENCE):
         // case TD(TD_OS_GRV):
             return TAPPING_TD_TERM;
+        case TD(TD_OOPSY):
+            return 300; // favor oopsy behavior
         // case LT(HIGHEST, KC_LEFT):
         // case RGUI_T(KC_DOWN):
         // case RALT_T(KC_UP):
@@ -1324,7 +1334,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_OS_GRV):
             return 0;
         case LT(HIGH, KC_TAB):
-        case LT(LOWEST, KC_APP):
+        // case LT(LOWEST, KC_APP):
             return TAPPING_RETRO_TERM;
         // While space key use retro tapping, we don't what to actiate the higher layer quickly with short tapping terms so just use default tapping term. We won't be rolling quickly through tab key so a shorter tapping term can be used with High layer.
         // case LT(HIGHER, KC_SPC):
@@ -1342,10 +1352,11 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         // case LT(HIGHER, KC_SPC):
         // case LT(OS,KC_GRV):
         // case TD(TD_OS_GRV):
-        case LT(HIGHEST, KC_LEFT):
-        case RGUI_T(KC_DOWN):
-        case RALT_T(KC_UP):
-        case RCTL_T(KC_RIGHT):
+        case RGUI_T(KC_LEFT):
+        case RALT_T(KC_DOWN):
+        case RCTL_T(KC_UP):
+        case LT(HIGHEST, KC_RIGHT):
+        case LT(HIGHEST, KC_SLSH):
             return true;
         default:
             return false;
@@ -1372,10 +1383,11 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Allow per key spamming for arrow keys (return false, default behaviour)
-        case LT(HIGHEST, KC_LEFT):
-        case RGUI_T(KC_DOWN):
-        case RALT_T(KC_UP):
-        case RCTL_T(KC_RIGHT):
+        case RGUI_T(KC_LEFT):
+        case RALT_T(KC_DOWN):
+        case RCTL_T(KC_UP):
+        case LT(HIGHEST, KC_RIGHT):
+        case LT(HIGHEST, KC_SLSH):
             return false;
         // Force hold by default
         default:
@@ -1388,7 +1400,7 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
         // case LT(OS,KC_GRV):
         // case LT(LOWER, KC_ESC):
         // case LT(LOW, KC_ENT):
-        case LT(LOWEST, KC_APP):
+        // case LT(LOWEST, KC_APP):
         case LT(HIGH, KC_TAB):
         case LT(HIGHER, KC_SPC):
             return true;

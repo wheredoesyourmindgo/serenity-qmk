@@ -146,7 +146,7 @@
 
 enum layers { BASE, BASE_QWRTY, LOWER, LOWER_ALT, LOW, LOWEST, HIGHER, HIGH, HIGHEST, OS };
 
-enum keycodes { CMD_TAB_PRV = SAFE_RANGE, TGL_LYT, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, OSHR, VOL_JUP, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, TRY_BSPACE_WORD, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, TLNG_ILFT, TLNG_IRGHT, ENC_BTN};
+enum keycodes { CMD_TAB_PRV = SAFE_RANGE, TGL_LYT, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, OSHR, VOL_JUP, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, TRY_BSPACE_WORD, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, TLNG_ILFT, TLNG_IRGHT, ENC_BTN, BTN1_HOLD};
 
 // Tap Dance declarations
 enum {
@@ -183,6 +183,7 @@ void oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
 void oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
 void tgl_select(qk_tap_dance_state_t *state, void *user_data);
 
+bool is_btn1_held;
 bool is_cmd_tab_active;
 bool is_cmd_tab_held;
 bool caps_active;

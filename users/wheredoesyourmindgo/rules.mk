@@ -45,6 +45,7 @@ ifeq ($(strip $(KEYBOARD)), boardsource/technik_o)
 	OPT_DEFS += -DTECHNIK_KEYBOARD
 # CONSOLE_ENABLE = yes
 # RGB_MATRIX_ENABLE = no
+	KEY_LOCK_ENABLE = no
 	LTO_ENABLE = yes
 	SRC += layout_4x12.c
 endif

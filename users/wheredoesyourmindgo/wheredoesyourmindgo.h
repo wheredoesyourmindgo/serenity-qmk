@@ -3,15 +3,23 @@
 
 #include "quantum.h"
 
+// F16 is used to show deskop (set in macOS preferences)
+// F17-F18 are used with display brightness below (set in macOS preferences)
+// F19-F24 are reserved for use with other devices
+
 // Keycodes
 #define BSPC_PRV_WRD LALT(KC_BSPC)  // Backspace previous word
 #define BSPC_PRV_LN LGUI(KC_BSPC)   // Backspace previous line
 #define MAC_MSTP KC_MPLY            // KC_MSTP does't work on macOS
-#define DISP_DIM KC_F18             // Dim Display
-#define DISP_BRI KC_F19             // Brighten Display
-#define ZOOM_IN LGUI(KC_PLUS)       // Zoom In
-#define ZOOM_OUT LGUI(KC_MINUS)     // Zoom Out
-#define ZOOM_RESET LGUI(KC_P0)      // Zoom Reset
+// Issue with External LG Monitor/display. Karabiner seems to block Control-brightness. Easiest workaround is to map display brightness controls in macOS system preferences to a function key.
+#define DISP_DIM KC_F17             // Dim Display
+#define DISP_BRI KC_F18             // Brighten Display
+#define ZOOM_IN_APP LGUI(KC_PLUS)       // Zoom in app
+#define ZOOM_OUT_APP LGUI(KC_MINUS)     // Zoom out app
+#define ZOOM_RESET_APP LGUI(KC_P0)      // Zoom reset app
+#define ZOOM_IN LALT(LGUI(KC_EQL))       // Zoom in
+#define ZOOM_OUT LALT(LGUI(KC_MINUS))     // Zoom out
+#define ZOOM_RESET LALT(LGUI(KC_8))      // Zoom reset
 #if defined REMAP_PASTE
     #define PASTE LGUI(KC_D)            // Re-mapped Paste
 #else
@@ -83,7 +91,7 @@
 #define OS_NXT_SPC LCTL(KC_RGHT)               // Next Space
 #define OS_APP_WNDWS LCTL(KC_DOWN)             // App Windows
 #define OS_MSN_CNTRL LCTL(KC_UP)               // Mission Control
-#define OS_DSKTP KC_F11                        // Show Desktop
+#define OS_DSKTP KC_F16                        // Show Desktop
 #define OS_SCRN_SHT_OPT SGUI(KC_5)             // Screenshot Options
 #define OS_SCRN_SHT_SLCT SGUI(KC_4)            // Screenshot of selected area
 #define OS_SCRN_SHT SGUI(KC_3)                 // Screenshot

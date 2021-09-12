@@ -107,8 +107,9 @@
 // #define OS_PRVS_APP SGUI(KC_TAB) // Previous App Window
 #define OS_NXT_APP_WNDW LGUI(KC_GRV)    // Next (Same)App Window
 #define OS_PRVS_APP_WNDW LGUI(KC_TILD)  // Previous (Same)App Window
-#define OS_NXT_WNDW LCTL(KC_F4)         // Next Window
-#define OS_PRVS_WNDW LSFT(LCTL(KC_F4))  // Previous Window
+// These don't work well. The previous shortcut enter's 'S' char in VSCode terminal. Often iTerm is skipped during window cycle altogether.
+// #define OS_NXT_WNDW LCTL(KC_F4)         // Next Window
+// #define OS_PRVS_WNDW LSFT(LCTL(KC_F4))  // Previous Window
 #define OS_SPTLGHT LGUI(KC_SPC)         // Spotlight
 #define OS_BCK LGUI(KC_LBRC)            // Back
 #define OS_FWD LGUI(KC_RBRC)            // Forward

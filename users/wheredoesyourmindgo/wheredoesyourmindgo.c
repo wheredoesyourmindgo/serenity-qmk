@@ -146,20 +146,22 @@ void low_ent_reset(qk_tap_dance_state_t *state, void *user_data) {
     // low_ent_t.state = TD_NONE;
 }
 
+/*
 void os_grave_finished(qk_tap_dance_state_t *state, void *user_data) {
     // os_grave_t.state = cur_dance(state);
-    layer_on(OS);
+    layer_on(MEDIA);
 }
 void os_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
     // os_grave_t.state = cur_dance(state);
     // Don't turn off OS layer if cmd+tab is active. Instead, wait for timeout or base layer switch.
     if (!is_cmd_tab_active) {
-        layer_off(OS);
+        layer_off(MEDIA);
     }
     if (!state->interrupted) {
         tap_code(KC_GRAVE);
     }
 }
+*/
 
 void caps_word_each(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
@@ -257,13 +259,13 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
     [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset),
     [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset),
-    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
-    [TD_OS_GRV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_finished, os_grave_reset),
+    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset)
+    // [TD_OS_GRV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_finished, os_grave_reset),
 };
 // end of Tap Dance config
 
 void cancel_cmd_shift(void) {
-    layer_off(OS);
+    layer_off(MEDIA);
     unregister_mods(MOD_BIT(KC_LGUI));
     if (MODS_LSFT) {
         unregister_mods(MOD_BIT(KC_LSFT));
@@ -1402,9 +1404,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_LOW_ENT):
         // case LT(LOWER, KC_ESC):
         case TD(TD_LOWER_ESC):
-        case TD(TD_OS_GRV):
+        // case TD(TD_OS_GRV):
             return 0;
         case LT(HIGH, KC_TAB):
+        case LT(KBRD, KC_QUOT):
+        case LT(MEDIA, KC_GRAVE):
         // case LT(LOWEST, KC_APP):
             return TAPPING_RETRO_TERM;
         // While space key use retro tapping, we don't what to actiate the higher layer quickly with short tapping terms so just use default tapping term. We won't be rolling quickly through tab key so a shorter tapping term can be used with High layer.
@@ -1421,7 +1425,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         // case LT(LOWER, KC_ESC):
         // case LT(HIGH, KC_TAB):
         // case LT(HIGHER, KC_SPC):
-        // case LT(OS,KC_GRV):
+        // case LT(MEDIA,KC_GRV):
         // case TD(TD_OS_GRV):
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
@@ -1438,7 +1442,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 // We won't be rolling through all the Layer-tap keys
 bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LT(OS,KC_GRV):
+        // case LT(MEDIA,KC_GRV):
         // case LT(LOWER, KC_ESC):
         // case LT(LOW, KC_ENT):
         case LT(HIGH, KC_TAB):
@@ -1468,12 +1472,14 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 
 bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LT(OS,KC_GRV):
+        // case LT(MEDIA,KC_GRV):
         // case LT(LOWER, KC_ESC):
         // case LT(LOW, KC_ENT):
         // case LT(LOWEST, KC_APP):
         case LT(HIGH, KC_TAB):
         case LT(HIGHER, KC_SPC):
+        case LT(KBRD, KC_QUOT):
+        case LT(MEDIA,KC_GRAVE):
             return true;
         default:
             return false;

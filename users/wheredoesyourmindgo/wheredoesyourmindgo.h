@@ -75,7 +75,7 @@
 #define WNDW_ALMST_MAX HYPR(KC_M)   // Almost Maximize
 #define WNDW_MAX LCA(KC_ENT)        // Maximize
 #define WNDW_VRT_MAX MEH(KC_UP)     // Vertical Maximize
-#define WNDW_TOP_LEFT LCA(KC_U)     // Top left
+#define WNDW_TOP_LFT LCA(KC_U)     // Top left
 #define WNDW_TOP_RGHT LCA(KC_I)     // Top right
 #define WNDW_BTM_LFT LCA(KC_J)      // Bottom left
 #define WNDW_BTM_RGHT LCA(KC_K)     // Bottom right
@@ -107,8 +107,9 @@
 // #define OS_PRVS_APP SGUI(KC_TAB) // Previous App Window
 #define OS_NXT_APP_WNDW LGUI(KC_GRV)    // Next (Same)App Window
 #define OS_PRVS_APP_WNDW LGUI(KC_TILD)  // Previous (Same)App Window
-#define OS_NXT_WNDW LCTL(KC_F4)         // Next Window
-#define OS_PRVS_WNDW LSFT(LCTL(KC_F4))  // Previous Window
+// These don't work well. The previous shortcut enter's 'S' char in VSCode terminal. Often iTerm is skipped during window cycle altogether.
+// #define OS_NXT_WNDW LCTL(KC_F4)         // Next Window
+// #define OS_PRVS_WNDW LSFT(LCTL(KC_F4))  // Previous Window
 #define OS_SPTLGHT LGUI(KC_SPC)         // Spotlight
 #define OS_BCK LGUI(KC_LBRC)            // Back
 #define OS_FWD LGUI(KC_RBRC)            // Forward
@@ -155,7 +156,7 @@
     #define ALPH_R2C10 KC_O
 #endif
 
-enum layers { BASE, BASE_QWRTY, LOWER, LOWER_ALT, LOW, LOWEST, HIGHER, HIGH, HIGHEST, OS };
+enum layers { BASE, BASE_QWRTY, LOWER, LOWER_ALT, LOW, LOWEST, HIGHER, HIGH, HIGHEST, MEDIA, KBRD };
 
 enum keycodes { CMD_TAB_PRV = SAFE_RANGE, TGL_LYT, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, OSHR, VOL_JUP, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, TRY_BSPACE_WORD, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, TLNG_ILFT, TLNG_IRGHT, ENC_BTN, BTN1_HOLD, CMD_TAB_HIDE, CMD_TAB_QUIT, XWNDW_CNTR};
 
@@ -166,8 +167,8 @@ enum {
     TD_LOW_ENT,
     TD_CAPS_WORD,
     TD_CAPS_SENTENCE,
-    TD_OOPSY,
-    TD_OS_GRV
+    TD_OOPSY
+    // TD_OS_GRV
 };
 
 // Tap dance state

@@ -624,6 +624,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // unregister_code(KC_TAB);
             }
             break;
+        case CMD_TAB_HIDE:
+            if (record->event.pressed) {
+                if (is_cmd_tab_active) {
+                    cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+                    cmd_tab_timer   = timer_read();
+                    tap_code(KC_H);
+                    return false;
+                }
+            }
+            break;
+        case CMD_TAB_QUIT:
+            if (record->event.pressed) {
+                if (is_cmd_tab_active) {
+                    cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+                    cmd_tab_timer   = timer_read();
+                    tap_code(KC_Q);
+                    return false;
+                }
+            }
+            break;
+        case OS_EXPOSE:
+            if (record->event.pressed) {
+                if (is_cmd_tab_active) {
+                    tap_code(KC_UP);
+                }
+            }
+            break;
+        case OS_DOCK:
+            if (record->event.pressed) {
+                if (is_cmd_tab_active) {
+                    tap_code(KC_ENT);
+                }
+            }
+            break;
         case CMD_TAB_PRV:
             if (record->event.pressed) {
                 if (!is_cmd_tab_active) {
@@ -741,6 +775,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         // Enter, period (and escape) cancel caps word and caps sentence
         case KC_ENT:
+            if (record->event.pressed) {
+                if (caps_sentence_active || caps_word_active) {
+                    cancel_quick_caps();
+                }
+                // We don't need to check if kc_dot was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_del).
+                dontBspaceWord = true;
+                if (is_cmd_tab_active) {
+                    cancel_cmd_shift();
+                }
+            }
+            break;
         case KC_DOT:
             if (record->event.pressed) {
                 if (caps_sentence_active || caps_word_active) {
@@ -1112,7 +1157,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //         return false;
         //     }
         //     break;
-        case WNDW_CNTR:
+        case XWNDW_CNTR:
             if (record->event.pressed) {
                 mod_state = get_mods();
                 if (MODS_RSFT) {

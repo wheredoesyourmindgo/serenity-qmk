@@ -89,7 +89,7 @@
 // OS (MacOS)
 #define OS_PRV_SPC LCTL(KC_LEFT)               // Previous Space
 #define OS_NXT_SPC LCTL(KC_RGHT)               // Next Space
-#define OS_APP_WNDWS LCTL(KC_DOWN)             // App Windows
+#define OS_EXPOSE LCTL(KC_DOWN)                // App Windows
 #define OS_MSN_CNTRL LCTL(KC_UP)               // Mission Control
 #define OS_DSKTP KC_F16                        // Show Desktop
 #define OS_SCRN_SHT_OPT SGUI(KC_5)             // Screenshot Options
@@ -97,15 +97,18 @@
 #define OS_SCRN_SHT SGUI(KC_3)                 // Screenshot
 #define OS_SCRN_SHT_CLP_SLCT LCTL(SGUI(KC_4))  // Screenshot of selected area to clipboard
 #define OS_SCRN_SHT_CLP LCTL(SGUI(KC_3))       // Screenshot to clipboard
-#define OS_SPC5 LCTL(KC_5)                     // Space 5
-#define OS_SPC4 LCTL(KC_4)                     // Space 4
-#define OS_SPC3 LCTL(KC_3)                     // Space 3
-#define OS_SPC2 LCTL(KC_2)                     // Space 2
-#define OS_SPC1 LCTL(KC_1)                     // Space 1
+// #define OS_SPC5 LCTL(KC_5)                     // Space 5
+// #define OS_SPC4 LCTL(KC_4)                     // Space 4
+// #define OS_SPC3 LCTL(KC_3)                     // Space 3
+// #define OS_SPC2 LCTL(KC_2)                     // Space 2
+// #define OS_SPC1 LCTL(KC_1)                     // Space 1
+#define OS_DOCK LCTL(KC_F3)                    // Focus Dock
 // #define OS_NXT_APP LGUI(KC_TAB) // Next App Window
 // #define OS_PRVS_APP SGUI(KC_TAB) // Previous App Window
 #define OS_NXT_APP_WNDW LGUI(KC_GRV)    // Next (Same)App Window
 #define OS_PRVS_APP_WNDW LGUI(KC_TILD)  // Previous (Same)App Window
+#define OS_NXT_WNDW LCTL(KC_F4)         // Next Window
+#define OS_PRVS_WNDW LSFT(LCTL(KC_F4))  // Previous Window
 #define OS_SPTLGHT LGUI(KC_SPC)         // Spotlight
 #define OS_BCK LGUI(KC_LBRC)            // Back
 #define OS_FWD LGUI(KC_RBRC)            // Forward
@@ -154,7 +157,7 @@
 
 enum layers { BASE, BASE_QWRTY, LOWER, LOWER_ALT, LOW, LOWEST, HIGHER, HIGH, HIGHEST, OS };
 
-enum keycodes { CMD_TAB_PRV = SAFE_RANGE, TGL_LYT, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, OSHR, VOL_JUP, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, TRY_BSPACE_WORD, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, TLNG_ILFT, TLNG_IRGHT, ENC_BTN, BTN1_HOLD};
+enum keycodes { CMD_TAB_PRV = SAFE_RANGE, TGL_LYT, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, OSHR, VOL_JUP, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, TRY_BSPACE_WORD, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, TLNG_ILFT, TLNG_IRGHT, ENC_BTN, BTN1_HOLD, CMD_TAB_HIDE, CMD_TAB_QUIT, XWNDW_CNTR};
 
 // Tap Dance declarations
 enum {

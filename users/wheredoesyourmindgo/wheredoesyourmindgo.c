@@ -146,6 +146,7 @@ void low_ent_reset(qk_tap_dance_state_t *state, void *user_data) {
     // low_ent_t.state = TD_NONE;
 }
 
+/*
 void os_grave_finished(qk_tap_dance_state_t *state, void *user_data) {
     // os_grave_t.state = cur_dance(state);
     layer_on(OS);
@@ -160,6 +161,7 @@ void os_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
         tap_code(KC_GRAVE);
     }
 }
+*/
 
 void caps_word_each(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
@@ -257,18 +259,20 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
     [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset),
     [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset),
-    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
-    [TD_OS_GRV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_finished, os_grave_reset),
+    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset)
+    // [TD_OS_GRV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_finished, os_grave_reset),
 };
 // end of Tap Dance config
 
 void cancel_cmd_shift(void) {
-    layer_off(OS);
+    if (IS_LAYER_ON(OS)) {
+        layer_off(OS);
+    }
     unregister_mods(MOD_BIT(KC_LGUI));
     if (MODS_LSFT) {
         unregister_mods(MOD_BIT(KC_LSFT));
     }
-    is_cmd_tab_active     = false;
+    is_cmd_tab_active = false;
     cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 }
 
@@ -648,6 +652,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (is_cmd_tab_active) {
                     tap_code(KC_UP);
+                    return false;
                 }
             }
             break;
@@ -655,6 +660,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (is_cmd_tab_active) {
                     tap_code(KC_ENT);
+                    return false;
                 }
             }
             break;
@@ -1284,6 +1290,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        case LT(OS, KC_GRV):
+            if (record->event.pressed) {
+            } else {
+                // Don't turn off OS layer if cmd+tab is active. Instead, wait for timeout or base layer switch.
+                if (is_cmd_tab_active) {
+                    return false;
+                }
+            }
+            break;
     }
     return true;
 }
@@ -1388,7 +1403,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_TGL_SEL):
         case TD(TD_CAPS_WORD):
         case TD(TD_CAPS_SENTENCE):
-        // case TD(TD_OS_GRV):
             return TAPPING_TD_TERM;
         case TD(TD_OOPSY):
             return 300; // favor oopsy behavior
@@ -1402,7 +1416,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_LOW_ENT):
         // case LT(LOWER, KC_ESC):
         case TD(TD_LOWER_ESC):
-        case TD(TD_OS_GRV):
+        // case TD(TD_OS_GRV):
+        case LT(OS, KC_GRV):
             return 0;
         case LT(HIGH, KC_TAB):
         // case LT(LOWEST, KC_APP):
@@ -1474,6 +1489,7 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
         // case LT(LOWEST, KC_APP):
         case LT(HIGH, KC_TAB):
         case LT(HIGHER, KC_SPC):
+        case LT(OS, KC_GRV):
             return true;
         default:
             return false;

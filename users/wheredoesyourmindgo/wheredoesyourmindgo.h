@@ -167,7 +167,7 @@ enum {
     TD_CAPS_WORD,
     TD_CAPS_SENTENCE,
     TD_OOPSY,
-    TD_OS_GRV
+    // TD_OS_GRV
 };
 
 // Tap dance state

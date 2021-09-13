@@ -41,11 +41,9 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 
 <span id="WindowMgtRef" />
 
-### Amethyst & Rectangle
+### Amethyst
 
-Amethyst and Rectangle shortcuts are arranged on the Higher layer on the left-hand side on home row. Alternate shortcuts can be triggered using the mods on the home row on the right side within the Higher layer. Below is a map of the commands and mod presses.
-
-_Rectangle shortcuts are shown italicized_
+Amethyst shortcuts are arranged on the Higher layer on the left-hand side on home row. Alternate shortcuts can be triggered using the mods on the home row on the right side within the Higher layer. Below is a map of the commands and mod presses.
 
 | **Mod** | `A` | `R`  | `S` | `T` |
 |--- | --- | --- | --- | ---|
@@ -53,8 +51,9 @@ _Rectangle shortcuts are shown italicized_
 |**Cmd**|Shrink Main|OSD Current Layout|Toggle Float Focused|Expand Main|
 |**Opt**|Decrease Main Count|Toggle Global Tiling|Toggle Focus w/ Mouse|Increase Main Count|
 |**Ctrl**|Throw Focused to Left Space|Reload Amethyst|Re-evaluate Layout|Throw Focused to Right Space|
-|**R. Shift**|_Window Smaller_|_Restore Window_|_Center Window_|_Window Larger_|
+|**-**|Move Focus C-Clockwise|Switch Focus to Main|Swap Main w/ Focused|Move Focus Clockwise|
 
+### Rectangle
 
 ## Tips
 

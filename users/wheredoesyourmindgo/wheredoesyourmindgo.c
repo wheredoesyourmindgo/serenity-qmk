@@ -656,7 +656,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case OS_DOCK:
             if (record->event.pressed) {
                 if (is_cmd_tab_active) {
-                    tap_code(KC_ENT);
+                    tap_code(CMD_TAB_HIDE);
                     return false;
                 }
             }

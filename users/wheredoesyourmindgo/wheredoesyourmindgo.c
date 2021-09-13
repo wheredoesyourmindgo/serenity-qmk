@@ -1154,27 +1154,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
-        // case OS_FLLSCRN:
-        //     if (record->event.pressed) {
-        //         if (MODS_RSFT) {
-        //             tap_code16_no_mod(WNDW_MAX);
-        //         } else {
-        //             tap_code16(OS_FLLSCRN);
-        //         }
-        //         return false;
-        //     }
-        //     break;
-        case XWNDW_CNTR:
+        case XWNDW_MAX:
             if (record->event.pressed) {
-                mod_state = get_mods();
                 if (MODS_RSFT) {
-                    del_mods(mod_state);
-                    tap_code16(WNDW_ALMST_MAX);
-                    tap_code16(WNDW_VRT_MAX);
-                    tap_code16(WNDW_CNTR);
+                    tap_code16_no_mod(WNDW_ALMST_MAX);
+                    tap_code16_no_mod(WNDW_VRT_MAX);
+                    tap_code16_no_mod(WNDW_CNTR);
                     register_mods(mod_state);
                 } else {
-                    tap_code16(WNDW_CNTR);
+                    tap_code16(WNDW_MAX);
                 }
                 return false;
             }
@@ -1221,7 +1209,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (MODS_LSFT) {
                     tap_code16_no_mod(TLNG_FSCRN);
                 } else if (MODS_LGUI) {
-                    tap_code16(TLNG_TGL_FLT_FCS);
+                    tap_code16_no_mod(TLNG_TGL_FLT_FCS);
                 } else if (MODS_LALT) {
                     tap_code16_no_mod(TLNG_MSE_FCS);
                 } else if (MODS_LCTRL) {

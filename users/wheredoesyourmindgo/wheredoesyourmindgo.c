@@ -32,11 +32,11 @@ extern int retro_tapping_counter;
 #define ONESHOT_MODS_RCTL (get_oneshot_mods() & MOD_BIT(KC_RCTL))
 
 
-bool     is_btn1_held = false;
+bool is_btn1_held = false;
 
-bool     is_cmd_tab_active = false;
-bool     is_cmd_tab_held   = false;
-uint16_t cmd_tab_timer     = 0;
+bool is_cmd_tab_active = false;
+bool is_cmd_tab_held = false;
+uint16_t cmd_tab_timer = 0;
 #define cmd_tab_timer_default_dur 1000;
 #define cmd_tab_timer_fast_dur 600;
 uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
@@ -265,9 +265,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 // end of Tap Dance config
 
 void cancel_cmd_shift(void) {
-    if (IS_LAYER_ON(OS)) {
-        layer_off(OS);
-    }
     unregister_mods(MOD_BIT(KC_LGUI));
     if (MODS_LSFT) {
         unregister_mods(MOD_BIT(KC_LSFT));
@@ -632,7 +629,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (is_cmd_tab_active) {
                     cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-                    cmd_tab_timer   = timer_read();
+                    cmd_tab_timer = timer_read();
                     tap_code(KC_H);
                     return false;
                 }
@@ -642,7 +639,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (is_cmd_tab_active) {
                     cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-                    cmd_tab_timer   = timer_read();
+                    cmd_tab_timer = timer_read();
                     tap_code(KC_Q);
                     return false;
                 }
@@ -789,6 +786,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 dontBspaceWord = true;
                 if (is_cmd_tab_active) {
                     cancel_cmd_shift();
+                    return false;
                 }
             }
             break;
@@ -1287,15 +1285,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else {
                     unregister_code16(KC_BTN1);
                     is_btn1_held = false;
-                }
-            }
-            break;
-        case LT(OS, KC_GRV):
-            if (record->event.pressed) {
-            } else {
-                // Don't turn off OS layer if cmd+tab is active. Instead, wait for timeout or base layer switch.
-                if (is_cmd_tab_active) {
-                    return false;
                 }
             }
             break;

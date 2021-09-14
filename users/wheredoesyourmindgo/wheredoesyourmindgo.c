@@ -88,22 +88,23 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
 
 void lower_esc_finished(qk_tap_dance_state_t *state, void *user_data) {
     // lower_esc_t.state = cur_dance(state);
-    // In case shift is held down prior to Lower hold use Lower-alt layer. Without this block Lower must be held first, followed by a shift hold.
+
+    /* In case shift is held down prior to Lower hold use Lower-alt layer. Without this block Lower must be held first, followed by a shift hold.
     if (MODS_LSFT) {
         layer_off(LOWER);
         layer_on(LOWER_ALT);
         // this is referring to actual left-shift key, not alternate shift
         unregister_mods(MOD_BIT(KC_LSFT));
+    } else { */
+    if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
+        layer_off(LOWER);
+        layer_on(BASE);
+        alt_lshift_active = true;
+        register_mods(MOD_BIT(KC_LSFT));
     } else {
-        if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
-            layer_off(LOWER);
-            layer_on(BASE);
-            alt_lshift_active = true;
-            register_mods(MOD_BIT(KC_LSFT));
-        } else {
-            layer_on(LOWER);
-        }
+        layer_on(LOWER);
     }
+    // }
 }
 void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
     // lower_esc_t.state = cur_dance(state);

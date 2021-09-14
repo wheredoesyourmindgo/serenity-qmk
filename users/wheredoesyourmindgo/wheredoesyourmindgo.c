@@ -107,7 +107,7 @@ void lower_esc_finished(qk_tap_dance_state_t *state, void *user_data) {
 }
 void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
     // lower_esc_t.state = cur_dance(state);
-    if (MODS_LSFT) {
+    if (MODS_LSFT && alt_lshift_active) {
         alt_lshift_active = false;
         unregister_mods(MOD_BIT(KC_LSFT));
     }
@@ -782,7 +782,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
                 }
             } else {
-                if (MODS_RSFT) {
+                if (MODS_RSFT && alt_rshift_active) {
                     alt_rshift_active = false;
                     unregister_mods(MOD_BIT(KC_RSFT));
                 }

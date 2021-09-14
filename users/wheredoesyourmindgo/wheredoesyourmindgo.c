@@ -7,16 +7,16 @@
 
 extern int retro_tapping_counter;
 
-// #define MODS_SFT (get_mods() & MOD_BIT(KC_LSFT) || get_mods() & MOD_BIT(KC_RSFT))
+#define MODS_SFT (get_mods() & MOD_BIT(KC_LSFT) || get_mods() & MOD_BIT(KC_RSFT))
 #define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
 #define MODS_LSFT (get_mods() & MOD_BIT(KC_LSFT))
-// #define MODS_CTRL (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTRL))
+#define MODS_CTRL (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTRL))
 #define MODS_RCTRL (get_mods() & MOD_BIT(KC_RCTRL))
 #define MODS_LCTRL (get_mods() & MOD_BIT(KC_LCTRL))
-// #define MODS_ALT (get_mods() & MOD_BIT(KC_LALT) || get_mods() & MOD_BIT(KC_RALT))
+#define MODS_ALT (get_mods() & MOD_BIT(KC_LALT) || get_mods() & MOD_BIT(KC_RALT))
 #define MODS_RALT (get_mods() & MOD_BIT(KC_RALT))
 #define MODS_LALT (get_mods() & MOD_BIT(KC_LALT))
-// #define MODS_GUI (get_mods() & MOD_BIT(KC_LGUI) || get_mods() & MOD_BIT(KC_RGUI))
+#define MODS_GUI (get_mods() & MOD_BIT(KC_LGUI) || get_mods() & MOD_BIT(KC_RGUI))
 #define MODS_RGUI (get_mods() & MOD_BIT(KC_RGUI))
 #define MODS_LGUI (get_mods() & MOD_BIT(KC_LGUI))
 // #define ACTIVE_MODS (get_mods())
@@ -44,6 +44,10 @@ uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 bool caps_active          = false;
 bool caps_word_active     = false;
 bool caps_sentence_active = false;
+
+// Track whether alt-shift is being used so that we don't get stuck in lower/higher layers when using dedicated shift keys with mods
+bool alt_lshift_active = false;
+bool alt_rshift_active = false;
 
 void cancel_quick_caps(void) {
     dprint("cancelling quick caps\n");
@@ -88,11 +92,13 @@ void lower_esc_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (MODS_LSFT) {
         layer_off(LOWER);
         layer_on(LOWER_ALT);
+        // this is referring to actual left-shift key, not alternate shift
         unregister_mods(MOD_BIT(KC_LSFT));
     } else {
         if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
             layer_off(LOWER);
             layer_on(BASE);
+            alt_lshift_active = true;
             register_mods(MOD_BIT(KC_LSFT));
         } else {
             layer_on(LOWER);
@@ -102,6 +108,7 @@ void lower_esc_finished(qk_tap_dance_state_t *state, void *user_data) {
 void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
     // lower_esc_t.state = cur_dance(state);
     if (MODS_LSFT) {
+        alt_lshift_active = false;
         unregister_mods(MOD_BIT(KC_LSFT));
     }
     if (IS_LAYER_ON(LOWER)) {
@@ -762,6 +769,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (MODS_RCTRL || MODS_RALT || MODS_RGUI) {
                     layer_on(BASE);
+                    alt_rshift_active = true;
                     register_mods(MOD_BIT(KC_RSFT));
                     // abort retro tapping
                     retro_tapping_counter++;
@@ -775,6 +783,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             } else {
                 if (MODS_RSFT) {
+                    alt_rshift_active = false;
                     unregister_mods(MOD_BIT(KC_RSFT));
                 }
             }
@@ -872,10 +881,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (IS_LAYER_ON(LOWER)) {
                     layer_off(LOWER);
+                    alt_lshift_active = true;
                     register_mods(MOD_BIT(KC_LSFT));
                 }
             } else {
-                if (MODS_LSFT && !MODS_LCTRL && !MODS_LALT && MODS_LGUI) {
+                if (MODS_LSFT && !MODS_LCTRL && !MODS_LALT && MODS_LGUI && alt_lshift_active) {
+                    alt_lshift_active = false;
                     unregister_mods(MOD_BIT(KC_LSFT));
                     layer_on(LOWER);
                 }
@@ -885,10 +896,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (IS_LAYER_ON(LOWER)) {
                     layer_off(LOWER);
+                    alt_lshift_active = true;
                     register_mods(MOD_BIT(KC_LSFT));
                 }
             } else {
-                if (MODS_LSFT && !MODS_LCTRL && MODS_LALT && !MODS_LGUI) {
+                if (MODS_LSFT && !MODS_LCTRL && MODS_LALT && !MODS_LGUI && alt_lshift_active) {
+                    alt_lshift_active = false;
                     unregister_mods(MOD_BIT(KC_LSFT));
                     layer_on(LOWER);
                 }
@@ -898,10 +911,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (IS_LAYER_ON(LOWER)) {
                     layer_off(LOWER);
+                    alt_lshift_active = true;
                     register_mods(MOD_BIT(KC_LSFT));
                 }
             } else {
-                if (MODS_LSFT && MODS_LCTRL && !MODS_LALT && !MODS_LGUI) {
+                if (MODS_LSFT && MODS_LCTRL && !MODS_LALT && !MODS_LGUI && alt_lshift_active) {
+                    alt_lshift_active = false;
                     unregister_mods(MOD_BIT(KC_LSFT));
                     layer_on(LOWER);
                 }
@@ -929,10 +944,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (IS_LAYER_ON(HIGHER)) {
                     layer_off(HIGHER);
+                    alt_rshift_active = true;
                     register_mods(MOD_BIT(KC_RSFT));
                 }
             } else {
-                if (MODS_RSFT && !MODS_RCTRL && !MODS_RALT && MODS_RGUI) {
+                if (MODS_RSFT && !MODS_RCTRL && !MODS_RALT && MODS_RGUI && alt_rshift_active) {
+                    alt_rshift_active = false;
                     unregister_mods(MOD_BIT(KC_RSFT));
                     layer_on(HIGHER);
                 }
@@ -943,10 +960,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (IS_LAYER_ON(HIGHER)) {
                     layer_off(HIGHER);
+                    alt_rshift_active = true;
                     register_mods(MOD_BIT(KC_RSFT));
                 }
             } else {
-                if (MODS_RSFT && !MODS_RCTRL && MODS_RALT && !MODS_RGUI) {
+                if (MODS_RSFT && !MODS_RCTRL && MODS_RALT && !MODS_RGUI && alt_rshift_active) {
+                    alt_rshift_active = false;
                     unregister_mods(MOD_BIT(KC_RSFT));
                     layer_on(HIGHER);
                 }
@@ -957,10 +976,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (IS_LAYER_ON(HIGHER)) {
                     layer_off(HIGHER);
+                    alt_rshift_active = true;
                     register_mods(MOD_BIT(KC_RSFT));
                 }
             } else {
-                if (MODS_RSFT && MODS_RCTRL && !MODS_RALT && !MODS_RGUI) {
+                if (MODS_RSFT && MODS_RCTRL && !MODS_RALT && !MODS_RGUI && alt_rshift_active) {
+                    alt_rshift_active = false;
                     unregister_mods(MOD_BIT(KC_RSFT));
                     layer_on(HIGHER);
                 }
@@ -1335,6 +1356,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        case KC_D:
+            #if defined REMAP_PASTE
+                if (record->event.pressed) {
+                    if (MODS_GUI && (!MODS_ALT && !MODS_CTRL && !MODS_SFT)) {
+                        tap_code(KC_V);
+                        return false;
+                    }
+                }
+            #endif
+        break;
+        case KC_V:
+            #if defined REMAP_PASTE
+                if (record->event.pressed) {
+                    if (MODS_GUI && (!MODS_ALT && !MODS_CTRL && !MODS_SFT)) {
+                        tap_code16(LSFT(KC_Z));
+                        return false;
+                    }
+                }
+            #endif
+        break;
     }
     return true;
 }

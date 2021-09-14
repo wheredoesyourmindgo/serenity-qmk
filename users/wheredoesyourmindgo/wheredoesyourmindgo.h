@@ -20,11 +20,7 @@
 #define ZOOM_IN LALT(LGUI(KC_EQL))       // Zoom in
 #define ZOOM_OUT LALT(LGUI(KC_MINUS))     // Zoom out
 #define ZOOM_RESET LALT(LGUI(KC_8))      // Zoom reset
-#if defined REMAP_PASTE
-    #define PASTE LGUI(KC_D)            // Re-mapped Paste
-#else
-    #define PASTE LGUI(KC_V)            // Paste
-#endif
+#define PASTE LGUI(KC_V)            // Paste
 #define COPY LGUI(KC_C)             // Copy
 #define CUT LGUI(KC_X)              // Cut
 #define UNDO LGUI(KC_Z)             // Undo
@@ -204,6 +200,8 @@ bool caps_sentence_active;
 void cancel_quick_caps(void);
 void cancel_caps_word(void);
 bool encoder_update_keymap(uint8_t index, bool clockwise);
+bool alt_lshift_active;
+bool alt_rshift_active;
 
 // Initialize variable holding the binary representation of active modifiers.
 uint8_t mod_state;

@@ -291,10 +291,12 @@ void tap_code16_no_mod(uint16_t code) {
     // Store the current modifier state in the variable for later reference
     mod_state = get_mods();
     // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
-    del_mods(mod_state);
+    // del_mods(mod_state);
+    unregister_mods(mod_state);
     tap_code16(code);
-    // Reapplying modifier state so that the held shift key(s) still work even after having tapped the Backspace/Delete key.
-    set_mods(mod_state);
+    // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
+    // set_mods(mod_state);
+    register_mods(mod_state);
 }
 
 /* Macros */
@@ -843,7 +845,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(DISP_BRI);
                 }
             }
-            break;
         case VOL_JUP:
             if (record->event.pressed) {
                 int i;
@@ -853,7 +854,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-
         // Un-used, see TD_OOPSY
         // case OOPS:
         //     if (record->event.pressed) {
@@ -1340,10 +1340,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case ENC_BTN:
             if (record->event.pressed) {
-                if (IS_LAYER_ON(HIGH) || MODS_RSFT) {
+                if (IS_LAYER_ON(HIGH) || MODS_RGUI) {
                     tap_code16_no_mod(OS_DRKMD_TGL);
                 } else if (MODS_RCTRL) {
-                    tap_code16_no_mod(LGUI(LALT(KC_8)));
+                    tap_code16_no_mod(ZOOM_RESET);
+                } else if (MODS_RALT) {
+                    tap_code16_no_mod(ZOOM_RESET_APP);
                 } else {
                     tap_code(KC_MUTE);
                 }
@@ -1463,18 +1465,22 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     if (!encoder_update_keymap(index, clockwise)) { return false; }
 	if(index == 0) {
 		if (clockwise) {
-            if (IS_LAYER_ON(HIGH) || MODS_RSFT) {
+            if (IS_LAYER_ON(HIGH)  || MODS_RGUI) {
                 tap_code16_no_mod(DISP_DIM);
             } else if (MODS_RCTRL) {
-                tap_code16_no_mod(LGUI(LALT(KC_MINS)));
+                tap_code16_no_mod(ZOOM_OUT);
+            } else if (MODS_RALT) {
+                tap_code16_no_mod(ZOOM_OUT_APP);
             } else {
                 tap_code16(KC_VOLD);
             }
 		} else {
-            if (IS_LAYER_ON(HIGH) || MODS_RSFT) {
+            if (IS_LAYER_ON(HIGH) ||  MODS_RGUI) {
                 tap_code16_no_mod(DISP_BRI);
             } else if (MODS_RCTRL) {
-                tap_code16_no_mod(LGUI(LALT(KC_EQL)));
+                tap_code16_no_mod(ZOOM_IN);
+            } else if (MODS_RALT) {
+                tap_code16_no_mod(ZOOM_IN_APP);
             } else {
                 tap_code16(KC_VOLU);
             }

@@ -298,6 +298,19 @@ void tap_code16_no_mod(uint16_t code) {
     // set_mods(mod_state);
     register_mods(mod_state);
 }
+void tap_code_no_mod(uint8_t code) {
+    // Initialize variable holding the binary representation of active modifiers.
+    uint8_t mod_state;
+    // Store the current modifier state in the variable for later reference
+    mod_state = get_mods();
+    // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
+    // del_mods(mod_state);
+    unregister_mods(mod_state);
+    tap_code(code);
+    // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
+    // set_mods(mod_state);
+    register_mods(mod_state);
+}
 
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {

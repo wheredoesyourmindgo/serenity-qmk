@@ -1354,7 +1354,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case ENC_BTN:
             if (record->event.pressed) {
-                if (IS_LAYER_ON(HIGH) || MODS_GUI) {
+                if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
                     tap_code16_no_mod(OS_DRKMD_TGL);
                 } else if (MODS_CTRL) {
                     tap_code16_no_mod(ZOOM_RESET);
@@ -1479,7 +1479,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     if (!encoder_update_keymap(index, clockwise)) { return false; }
 	if(index == 0) {
 		if (clockwise) {
-            if (IS_LAYER_ON(HIGH)  || MODS_GUI) {
+            if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
                 tap_code16_no_mod(DISP_DIM);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_OUT);
@@ -1489,7 +1489,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code16(KC_VOLD);
             }
 		} else {
-            if (IS_LAYER_ON(HIGH) ||  MODS_GUI) {
+            if (IS_LAYER_ON(HIGHER) ||  MODS_GUI) {
                 tap_code16_no_mod(DISP_BRI);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_IN);

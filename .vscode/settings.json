@@ -28,5 +28,6 @@
         "files.trimTrailingWhitespace": false
     },
     "git.detectSubmodules": false,
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "git.postCommitCommand": "push"
 }

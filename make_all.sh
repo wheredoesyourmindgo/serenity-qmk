@@ -1,10 +1,10 @@
 #!/bin/sh
-OPTS='MENU_ON_HIGHEST=yes COLEMAK_DH_OA=yes REMAP_PASTE=yes REMAP_PARENS=yes'
-make binepad/bn003:wheredoesyourmindgo
-# make binepad/bnr1:wheredoesyourmindgo
-make boardwalk:wheredoesyourmindgo $OPTS
-make ristretto:wheredoesyourmindgo $OPTS
-make boardsource/technik_o:wheredoesyourmindgo $OPTS
-make foostan/cornelius:wheredoesyourmindgo $OPTS
-make signum/3_0/elitec:wheredoesyourmindgo $OPTS
-make planck/rev6:wheredoesyourmindgo $OPTS
+OPTS='-j 2 -e MENU_ON_HIGHEST=yes -e COLEMAK_DH_OA=yes -e REMAP_PASTE=yes -e REMAP_PARENS=yes'
+qmk compile -kb binepad/bn003 -km wheredoesyourmindgo
+# qmk compile -kb binepad/bnr1 -km wheredoesyourmindgo
+qmk compile -kb boardwalk -km wheredoesyourmindgo $OPTS
+qmk compile -kb ristretto -km wheredoesyourmindgo $OPTS
+qmk compile -kb boardsource/technik_o -km wheredoesyourmindgo $OPTS
+qmk compile -kb foostan/cornelius -km wheredoesyourmindgo $OPTS
+qmk compile -kb signum/3_0/elitec -km wheredoesyourmindgo $OPTS
+qmk compile -kb planck/rev6 -km wheredoesyourmindgo $OPTS

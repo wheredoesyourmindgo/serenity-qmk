@@ -181,7 +181,7 @@ void caps_word_each(qk_tap_dance_state_t *state, void *user_data) {
     } else if (state->count == 2) {
         unregister_mods(MOD_BIT(KC_LSFT));
         if (!caps_active && !caps_word_active && !caps_sentence_active) {
-            caps_active      = true;
+            caps_active = true;
             caps_word_active = true;
             // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
             tap_code_delay(KC_CAPS, 300);
@@ -200,9 +200,9 @@ void caps_sentence_each(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         register_mods(MOD_BIT(KC_RSFT));
     } else if (state->count == 2) {
-        unregister_mods(MOD_BIT(KC_LSFT));
+        unregister_mods(MOD_BIT(KC_RSFT));
         if (!caps_active && !caps_sentence_active && !caps_word_active) {
-            caps_active          = true;
+            caps_active = true;
             caps_sentence_active = true;
             // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
             tap_code_delay(KC_CAPS, 200);

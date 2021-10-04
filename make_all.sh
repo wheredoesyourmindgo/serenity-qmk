@@ -1,5 +1,5 @@
 #!/bin/sh
-OPTS='MENU_ON_HIGHEST=yes COLEMAK_DH_OA=yes REMAP_PASTE=yes'
+OPTS='MENU_ON_HIGHEST=yes COLEMAK_DH_OA=yes REMAP_PASTE=yes REMAP_PARENS=yes'
 make binepad/bn003:wheredoesyourmindgo
 # make binepad/bnr1:wheredoesyourmindgo
 make boardwalk:wheredoesyourmindgo $OPTS

@@ -71,6 +71,10 @@ ifeq ($(strip $(REMAP_PASTE)), yes)
   OPT_DEFS += -DREMAP_PASTE
 endif
 
+ifeq ($(strip $(REMAP_PARENS)), yes)
+  OPT_DEFS += -DREMAP_PARENS
+endif
+
 ifeq ($(strip $(QWERTY_BASE)), yes)
   OPT_DEFS += -DQWERTY_BASE
 endif

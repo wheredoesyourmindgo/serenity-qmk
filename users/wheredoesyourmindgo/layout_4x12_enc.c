@@ -28,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, DF(BASE), KC_TRNS   ,KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     ),
 	[LOW] = LAYOUT_4x12_enc(
-        KC_DEL, KC_EXLM      , KC_AT        , KC_HASH      , KC_DLR       , KC_PERC ,                  KC_CIRC, KC_AMPR, KC_LPRN, KC_RPRN, KC_ASTR, KC_BSPC,
+        KC_DEL, KC_EXLM      , KC_AT        , KC_HASH      , KC_DLR       , KC_PERC ,                  KC_CIRC, KC_AMPR, XASTR, XLPRN, XRPRN, KC_BSPC,
         KC_NO, XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT, DF(LOW),                  KC_EQL, KC_MINS , KC_LCBR, KC_RCBR, KC_PIPE, KC_QUOT,
         KC_LSFT, KC_NO, OSM(MOD_RALT), KC_NO        , VOID        , KC_NO   ,                  KC_PLUS, KC_UNDS, KC_LBRC, KC_RBRC, KC_BSLS, KC_RSFT,
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, DF(BASE), ENC_BTN, KC_TAB, KC_SPC, KC_NO, KC_NO, KC_NO, KC_NO

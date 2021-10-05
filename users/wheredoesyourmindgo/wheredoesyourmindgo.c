@@ -55,20 +55,20 @@ bool alt_rshift_active = false;
 
 void cancel_quick_caps(void) {
     // only fire caps_lock if caps was active
-    if (caps_active & (caps_sentence_active || caps_word_active)) {
+    if (caps_active) {
         tap_code(KC_CAPSLOCK);
         caps_active = false;
-        caps_sentence_active = false;
-        caps_word_active = false;
     }
+    caps_sentence_active = false;
+    caps_word_active = false;
 }
 void cancel_caps_word(void) {
     // only fire caps_lock if caps was active
-    if (caps_active & caps_word_active) {
+    if (caps_active) {
         tap_code(KC_CAPSLOCK);
         caps_active = false;
-        caps_word_active = false;
     }
+    caps_word_active = false;
 }
 
 // void cancel_caps_sentence(void) {

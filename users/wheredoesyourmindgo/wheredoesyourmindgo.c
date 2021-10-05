@@ -55,17 +55,22 @@ bool alt_rshift_active = false;
 
 void cancel_quick_caps(void) {
     dprint("cancelling quick caps\n");
+    if (caps_active) {
+        tap_code(KC_CAPSLOCK);
+    }
     caps_sentence_active = false;
     caps_word_active     = false;
     caps_active          = false;
-    tap_code(KC_CAPSLOCK);
 }
 void cancel_caps_word(void) {
     dprint("cancelling caps word\n");
+    if (caps_active) {
+        tap_code(KC_CAPSLOCK);
+    }
     caps_word_active = false;
     caps_active      = false;
-    tap_code(KC_CAPSLOCK);
 }
+
 // void cancel_caps_sentence(void) {
 //     caps_sentence_active = false;
 //     if (caps_active) {

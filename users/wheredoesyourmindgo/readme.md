@@ -27,7 +27,9 @@ This is a QMK layout that includes dedicated right and left shift keys. The Base
 - (make option) To remap the parenthesis over 1 column to the left use the `REMAP_PARENS=yes` option. This will shift the asterisk shortcut over the the 0 position. The result is that the parenthesis, braces, brackets, and arrows will all line up on the same two columns; neat.
 - (make option, macOS) To remap the command+d press to command+v use the `REMAP_PASTE=yes` option. This will also remap command+v to redo. Note, the result is that you loose the 'duplicate file' shortcut (command+d), unless of course you remap it in System Preferences.
 
-## Mod Usage
+## Usage
+
+### Mods
 
 Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and right. When activating a multi-combo mod press, move your hand in the same fashion as you would if there were an arrow cluster there towards the bottom corner. Effectively, this in turn should feel very reminiscent to using home row mods. Since mods are mirrored on both the bottom right and left use opposite hand to press key. When activating single mod presses, leave your hand above the home row and lower the corresponding finger down 2 rows to activate the press and hold. This is done identically to how mods are typically activated with a standard ANSI layout. Again, since mods are mirrored on both the bottom right and left use opposite hand to press key.
 
@@ -42,6 +44,23 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 6. Related, having enter key next to space is not ideal due to the chance of miss-tap resulting from the proximity; thus, tab joins space on right side, enter with escape on left.
 
 ## Reference
+
+### Layout Overview
+
+\[...\] denotes hold press
+
+*_#x* denotes number of taps
+
+\* can spam key press (via tapping force hold)
+
+#### Alpha/Base Layer
+
+| |  |  |  |  |  |  |  |  |  |  | |
+|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
+| *Del* | Q | W  | F | P | B | J | L | U | Y | ; | *Bspace*|
+|backtick, \[OS Lyr\]|A|R|S|T|G|M|N|E|I|O|quote|
+|LShift, *_2x Caps Word*|Z|X|C|D|V|K|H|,|.|/|RShift, *_2x Caps Sentence*|
+|App \[Mouse Lyr\]|LCtrl|LAlt|LGui|Esc \[Arrow+Num Lyr\]|Enter \[Symbol Lyr\]|Tab \[Media Lyr\]|Space \[Aux Lyr\]|LArrow\* \[LGui\]|DArrow\* \[LAlt\]|UArrow\* \[LCtrl\]|RArrow\* \[Func Lyr\]
 
 <span id="WindowMgtRef" />
 
@@ -63,6 +82,7 @@ Amethyst shortcuts are arranged on the Higher layer on the left-hand side on hom
 -   While it may be tempting to change this layout to use shift when held/enter when tapped with right shift key it's worth considering the ramifications of using a mod-tap there.
 -   When using a keyboard flashed with this firmware/layout on a MacBook, consider using Karabiner Elements to disable the built-in Apple keyboard when QMK keyboard is plugged in.
 -   On macOS, using System Preferences or Karabiner Elements, consider using F keys as standard Function keys since OS and Media controls are already implemented in their respective layers.
+- Certain (command line) applications may require use of function keys, namely F1-F10. Worth considering mapping the higher function keys first (start w/ F24 and work downwards) for OS shortcuts as desired.
 -   In order to optimize this layout for use with Windows or \*nix you'll likely want to modify the mod order since this layout is primarily targeted towards use with macOS (which utilizes the Command/GUI key in a manner similar to how Windows treats the Control key). The order for mods on the left half is Control --> Option/Alt --> Command/GUI --> Shift; These mods are in reverse order on the right half.
 -   Keep in mind, when activating a Layer on the bottom row in conjunction with a Mod key press on the home row (ex. Shift+Arrow_Left to select text) the key sequence order is important. The layer must be held first, then home row mod can be activated.
 -   Capslock + Vim can be dizzying, I recommend using CapsLocker for MacOS for a decent notification when capslock is toggled.

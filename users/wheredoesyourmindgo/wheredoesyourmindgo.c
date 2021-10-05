@@ -1362,26 +1362,123 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
-        case TGL_HIGHEST:
+        case LT(HIGHEST_ALT, TGL_HIGHEST):
             if (record->event.pressed) {
-                if (IS_LAYER_ON(HIGHEST)) {
-                    layer_off(HIGHEST);
-                    layer_on(HIGHEST_ALT);
+                // Only on tap. See note below.
+                if (record->tap.count > 0) {
+                    if (IS_LAYER_ON(HIGHEST)) {
+                        layer_off(HIGHEST);
+                        layer_on(HIGHEST_ALT);
+                    } else {
+                        layer_off(HIGHEST_ALT);
+                        layer_on(HIGHEST);
+                    }
+                    // returning false on tap prevents KC_APP from firing (not sure why)
+                    return false;
                 } else {
-                    layer_off(HIGHEST_ALT);
-                    layer_on(HIGHEST);
+                    if (IS_LAYER_ON(HIGHEST)) {
+                        layer_off(HIGHEST);
+                        layer_on(HIGHEST_ALT);
+                    }
+                    return false;
+                }
+            } else {
+                if (!(record->tap.count > 0)) {
+                    if (IS_LAYER_ON(HIGHEST_ALT)) {
+                        layer_off(HIGHEST_ALT);
+                        layer_on(HIGHEST);
+                    }
                 }
                 return false;
             }
             break;
-        case TGL_LOWER:
+        // Everything in LT(HIGHEST/LOWEST has been done manually. Consider moving this to a tap dance function in the future.
+        case LT(HIGHEST, TGL_HIGHEST):
             if (record->event.pressed) {
-                if (IS_LAYER_ON(LOWER)) {
-                    layer_off(LOWER);
-                    layer_on(LOWER_ALT);
+                // Only on tap. See note below.
+                if (record->tap.count > 0) {
+                    if (IS_LAYER_ON(HIGHEST)) {
+                        layer_off(HIGHEST);
+                        layer_on(HIGHEST_ALT);
+                    } else {
+                        layer_off(HIGHEST_ALT);
+                        layer_on(HIGHEST);
+                    }
+                    // returning false on tap prevents KC_APP from firing (not sure why)
+                    return false;
                 } else {
-                    layer_off(LOWER_ALT);
-                    layer_on(LOWER);
+                    if (IS_LAYER_ON(HIGHEST_ALT)) {
+                        layer_off(HIGHEST_ALT);
+                        layer_on(HIGHEST);
+                    }
+                    return false;
+                }
+            } else {
+                if (!(record->tap.count > 0)) {
+                    if (IS_LAYER_ON(HIGHEST)) {
+                        layer_off(HIGHEST);
+                        layer_on(HIGHEST_ALT);
+                    }
+                }
+                return false;
+            }
+            break;
+        case LT(LOWER_ALT, TGL_LOWER):
+            if (record->event.pressed) {
+                // Only on tap. See note below.
+                if (record->tap.count > 0) {
+                    if (IS_LAYER_ON(LOWER)) {
+                        layer_off(LOWER);
+                        layer_on(LOWER_ALT);
+                    } else {
+                        layer_off(LOWER_ALT);
+                        layer_on(LOWER);
+                    }
+                    // returning false on tap prevents KC_APP from firing (not sure why)
+                    return false;
+                } else {
+                    if (IS_LAYER_ON(LOWER)) {
+                        layer_off(LOWER);
+                        layer_on(LOWER_ALT);
+                    }
+                    return false;
+                }
+            } else {
+                if (!(record->tap.count > 0)) {
+                    if (IS_LAYER_ON(LOWER_ALT)) {
+                        layer_off(LOWER_ALT);
+                        layer_on(LOWER);
+                    }
+                }
+                return false;
+            }
+            break;
+        case LT(LOWER, TGL_LOWER):
+            if (record->event.pressed) {
+                // Only on tap. See note below.
+                if (record->tap.count > 0) {
+                    if (IS_LAYER_ON(LOWER)) {
+                        layer_off(LOWER);
+                        layer_on(LOWER_ALT);
+                    } else {
+                        layer_off(LOWER_ALT);
+                        layer_on(LOWER);
+                    }
+                    // returning false on tap prevents KC_APP from firing (not sure why)
+                    return false;
+                } else {
+                    if (IS_LAYER_ON(LOWER_ALT)) {
+                        layer_off(LOWER_ALT);
+                        layer_on(LOWER);
+                    }
+                    return false;
+                }
+            } else {
+                if (!(record->tap.count > 0)) {
+                    if (IS_LAYER_ON(LOWER)) {
+                        layer_off(LOWER);
+                        layer_on(LOWER_ALT);
+                    }
                 }
                 return false;
             }

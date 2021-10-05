@@ -57,7 +57,14 @@ endif
 
 
 
-SRC += wheredoesyourmindgo.c
+ifeq ($(strip $(KEYBOARD)), binepad/bn003)
+	TAP_DANCE_ENABLE = no
+	MOUSEKEY_ENABLE = no
+	EXTRAKEY_ENABLE = no
+	KEY_LOCK_ENABLE = no
+else
+	SRC += wheredoesyourmindgo.c
+endif
 
 ifeq ($(strip $(MENU_ON_HIGHEST)), yes)
   OPT_DEFS += -DMENU_ON_HIGHEST

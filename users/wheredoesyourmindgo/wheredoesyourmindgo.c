@@ -116,9 +116,11 @@ void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
         alt_lshift_active = false;
         unregister_mods(MOD_BIT(KC_LSFT));
     }
+    // Release layer hold if activated
     if (IS_LAYER_ON(LOWER)) {
         layer_off(LOWER);
     }
+    // Release layer hold if Lower_alt was toggled on during press
     if (IS_LAYER_ON(LOWER_ALT)) {
         layer_off(LOWER_ALT);
     }
@@ -941,6 +943,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case LT(HIGHEST, KC_RIGHT):
+        case LT(HIGHEST, KC_SLSH):
             if (record->event.pressed) {
                 #if defined MENU_ON_HIGHEST
                 // Only on hold during LT(HIGHEST)
@@ -955,6 +958,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     unregister_code(KC_MENU);
                 }
                 #endif
+                // Release layer hold if Highest_alt was toggled on during press
+                if (IS_LAYER_ON(HIGHEST)) {
+                    layer_off(HIGHEST);
+                }
+                if (IS_LAYER_ON(HIGHEST_ALT)) {
+                    layer_off(HIGHEST_ALT);
+                }
             }
             break;
         case KC_RGUI:
@@ -1348,6 +1358,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     layer_off(BASE_QWRTY);
                     layer_on(BASE);
                     default_layer_set(BASE);
+                }
+                return false;
+            }
+            break;
+        case TGL_HIGHEST:
+            if (record->event.pressed) {
+                if (IS_LAYER_ON(HIGHEST)) {
+                    layer_off(HIGHEST);
+                    layer_on(HIGHEST_ALT);
+                } else {
+                    layer_off(HIGHEST_ALT);
+                    layer_on(HIGHEST);
+                }
+                return false;
+            }
+            break;
+        case TGL_LOWER:
+            if (record->event.pressed) {
+                if (IS_LAYER_ON(LOWER)) {
+                    layer_off(LOWER);
+                    layer_on(LOWER_ALT);
+                } else {
+                    layer_off(LOWER_ALT);
+                    layer_on(LOWER);
                 }
                 return false;
             }

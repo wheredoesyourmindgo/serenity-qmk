@@ -54,21 +54,21 @@ bool alt_lshift_active = false;
 bool alt_rshift_active = false;
 
 void cancel_quick_caps(void) {
-    dprint("cancelling quick caps\n");
-    if (caps_active) {
+    // only fire caps_lock if caps was active
+    if (caps_active & (caps_sentence_active || caps_word_active)) {
         tap_code(KC_CAPSLOCK);
+        caps_active = false;
+        caps_sentence_active = false;
+        caps_word_active = false;
     }
-    caps_sentence_active = false;
-    caps_word_active     = false;
-    caps_active          = false;
 }
 void cancel_caps_word(void) {
-    dprint("cancelling caps word\n");
-    if (caps_active) {
+    // only fire caps_lock if caps was active
+    if (caps_active & caps_word_active) {
         tap_code(KC_CAPSLOCK);
+        caps_active = false;
+        caps_word_active = false;
     }
-    caps_word_active = false;
-    caps_active      = false;
 }
 
 // void cancel_caps_sentence(void) {

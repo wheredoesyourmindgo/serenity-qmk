@@ -103,9 +103,8 @@
 // #define OS_PRVS_APP SGUI(KC_TAB) // Previous App Window
 #define OS_NXT_APP_WNDW LGUI(KC_GRV)    // Next (Same)App Window
 #define OS_PRVS_APP_WNDW LGUI(KC_TILD)  // Previous (Same)App Window
-// These don't work well. The previous shortcut enter's 'S' char in VSCode terminal. Often iTerm is skipped during window cycle altogether.
-// #define OS_NXT_WNDW LCTL(KC_F4)         // Next Window
-// #define OS_PRVS_WNDW LSFT(LCTL(KC_F4))  // Previous Window
+#define OS_NXT_WNDW LCTL(KC_F4)         // Next Window
+#define OS_PRVS_WNDW LSFT(LCTL(KC_F4))  // Previous Window
 #define OS_SPTLGHT LGUI(KC_SPC)         // Spotlight
 #define OS_BCK LGUI(KC_LBRC)            // Back
 #define OS_FWD LGUI(KC_RBRC)            // Forward
@@ -173,6 +172,7 @@ enum {
     TD_LOW_ENT,
     TD_CAPS_WORD,
     TD_CAPS_SENTENCE,
+    TD_MULTI_CNTR,
     TD_OOPSY,
     // TD_OS_GRV
 };
@@ -200,6 +200,7 @@ void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
 void oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
 void oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
 void tgl_select(qk_tap_dance_state_t *state, void *user_data);
+void multi_cntr_each(qk_tap_dance_state_t *state, void *user_data);
 
 bool is_btn1_held;
 bool is_cmd_tab_active;

@@ -45,8 +45,8 @@ uint16_t cmd_tab_timer = 0;
 #define cmd_tab_timer_fast_dur 600;
 uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 
-bool caps_active          = false;
-bool caps_word_active     = false;
+bool caps_active = false;
+bool caps_word_active = false;
 bool caps_sentence_active = false;
 
 // Track whether alt-shift is being used so that we don't get stuck in lower/higher layers when using dedicated shift keys with mods
@@ -197,6 +197,7 @@ void caps_word_each(qk_tap_dance_state_t *state, void *user_data) {
         reset_tap_dance(state);
     }
 }
+
 void caps_word_reset(qk_tap_dance_state_t *state, void *user_data) {
     if (MODS_LSFT) {
         unregister_mods(MOD_BIT(KC_LSFT));
@@ -218,6 +219,7 @@ void caps_sentence_each(qk_tap_dance_state_t *state, void *user_data) {
         reset_tap_dance(state);
     }
 }
+
 void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data) {
     if (MODS_RSFT) {
         unregister_mods(MOD_BIT(KC_RSFT));
@@ -271,11 +273,26 @@ void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
+void multi_cntr_each(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 1:
+            tap_code16(WNDW_CNTR);
+            break;
+        case 2:
+            tap_code16(WNDW_ALMST_MAX);
+            break;
+        case 3:
+            tap_code16(WNDW_VRT_MAX);
+            break;
+    }
+}
+
 // Tap once for Word Select, twice for Line Select, three times for all
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_LOWER_ESC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lower_esc_finished, lower_esc_reset),
     [TD_LOW_ENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, low_ent_finished, low_ent_reset),
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
+    [TD_MULTI_CNTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_cntr_each, NULL, NULL),
     [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset),
     [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset),
     [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset)
@@ -1658,6 +1675,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_CAPS_SENTENCE):
             return TAPPING_TD_TERM;
         case TD(TD_OOPSY):
+        case TD(TD_MULTI_CNTR):
             return 300; // favor oopsy behavior
         // case LT(HIGHEST, KC_LEFT):
         // case RGUI_T(KC_DOWN):

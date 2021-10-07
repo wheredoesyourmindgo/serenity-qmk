@@ -759,18 +759,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case KC_ESC:
             if (record->event.pressed) {
-                bool return_val = true;
                 // Only fire escape special mode is not active
+                if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active) {
+                    return true;
+                }
                 // Cancel One Shot Mods (if active)
                 if (ONESHOT_MODS_ACTIVE) {
                     clear_oneshot_mods();
-                    return_val = false;
                 }
                 if (caps_sentence_active || caps_word_active) {
                     cancel_quick_caps();
-                    return_val = false;
                 }
-                return return_val;
+                return false;
             }
             break;
         // See lower_esc tap dance reset function. That tap dance was setup because tap.count will always be 0 when a 0 value is used with Tapping Term.

@@ -54,21 +54,21 @@ bool alt_lshift_active = false;
 bool alt_rshift_active = false;
 
 void cancel_quick_caps(void) {
-    // only fire caps_lock if caps was active
-    if (caps_active) {
-        tap_code(KC_CAPSLOCK);
-        caps_active = false;
-    }
     caps_sentence_active = false;
     caps_word_active = false;
-}
-void cancel_caps_word(void) {
     // only fire caps_lock if caps was active
     if (caps_active) {
-        tap_code(KC_CAPSLOCK);
         caps_active = false;
+        tap_code(KC_CAPSLOCK); // tap kc_capslock last, after everything is set false for custom macro
     }
+}
+void cancel_caps_word(void) {
     caps_word_active = false;
+    // only fire caps_lock if caps was active
+    if (caps_active) {
+        caps_active = false;
+        tap_code(KC_CAPSLOCK); // tap kc_capslock last, after everything is set false for custom macro
+    }
 }
 
 // void cancel_caps_sentence(void) {

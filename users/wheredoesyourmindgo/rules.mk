@@ -75,6 +75,10 @@ ifeq ($(strip $(COLEMAK_DH_OA)), yes)
   OPT_DEFS += -DCOLEMAK_DH_OA
 endif
 
+ifeq ($(strip $(COLEMAK_DH_RING)), yes)
+  OPT_DEFS += -DCOLEMAK_DH_RING
+endif
+
 ifeq ($(strip $(REMAP_PASTE)), yes)
   OPT_DEFS += -DREMAP_PASTE
 endif

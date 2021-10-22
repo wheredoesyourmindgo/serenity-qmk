@@ -774,7 +774,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_COLN:
         case KC_SCLN:
         case KC_COMM:
-        case KC_TAB:
+        // case KC_TAB: // see below
         case KC_SPC:
             if (record->event.pressed) {
                 if (caps_word_active) {
@@ -783,6 +783,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case LT(HIGH, KC_TAB):
+            #if defined REMAP_PASTE
+            if (record->event.pressed) {
+                if (
+                    (MODS_GUI && (!MODS_ALT && !MODS_CTRL && !MODS_SFT)) ||
+                    (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL && !ONESHOT_MODS_SFT))
+                ) {
+                    tap_code(KC_D);
+                    return false;
+                } else {
+                    // normal tab behavior
+                    // Only on tap (ie. Not during LT(HIGH) and LT(HIGHER))
+                    if (record->tap.count > 0) {
+                        if (caps_word_active) {
+                            cancel_caps_word();
+                        }
+                    }
+                }
+            }
+            #else
             if (record->event.pressed) {
                 // Only on tap (ie. Not during LT(HIGH) and LT(HIGHER))
                 if (record->tap.count > 0) {
@@ -791,6 +810,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
                 }
             }
+            #endif
             break;
         case LT(HIGHER, KC_SPC):
             if (record->event.pressed) {
@@ -1515,30 +1535,54 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case KC_D:
             #if defined REMAP_PASTE
-                if (record->event.pressed) {
-                    if (
-                        (MODS_GUI && (!MODS_ALT && !MODS_CTRL && !MODS_SFT)) ||
-                        (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL && !ONESHOT_MODS_SFT))
-                    ) {
-                        tap_code(KC_V);
-                        return false;
-                    }
+            if (record->event.pressed) {
+                if (
+                    (MODS_GUI && (!MODS_ALT && !MODS_CTRL && !MODS_SFT)) ||
+                    (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL && !ONESHOT_MODS_SFT))
+                ) {
+                    tap_code(KC_V);
+                    return false;
                 }
+            }
             #endif
-        break;
+            break;
         case KC_V:
             #if defined REMAP_PASTE
-                if (record->event.pressed) {
-                    if (
-                        (MODS_GUI && (!MODS_ALT && !MODS_CTRL && !MODS_SFT)) ||
-                        (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL && !ONESHOT_MODS_SFT))
-                    ) {
-                        tap_code16(LSFT(KC_Z));
-                        return false;
+            if (record->event.pressed) {
+                if (
+                    (MODS_GUI && (!MODS_ALT && !MODS_CTRL && !MODS_SFT)) ||
+                    (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL && !ONESHOT_MODS_SFT))
+                ) {
+                    tap_code16(LSFT(KC_Z));
+                    return false;
+                }
+            }
+            #endif
+            break;
+        case KC_TAB:
+            #if defined REMAP_PASTE
+            if (record->event.pressed) {
+                if (
+                    (MODS_GUI && (!MODS_ALT && !MODS_CTRL && !MODS_SFT)) ||
+                    (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL && !ONESHOT_MODS_SFT))
+                ) {
+                    tap_code(KC_D);
+                    return false;
+                } else {
+                    // normal tab behavior
+                    if (caps_word_active) {
+                        cancel_caps_word();
                     }
                 }
+            }
+            #else
+            if (record->event.pressed) {
+                if (caps_word_active) {
+                    cancel_caps_word();
+                }
+            }
             #endif
-        break;
+            break;
     }
     return true;
 }

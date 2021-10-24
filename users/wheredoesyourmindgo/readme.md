@@ -58,7 +58,7 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 | |  |  |  |  |  |  |  |  |  |  | |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
 | *Del* | Q | W  | F | P | B | J | L | U | Y | ; | *Bspace*|
-|backtick, \[OS Lyr\]|A|R|S|T|G|M|N|E|I|O|quote|
+|minus|A|R|S|T|G|M|N|E|I|O|quote|
 |LShift, *_2x Caps Word*|Z|X|C|D|V|K|H|,|.|/|RShift, *_2x Caps Sentence*|
 |App \[Mouse Lyr\]|LCtrl|LAlt|LGui|Esc \[Arrow+Num Lyr\]|Enter \[Symbol Lyr\]|Tab \[Media Lyr\]|Space \[Aux Lyr\]|LArrow\* \[LGui\]|DArrow\* \[LAlt\]|UArrow\* \[LCtrl\]|RArrow\* \[Func Lyr\]
 

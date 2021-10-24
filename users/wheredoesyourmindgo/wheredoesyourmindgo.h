@@ -97,7 +97,7 @@
 // #define OS_SPC4 LCTL(KC_4)                     // Space 4
 // #define OS_SPC3 LCTL(KC_3)                     // Space 3
 // #define OS_SPC2 LCTL(KC_2)                     // Space 2
-// #define OS_SPC1 LCTL(KC_1)                     // Space 1
+#define OS_SPC1 LCTL(KC_1)                     // Space 1
 #define OS_DOCK LCTL(KC_F3)                    // Focus Dock
 // #define OS_NXT_APP LGUI(KC_TAB) // Next App Window
 // #define OS_PRVS_APP SGUI(KC_TAB) // Previous App Window
@@ -143,14 +143,6 @@
 #define VOID KC_NO
 #define PRV_APP LGUI(KC_TAB)
 
-#if defined COLEMAK_DH_OA
-    #define ALPH_R2C1 KC_O
-    #define ALPH_R2C10 KC_A
-#else
-    #define ALPH_R2C1 KC_A
-    #define ALPH_R2C10 KC_O
-#endif
-
 #if defined REMAP_PARENS
     #define XASTR KC_LPRN
     #define XLPRN KC_RPRN
@@ -163,7 +155,7 @@
 
 enum layers { BASE, BASE_QWRTY, LOWER, LOWER_ALT, LOW, LOWEST, HIGHER, HIGH, HIGHEST, HIGHEST_ALT, OS };
 
-enum keycodes { CMD_TAB_PRV = SAFE_RANGE, TGL_LYT, TGL_LOWER, TGL_HIGHEST, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, OSHR, VOL_JUP, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, TRY_BSPACE_WORD, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, TLNG_ILFT, TLNG_IRGHT, ENC_BTN, BTN1_HOLD, CMD_TAB_HIDE, CMD_TAB_QUIT, XWNDW_MAX, WNDW_LFT, WNDW_RGHT, WNDW_ILFT, WNDW_IRGHT};
+enum keycodes { CMD_TAB_PRV = SAFE_RANGE, TGL_LYT, TGL_LOWER, TGL_HIGHEST, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, OSHR, VOL_JUP, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, TRY_BSPACE_WORD, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, TLNG_ILFT, TLNG_IRGHT, ENC_BTN, BTN1_HOLD, CMD_TAB_HIDE, CMD_TAB_QUIT, XWNDW_MAX, WNDW_LFT, WNDW_RGHT, WNDW_ILFT, WNDW_IRGHT, OS_LAST_SPC};
 
 // Tap Dance declarations
 enum {

@@ -291,7 +291,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset),
     [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset),
     [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset)
-    // [TD_OS_GRV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, os_grave_finished, os_grave_reset),
 };
 // end of Tap Dance config
 
@@ -739,6 +738,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        case LT(OS, KC_ESC):
+            if (record->event.pressed) {
+                // Only on tap (ie. Not during LT(OS)
+                if (record->tap.count > 0) {
+                // Only fire escape special mode is not active
+                if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active) {
+                    return true;
+                }
+                // Cancel One Shot Mods (if active)
+                if (ONESHOT_MODS_ACTIVE) {
+                    clear_oneshot_mods();
+                }
+                if (caps_sentence_active || caps_word_active) {
+                    cancel_quick_caps();
+                }
+                return false;
+                }
+            }
+            break;
         case KC_ESC:
             if (record->event.pressed) {
                 // Only fire escape special mode is not active
@@ -813,6 +831,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             #endif
             break;
         case LT(HIGHER, KC_SPC):
+        case LT(OS, KC_SPC):
             if (record->event.pressed) {
                 if (MODS_RCTRL || MODS_RALT || MODS_RGUI) {
                     layer_on(BASE);
@@ -822,7 +841,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     retro_tapping_counter++;
                     return false;
                 }
-                // Only on tap (ie. Not during LT(HIGH) and LT(HIGHER))
+                // Only on tap (ie. Not during LT(OS) and LT(HIGHER))
                 if (record->tap.count > 0) {
                     if (caps_word_active) {
                         cancel_caps_word();
@@ -1583,6 +1602,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             #endif
             break;
+        case OS_LAST_SPC:
+            if (record->event.pressed) {
+                int i;
+                for (i = 1; i <= 16; ++i) {
+                    tap_code16(OS_NXT_SPC);
+                }
+            }
+            break;
     }
     return true;
 }
@@ -1714,8 +1741,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_LOW_ENT):
         // case LT(LOWER, KC_ESC):
         case TD(TD_LOWER_ESC):
-        // case TD(TD_OS_GRV):
-        case LT(OS, KC_GRV):
+        case LT(OS, KC_ESC):
+        case LT(OS, KC_SPC):
             return 0;
         // While space key use retro tapping, we don't what to actiate the higher layer quickly with short tapping terms so just use default tapping term. We won't be rolling quickly through tab key so a shorter tapping term can be used with High layer.
         case LT(HIGHER, KC_SPC):
@@ -1733,8 +1760,6 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         // case LT(LOWER, KC_ESC):
         // case LT(HIGH, KC_TAB):
         // case LT(HIGHER, KC_SPC):
-        // case LT(OS,KC_GRV):
-        // case TD(TD_OS_GRV):
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
@@ -1750,7 +1775,6 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 // We won't be rolling through all the Layer-tap keys
 bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LT(OS,KC_GRV):
         // case LT(LOWER, KC_ESC):
         // case LT(LOW, KC_ENT):
         case LT(HIGH, KC_TAB):
@@ -1780,13 +1804,13 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 
 bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LT(OS,KC_GRV):
         // case LT(LOWER, KC_ESC):
         // case LT(LOW, KC_ENT):
         // case LT(LOWEST, KC_APP):
         case LT(HIGH, KC_TAB):
         case LT(HIGHER, KC_SPC):
-        case LT(OS, KC_GRV):
+        case LT(OS, KC_SPC):
+        case LT(OS, KC_ESC):
             return true;
         default:
             return false;

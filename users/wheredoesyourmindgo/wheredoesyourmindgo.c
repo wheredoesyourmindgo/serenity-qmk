@@ -1566,7 +1566,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             #endif
             break;
         case KC_V:
-            #if defined REMAP_PASTE
+            #if defined REMAP_PASTE && !COLEMAK_DH_RING
             if (record->event.pressed) {
                 if (
                     (MODS_GUI && (!MODS_ALT && !MODS_CTRL && !MODS_SFT)) ||
@@ -1577,9 +1577,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             #endif
-            break;
-        // Swap undo (redo) w/ open network connection (open network folder)
-        case KC_Z:
             #if defined REMAP_PASTE && COLEMAK_DH_RING
             if (record->event.pressed) {
                 if (
@@ -1592,14 +1589,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             #endif
             break;
-       case KC_K:
+        case KC_K:
             #if defined REMAP_PASTE && COLEMAK_DH_RING
             if (record->event.pressed) {
                 if (
-                    (MODS_GUI && (!MODS_ALT && !MODS_CTRL)) ||
-                    (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL))
+                    (MODS_GUI && (!MODS_ALT && !MODS_CTRL && !MODS_SFT)) ||
+                    (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL && !ONESHOT_MODS_SFT))
                 ) {
-                    tap_code16(KC_Z);
+                    tap_code16(LSFT(KC_Z));
                     return false;
                 }
             }

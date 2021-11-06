@@ -1580,7 +1580,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         // Swap undo (redo) w/ open network connection (open network folder)
         case KC_Z:
-            #if defined REMAP_PASTE
+            #if defined REMAP_PASTE && COLEMAK_DH_RING
             if (record->event.pressed) {
                 if (
                     (MODS_GUI && (!MODS_ALT && !MODS_CTRL)) ||
@@ -1593,7 +1593,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             #endif
             break;
        case KC_K:
-            #if defined REMAP_PASTE
+            #if defined REMAP_PASTE && COLEMAK_DH_RING
             if (record->event.pressed) {
                 if (
                     (MODS_GUI && (!MODS_ALT && !MODS_CTRL)) ||

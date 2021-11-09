@@ -1583,7 +1583,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     (MODS_GUI && (!MODS_ALT && !MODS_CTRL)) ||
                     (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL))
                 ) {
-                    tap_code16(KC_K);
+                    tap_code(KC_K);
                     return false;
                 }
             }
@@ -1597,6 +1597,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL && !ONESHOT_MODS_SFT))
                 ) {
                     tap_code16(LSFT(KC_Z));
+                    return false;
+                }
+            }
+            #endif
+            break;
+        case KC_W:
+            #if defined REMAP_PASTE && COLEMAK_DH_RING
+            if (record->event.pressed) {
+                if (
+                    (MODS_GUI && (!MODS_ALT && !MODS_CTRL)) ||
+                    (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL))
+                ) {
+                    tap_code(KC_Z);
+                    return false;
+                }
+            }
+            #endif
+            break;
+        case KC_Z:
+            #if defined REMAP_PASTE && COLEMAK_DH_RING
+            if (record->event.pressed) {
+                if (
+                    (MODS_GUI && (!MODS_ALT && !MODS_CTRL)) ||
+                    (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL))
+                ) {
+                    tap_code(KC_W);
                     return false;
                 }
             }

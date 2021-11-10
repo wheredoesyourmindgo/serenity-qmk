@@ -29,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 	[LOWER] = LAYOUT_4x12(
         KC_DEL , KC_1         , KC_2         , KC_3         , KC_4         , KC_5     ,         KC_6          , KC_7   , KC_8 , KC_9, KC_0, TRY_BSPACE_WORD,
-        KC_MINS , XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT, DF(LOWER),         KC_DOT, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_QUOT,
+        WNDW_RSTR, XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT, DF(LOWER),         KC_DOT, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_QUOT,
         KC_LSFT, LT(LOWER_ALT,TGL_LOWER), OSM(MOD_RALT)      , KC_NO        , VOID        , KC_NO    ,          KC_NO  , KC_HOME, KC_PGDN, KC_PGUP, KC_END, RSFT_T(KC_CAPS),
         KC_NO, KC_LCTL, KC_LALT, KC_LGUI,  DF(BASE)     , KC_ENT   , KC_TAB, LT(OS, KC_SPC),  KC_NO, KC_NO, KC_NO, KC_NO
     ),

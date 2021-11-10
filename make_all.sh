@@ -1,5 +1,5 @@
 #!/bin/sh
-OPTS='-j 2 -e MENU_ON_HIGHEST=yes -e COLEMAK_DH_RING=yes -e REMAP_PASTE=yes -e REMAP_PARENS=yes'
+OPTS='-j 2 -e MENU_ON_HIGHEST=yes -e COLEMAK_DH_RING=yes -e REMAP_PASTE=no -e REMAP_PARENS=yes'
 qmk compile -kb binepad/bn003 -km wheredoesyourmindgo
 # qmk compile -kb binepad/bnr1 -km wheredoesyourmindgo
 qmk compile -kb boardwalk -km wheredoesyourmindgo $OPTS

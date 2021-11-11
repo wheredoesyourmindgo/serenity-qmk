@@ -52,6 +52,34 @@ bool caps_sentence_active = false;
 bool alt_lshift_active = false;
 bool alt_rshift_active = false;
 
+void tap_code16_no_mod(uint16_t code) {
+    // Initialize variable holding the binary representation of active modifiers.
+    uint8_t mod_state;
+    // Store the current modifier state in the variable for later reference
+    mod_state = get_mods();
+    // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
+    // del_mods(mod_state);
+    unregister_mods(mod_state);
+    tap_code16(code);
+    // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
+    // set_mods(mod_state);
+    register_mods(mod_state);
+}
+
+void tap_code_no_mod(uint8_t code) {
+    // Initialize variable holding the binary representation of active modifiers.
+    uint8_t mod_state;
+    // Store the current modifier state in the variable for later reference
+    mod_state = get_mods();
+    // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
+    // del_mods(mod_state);
+    unregister_mods(mod_state);
+    tap_code(code);
+    // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
+    // set_mods(mod_state);
+    register_mods(mod_state);
+}
+
 void cancel_quick_caps(void) {
     caps_sentence_active = false;
     caps_word_active = false;
@@ -268,16 +296,33 @@ void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void multi_cntr_each(qk_tap_dance_state_t *state, void *user_data) {
+void multi_rst_each(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
         case 1:
-            tap_code16(WNDW_CNTR);
+            if (MODS_RSFT) {
+                tap_code16_no_mod(WNDW_ALMST_MAX);
+            } else {
+                tap_code16_no_mod(WNDW_CNTR);
+            }
             break;
         case 2:
-            tap_code16(WNDW_ALMST_MAX);
+            tap_code16_no_mod(WNDW_RSTR);
             break;
-        case 3:
-            tap_code16(WNDW_VRT_MAX);
+    }
+}
+
+void multi_max_each(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 1:
+            if (MODS_RSFT) {
+                tap_code16_no_mod(WNDW_ALMST_MAX);
+                tap_code16_no_mod(WNDW_VRT_MAX);
+            } else {
+                tap_code16_no_mod(WNDW_VRT_MAX);
+            }
+            break;
+        case 2:
+            tap_code16_no_mod(WNDW_MAX);
             break;
     }
 }
@@ -287,7 +332,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_LOWER_ESC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lower_esc_finished, lower_esc_reset),
     [TD_LOW_ENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, low_ent_finished, low_ent_reset),
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
-    [TD_MULTI_CNTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_cntr_each, NULL, NULL),
+    [TD_MULTI_MAX] = ACTION_TAP_DANCE_FN_ADVANCED(multi_max_each, NULL, NULL),
+    [TD_MULTI_RSTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_rst_each, NULL, NULL),
     [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset),
     [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset),
     [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset)
@@ -301,33 +347,6 @@ void cancel_cmd_shift(void) {
     }
     is_cmd_tab_active = false;
     cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-}
-
-void tap_code16_no_mod(uint16_t code) {
-    // Initialize variable holding the binary representation of active modifiers.
-    uint8_t mod_state;
-    // Store the current modifier state in the variable for later reference
-    mod_state = get_mods();
-    // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
-    // del_mods(mod_state);
-    unregister_mods(mod_state);
-    tap_code16(code);
-    // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
-    // set_mods(mod_state);
-    register_mods(mod_state);
-}
-void tap_code_no_mod(uint8_t code) {
-    // Initialize variable holding the binary representation of active modifiers.
-    uint8_t mod_state;
-    // Store the current modifier state in the variable for later reference
-    mod_state = get_mods();
-    // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
-    // del_mods(mod_state);
-    unregister_mods(mod_state);
-    tap_code(code);
-    // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
-    // set_mods(mod_state);
-    register_mods(mod_state);
 }
 
 /* Macros */
@@ -1696,13 +1715,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
 
 void keyboard_post_init_user(void) {
-#ifdef QWERTY_BASE
+    #ifdef QWERTY_BASE
     // Call the post init code.
     layer_off(BASE);
     layer_on(BASE_QWRTY);
     default_layer_set(BASE_QWRTY);
-#endif
+    #endif
 }
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+        case BASE:
+            if (is_cmd_tab_active) {
+                // cancel app swithing when switching back to base layer
+                cancel_cmd_shift();
+            }
+            break;
+        // default: //  for any other layers, or the default layer
+        //     break;
+    }
+  return state;
+}
+
 
 // LEADER_EXTERNS();
 
@@ -1779,7 +1813,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_CAPS_SENTENCE):
             return TAPPING_TD_TERM;
         case TD(TD_OOPSY):
-        case TD(TD_MULTI_CNTR):
+        case TD(TD_MULTI_MAX):
+        case TD(TD_MULTI_RSTR):
             return 300; // favor oopsy behavior
         // case LT(HIGHEST, KC_LEFT):
         // case RGUI_T(KC_DOWN):

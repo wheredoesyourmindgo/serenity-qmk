@@ -165,7 +165,8 @@ enum {
     TD_LOW_ENT,
     TD_CAPS_WORD,
     TD_CAPS_SENTENCE,
-    TD_MULTI_CNTR,
+    TD_MULTI_MAX,
+    TD_MULTI_RSTR,
     TD_OOPSY,
     // TD_OS_GRV
 };
@@ -193,7 +194,8 @@ void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data);
 void oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
 void oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
 void tgl_select(qk_tap_dance_state_t *state, void *user_data);
-void multi_cntr_each(qk_tap_dance_state_t *state, void *user_data);
+void multi_max_each(qk_tap_dance_state_t *state, void *user_data);
+void multi_rst_each(qk_tap_dance_state_t *state, void *user_data);
 
 bool is_btn1_held;
 bool is_cmd_tab_active;

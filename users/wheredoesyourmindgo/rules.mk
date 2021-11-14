@@ -36,8 +36,9 @@ endif
 ifeq ($(strip $(KEYBOARD)), ristretto)
 	OPT_DEFS += -DRISTRETTO_KEYBOARD
 	LTO_ENABLE = yes
-# CONSOLE_ENABLE = no
-	KEY_LOCK_ENABLE = no
+	CONSOLE_ENABLE = no
+	KEY_LOCK_ENABLE = yes
+	EXTRAKEY_ENABLE = no
 	ENCODER_ENABLE = yes
 	SRC += layout_4x12_enc.c
 endif
@@ -55,8 +56,6 @@ ifeq ($(strip $(KEYBOARD)), signum/3_0/elitec)
 	OPT_DEFS += -DSIGNUM_KEYBOARD
 	SRC += layout_4x12.c
 endif
-
-
 
 ifeq ($(strip $(KEYBOARD)), binepad/bn003)
 	TAP_DANCE_ENABLE = no

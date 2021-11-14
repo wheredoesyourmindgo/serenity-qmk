@@ -3,7 +3,7 @@ TAP_DANCE_ENABLE = yes 		# + Tap Dance
 MOUSEKEY_ENABLE = yes 		# + Mouse keys
 EXTRAKEY_ENABLE = yes 		# + Audio control and System control
 AUTO_SHIFT_ENABLE = no 		# - Auto Shift
-KEY_LOCK_ENABLE = yes 		# Key lock
+# KEY_LOCK_ENABLE = yes 		# Key lock
 
 # LTO_ENABLE = yes
 # CONSOLE_ENABLE = yes
@@ -39,8 +39,8 @@ ifeq ($(strip $(KEYBOARD)), ristretto)
 	OPT_DEFS += -DRISTRETTO_KEYBOARD
 	LTO_ENABLE = yes
 	CONSOLE_ENABLE = no
-	KEY_LOCK_ENABLE = yes
-	NO_USB_STARTUP_CHECK = yes
+# KEY_LOCK_ENABLE = yes
+# NO_USB_STARTUP_CHECK = yes
 	ENCODER_ENABLE = yes
 	SRC += layout_4x12_enc.c
 endif

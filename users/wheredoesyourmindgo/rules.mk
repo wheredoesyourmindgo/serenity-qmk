@@ -4,7 +4,7 @@ MOUSEKEY_ENABLE = yes 		# + Mouse keys
 EXTRAKEY_ENABLE = yes 		# + Audio control and System control
 AUTO_SHIFT_ENABLE = no 		# - Auto Shift
 KEY_LOCK_ENABLE = yes 		# Key lock
-NO_USB_STARTUP_CHECK = yes  # test this for a while with all keyboards (used w/ ristretto to reduce file size)
+
 # LTO_ENABLE = yes
 # CONSOLE_ENABLE = yes
 # COMBO_ENABLE = yes # Combos
@@ -34,6 +34,7 @@ ifeq ($(strip $(KEYBOARD)), foostan/cornelius)
 	SRC += layout_4x12.c
 endif
 
+# with usb startup disabled we won't be able to wake computer from sleep but we will be able to use key lock
 ifeq ($(strip $(KEYBOARD)), ristretto)
 	OPT_DEFS += -DRISTRETTO_KEYBOARD
 	LTO_ENABLE = yes

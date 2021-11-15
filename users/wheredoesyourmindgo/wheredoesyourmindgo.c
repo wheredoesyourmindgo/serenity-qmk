@@ -1621,32 +1621,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             #endif
             break;
-        case KC_W:
-            #if defined REMAP_PASTE && COLEMAK_DH_RING
-            if (record->event.pressed) {
-                if (
-                    (MODS_GUI && (!MODS_ALT && !MODS_CTRL)) ||
-                    (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL))
-                ) {
-                    tap_code(KC_Z);
-                    return false;
-                }
-            }
-            #endif
-            break;
-        case KC_Z:
-            #if defined REMAP_PASTE && COLEMAK_DH_RING
-            if (record->event.pressed) {
-                if (
-                    (MODS_GUI && (!MODS_ALT && !MODS_CTRL)) ||
-                    (ONESHOT_MODS_GUI && (!ONESHOT_MODS_LALT && !ONESHOT_MODS_CTRL))
-                ) {
-                    tap_code(KC_W);
-                    return false;
-                }
-            }
-            #endif
-            break;
         case KC_TAB:
             #if defined REMAP_PASTE
             if (record->event.pressed) {

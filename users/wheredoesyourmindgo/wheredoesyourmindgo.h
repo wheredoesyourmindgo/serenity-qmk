@@ -212,7 +212,7 @@ bool alt_rshift_active;
 // Initialize variable holding the binary representation of active modifiers.
 uint8_t mod_state;
 
-#define CAPS_TAP_DELAY 40
+#define CAPS_TAP_DELAY 20
 
 
 #if defined PLANCK_KEYBOARD

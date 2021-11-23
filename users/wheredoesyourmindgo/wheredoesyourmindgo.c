@@ -85,14 +85,18 @@ void cancel_quick_caps(void) {
     caps_word_active = false;
     // only fire caps_lock if caps was active
     if (host_keyboard_led_state().caps_lock) {
-        tap_code(KC_CAPSLOCK); // tap kc_capslock last, after everything is set false for custom macro
+        // tap kc_capslock last, after everything is set false for custom macro
+        // tap_code(KC_CAPSLOCK);
+        tap_code_delay(KC_CAPS, 300);
     }
 }
 void cancel_caps_word(void) {
     caps_word_active = false;
     // only fire caps_lock if caps was active
     if (host_keyboard_led_state().caps_lock) {
-        tap_code(KC_CAPSLOCK); // tap kc_capslock last, after everything is set false for custom macro
+        // tap kc_capslock last, after everything is set false for custom macro
+        // tap_code(KC_CAPSLOCK);
+        tap_code_delay(KC_CAPS, 300);
     }
 }
 
@@ -236,7 +240,7 @@ void caps_sentence_each(qk_tap_dance_state_t *state, void *user_data) {
         if (!host_keyboard_led_state().caps_lock && !caps_sentence_active && !caps_word_active) {
             caps_sentence_active = true;
             // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
-            tap_code_delay(KC_CAPS, 200);
+            tap_code_delay(KC_CAPS, 300);
         }
         // it's is unclear if reset_tap_dance() helps in this regard
         reset_tap_dance(state);

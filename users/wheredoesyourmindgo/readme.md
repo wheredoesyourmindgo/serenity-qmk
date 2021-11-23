@@ -71,7 +71,7 @@ Amethyst shortcuts are arranged on the Higher layer on the left-hand side on hom
 | **Mod** | `A` | `R`  | `S` | `T` |
 |--- | --- | --- | --- | ---|
 |**Shift**|Cycle Layout Back|OSD Current Layout|Floating Layout|Cycle Layout Forward|
-|**Cmd**|Shrink Main|Restore Window *(rectangle)*|Toggle Float Focused|Expand Main|
+|**Cmd**|Shrink Main|*currently void*|Toggle Float Focused|Expand Main|
 |**Opt**|Decrease Main Count|Toggle Global Tiling|Toggle Focus w/ Mouse|Increase Main Count|
 |**Ctrl**|Throw Focused to Left Space|Reload Amethyst|Re-evaluate Layout|Throw Focused to Right Space|
 |**-**|Move Focus C-Clockwise|Switch Focus to Main|Swap Main w/ Focused|Move Focus Clockwise|

@@ -1314,6 +1314,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (MODS_LSFT) {
                     tap_code16_no_mod(TLNG_LYT_INF);
                 } else if (MODS_LGUI) {
+                    tap_code16_no_mod(KC_NO);
                     // tap_code16_no_mod(WNDW_RSTR);
                 } else if (MODS_LALT) {
                     tap_code16_no_mod(TLNG_GLBL_TLNG);

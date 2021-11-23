@@ -200,6 +200,7 @@ void multi_rst_each(qk_tap_dance_state_t *state, void *user_data);
 bool is_btn1_held;
 bool is_cmd_tab_active;
 bool is_cmd_tab_held;
+bool caps_lock_active;
 bool caps_word_active;
 bool caps_sentence_active;
 void cancel_quick_caps(void);
@@ -210,6 +211,8 @@ bool alt_rshift_active;
 
 // Initialize variable holding the binary representation of active modifiers.
 uint8_t mod_state;
+
+#define CAPS_TAP_DELAY 80
 
 
 #if defined PLANCK_KEYBOARD

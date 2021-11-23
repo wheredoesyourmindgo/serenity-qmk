@@ -45,6 +45,7 @@ uint16_t cmd_tab_timer = 0;
 #define cmd_tab_timer_fast_dur 600;
 uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 
+bool caps_lock_active = false;
 bool caps_word_active = false;
 bool caps_sentence_active = false;
 
@@ -84,19 +85,21 @@ void cancel_quick_caps(void) {
     caps_sentence_active = false;
     caps_word_active = false;
     // only fire caps_lock if caps was active
-    if (host_keyboard_led_state().caps_lock) {
+    if (caps_lock_active) {
+        caps_lock_active = false;
         // tap kc_capslock last, after everything is set false for custom macro
         // tap_code(KC_CAPSLOCK);
-        tap_code_delay(KC_CAPS, 300);
+        tap_code_delay(KC_CAPS, CAPS_TAP_DELAY);
     }
 }
 void cancel_caps_word(void) {
     caps_word_active = false;
     // only fire caps_lock if caps was active
-    if (host_keyboard_led_state().caps_lock) {
+    if (caps_lock_active) {
+        caps_lock_active = false;
         // tap kc_capslock last, after everything is set false for custom macro
         // tap_code(KC_CAPSLOCK);
-        tap_code_delay(KC_CAPS, 300);
+        tap_code_delay(KC_CAPS, CAPS_TAP_DELAY);
     }
 }
 
@@ -216,10 +219,11 @@ void caps_word_each(qk_tap_dance_state_t *state, void *user_data) {
         register_mods(MOD_BIT(KC_LSFT));
     } else if (state->count == 2) {
         unregister_mods(MOD_BIT(KC_LSFT));
-        if (!host_keyboard_led_state().caps_lock && !caps_word_active && !caps_sentence_active) {
+        if (!caps_lock_active && !caps_word_active && !caps_sentence_active) {
+            caps_lock_active = true;
             caps_word_active = true;
             // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
-            tap_code_delay(KC_CAPS, 300);
+            tap_code_delay(KC_CAPS, CAPS_TAP_DELAY);
         }
         // it's is unclear if reset_tap_dance() helps in this regard
         reset_tap_dance(state);
@@ -237,10 +241,11 @@ void caps_sentence_each(qk_tap_dance_state_t *state, void *user_data) {
         register_mods(MOD_BIT(KC_RSFT));
     } else if (state->count == 2) {
         unregister_mods(MOD_BIT(KC_RSFT));
-        if (!host_keyboard_led_state().caps_lock && !caps_sentence_active && !caps_word_active) {
+        if (!caps_lock_active && !caps_sentence_active && !caps_word_active) {
+            caps_lock_active = true;
             caps_sentence_active = true;
             // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
-            tap_code_delay(KC_CAPS, 300);
+            tap_code_delay(KC_CAPS, CAPS_TAP_DELAY);
         }
         // it's is unclear if reset_tap_dance() helps in this regard
         reset_tap_dance(state);
@@ -375,6 +380,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     if (caps_sentence_active || caps_word_active) {
                         cancel_quick_caps();
                         return false;
+                    } else {
+                        caps_lock_active = !caps_lock_active;
                     }
                 }
             }
@@ -384,6 +391,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (caps_sentence_active || caps_word_active) {
                     cancel_quick_caps();
                     return false;
+                } else {
+                    caps_lock_active = !caps_lock_active;
                 }
             }
             break;

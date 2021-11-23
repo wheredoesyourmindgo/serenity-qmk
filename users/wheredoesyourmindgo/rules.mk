@@ -14,7 +14,7 @@ AUTO_SHIFT_ENABLE = no 		# - Auto Shift
 ifeq ($(strip $(KEYBOARD)), planck/rev6)
 	OPT_DEFS += -DPLANCK_KEYBOARD
 	RGBLIGHT_ENABLE = no
-	# SRC += muse.c
+# SRC += muse.c
 	SRC += layout_4x12.c
 endif
 

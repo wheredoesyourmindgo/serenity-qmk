@@ -699,16 +699,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //         }
         //     }
         //     break;
-        case CMD_TAB_QUIT:
-            if (record->event.pressed) {
-                if (is_cmd_tab_active) {
-                    cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-                    cmd_tab_timer = timer_read();
-                    tap_code(KC_Q);
-                    return false;
-                }
-            }
-            break;
         case OS_EXPOSE:
             if (record->event.pressed) {
                 if (is_cmd_tab_active) {

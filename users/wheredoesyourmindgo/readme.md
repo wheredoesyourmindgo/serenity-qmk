@@ -63,6 +63,15 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 |LShift, *_2x Caps Word*|Z|X|C|D|V|K|H|,|.|/|RShift, *_2x Caps Sentence*|
 |App \[Mouse Lyr\]|LCtrl|LAlt|LGui|Esc \[Arrow+Num Lyr\]|Enter \[Symbol Lyr\]|Tab \[Media Lyr\]|Space \[Aux Lyr\]|LArrow\* \[LGui\]|DArrow\* \[LAlt\]|UArrow\* \[LCtrl\]|RArrow\* \[Func Lyr\]
 
+#### OS Layer
+
+| |  |  |  |  |  |  |  |  |  |  | |
+|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
+|  |  |   | Terminal Visor | Launcher (alfred) |  | Screenshot Opt. | Spotlight | Launchpad | Siri  | Sidebar | |
+|Prev. App|App Switch left|App Expose|Mission Control|App Switch right| Fullscreen | Show Desktop|Prev. Space|Space 1|Last Space|Next Space||
+||Select Dock |||||||||||
+| | | | | | | | | | | | |
+
 <span id="WindowMgtRef" />
 
 ### Amethyst & Rectangle

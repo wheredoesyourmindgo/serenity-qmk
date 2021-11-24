@@ -64,21 +64,74 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 
 | |  |  |  |  |  |  |  |  |  |  | |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
-| *Del* | Q | W  | F | P | B | J | L | U | Y | ; | *Bspace*|
+| Del | Q | W  | F | P | B | J | L | U | Y | ; | Bspace|
 |minus|A|R|S|T|G|M|N|E|I|O|quote|
 |LShift, *_2x Caps Word*|Z|X|C|D|V|K|H|,|.|/|RShift, *_2x Caps Sentence*|
-|App \[Mouse Lyr\]|LCtrl|LAlt|LGui|Esc^ \[Arrow+Num Lyr\] \<OS Layer\>|Enter \[Symbol Lyr\]|Tab \[Media Lyr\]|Space^ \[Aux Lyr\] \<OS Layer\>|LArrow\* \[LGui\]|DArrow\* \[LAlt\]|UArrow\* \[LCtrl\]|RArrow\* \[Func Lyr\]
+|App \[Mouse Lyr\]|LCtrl|LAlt|LGui|Esc^ \[Arrow+Num Lyr\] \<OS Lyr\>|Enter \[Symbol Lyr\]|Tab \[Media Lyr\]|Space^ \[Aux Lyr\] \<OS Lyr\>|LArrow\* \[LGui\]|DArrow\* \[LAlt\]|UArrow\* \[LCtrl\]|RArrow\* \[Func Lyr\]
 
-#### Number/Nav. Layer
+#### Mouse Layer (lowest)
 
 | |  |  |  |  |  |  |  |  |  |  | |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
-| *Del* | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 | *Bspace. word* |
-| minus | LCtl (osm) | LAlt (osm) | LGui (osm) | LShft (osm) | OSL Higher Lyr. | dot | left arrow | down arrow | up arrow | right arrow | quote |
-| LShift | \[Alt. Num/Nav Lyr.\]** | RAlt (osm) | | *void* | Lock Num/Nav Lyr. | | home | page down | page up | end | capslock \[RShft\] |
+| Del |  |   | | |  | Lft. Btn. hold | Left Btn. | Mid. Btn. | Right Btn. | | Bspace |
+| | | | | | | | Move left | Move down | Move up | Move right | |
+| LSft | | RAlt (osm) | | | Lock Mouse Lyr | | Wheel right | Wheel Up | Wheel Down | Wheel left | |
+| Goto Base Lyr | LCtl (osm) | LAlt (osm) | LGui (osm) | LShft (osm) | enter | tab | space | | | | |
+
+#### Number/Nav. Layer (lower)
+
+| |  |  |  |  |  |  |  |  |  |  | |
+|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
+| Del | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 | *Bspace. word* |
+| Minus | LCtl (osm) | LAlt (osm) | LGui (osm) | LShft (osm) | OSL Higher Lyr | Dot | Left arrow | Down arrow | Up arrow | Right arrow | Quote |
+| LShift | \[Alt. Num/Nav Lyr\]** | RAlt (osm) | | *void* | Lock Num/Nav Lyr | | Home | Page down | Page up | End | Capslock \[RShft\] |
+| | LCtl | LAlt | LGui | Goto Base Lyr | enter | tab | space \[OS Lyr\] | | | | |
+
+#### Alt. Number/Nav. Layer (lower_alt)
+
+| |  |  |  |  |  |  |  |  |  |  | |
+|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
+|  |  |   | | |  | App Zoom Reset | | App Zoom In | App Zoom Out | | |
+| | |||| | | Back | Down Folder Lvl. | Up Folder Lvl. | Forward | |
+|| \[Num/Nav Lyr\]** |||| Lock Alt. Num/Nav Lyr | Zoom Reset | | Zoom In | Zoom Out |||
+| | LCtl | LAlt | LGui | Goto Base Lyr | enter | tab | space \[OS Lyr\] | | | | |
+
+#### Symbol Layer (low)
+
+| |  |  |  |  |  |  |  |  |  |  | |
+|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
+| Del  | ! | @ | # | $ | % | ^ | & | * or ( | ( or ) | ) or * | Bspace |
+| minus | LCtl (osm) | LAlt (osm) | LGui (osm) | LShft (osm) | OSL Media Lyr | ` | = | { | } | \| | quote |
+| LShft | | RAlt (osm) | | *void* | Lock Symbol Lyr | ~ | + | [ | ] | \ | RShft |
+| | | | | esc | Goto Base Lyr | tab | space | | | | |
+
+#### Media Layer (high)
+
+| |  |  |  |  |  |  |  |  |  |  | |
+|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
+| Del | | Dim Display | Bri. Display | | Dark Mode Toggle | RGB Toggle | Next RGB Mode | Inc. RGB Hue | Inc. RGB Sat. | Inc. RGB Bright | Firmware reset |
+| minus | | Vol. Down | Vol. Up | | Mute | OSL Symbol Lyr | LShft (osm) | LGui (osm) | LAlt (osm) | LCtl (osm) | Firmware debug |
+| LShft | Media Reverse | Media Stop | Media Play | Media Forward | Toggle Qwerty Base Lyr | Lock Media Lyr | *void* | | RAlt (osm) | | RShft|
+| | | | | esc | enter | Goto Base Lyr | space | | | | |
+
+#### Aux. Layer (higher)
+
+| |  |  |  |  |  |  |  |  |  |  | |
+|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
+|  |  |   | | |  | | | | | | |
+| | |||| | ||||||
+|||||||||||||
+| | | | | | | | | | | | |
+#### Func. Layer (highest)
+
+| |  |  |  |  |  |  |  |  |  |  | |
+|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
+|  |  |   | | |  | | | | | | |
+| | |||| | ||||||
+|||||||||||||
 | | | | | | | | | | | | |
 
-#### Symbol Layer
+#### ... Layer ()
 
 | |  |  |  |  |  |  |  |  |  |  | |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|

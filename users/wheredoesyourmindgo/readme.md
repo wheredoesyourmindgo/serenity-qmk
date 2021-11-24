@@ -58,6 +58,8 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 
 ^ acts as shift press when held with any other modifier(s)
 
+\*\* can toggle layer with tap
+
 #### Alpha/Base Layer
 
 | |  |  |  |  |  |  |  |  |  |  | |
@@ -67,6 +69,23 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 |LShift, *_2x Caps Word*|Z|X|C|D|V|K|H|,|.|/|RShift, *_2x Caps Sentence*|
 |App \[Mouse Lyr\]|LCtrl|LAlt|LGui|Esc^ \[Arrow+Num Lyr\] \<OS Layer\>|Enter \[Symbol Lyr\]|Tab \[Media Lyr\]|Space^ \[Aux Lyr\] \<OS Layer\>|LArrow\* \[LGui\]|DArrow\* \[LAlt\]|UArrow\* \[LCtrl\]|RArrow\* \[Func Lyr\]
 
+#### Number/Nav. Layer
+
+| |  |  |  |  |  |  |  |  |  |  | |
+|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
+| *Del* | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 | *Bspace. word* |
+| minus | LCtl (osm) | LAlt (osm) | LGui (osm) | LShft (osm) | OSL Higher Lyr. | dot | left arrow | down arrow | up arrow | right arrow | quote |
+| LShift | \[Alt. Num/Nav Lyr.\]** | RAlt (osm) | | *void* | Lock Num/Nav Lyr. | | home | page down | page up | end | capslock \[RShft\] |
+| | | | | | | | | | | | |
+
+#### Symbol Layer
+
+| |  |  |  |  |  |  |  |  |  |  | |
+|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
+|  |  |   | | |  | | | | | | |
+| | |||| | ||||||
+|||||||||||||
+| | | | | | | | | | | | |
 #### OS Layer
 
 | |  |  |  |  |  |  |  |  |  |  | |

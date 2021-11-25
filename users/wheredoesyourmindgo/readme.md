@@ -15,6 +15,7 @@ This is a QMK layout that includes dedicated right and left shift keys. The Base
 - Easy and flexible capslock; Capslock can be toggled on/off with a Lower/Higher+shift (opposite shift) press. Additionally,
   - Caps-word can be toggled with a double left shift tap. Capslock will disable at the first occurrence of a space, comma, semi-colon, colon, period(dot), escape, tab, or enter tap. Left shift is greedy in regard to interruption.
   - Caps-sentence can be toggled with a double right shift tap. Capslock will disable at the first occurrence of a period(dot), escape, or enter tap. Right shift is greedy in regard to interruption.
+- Key lock on Mouse layer for dexterity and ease of use with text selections or holding mouse button clicks.
 - (macOS) Easy access to macOS command key using thumbs. macOS is chock-full of shortcuts that utilize the command key so I'm calling this a feature.
 - (macOS) Double left control tap hides active window and mutes volume. Left control is greedy in regard to interruption.
 - (macOS) An additional shortcut within the Higher layer on the "b" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
@@ -73,8 +74,8 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 
 | |  |  |  |  |  |  |  |  |  |  | |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
-| Del |  |   | | |  | Lft. Btn. hold | Left Btn. | Mid. Btn. | Right Btn. | | Bspace |
-| | | | | | | | Move left | Move down | Move up | Move right | |
+| Del |  |   | | |  | Key Lock | Left Btn. | Mid. Btn. | Right Btn. | Mouse Btn 4 | Bspace |
+| | | | | | | Mouse Btn 5 | Move left | Move down | Move up | Move right | |
 | LSft | | RAlt (osm) | | | Lock Mouse Lyr | | Wheel right | Wheel Up | Wheel Down | Wheel left | |
 | Goto Base Lyr | LCtl (osm) | LAlt (osm) | LGui (osm) | LShft (osm) | enter | tab | space | | | | |
 

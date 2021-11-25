@@ -3,7 +3,12 @@ TAP_DANCE_ENABLE = yes 		# + Tap Dance
 MOUSEKEY_ENABLE = yes 		# + Mouse keys
 EXTRAKEY_ENABLE = yes 		# + Audio control and System control
 AUTO_SHIFT_ENABLE = no 		# - Auto Shift
-# KEY_LOCK_ENABLE = yes 		# Key lock
+KEY_LOCK_ENABLE = yes 		# Key lock
+# free up some space for ristretto
+SPACE_CADET_ENABLE = no
+GRAVE_ESC_ENABLE = no
+# If more space is needed consider the following option. See https://github.com/qmk/qmk_firmware/blob/develop/docs/squeezing_avr.md for more info.
+# MAGIC_ENABLE = no
 
 # LTO_ENABLE = yes
 # CONSOLE_ENABLE = yes

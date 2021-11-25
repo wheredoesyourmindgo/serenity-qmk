@@ -36,8 +36,6 @@ extern int retro_tapping_counter;
 #define ONESHOT_MODS_SFT (ONESHOT_MODS_LSFT || ONESHOT_MODS_RSFT)
 
 
-bool is_btn1_held = false;
-
 bool is_cmd_tab_active = false;
 bool is_cmd_tab_held = false;
 uint16_t cmd_tab_timer = 0;
@@ -1562,17 +1560,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_MUTE);
                 }
                 return false;
-            }
-            break;
-        case BTN1_HOLD:
-            if (record->event.pressed) {
-                if (!is_btn1_held) {
-                    register_code16(KC_BTN1);
-                    is_btn1_held = true;
-                } else {
-                    unregister_code16(KC_BTN1);
-                    is_btn1_held = false;
-                }
             }
             break;
         case KC_D:

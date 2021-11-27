@@ -1695,9 +1695,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
                 // cancel app swithing when switching back to base layer
                 cancel_cmd_shift();
             }
+            cancel_key_lock();
             break;
-        // default: //  for any other layers, or the default layer
-        //     break;
+        default: //  for any other layers, or the default layer
+            cancel_key_lock();
+            break;
     }
   return state;
 }

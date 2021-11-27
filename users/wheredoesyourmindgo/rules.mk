@@ -4,6 +4,7 @@ MOUSEKEY_ENABLE = yes 		# + Mouse keys
 EXTRAKEY_ENABLE = yes 		# + Audio control and System control
 AUTO_SHIFT_ENABLE = no 		# - Auto Shift
 KEY_LOCK_ENABLE = yes 		# Key lock
+LTO_ENABLE = yes
 # free up some space for ristretto
 SPACE_CADET_ENABLE = no
 GRAVE_ESC_ENABLE = no
@@ -30,7 +31,6 @@ endif
 ifeq ($(strip $(KEYBOARD)), boardwalk)
 	OPT_DEFS += -DBOARDWALK_KEYBOARD
 	RGBLIGHT_ENABLE = no
-	LTO_ENABLE = yes
 	SRC += layout_boardwalk_hs.c
 endif
 
@@ -42,7 +42,6 @@ endif
 # with usb startup disabled we won't be able to wake computer from sleep but we will be able to use key lock
 ifeq ($(strip $(KEYBOARD)), ristretto)
 	OPT_DEFS += -DRISTRETTO_KEYBOARD
-	LTO_ENABLE = yes
 	CONSOLE_ENABLE = no
 # KEY_LOCK_ENABLE = yes
 # NO_USB_STARTUP_CHECK = yes
@@ -52,10 +51,9 @@ endif
 
 ifeq ($(strip $(KEYBOARD)), boardsource/technik_o)
 	OPT_DEFS += -DTECHNIK_KEYBOARD
-# CONSOLE_ENABLE = yes
-# RGB_MATRIX_ENABLE = no
-	KEY_LOCK_ENABLE = no
-	LTO_ENABLE = yes
+# CONSOLE_ENABLE = no
+	RGB_MATRIX_ENABLE = no
+# KEY_LOCK_ENABLE = no
 	SRC += layout_4x12.c
 endif
 

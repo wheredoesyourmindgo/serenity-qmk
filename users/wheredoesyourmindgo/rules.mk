@@ -83,10 +83,6 @@ ifeq ($(strip $(COLEMAK_DH_RING)), yes)
   OPT_DEFS += -DCOLEMAK_DH_RING
 endif
 
-ifeq ($(strip $(REMAP_PASTE)), yes)
-  OPT_DEFS += -DREMAP_PASTE
-endif
-
 ifeq ($(strip $(REMAP_PARENS)), yes)
   OPT_DEFS += -DREMAP_PARENS
 endif

@@ -27,7 +27,6 @@ This is a QMK layout that includes dedicated right and left shift keys. The Base
 - (make option) Hold the Menu key (KC_MENU) while holding down the function key. This can be enabled by building firmware with `MENU_ON_HIGHEST=yes` option. The Menu keycode is not used by MacOS, but it will register, so it can be converted to something else such as the Function "fn" key via a Karabiner-Elements rule which will enable further customization via Karabiner-Elements with additional rules.
 - (make option) With regard to the Colemak(-dh) layout, does typing the trigram 'was' got you down? Flip some keys around with the `COLEMAK_DH_RING=yes` option. See [my post on Reddit](https://www.reddit.com/r/KeyboardLayouts/comments/qusrbc/colemakdhring_mod_3rd_atbat) for more info.
 - (make option) To remap the parenthesis over 1 column to the left use the `REMAP_PARENS=yes` option. This will shift the asterisk shortcut over the the 0 position. The result is that the parenthesis, braces, brackets, and arrows will all line up on the same two columns; neat.
-- (make option, macOS) To remap the command+d press to command+v use the `REMAP_PASTE=yes` option. This will also remap command+v to redo and command+tab to command+d (duplicate file). Command+tab, or App Switcher, is launched from OS layer. 
 
 ## Usage
 

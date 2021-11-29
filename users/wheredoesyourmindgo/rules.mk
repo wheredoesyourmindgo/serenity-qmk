@@ -75,16 +75,8 @@ ifeq ($(strip $(MENU_ON_HIGHEST)), yes)
   OPT_DEFS += -DMENU_ON_HIGHEST
 endif
 
-ifeq ($(strip $(COLEMAK_DH_OA)), yes)
-  OPT_DEFS += -DCOLEMAK_DH_OA
-endif
-
 ifeq ($(strip $(COLEMAK_DH_RING)), yes)
   OPT_DEFS += -DCOLEMAK_DH_RING
-endif
-
-ifeq ($(strip $(REMAP_PARENS)), yes)
-  OPT_DEFS += -DREMAP_PARENS
 endif
 
 ifeq ($(strip $(QWERTY_BASE)), yes)

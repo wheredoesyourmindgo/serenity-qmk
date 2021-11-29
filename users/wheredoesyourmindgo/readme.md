@@ -25,7 +25,7 @@ This is a QMK layout that includes dedicated right and left shift keys. The Base
 & [Rectangle](https://rectangleapp.com/) on the Higher layer. See [Reference](#WindowMgtRef) below for additional info.
 - (macOS) Shortcuts for quick access to word & line backspace and word & line delete forward. These are activated from Lower, Lowest, Higher, and Highest layers, respectively. For convenience, the word delete will not trigger when entering numbers in Lower layer, which is ideal for using backspace within Lower layer (the side effect is that words that end with a number can't be word-deleted until Lower hold is released and held again).
 - (make option) Hold the Menu key (KC_MENU) while holding down the function key. This can be enabled by building firmware with `MENU_ON_HIGHEST=yes` option. The Menu keycode is not used by MacOS, but it will register, so it can be converted to something else such as the Function "fn" key via a Karabiner-Elements rule which will enable further customization via Karabiner-Elements with additional rules.
-- (make option) With regard to the Colemak(-dh) layout, does typing the trigram 'was' got you down? Flip some keys around with the `COLEMAK_DH_RING=yes` option. See [my post on Reddit](https://www.reddit.com/r/KeyboardLayouts/comments/qusrbc/colemakdhring_mod_3rd_atbat) for more info.
+- (make option) With regard to the Colemak(-dh) layout, does typing the trigram 'was' got you down? Flip some keys around with the `FLEXOR_LAYOUT=yes` option. See [my post on Reddit](https://www.reddit.com/r/KeyboardLayouts/comments/r485x5/flexor_layout_fka_colemakdhring/) for more info.
 
 ## Usage
 

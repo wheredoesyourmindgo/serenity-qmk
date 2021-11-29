@@ -4,7 +4,7 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_boardwalk_hs(
-    #if defined COLEMAK_DH_RING
+    #if defined FLEXOR_LAYOUT
         KC_NO, KC_1, KC_2, KC_3, KC_4, KC_5, KC_MINS, KC_EQL, KC_6, KC_7, KC_8, KC_9, KC_0, KC_NO,
         KC_DEL, KC_K, KC_Y, KC_C, KC_W, KC_P, KC_LBRC, KC_RBRC, KC_J, KC_L, KC_U, KC_SCLN, KC_Z, KC_BSPC,
         KC_QUOT, KC_R, KC_I, KC_S, KC_T, KC_G, KC_HOME, KC_PGUP,  KC_M, KC_N, KC_E, KC_A, KC_O, KC_MINS,

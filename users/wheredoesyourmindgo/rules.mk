@@ -75,8 +75,8 @@ ifeq ($(strip $(MENU_ON_HIGHEST)), yes)
   OPT_DEFS += -DMENU_ON_HIGHEST
 endif
 
-ifeq ($(strip $(COLEMAK_DH_RING)), yes)
-  OPT_DEFS += -DCOLEMAK_DH_RING
+ifeq ($(strip $(FLEXOR_LAYOUT)), yes)
+  OPT_DEFS += -DFLEXOR_LAYOUT
 endif
 
 ifeq ($(strip $(QWERTY_BASE)), yes)

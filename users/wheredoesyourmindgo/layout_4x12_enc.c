@@ -3,7 +3,7 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_4x12_enc(
-    #if defined COLEMAK_DH_RING
+    #if defined FLEXOR_LAYOUT
         KC_DEL, KC_K, KC_Y, KC_F, KC_W, KC_P, KC_J, KC_L, KC_U, KC_SCLN, KC_Z, KC_BSPC,
         KC_QUOT, KC_R, KC_I, KC_S, KC_T, KC_G, KC_M, KC_N, KC_E, KC_A, KC_O, KC_MINS,
         TD(TD_CAPS_WORD), KC_X, KC_Q, KC_F, KC_D, KC_B, KC_V, KC_H, KC_SLSH, KC_COMM, KC_DOT, TD(TD_CAPS_SENTENCE),

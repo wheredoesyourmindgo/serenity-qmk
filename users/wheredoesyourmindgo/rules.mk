@@ -79,6 +79,10 @@ ifeq ($(strip $(FLEXOR_LAYOUT)), yes)
   OPT_DEFS += -DFLEXOR_LAYOUT
 endif
 
+ifeq ($(strip $(SERTAIN_LAYOUT)), yes)
+  OPT_DEFS += -DSERTAIN_LAYOUT
+endif
+
 ifeq ($(strip $(QWERTY_BASE)), yes)
   OPT_DEFS += -DQWERTY_BASE
 endif

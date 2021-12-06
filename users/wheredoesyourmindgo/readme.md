@@ -153,13 +153,13 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 
 Amethyst shortcuts are arranged on the Higher layer on the left-hand side on home row. Alternate shortcuts can be triggered using the mods on the home row on the right side within the Higher layer. Below is a map of the commands and mod presses.
 
-| **Mod** | `A` | `R`  | `S` | `T` |
+| **Mod** | `A` | `S`  | `D` | `F` |
 |--- | --- | --- | --- | ---|
-|**Shift**|Cycle Layout Back|OSD Current Layout|Floating Layout|Cycle Layout Forward|
-|**Cmd**|Shrink Main|*currently void*|Toggle Float Focused|Expand Main|
-|**Opt**|Decrease Main Count|Toggle Global Tiling|Toggle Focus w/ Mouse|Increase Main Count|
-|**Ctrl**|Throw Focused to Left Space|Reload Amethyst|Re-evaluate Layout|Throw Focused to Right Space|
-|**-**|Move Focus C-Clockwise|Switch Focus to Main|Swap Main w/ Focused|Move Focus Clockwise|
+|**Shift**|OSD Current Layout|Cycle Layout Back|Cycle Layout Forward|Floating Layout|
+|**Cmd**|*currently void*|Shrink Main|Expand Main|Toggle Float Focused|
+|**Opt**|Toggle Global Tiling|Decrease Main Count|Increase Main Count|Toggle Focus w/ Mouse|
+|**Ctrl**|Reload Amethyst|Throw Focused to Left Space|Throw Focused to Right Space|Re-evaluate Layout|
+|**-**|Switch Focus to Main|Move Focus C-Clockwise|Move Focus Clockwise|Swap Main w/ Focused|
 
 ## Tips
 

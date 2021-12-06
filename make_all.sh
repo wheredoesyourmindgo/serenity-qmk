@@ -1,5 +1,5 @@
 #!/bin/sh
-OPTS='-j 2 -e MENU_ON_HIGHEST=yes -e SERTAIN_LAYOUT=yes'
+OPTS='-j 2 -e MENU_ON_HIGHEST=yes -e UNSERTAIN_LAYOUT=yes'
 qmk compile -kb binepad/bn003 -km wheredoesyourmindgo
 # qmk compile -kb binepad/bnr1 -km wheredoesyourmindgo
 qmk compile -kb boardwalk -km wheredoesyourmindgo $OPTS

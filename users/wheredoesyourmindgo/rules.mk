@@ -83,6 +83,10 @@ ifeq ($(strip $(UNSERTAIN_LAYOUT)), yes)
   OPT_DEFS += -DUNSERTAIN_LAYOUT
 endif
 
+ifeq ($(strip $(CRANKIESTY_LAYOUT)), yes)
+  OPT_DEFS += -DCRANKIESTY_LAYOUT
+endif
+
 ifeq ($(strip $(QWERTY_BASE)), yes)
   OPT_DEFS += -DQWERTY_BASE
 endif

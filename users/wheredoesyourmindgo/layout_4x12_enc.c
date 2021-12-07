@@ -1,5 +1,10 @@
 #include QMK_KEYBOARD_H
 #include "wheredoesyourmindgo.h"
+/*
+x  l  h  m  j  p  w  o  u  ;  [  ]
+s  r  n  t  k  f  c  e  i  a  -
+z  q  b  d  v  g  y  '  ,  .
+*/
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_4x12_enc(
@@ -12,6 +17,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_DEL, KC_X, KC_L, KC_D, KC_F, KC_V, KC_J, KC_W, KC_O, KC_U, KC_SCLN, KC_BSPC,
             KC_GRV, KC_S, KC_R, KC_T, KC_N, KC_K, KC_P, KC_C, KC_E, KC_I, KC_A, KC_MINS,
             TD(TD_CAPS_WORD), KC_Z, KC_Q, KC_M, KC_H, KC_B, KC_G, KC_Y, KC_QUOT, KC_COMM, KC_DOT, TD(TD_CAPS_SENTENCE),
+            TD(TD_OOPSY), KC_LCTL, KC_LALT, KC_LGUI, TD(TD_LOWER_ESC), TD(TD_LOW_ENT), ENC_BTN, LT(HIGH,KC_TAB), LT(HIGHER,KC_SPC), RGUI_T(KC_LEFT), RALT_T(KC_DOWN), RCTL_T(KC_UP), LT(HIGHEST,KC_RIGHT)
+        #elif defined CRANKIESTY_LAYOUT
+            KC_DEL, KC_Z, KC_L, KC_H, KC_M, KC_Q, KC_P, KC_F, KC_O, KC_U, KC_SCLN, KC_BSPC,
+            KC_GRV, KC_S, KC_R, KC_N, KC_T, KC_K, KC_Y, KC_C, KC_E, KC_I, KC_A, KC_MINS,
+            TD(TD_CAPS_WORD), KC_X, KC_J, KC_B, KC_D, KC_V, KC_G, KC_W, KC_QUOT, KC_COMM, KC_DOT, TD(TD_CAPS_SENTENCE),
             TD(TD_OOPSY), KC_LCTL, KC_LALT, KC_LGUI, TD(TD_LOWER_ESC), TD(TD_LOW_ENT), ENC_BTN, LT(HIGH,KC_TAB), LT(HIGHER,KC_SPC), RGUI_T(KC_LEFT), RALT_T(KC_DOWN), RCTL_T(KC_UP), LT(HIGHEST,KC_RIGHT)
         #else
             KC_DEL, KC_Q, KC_W, KC_F, KC_P, KC_B, KC_J, KC_L, KC_U, KC_Y, KC_SCLN, KC_BSPC,

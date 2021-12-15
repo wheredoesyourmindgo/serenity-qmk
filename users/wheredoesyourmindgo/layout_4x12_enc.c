@@ -1,10 +1,5 @@
 #include QMK_KEYBOARD_H
 #include "wheredoesyourmindgo.h"
-/*
-x  l  h  m  j  p  w  o  u  ;  [  ]
-s  r  n  t  k  f  c  e  i  a  -
-z  q  b  d  v  g  y  '  ,  .
-*/
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_4x12_enc(

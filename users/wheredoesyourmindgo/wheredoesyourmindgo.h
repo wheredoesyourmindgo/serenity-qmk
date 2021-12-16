@@ -192,6 +192,8 @@ bool is_cmd_tab_held;
 bool caps_lock_active;
 bool caps_word_active;
 bool caps_sentence_active;
+void tap_code_no_mod(uint8_t);
+void tap_code16_no_mod(uint16_t);
 void cancel_quick_caps(void);
 void cancel_caps_word(void);
 bool encoder_update_keymap(uint8_t index, bool clockwise);

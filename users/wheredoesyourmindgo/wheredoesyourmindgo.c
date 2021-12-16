@@ -811,7 +811,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Tab, space, colon, semi-colon, comma cancel caps word
         case KC_COLN:
         case KC_SCLN:
-        case KC_COMM:
+        // case KC_COMM: // see below
         // case KC_TAB: // see below
         case KC_SPC:
             if (record->event.pressed) {
@@ -868,15 +868,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case KC_DOT:
-            if (record->event.pressed) {
-                if (caps_sentence_active || caps_word_active) {
-                    cancel_quick_caps();
-                }
-                // We don't need to check if kc_dot was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_del).
-                dontBspaceWord = true;
-            }
-            break;
+        // see below
+        // case KC_DOT:
+        //     if (record->event.pressed) {
+        //         if (caps_sentence_active || caps_word_active) {
+        //             cancel_quick_caps();
+        //         }
+        //         // We don't need to check if kc_dot was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_del).
+        //         dontBspaceWord = true;
+        //     }
+        //     break;
         // See low_ent tap dance reset function. That tap dance was setup because tap.count will always be 0 when a 0 value is used with Tapping Term.
         // case LT(LOW, KC_ENT):
         case ALGR_T(KC_DOT):
@@ -1549,14 +1550,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case OS_LAST_SPC:
+        case KC_DOT:
             if (record->event.pressed) {
-                int i;
-                for (i = 1; i <= 16; ++i) {
-                    tap_code16(OS_NXT_SPC);
+                if (caps_sentence_active || caps_word_active) {
+                    cancel_quick_caps();
+                }
+                // We don't need to check if kc_dot was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_del).
+                dontBspaceWord = true;
+                if (IS_LAYER_ON(BASE) && MODS_SFT && !MODS_ALT && !MODS_CTRL && !MODS_GUI) {
+                    tap_code16(KC_COLN);
+                    return false;
                 }
             }
             break;
+        case KC_COMM:
+            if (record->event.pressed) {
+                if (caps_word_active) {
+                    cancel_caps_word();
+                }
+                if (IS_LAYER_ON(BASE) && MODS_SFT && !MODS_ALT && !MODS_CTRL && !MODS_GUI) {
+                    tap_code_no_mod(KC_SCOLON);
+                    return false;
+                }
+            }
+            break;
+
+        // case OS_LAST_SPC:
+        //     if (record->event.pressed) {
+        //         int i;
+        //         for (i = 1; i <= 16; ++i) {
+        //             tap_code16(OS_NXT_SPC);
+        //         }
+        //     }
+        //     break;
     }
     return true;
 }

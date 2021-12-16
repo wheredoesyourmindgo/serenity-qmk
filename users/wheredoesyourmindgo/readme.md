@@ -144,7 +144,7 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 | |  |  |  |  |  |  |  |  |  |  | |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
 |  |  |   | Terminal Visor | Launcher (alfred) |  | Screenshot Opt. | Spotlight | Launchpad | Siri  | Sidebar | |
-|Prev. App|App Switch left|App Switch right|App Expose| Fullscreen | | Mission Control|Prev. Space|Next Space|Show Desktop||
+||Prev. App|App Switch left|App Switch right|App Expose| Fullscreen | | Mission Control|Prev. Space|Next Space|Show Desktop||
 ||Select Dock |||||||||||
 | | | | | | | | | | | | |
 

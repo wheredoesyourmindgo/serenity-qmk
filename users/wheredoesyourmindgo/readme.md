@@ -64,7 +64,7 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 | |  |  |  |  |  |  |  |  |  |  | |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
 | Del | Q | W  | F | P | B | J | L | U | Y | ; | Bspace|
-|minus|A|R|S|T|G|M|N|E|I|O|quote|
+|`|A|R|S|T|G|M|N|E|I|O|=|
 |LShift, *_2x Caps Word*|Z|X|C|D|V|K|H|,|.|/|RShift, *_2x Caps Sentence*|
 |App \[Mouse Lyr\]|LCtrl|LAlt|LGui|Esc^ \[Arrow+Num Lyr\] \<OS Lyr\>|Enter \[Symbol Lyr\]|Tab \[Media Lyr\]|Space^ \[Aux Lyr\] \<OS Lyr\>|LArrow\* \[LGui\]|DArrow\* \[LAlt\]|UArrow\* \[LCtrl\]|RArrow\* \[Func Lyr\]
 
@@ -99,9 +99,9 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 
 | |  |  |  |  |  |  |  |  |  |  | |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
-| Del  | ! | @ | # | $ | % | ^ | & | * or ( | ( or ) | ) or * | Bspace |
-| minus | LCtl (osm) | LAlt (osm) | LGui (osm) | LShft (osm) | OSL Media Lyr | ` | = | { | } | \| | quote |
-| LShft | | RAlt (osm) | | *void* | Lock Symbol Lyr | ~ | + | [ | ] | \ | RShft |
+| Del  | ! | @ | # | $ | % | ^ | & | ( | ) | * | Bspace |
+| minus | LCtl (osm) | LAlt (osm) | LGui (osm) | LShft (osm) | OSL Media Lyr | \| | < | { | } | > | = |
+| LShft | | RAlt (osm) | | *void* | Lock Symbol Lyr | \ | / | [ | ] | ? | RShft |
 | | | | | esc | Goto Base Lyr | tab | space | | | | |
 
 #### Media Layer (high)
@@ -121,6 +121,7 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 | | |||| | ||||||
 |||||||||||||
 | | | | | | | | | | | | |
+
 #### Func. Layer (highest)
 
 | |  |  |  |  |  |  |  |  |  |  | |
@@ -143,7 +144,7 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 | |  |  |  |  |  |  |  |  |  |  | |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
 |  |  |   | Terminal Visor | Launcher (alfred) |  | Screenshot Opt. | Spotlight | Launchpad | Siri  | Sidebar | |
-|Prev. App|App Switch left|App Expose|Mission Control|App Switch right| Fullscreen | Show Desktop|Prev. Space|Space 1|Last Space|Next Space||
+|Prev. App|App Switch left|App Switch right|App Expose| Fullscreen | | Mission Control|Prev. Space|Next Space|Show Desktop||
 ||Select Dock |||||||||||
 | | | | | | | | | | | | |
 

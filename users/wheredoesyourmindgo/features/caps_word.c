@@ -5,20 +5,10 @@
 
 bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
   static bool caps_word_enabled = false;
-  static bool shifted = false;
-  static bool left_shifting = false;
 
   void cancel_caps_word(void) {
     // Disable caps word.
     caps_word_enabled = false;
-    if (shifted) {
-        if (left_shifting) {
-            unregister_code(KC_RSFT);
-        } else {
-            unregister_code(KC_LSFT);
-        }
-    }
-    shifted = false;
   }
 
   if (!caps_word_enabled) {
@@ -27,7 +17,6 @@ bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
         == MOD_MASK_SHIFT) {
       clear_mods();
       clear_oneshot_mods();
-      shifted = false;
       caps_word_enabled = true;
       return false;
     }
@@ -38,7 +27,9 @@ bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
 
   if (!((get_mods() | get_oneshot_mods()) & ~MOD_MASK_SHIFT)) {
     switch (keycode) {
-      case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+      // don't strip out shift press
+      // case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+      // do strip out layer press
       case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
         // Earlier return if this has not been considered tapped yet.
         if (record->tap.count == 0) { return true; }
@@ -48,24 +39,15 @@ bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
 
     switch (keycode) {
       case KC_RSFT:
-        left_shifting = false;
         return true;
 
       case KC_LSFT:
-        left_shifting = true;
         return true;
 
       // Letter keys should be shifted.
       case KC_A ... KC_Z:
-        if (!shifted) {
-            if (left_shifting) {
-                register_code(KC_RSFT);
-            } else {
-                register_code(KC_LSFT);
-            }
-        }
-        shifted = true;
-        return true;
+        tap_code16(LSFT(keycode));
+        return false;
 
       // Keycodes that continue caps word but shouldn't get shifted.
       case KC_1 ... KC_0:
@@ -78,14 +60,6 @@ bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
       case KC_LBRACKET:
       case KC_LCBR:
       case KC_LABK:
-        if (shifted) {
-            if (left_shifting) {
-                unregister_code(KC_RSFT);
-            } else {
-                unregister_code(KC_LSFT);
-            }
-        }
-        shifted = false;
         return true;
 
       // Just cancel caps word and don't send keycode.

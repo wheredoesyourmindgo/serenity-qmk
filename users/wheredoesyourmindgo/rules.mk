@@ -17,8 +17,13 @@ GRAVE_ESC_ENABLE = no
 # SWAP_HANDS_ENABLE = yes # Swap Hands
 # WINDOW_MGT = yes
 
+ifneq ($(strip $(KEYBOARD)), binepad/bn003)
+	SRC += wheredoesyourmindgo.c
 # use caps word
-SRC += features/caps_word.c
+	SRC += features/caps_word.c
+# use oneshot mods fix
+	SRC += features/oneshot_mods.c
+endif
 
 ifeq ($(strip $(KEYBOARD)), planck/rev6)
 	OPT_DEFS += -DPLANCK_KEYBOARD
@@ -70,8 +75,6 @@ ifeq ($(strip $(KEYBOARD)), binepad/bn003)
 	MOUSEKEY_ENABLE = no
 	EXTRAKEY_ENABLE = no
 	KEY_LOCK_ENABLE = no
-else
-	SRC += wheredoesyourmindgo.c
 endif
 
 ifeq ($(strip $(MENU_ON_HIGHEST)), yes)

@@ -27,11 +27,13 @@
 // #define RGBLIGHT_SLEEP true
 // #define DEBUG_ACTION
 
-#define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
+// #define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
 #define PERMISSIVE_HOLD_PER_KEY
 // Enable per key rapid switch from tap to hold, disables double tap hold auto-repeat.
 #define TAPPING_FORCE_HOLD_PER_KEY
 // #define RETRO_TAPPING_PER_KEY
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+
 
 // #define LEADER_PER_KEY_TIMING
 // #define LEADER_TIMEOUT 250

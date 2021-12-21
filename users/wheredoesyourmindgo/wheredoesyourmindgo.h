@@ -146,28 +146,23 @@
 
 enum layers { BASE, BASE_QWRTY, LOWER, LOWER_ALT, LOW, LOWEST, HIGHER, HIGH, HIGHEST, HIGHEST_ALT, OS };
 
-enum keycodes { CMD_TAB_PRV = SAFE_RANGE, TGL_LYT, TGL_LOWER, TGL_HIGHEST, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, OSHR, VOL_JUP, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, TRY_BSPACE_WORD, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, TLNG_ILFT, TLNG_IRGHT, ENC_BTN, CMD_TAB_HIDE, XWNDW_MAX, WNDW_LFT, WNDW_RGHT, WNDW_ILFT, WNDW_IRGHT, OS_LAST_SPC};
+enum keycodes { CMD_TAB_PRV = SAFE_RANGE, CAPS_SENTENCE, TGL_LYT, TGL_LOWER, TGL_HIGHEST, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, OSHR, VOL_JUP, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, TRY_BSPACE_WORD, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, TLNG_ILFT, TLNG_IRGHT, ENC_BTN, CMD_TAB_HIDE, XWNDW_MAX, WNDW_LFT, WNDW_RGHT, WNDW_ILFT, WNDW_IRGHT, OS_LAST_SPC};
 
 // Tap Dance declarations
 enum {
     TD_TGL_SEL,  // Toggle Select (similar to double, triple, and quadruple mouse click)
-    TD_LOWER_ESC,
-    TD_LOW_ENT,
-    TD_CAPS_WORD,
-    TD_CAPS_SENTENCE,
     TD_MULTI_MAX,
     TD_MULTI_RSTR,
-    TD_OOPSY,
-    // TD_OS_GRV
+    TD_OOPSY
 };
 
 // Tap dance state
-typedef enum { TD_NONE, TD_INTERRUPTED, TD_NOT_INTERRUPTED } td_state_t;
+// typedef enum { TD_NONE, TD_INTERRUPTED, TD_NOT_INTERRUPTED } td_state_t;
 
-typedef struct {
-    bool    is_press_action;
-    uint8_t state;
-} td_tap_t;
+// typedef struct {
+//     bool    is_press_action;
+//     uint8_t state;
+// } td_tap_t;
 
 // Functions associated with individual tap dances
 void oopsy_finished(qk_tap_dance_state_t *state, void *user_data);

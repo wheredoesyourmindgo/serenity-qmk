@@ -19,8 +19,9 @@ GRAVE_ESC_ENABLE = no
 
 ifneq ($(strip $(KEYBOARD)), binepad/bn003)
 	SRC += wheredoesyourmindgo.c
-# use caps word
+# use caps word/sentence
 	SRC += features/caps_word.c
+	SRC += features/caps_sentence.c
 # use oneshot mods fix
 	SRC += features/oneshot_mods.c
 endif

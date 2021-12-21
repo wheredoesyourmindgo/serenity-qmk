@@ -1,5 +1,6 @@
 #include "wheredoesyourmindgo.h"
 #include "features/caps_word.h"
+#include "features/caps_sentence.h"
 #include "features/oneshot_mods.h"
 
 #ifdef CONSOLE_ENABLE
@@ -95,15 +96,12 @@ void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
             tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
         }
     } else {
-        // register_mods(MOD_BIT(KC_LCTRL));
         layer_on(LOWEST);
     }
 }
 
 void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
-    // if (MODS_LCTRL) {
     if (IS_LAYER_ON(LOWEST)) {
-        // unregister_mods(MOD_BIT(KC_LCTRL));
         layer_off(LOWEST);
     }
 }
@@ -182,6 +180,7 @@ void cancel_cmd_shift(void) {
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_caps_word(keycode, record)) { return false; }
+    if (!process_caps_sentence(keycode, record)) { return false; }
     process_oneshot_mods(keycode, record);
 
     if (!(keycode == TRY_BSPACE_WORD)) {
@@ -1189,7 +1188,25 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
+// Mirror settings for get_permissive_hold()
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(LOWER, KC_ESC):
+        case LT(LOW, KC_ENT):
+        case LT(HIGH, KC_TAB):
+        // case LT(HIGHER, KC_SPC):
+        case RGUI_T(KC_LEFT):
+        case RALT_T(KC_DOWN):
+        case RCTL_T(KC_UP):
+        case LT(HIGHEST, KC_RIGHT):
+        case LT(HIGHEST, KC_SLSH):
+            return true;
+        default:
+            return false;
+    }
+}
+
+/* bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Might roll through space
         case LT(HIGHER, KC_SPC):
@@ -1197,7 +1214,7 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
         default:
             return false;
     }
-}
+} */
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {

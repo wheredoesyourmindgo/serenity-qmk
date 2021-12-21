@@ -17,6 +17,9 @@ GRAVE_ESC_ENABLE = no
 # SWAP_HANDS_ENABLE = yes # Swap Hands
 # WINDOW_MGT = yes
 
+# use caps word
+SRC += features/caps_word.c
+
 ifeq ($(strip $(KEYBOARD)), planck/rev6)
 	OPT_DEFS += -DPLANCK_KEYBOARD
 	RGBLIGHT_ENABLE = no

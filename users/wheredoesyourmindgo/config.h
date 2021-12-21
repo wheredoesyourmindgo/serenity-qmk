@@ -1,7 +1,6 @@
 #pragma once
 
 #define TAPPING_TERM 200
-#define TAPPING_TD_TERM 225
 #define TAPPING_TERM_PER_KEY
 // #define TAPPING_TOGGLE 2
 
@@ -26,15 +25,13 @@
 #define MOUSEKEY_TIME_TO_MAX 64
 
 // #define RGBLIGHT_SLEEP true
-
 // #define DEBUG_ACTION
 
-// Prevent normal rollover on alphas from accidentally triggering mods (only with alpha keys).
-// #define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
+#define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
 #define PERMISSIVE_HOLD_PER_KEY
 // Enable per key rapid switch from tap to hold, disables double tap hold auto-repeat.
 #define TAPPING_FORCE_HOLD_PER_KEY
-#define RETRO_TAPPING_PER_KEY
+// #define RETRO_TAPPING_PER_KEY
 
 // #define LEADER_PER_KEY_TIMING
 // #define LEADER_TIMEOUT 250

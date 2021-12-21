@@ -1,11 +1,12 @@
 #include "wheredoesyourmindgo.h"
+#include "features/caps_word.h"
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
 #endif
 
 
-extern int retro_tapping_counter;
+// extern int retro_tapping_counter;
 
 #define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
 #define MODS_LSFT (get_mods() & MOD_BIT(KC_LSFT))
@@ -43,10 +44,6 @@ uint16_t cmd_tab_timer = 0;
 #define cmd_tab_timer_fast_dur 600;
 uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 
-bool caps_lock_active = false;
-bool caps_word_active = false;
-bool caps_sentence_active = false;
-
 // Track whether alt-shift is being used so that we don't get stuck in lower/higher layers when using dedicated shift keys with mods
 bool alt_lshift_active = false;
 bool alt_rshift_active = false;
@@ -79,182 +76,11 @@ void tap_code_no_mod(uint8_t code) {
     register_mods(mod_state);
 }
 
-void cancel_quick_caps(void) {
-    caps_sentence_active = false;
-    caps_word_active = false;
-    // only fire caps_lock if caps was active
-    if (caps_lock_active) {
-        caps_lock_active = false;
-        // tap kc_capslock last, after everything is set false for custom macro
-        // tap_code(KC_CAPSLOCK);
-        tap_code_delay(KC_CAPS, CAPS_TAP_DELAY);
-    }
-}
-void cancel_caps_word(void) {
-    caps_word_active = false;
-    // only fire caps_lock if caps was active
-    if (caps_lock_active) {
-        caps_lock_active = false;
-        // tap kc_capslock last, after everything is set false for custom macro
-        // tap_code(KC_CAPSLOCK);
-        tap_code_delay(KC_CAPS, CAPS_TAP_DELAY);
-    }
-}
-
-// void cancel_caps_sentence(void) {
-//     caps_sentence_active = false;
-//     if (caps_active) {
-//         caps_active = false;
-//         tap_code(KC_CAPSLOCK);
-//     }
-// }
 
 // track last key pressed to determine if delete word should trigger
 bool dontBspaceWord = false;
 
-// Create an instance of 'td_tap_t' for the 'os_grave' tap dance.
-// static td_tap_t os_grave_t = {.is_press_action = true, .state = TD_NONE};
-// Create an instance of 'td_tap_t' for the 'lower_esc' tap dance.
-// static td_tap_t lower_esc_t = {.is_press_action = true, .state = TD_NONE};
 
-td_state_t cur_dance(qk_tap_dance_state_t *state) {
-    if (state->interrupted) {
-        return TD_INTERRUPTED;
-    } else {
-        return TD_NOT_INTERRUPTED;
-    }
-}
-
-void lower_esc_finished(qk_tap_dance_state_t *state, void *user_data) {
-    // lower_esc_t.state = cur_dance(state);
-
-    /* In case shift is held down prior to Lower hold use Lower-alt layer. Without this block Lower must be held first, followed by a shift hold.
-    if (MODS_LSFT) {
-        layer_off(LOWER);
-        layer_on(LOWER_ALT);
-        // this is referring to actual left-shift key, not alternate shift
-        unregister_mods(MOD_BIT(KC_LSFT));
-    } else { */
-    if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
-        layer_off(LOWER);
-        layer_on(BASE);
-        alt_lshift_active = true;
-        register_mods(MOD_BIT(KC_LSFT));
-    } else {
-        layer_on(LOWER);
-    }
-    // }
-}
-void lower_esc_reset(qk_tap_dance_state_t *state, void *user_data) {
-    // lower_esc_t.state = cur_dance(state);
-    if (MODS_LSFT && alt_lshift_active) {
-        alt_lshift_active = false;
-        unregister_mods(MOD_BIT(KC_LSFT));
-    }
-    // Release layer hold if activated
-    if (IS_LAYER_ON(LOWER)) {
-        layer_off(LOWER);
-    }
-    // Release layer hold if Lower_alt was toggled on during press
-    if (IS_LAYER_ON(LOWER_ALT)) {
-        layer_off(LOWER_ALT);
-    }
-    if (!state->interrupted) {
-        // Only fire escape if keypress was not interrupted AND special mode is not active AND left control, opt, and/or command is not being held
-        // if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active && !ONESHOT_LYR_ACTIVE) {
-        if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active && !MODS_LCTRL && !MODS_LALT && !MODS_LGUI) {
-            tap_code(KC_ESC);
-            return;
-        }
-        //  Cancel One Shot Mods (if active)
-        if (ONESHOT_MODS_ACTIVE) {
-            clear_oneshot_mods();
-        }
-        if (caps_sentence_active || caps_word_active) {
-            cancel_quick_caps();
-        }
-    }
-    // lower_esc_t.state = TD_NONE;
-}
-
-void low_ent_finished(qk_tap_dance_state_t *state, void *user_data) {
-    // low_ent_t.state = cur_dance(state);
-    layer_on(LOW);
-}
-
-void low_ent_reset(qk_tap_dance_state_t *state, void *user_data) {
-    // low_ent_t.state = cur_dance(state);
-    layer_off(LOW);
-    if (!state->interrupted) {
-        // Always fire enter
-        tap_code(KC_ENT);
-        if (caps_sentence_active || caps_word_active) {
-            cancel_quick_caps();
-        }
-    }
-    // low_ent_t.state = TD_NONE;
-}
-
-/*
-void os_grave_finished(qk_tap_dance_state_t *state, void *user_data) {
-    // os_grave_t.state = cur_dance(state);
-    layer_on(OS);
-}
-void os_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
-    // os_grave_t.state = cur_dance(state);
-    // Don't turn off OS layer if cmd+tab is active. Instead, wait for timeout or base layer switch.
-    if (!is_cmd_tab_active) {
-        layer_off(OS);
-    }
-    if (!state->interrupted) {
-        tap_code(KC_GRAVE);
-    }
-}
-*/
-
-void caps_word_each(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        register_mods(MOD_BIT(KC_LSFT));
-    } else if (state->count == 2) {
-        unregister_mods(MOD_BIT(KC_LSFT));
-        if (!caps_lock_active && !caps_word_active && !caps_sentence_active) {
-            caps_lock_active = true;
-            caps_word_active = true;
-            // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
-            tap_code_delay(KC_CAPS, CAPS_TAP_DELAY);
-        }
-        // it's is unclear if reset_tap_dance() helps in this regard
-        reset_tap_dance(state);
-    }
-}
-
-void caps_word_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (MODS_LSFT) {
-        unregister_mods(MOD_BIT(KC_LSFT));
-    }
-}
-
-void caps_sentence_each(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        register_mods(MOD_BIT(KC_RSFT));
-    } else if (state->count == 2) {
-        unregister_mods(MOD_BIT(KC_RSFT));
-        if (!caps_lock_active && !caps_sentence_active && !caps_word_active) {
-            caps_lock_active = true;
-            caps_sentence_active = true;
-            // Fixes kc_caps not activating w/ Planck. See https://docs.qmk.fm/#/feature_macros?id=tap_codeltkcgt.
-            tap_code_delay(KC_CAPS, CAPS_TAP_DELAY);
-        }
-        // it's is unclear if reset_tap_dance() helps in this regard
-        reset_tap_dance(state);
-    }
-}
-
-void caps_sentence_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (MODS_RSFT) {
-        unregister_mods(MOD_BIT(KC_RSFT));
-    }
-}
 
 void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count == 1) {
@@ -336,13 +162,9 @@ void multi_max_each(qk_tap_dance_state_t *state, void *user_data) {
 
 // Tap once for Word Select, twice for Line Select, three times for all
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_LOWER_ESC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lower_esc_finished, lower_esc_reset),
-    [TD_LOW_ENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, low_ent_finished, low_ent_reset),
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
     [TD_MULTI_MAX] = ACTION_TAP_DANCE_FN_ADVANCED(multi_max_each, NULL, NULL),
     [TD_MULTI_RSTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_rst_each, NULL, NULL),
-    [TD_CAPS_WORD] = ACTION_TAP_DANCE_FN_ADVANCED(caps_word_each, NULL, caps_word_reset),
-    [TD_CAPS_SENTENCE] = ACTION_TAP_DANCE_FN_ADVANCED(caps_sentence_each, NULL, caps_sentence_reset),
     [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset)
 };
 // end of Tap Dance config
@@ -358,6 +180,7 @@ void cancel_cmd_shift(void) {
 
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_caps_word(keycode, record)) { return false; }
 
     if (!(keycode == TRY_BSPACE_WORD)) {
         if (record->event.pressed) {
@@ -370,30 +193,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //     clear_oneshot_mods();
     // }
     switch (keycode) {
-        case RSFT_T(KC_CAPS):
-        case LSFT_T(KC_CAPS):
-            if (record->event.pressed) {
-                // Only when KC_CAPS
-                if (record->tap.count > 0) {
-                    if (caps_sentence_active || caps_word_active) {
-                        cancel_quick_caps();
-                        return false;
-                    } else {
-                        caps_lock_active = !caps_lock_active;
-                    }
-                }
-            }
-            break;
-        case KC_CAPSLOCK:
-            if (record->event.pressed) {
-                if (caps_sentence_active || caps_word_active) {
-                    cancel_quick_caps();
-                    return false;
-                } else {
-                    caps_lock_active = !caps_lock_active;
-                }
-            }
-            break;
         case XOSM_LSFT:
             if (record->event.pressed) {
                 register_mods(MOD_BIT(KC_LSFT));
@@ -758,76 +557,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case LT(OS, KC_ESC):
-            if (record->event.pressed) {
-                // Only on tap (ie. Not during LT(OS)
-                if (record->tap.count > 0) {
-                // Only fire escape special mode is not active
-                if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active) {
-                    return true;
-                }
-                // Cancel One Shot Mods (if active)
-                if (ONESHOT_MODS_ACTIVE) {
-                    clear_oneshot_mods();
-                }
-                if (caps_sentence_active || caps_word_active) {
-                    cancel_quick_caps();
-                }
-                return false;
-                }
-            }
-            break;
         case KC_ESC:
             if (record->event.pressed) {
                 // Only fire escape special mode is not active
-                if (!ONESHOT_MODS_ACTIVE && !caps_sentence_active && !caps_word_active) {
+                if (!ONESHOT_MODS_ACTIVE) {
                     return true;
                 }
                 // Cancel One Shot Mods (if active)
                 if (ONESHOT_MODS_ACTIVE) {
                     clear_oneshot_mods();
                 }
-                if (caps_sentence_active || caps_word_active) {
-                    cancel_quick_caps();
-                }
                 return false;
-            }
-            break;
-        // See lower_esc tap dance reset function. That tap dance was setup because tap.count will always be 0 when a 0 value is used with Tapping Term.
-        // case LT(LOWER, KC_ESC):
-        //     if (record->event.pressed) {
-        //         // Only when KC_ESC
-        //         if (record->tap.count > 0) {
-        //             // Cancel One Shot Mods (if active)
-        //             if (ONESHOT_MODS_ACTIVE) {
-        //                 clear_oneshot_mods();
-        //             }
-        //             if (caps_sentence_active || caps_word_active) {
-        //                 cancel_quick_caps();
-        //             }
-        //         }
-        //     }
-        //     break;
-        // Tab, space, colon, semi-colon, comma cancel caps word
-        case KC_COLN:
-        case KC_SCLN:
-        // case KC_COMM: // see below
-        // case KC_TAB: // see below
-        case KC_SPC:
-            if (record->event.pressed) {
-                if (caps_word_active) {
-                    cancel_caps_word();
-                }
-            }
-            break;
-        case LT(HIGH, KC_TAB):
-            if (record->event.pressed) {
-                // Only on tap (ie. Not during LT(HIGH) and LT(HIGHER))
-                if (record->tap.count > 0) {
-                    if (caps_word_active) {
-                        cancel_caps_word();
-                    }
-                }
             }
             break;
         case LT(HIGHER, KC_SPC):
@@ -838,14 +578,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     alt_rshift_active = true;
                     register_mods(MOD_BIT(KC_RSFT));
                     // abort retro tapping
-                    retro_tapping_counter++;
+                    // retro_tapping_counter++;
                     return false;
-                }
-                // Only on tap (ie. Not during LT(OS) and LT(HIGHER))
-                if (record->tap.count > 0) {
-                    if (caps_word_active) {
-                        cancel_caps_word();
-                    }
                 }
             } else {
                 if (MODS_RSFT && alt_rshift_active) {
@@ -857,36 +591,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Enter, period (and escape) cancel caps word and caps sentence
         case KC_ENT:
             if (record->event.pressed) {
-                if (caps_sentence_active || caps_word_active) {
-                    cancel_quick_caps();
-                }
                 // We don't need to check if kc_dot was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_del).
                 dontBspaceWord = true;
                 if (is_cmd_tab_active) {
                     cancel_cmd_shift();
                     return false;
-                }
-            }
-            break;
-        // see below
-        // case KC_DOT:
-        //     if (record->event.pressed) {
-        //         if (caps_sentence_active || caps_word_active) {
-        //             cancel_quick_caps();
-        //         }
-        //         // We don't need to check if kc_dot was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_del).
-        //         dontBspaceWord = true;
-        //     }
-        //     break;
-        // See low_ent tap dance reset function. That tap dance was setup because tap.count will always be 0 when a 0 value is used with Tapping Term.
-        // case LT(LOW, KC_ENT):
-        case ALGR_T(KC_DOT):
-            if (record->event.pressed) {
-                // Only on tap (ie. Not during LT(LOW) and alt)
-                if (record->tap.count > 0) {
-                    if (caps_sentence_active || caps_word_active) {
-                        cancel_quick_caps();
-                    }
                 }
             }
             break;
@@ -927,20 +636,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //     }
         //     break;
 
-        // Old layout, see TD_LOWER_ESC
-        // case LT(LOWEST, KC_APP):
-        //     if (record->event.pressed) {
-        //         if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
-        //             layer_on(BASE);
-        //             register_mods(MOD_BIT(KC_LSFT));
-        //             return false;
-        //         }
-        //     } else {
-        //         if (MODS_LSFT) {
-        //             unregister_mods(MOD_BIT(KC_LSFT));
-        //         }
-        //     }
-        //     break;
+        case LT(LOWER, KC_ESC):
+        case LT(OS, KC_ESC):
+            if (record->event.pressed) {
+                if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
+                    layer_on(BASE);
+                    alt_lshift_active = true;
+                    register_mods(MOD_BIT(KC_LSFT));
+                    // abort retro tapping
+                    // retro_tapping_counter++;
+                    return false;
+                }
+                  // Only on tap (ie. Not during LT(OS)
+                if (record->tap.count > 0) {
+                    // Only fire escape special mode is not active
+                    if (!ONESHOT_MODS_ACTIVE) {
+                        return true;
+                    }
+                    // Cancel One Shot Mods (if active)
+                    if (ONESHOT_MODS_ACTIVE) {
+                        clear_oneshot_mods();
+                    }
+                    return false;
+                }
+            } else {
+                if (MODS_LSFT && alt_lshift_active) {
+                    alt_lshift_active = false;
+                    unregister_mods(MOD_BIT(KC_LSFT));
+                }
+            }
+            break;
 
         case KC_LGUI:
             if (record->event.pressed) {
@@ -1543,18 +1268,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
-        case KC_TAB:
-            if (record->event.pressed) {
-                if (caps_word_active) {
-                    cancel_caps_word();
-                }
-            }
-            break;
         case KC_DOT:
             if (record->event.pressed) {
-                if (caps_sentence_active || caps_word_active) {
-                    cancel_quick_caps();
-                }
                 // We don't need to check if kc_dot was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_del).
                 dontBspaceWord = true;
                 if (IS_LAYER_ON(BASE) && MODS_SFT && !MODS_ALT && !MODS_CTRL && !MODS_GUI) {
@@ -1565,9 +1280,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case KC_COMM:
             if (record->event.pressed) {
-                if (caps_word_active) {
-                    cancel_caps_word();
-                }
                 if (IS_LAYER_ON(BASE) && MODS_SFT && !MODS_ALT && !MODS_CTRL && !MODS_GUI) {
                     tap_code_no_mod(KC_SCOLON);
                     return false;
@@ -1707,7 +1419,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 		}
     }
     // abort retro tapping
-    retro_tapping_counter++;
+    // retro_tapping_counter++;
+
 	return false;
 }
 #endif
@@ -1715,30 +1428,11 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TD(TD_TGL_SEL):
-        case TD(TD_CAPS_WORD):
-        case TD(TD_CAPS_SENTENCE):
-            return TAPPING_TD_TERM;
+            return 225;
         case TD(TD_OOPSY):
         case TD(TD_MULTI_MAX):
         case TD(TD_MULTI_RSTR):
             return 300; // favor oopsy behavior
-        // case LT(HIGHEST, KC_LEFT):
-        // case RGUI_T(KC_DOWN):
-        // case RALT_T(KC_UP):
-        // case RCTL_T(KC_RIGHT):
-        //     return TAPPING_TD_FAST_TERM;
-        // Using retro tapping with the following
-        // case LT(LOW, KC_ENT):
-        case TD(TD_LOW_ENT):
-        // case LT(LOWER, KC_ESC):
-        case TD(TD_LOWER_ESC):
-        case LT(OS, KC_ESC):
-        case LT(OS, KC_SPC):
-            return 0;
-        // While space key use retro tapping, we don't what to actiate the higher layer quickly with short tapping terms so just use default tapping term. We won't be rolling quickly through tab key so a shorter tapping term can be used with High layer.
-        case LT(HIGHER, KC_SPC):
-        case LT(HIGH, KC_TAB):
-            return 225; // slightly longer
         default:
             return TAPPING_TERM;
     }
@@ -1747,9 +1441,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LT(LOW, KC_ENT):
-        // case LT(LOWER, KC_ESC):
-        // case LT(HIGH, KC_TAB):
+        case LT(LOWER, KC_ESC):
+        case LT(LOW, KC_ENT):
+        case LT(HIGH, KC_TAB):
         // case LT(HIGHER, KC_SPC):
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
@@ -1762,21 +1456,15 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-/**
-// We won't be rolling through all the Layer-tap keys
 bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LT(LOWER, KC_ESC):
-        // case LT(LOW, KC_ENT):
-        case LT(HIGH, KC_TAB):
-            return false;
         // Might roll through space
-        // case LT(HIGHER, KC_SPC):
-        default:
+        case LT(HIGHER, KC_SPC):
             return true;
+        default:
+            return false;
     }
 }
-**/
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -1793,10 +1481,10 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
+/* bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LT(LOWER, KC_ESC):
-        // case LT(LOW, KC_ENT):
+        case LT(LOWER, KC_ESC):
+        case LT(LOW, KC_ENT):
         // case LT(LOWEST, KC_APP):
         case LT(HIGH, KC_TAB):
         case LT(HIGHER, KC_SPC):
@@ -1806,4 +1494,4 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
         default:
             return false;
     }
-}
+} */

@@ -346,15 +346,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(DISP_BRI);
                 }
             }
-        case VOL_JUP:
-            if (record->event.pressed) {
-                int i;
-                for (i = 1; i <= 5; ++i) {
-                    // tap_code(KC_VOLU) doesn't work w/ Planck
-                    tap_code(KC__VOLUP);
-                }
-            }
-            break;
         // Un-used, see TD_OOPSY
         // case OOPS:
         //     if (record->event.pressed) {

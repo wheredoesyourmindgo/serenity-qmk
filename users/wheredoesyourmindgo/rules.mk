@@ -82,18 +82,6 @@ ifeq ($(strip $(MENU_ON_HIGHEST)), yes)
   OPT_DEFS += -DMENU_ON_HIGHEST
 endif
 
-ifeq ($(strip $(FLEXOR_LAYOUT)), yes)
-  OPT_DEFS += -DFLEXOR_LAYOUT
-endif
-
-ifeq ($(strip $(UNSERTAIN_LAYOUT)), yes)
-  OPT_DEFS += -DUNSERTAIN_LAYOUT
-endif
-
-ifeq ($(strip $(MISCREANTY_LAYOUT)), yes)
-  OPT_DEFS += -DMISCREANTY_LAYOUT
-endif
-
 ifeq ($(strip $(QWERTY_BASE)), yes)
   OPT_DEFS += -DQWERTY_BASE
 endif

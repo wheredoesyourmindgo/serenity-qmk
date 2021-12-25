@@ -276,19 +276,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case DF(LOWEST):
-        case DF(LOWER):
-        case DF(LOW):
-        case DF(HIGH):
-        case DF(HIGHER):
-        case DF(HIGHEST):
-            // Cancel One Shot Mods (if active) is necessary when switching to layers other than base layer. This will prevent an issue where the keyboard might get stuck in a layer.
-            if (record->event.pressed) {
-                if (ONESHOT_MODS_ACTIVE) {
-                    clear_oneshot_mods();
-                }
-            }
-            break;
         case KC_ESC:
             if (record->event.pressed) {
                 // Only fire escape special mode is not active
@@ -901,6 +888,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             break;
         default: //  for any other layers, or the default layer
             cancel_key_lock();
+            // Cancel One Shot Mods (if active) is necessary when switching to layers other than base layer. This will prevent an issue where the keyboard might get stuck in a layer.
+            if (ONESHOT_MODS_ACTIVE) {
+                clear_oneshot_mods();
+            }
             break;
     }
   return state;

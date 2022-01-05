@@ -833,6 +833,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        case KC_LT:
+        case KC_GT:
+        case KC_LCBR:
+        case KC_RCBR:
+        case KC_LBRC:
+        case KC_RBRC:
+            if (record->event.pressed) {
+                tap_code16(keycode);
+                // immediately un-register mods (don't wait for keypress release)
+                uint8_t mod_state;
+                mod_state = get_mods();
+                unregister_mods(mod_state);
+                return false;
+            }
+            break;
     }
     return true;
 }
@@ -1016,15 +1031,15 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-/* bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        // Might roll through space
-        case LT(HIGHER, KC_SPC):
-            return true;
-        default:
-            return false;
-    }
-} */
+// bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         // Might roll through space
+//         case LT(HIGHER, KC_SPC):
+//             return true;
+//         default:
+//             return false;
+//     }
+// }
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {

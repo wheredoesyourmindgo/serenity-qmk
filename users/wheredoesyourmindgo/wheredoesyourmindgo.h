@@ -140,8 +140,6 @@
 #define APP7 KC_NO         // App Shortcut
 #define APP8 KC_NO         // App Shortcut
 
-// Placeholder for bailing out of retro tap
-#define VOID KC_NO
 #define PRV_APP LGUI(KC_TAB)
 
 enum layers { BASE, BASE_QWRTY, LOWER, LOWER_ALT, LOW, LOWEST, HIGHER, HIGH, HIGHEST, HIGHEST_ALT, OS };

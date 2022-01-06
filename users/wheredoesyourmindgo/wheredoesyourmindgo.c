@@ -603,13 +603,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 clear_oneshot_mods();
                 if (MODS_LSFT) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LGUI) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LALT) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else {
                     tap_code16(OS_PRVS_APP_WNDW);
                 }
@@ -619,13 +619,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 clear_oneshot_mods();
                 if (MODS_LSFT) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LGUI) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LALT) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else {
                     tap_code16(WNDW_ALMST_MAX);
                 }
@@ -635,13 +635,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 clear_oneshot_mods();
                 if (MODS_LSFT) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LGUI) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LALT) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else {
                     tap_code16(WNDW_VRT_MAX);
                 }
@@ -651,13 +651,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 clear_oneshot_mods();
                 if (MODS_LSFT) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LGUI) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LALT) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(VOID);
+                    tap_code16_no_mod(KC_NO);
                 } else {
                     tap_code16(OS_NXT_APP_WNDW);
                 }
@@ -833,6 +833,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        // Immediately un-register (shift) mods (don't wait for keypress release). This will prevent shifted symbols from happening during fast rolls on low layer.
         case KC_LT:
         case KC_GT:
         case KC_LCBR:
@@ -841,7 +842,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_RBRC:
             if (record->event.pressed) {
                 tap_code16(keycode);
-                // immediately un-register mods (don't wait for keypress release)
                 uint8_t mod_state;
                 mod_state = get_mods();
                 unregister_mods(mod_state);

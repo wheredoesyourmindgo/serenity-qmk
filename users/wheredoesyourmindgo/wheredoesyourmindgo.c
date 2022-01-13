@@ -899,10 +899,14 @@ layer_state_t layer_state_set_user(layer_state_t state) {
                 // cancel app swithing when switching back to base layer
                 cancel_cmd_shift();
             }
-            cancel_key_lock();
+            #ifdef KEY_LOCK_ENABLE
+                cancel_key_lock();
+            #endif
             break;
         default: //  for any other layers, or the default layer
-            cancel_key_lock();
+            #ifdef KEY_LOCK_ENABLE
+                cancel_key_lock();
+            #endif
             // Cancel One Shot Mods (if active) is necessary when switching to layers other than base layer. This will prevent an issue where the keyboard might get stuck in a layer.
             if (ONESHOT_MODS_ACTIVE) {
                 clear_oneshot_mods();

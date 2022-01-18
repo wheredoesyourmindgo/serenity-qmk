@@ -1,8 +1,8 @@
-# I 🖤 Shift Keys
+# Serenity
 
 ## About
 
-This is a QMK layout that includes dedicated right and left shift keys. The Base layer uses the Colemak-DH layout. This layout is configured for use with macOS and would generally be used with a 42+ key layout.
+This is a QMK layout that includes dedicated right and left shift keys. The Base layer uses the Serenity alpha layout. This layout is configured for use with macOS and would generally be used with a 42+ key layout.
 
 ## Features
 
@@ -10,22 +10,21 @@ This is a QMK layout that includes dedicated right and left shift keys. The Base
 - One Shot Mods on Home Row when activating any of the 6 principle layers. These are particularly useful for same hand mod presses (eg. "Command + 1..5") that require use of the same hand.
 - Control, Alt, GUI, and Shift Mods on both sides. Arrow keys on bottom right double as Layer/Mod toggle when held. All four arrow keys can be spammed when tapped twice.
 - Two dual use keys. The Lowest_Layer and Highest_layer keys can be used as Shift keys for improved dexterity and better ergonomics. When using a multi-key combo with mods the inner adjacent key that is used for activating the Lowest (left) and Highest layer (right) can be used as a Shift mod key. It doesn't matter which order you press the sequence of mod keys. As long as 1 or more mod keys is pressed in conjunction with the adjacent Lowest/Highest Layer key, adjacent the Lowest/Highest Layer key will immediately become a Shift mod press until the key is released. See below for use case.
-- Layers can be held/stuck using the "v" & "k" keys while activating a layer. Use cases include persistence of the Keyboard Mouse, or performing numerical data entry with the Lower_layer active for extended periods. Un-stick layers by tapping the respective layer key again.
-- Layers can be held/stuck for one-shot using the "g" & "m" keys while activating a layer. Use cases include cut copy paste with one (left) hand.
-- Easy and flexible capslock; Capslock can be toggled on/off with a Lower/Higher+shift (opposite shift) press. Additionally,
-  - Caps-word can be toggled with a double left shift tap. Capslock will disable at the first occurrence of a space, comma, semi-colon, colon, period(dot), escape, tab, or enter tap. Left shift is greedy in regard to interruption.
-  - Caps-sentence can be toggled with a double right shift tap. Capslock will disable at the first occurrence of a period(dot), escape, or enter tap. Right shift is greedy in regard to interruption.
+- Layers can be held/stuck using the "b" & "k" keys while activating a layer. Use cases include persistence of the Keyboard Mouse, or performing numerical data entry with the Lower_layer active for extended periods. Un-stick layers by tapping the respective layer key again.
+- Layers can be flipped and held/stuck for one-shot using the "y" & "g" keys while activating a layer. Use cases include cut copy paste with one (left) hand.
+- Easy and flexible capslock; Capslock can be toggled on/off with a left shift tap when Higher layer is active. Additionally,
+  - Caps-word can be toggled with a simultaneous left and right tap. Capslock will disable at the first occurrence of a space, comma, semi-colon, colon, period(dot), escape, tab, or enter tap. Left shift is greedy in regard to interruption.
+  - Caps-sentence can be toggled with a right shift tap when Lower layer is active. Capslock will disable at the first occurrence of a period(dot), escape, or enter tap. Right shift is greedy in regard to interruption.
 - Key lock on Mouse layer for dexterity and ease of use with text selections or holding mouse button clicks.
 - (macOS) Easy access to macOS command key using thumbs. macOS is chock-full of shortcuts that utilize the command key so I'm calling this a feature.
 - (macOS) Double left control tap hides active window and mutes volume. Left control is greedy in regard to interruption.
-- (macOS) An additional shortcut within the Higher layer on the "b" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
-- (macOS) Additional Layer for alternate OS movements. The Alternate Lower layer can be toggled on holding/tapping "z" key while temporarily activating Lower layer. The Lower_alt layer replaces arrow keys with OS back button (commonly used in web browsers and Finder), Finder Navigate elect folder shortcut, Finder Navigate Parent Folder shortcut, and OS forward button (again, commonly used with web browsers and Finder). The Page Down and Page Up shortcuts are replaced with Zoom In and Zoom Out. The dot shortcut is replaced with Zoom Reset. The 8 and 9 shortcuts are replaced with App Zoom In and App Zoom Out respectively while the 6 key is replaced with App Zoom Reset. 
+- (macOS) An additional shortcut within the Higher layer on the "z" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
+- (macOS) Additional Layer for alternate OS movements. The Alternate Lower layer can be toggled on holding/tapping "x" key while temporarily activating Lower layer. The Lower_alt layer replaces arrow keys with OS back button (commonly used in web browsers and Finder), Finder Navigate elect folder shortcut, Finder Navigate Parent Folder shortcut, and OS forward button (again, commonly used with web browsers and Finder). The Page Down and Page Up shortcuts are replaced with Zoom In and Zoom Out. The dot shortcut is replaced with Zoom Reset. The 8 and 9 shortcuts are replaced with App Zoom In and App Zoom Out respectively while the 6 key is replaced with App Zoom Reset. 
 - (macOS) Additional Layer for macOS shortcuts, activated with simultaneous lower and higher hold. See keymap.c
 - (macOS) Window Tiling/Management shortcuts using [Amethyst](https://ianyh.com/amethyst/)
 & [Rectangle](https://rectangleapp.com/) on the Higher layer. See [Reference](#WindowMgtRef) below for additional info.
 - (macOS) Shortcuts for quick access to word & line backspace and word & line delete forward. These are activated from Lower, Lowest, Higher, and Highest layers, respectively. For convenience, the word delete will not trigger when entering numbers in Lower layer, which is ideal for using backspace within Lower layer (the side effect is that words that end with a number can't be word-deleted until Lower hold is released and held again).
 - (make option) Hold the Menu key (KC_MENU) while holding down the function key. This can be enabled by building firmware with `MENU_ON_HIGHEST=yes` option. The Menu keycode is not used by MacOS, but it will register, so it can be converted to something else such as the Function "fn" key via a Karabiner-Elements rule which will enable further customization via Karabiner-Elements with additional rules.
-- (make option) With regard to the Colemak(-dh) layout, does typing the trigram 'was' got you down? Flip some keys around with the `FLEXOR_LAYOUT=yes` option. See [my post on Reddit](https://www.reddit.com/r/KeyboardLayouts/comments/r485x5/flexor_layout_fka_colemakdhring/) for more info.
 
 ## Usage
 
@@ -63,8 +62,8 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 
 | |  |  |  |  |  |  |  |  |  |  | |
 |--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
-| Del | Q | W  | F | P | B | J | L | U | Y | ; | Bspace|
-|`|A|R|S|T|G|M|N|E|I|O|=|
+| Del | V | L  | D | W | Z | Q | F | O | U | _ | Bspace|
+|`|S|R|H|N|Y|G|T|E|I|A|=|
 |LShift, *_2x Caps Word*|Z|X|C|D|V|K|H|,|.|/|RShift, *_2x Caps Sentence*|
 |App \[Mouse Lyr\]|LCtrl|LAlt|LGui|Esc^ \[Arrow+Num Lyr\] \<OS Lyr\>|Enter \[Symbol Lyr\]|Tab \[Media Lyr\]|Space^ \[Aux Lyr\] \<OS Lyr\>|LArrow\* \[LGui\]|DArrow\* \[LAlt\]|UArrow\* \[LCtrl\]|RArrow\* \[Func Lyr\]
 
@@ -154,7 +153,7 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 
 Amethyst shortcuts are arranged on the Higher layer on the left-hand side on home row. Alternate shortcuts can be triggered using the mods on the home row on the right side within the Higher layer. Below is a map of the commands and mod presses.
 
-| **Mod** | `A` | `S`  | `D` | `F` |
+| **Mod** | `S` | `R`  | `H` | `N` |
 |--- | --- | --- | --- | ---|
 |**Shift**|OSD Current Layout|Cycle Layout Back|Cycle Layout Forward|Floating Layout|
 |**Cmd**|*currently void*|Shrink Main|Expand Main|Toggle Float Focused|

@@ -2,6 +2,7 @@
 #include "features/caps_word.h"
 #include "features/caps_sentence.h"
 #include "features/oneshot_mods.h"
+#include "features/custom_shift_keys.h"
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -177,10 +178,20 @@ void cancel_cmd_shift(void) {
     cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 }
 
+// Custom Shift Keys
+const custom_shift_key_t custom_shift_keys[] = {
+  {KC_COMMA, KC_SEMICOLON}, // Shift . is
+  {KC_DOT, KC_COLON} // Shift . is :
+};
+uint8_t NUM_CUSTOM_SHIFT_KEYS =
+    sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
+
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_custom_shift_keys(keycode, record)) { return false; }
     if (!process_caps_word(keycode, record)) { return false; }
     if (!process_caps_sentence(keycode, record)) { return false; }
+
     process_oneshot_mods(keycode, record);
 
     if (!(keycode == TRY_BSPACE_WORD)) {
@@ -819,18 +830,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 // We don't need to check if kc_dot was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_del).
                 dontBspaceWord = true;
-                if (IS_LAYER_ON(BASE) && MODS_SFT && !MODS_ALT && !MODS_CTRL && !MODS_GUI) {
-                    tap_code16(KC_COLN);
-                    return false;
-                }
-            }
-            break;
-        case KC_COMM:
-            if (record->event.pressed) {
-                if (IS_LAYER_ON(BASE) && MODS_SFT && !MODS_ALT && !MODS_CTRL && !MODS_GUI) {
-                    tap_code_no_mod(KC_SCOLON);
-                    return false;
-                }
             }
             break;
         // Immediately un-register (shift) mods (don't wait for keypress release). This will prevent shifted symbols from happening during fast rolls on low layer.

@@ -181,7 +181,10 @@ void cancel_cmd_shift(void) {
 // Custom Shift Keys
 const custom_shift_key_t custom_shift_keys[] = {
   {KC_COMMA, KC_SEMICOLON}, // Shift . is
-  {KC_DOT, KC_COLON} // Shift . is :
+  {KC_DOT, KC_COLON}, // Shift . is :
+  {KC_8, KC_LEFT_PAREN}, // Shift 8 is (
+  {KC_9, KC_RIGHT_PAREN}, // Shift 9 is )
+  {KC_0, KC_ASTERISK} // Shift 0 is *
 };
 uint8_t NUM_CUSTOM_SHIFT_KEYS =
     sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);

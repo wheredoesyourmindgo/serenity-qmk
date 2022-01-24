@@ -919,8 +919,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 
-// LEADER_EXTERNS();
-
 void matrix_scan_user(void) {
     if (is_cmd_tab_active) {
         if (timer_elapsed(cmd_tab_timer) > cmd_tab_timer_timeout && !is_cmd_tab_held) {
@@ -929,30 +927,7 @@ void matrix_scan_user(void) {
     }
 }
 
-    // Leaders
-    //    LEADER_DICTIONARY() {
-    //     leading = false;
-    //     leader_end();
 
-    //     SEQ_ONE_KEY(KC_L) {
-    //       // Alfred
-    //       tap_code16(LALT(KC_SPC));
-    //     }
-    //     SEQ_ONE_KEY(KC_T) {
-    //       // iTerm
-    //       tap_code16(LCTL(KC_SPC));
-    //     }
-    //     SEQ_TWO_KEYS(KC_Y, KC_D) {
-    //       SEND_STRING("yarn dev");
-    //     }
-    //     SEQ_TWO_KEYS(KC_Y, KC_I) {
-    //       SEND_STRING("yarn install");
-    //     }
-    //     SEQ_TWO_KEYS(KC_G, KC_P) {
-    //       SEND_STRING("git pull");
-    //     }
-    //   }
-// }
 #ifdef ENCODER_ENABLE
 __attribute__((weak)) bool encoder_update_keymap(uint8_t index, bool clockwise) { return true; }
 

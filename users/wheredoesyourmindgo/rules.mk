@@ -25,6 +25,7 @@ ifneq ($(strip $(KEYBOARD)), binepad/bn003)
 # use oneshot mods fix
 	SRC += features/oneshot_mods.c
 	SRC += features/custom_shift_keys.c
+	SRC += features/custom_gui_keys.c
 endif
 
 ifeq ($(strip $(KEYBOARD)), planck/rev6)

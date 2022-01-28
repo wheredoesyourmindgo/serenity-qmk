@@ -3,6 +3,7 @@
 #include "features/caps_sentence.h"
 #include "features/oneshot_mods.h"
 #include "features/custom_shift_keys.h"
+#include "features/custom_gui_keys.h"
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -185,8 +186,16 @@ const custom_shift_key_t custom_shift_keys[] = {
 uint8_t NUM_CUSTOM_SHIFT_KEYS =
     sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
 
+// Custom Gui Keys
+const custom_gui_key_t custom_gui_keys[] = {
+  {KC_DELETE, LCTL(KC_K)}, // Gui Delete is delete line forward
+};
+uint8_t NUM_CUSTOM_GUI_KEYS =
+    sizeof(custom_gui_keys) / sizeof(custom_gui_key_t);
+
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_custom_gui_keys(keycode, record)) { return false; }
     if (!process_custom_shift_keys(keycode, record)) { return false; }
     if (!process_caps_word(keycode, record)) { return false; }
     if (!process_caps_sentence(keycode, record)) { return false; }

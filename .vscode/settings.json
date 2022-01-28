@@ -30,5 +30,8 @@
     "git.detectSubmodules": false,
     "editor.formatOnSave": false,
     "git.postCommitCommand": "push",
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "cSpell.words": [
+        "LCTL"
+    ]
 }

@@ -79,12 +79,6 @@ void tap_code_no_mod(uint8_t code) {
     register_mods(mod_state);
 }
 
-
-// track last key pressed to determine if delete word should trigger
-bool dontBspaceWord = false;
-
-
-
 void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count == 1) {
         tap_code16(KC_APP);
@@ -184,7 +178,9 @@ const custom_shift_key_t custom_shift_keys[] = {
   {KC_DOT, KC_COLON}, // Shift . is :
   {KC_8, KC_LEFT_PAREN}, // Shift 8 is (
   {KC_9, KC_RIGHT_PAREN}, // Shift 9 is )
-  {KC_0, KC_ASTERISK} // Shift 0 is *
+  {KC_0, KC_ASTERISK}, // Shift 0 is *
+  {KC_BACKSPACE, LALT(KC_BACKSPACE)}, // Shift Backspace is delete previous word
+  {KC_DELETE, LALT(KC_DELETE)} // Shift Delete is delete previous word
 };
 uint8_t NUM_CUSTOM_SHIFT_KEYS =
     sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
@@ -196,12 +192,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_caps_sentence(keycode, record)) { return false; }
 
     process_oneshot_mods(keycode, record);
-
-    if (!(keycode == TRY_BSPACE_WORD)) {
-        if (record->event.pressed) {
-            dontBspaceWord = false;
-        }
-    }
 
     switch (keycode) {
         case OS_PRV_SPC:
@@ -336,8 +326,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Enter, period (and escape) cancel caps word and caps sentence
         case KC_ENT:
             if (record->event.pressed) {
-                // We don't need to check if kc_dot was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_del).
-                dontBspaceWord = true;
                 if (is_cmd_tab_active) {
                     cancel_cmd_shift();
                     return false;
@@ -527,23 +515,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     alt_rshift_active = false;
                     unregister_mods(MOD_BIT(KC_RSFT));
                     layer_on(HIGHER);
-                }
-            }
-            break;
-        // We don't need to check if kc_del was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_dot).
-        case KC_1 ... KC_0:
-        case KC_RIGHT ... KC_UP:
-        case KC_DEL:
-            if (record->event.pressed) {
-                dontBspaceWord = true;
-            }
-            break;
-        case TRY_BSPACE_WORD:
-            if (record->event.pressed) {
-                if (dontBspaceWord) {
-                    tap_code(KC_BSPACE);
-                } else {
-                    tap_code16(BSPC_PRV_WRD);
                 }
             }
             break;
@@ -827,12 +798,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_MUTE);
                 }
                 return false;
-            }
-            break;
-        case KC_DOT:
-            if (record->event.pressed) {
-                // We don't need to check if kc_dot was tapped in Lower layer cause once Lower is triggered via held dontBspaceWord will get reset. Same holds true for other keycodes used in and out of Lower layer (arrows, kc_del).
-                dontBspaceWord = true;
             }
             break;
         // Immediately un-register (shift) mods (don't wait for keypress release). This will prevent shifted symbols from happening during fast rolls on low layer.

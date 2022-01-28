@@ -341,21 +341,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case DISP_FDIM:
-            if (record->event.pressed) {
-                int i;
-                for (i = 1; i <= 20; ++i) {
-                    tap_code(DISP_DIM);
-                }
-            }
-            break;
-        case DISP_FBRI:
-            if (record->event.pressed) {
-                int i;
-                for (i = 1; i <= 20; ++i) {
-                    tap_code(DISP_BRI);
-                }
-            }
+        // case DISP_FDIM:
+        //     if (record->event.pressed) {
+        //         int i;
+        //         for (i = 1; i <= 20; ++i) {
+        //             tap_code(DISP_DIM);
+        //         }
+        //     }
+        //     break;
+        // case DISP_FBRI:
+        //     if (record->event.pressed) {
+        //         int i;
+        //         for (i = 1; i <= 20; ++i) {
+        //             tap_code(DISP_BRI);
+        //         }
+        //     }
         // Un-used, see TD_OOPSY
         // case OOPS:
         //     if (record->event.pressed) {
@@ -593,70 +593,70 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case WNDW_LFT:
-            if (record->event.pressed) {
-                clear_oneshot_mods();
-                if (MODS_LSFT) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LGUI) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LALT) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(KC_NO);
-                } else {
-                    tap_code16(OS_PRVS_APP_WNDW);
-                }
-            }
-            break;
-        case WNDW_ILFT:
-            if (record->event.pressed) {
-                clear_oneshot_mods();
-                if (MODS_LSFT) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LGUI) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LALT) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(KC_NO);
-                } else {
-                    tap_code16(WNDW_ALMST_MAX);
-                }
-            }
-            break;
-        case WNDW_IRGHT:
-            if (record->event.pressed) {
-                clear_oneshot_mods();
-                if (MODS_LSFT) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LGUI) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LALT) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(KC_NO);
-                } else {
-                    tap_code16(WNDW_VRT_MAX);
-                }
-            }
-            break;
-        case WNDW_RGHT:
-            if (record->event.pressed) {
-                clear_oneshot_mods();
-                if (MODS_LSFT) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LGUI) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LALT) {
-                    tap_code16_no_mod(KC_NO);
-                } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(KC_NO);
-                } else {
-                    tap_code16(OS_NXT_APP_WNDW);
-                }
-            }
-            break;
+        // case WNDW_LFT:
+        //     if (record->event.pressed) {
+        //         clear_oneshot_mods();
+        //         if (MODS_LSFT) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LGUI) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LALT) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LCTRL) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else {
+        //             tap_code16(OS_PRVS_APP_WNDW);
+        //         }
+        //     }
+        //     break;
+        // case WNDW_ILFT:
+        //     if (record->event.pressed) {
+        //         clear_oneshot_mods();
+        //         if (MODS_LSFT) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LGUI) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LALT) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LCTRL) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else {
+        //             tap_code16(WNDW_ALMST_MAX);
+        //         }
+        //     }
+        //     break;
+        // case WNDW_IRGHT:
+        //     if (record->event.pressed) {
+        //         clear_oneshot_mods();
+        //         if (MODS_LSFT) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LGUI) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LALT) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LCTRL) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else {
+        //             tap_code16(WNDW_VRT_MAX);
+        //         }
+        //     }
+        //     break;
+        // case WNDW_RGHT:
+        //     if (record->event.pressed) {
+        //         clear_oneshot_mods();
+        //         if (MODS_LSFT) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LGUI) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LALT) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else if (MODS_LCTRL) {
+        //             tap_code16_no_mod(KC_NO);
+        //         } else {
+        //             tap_code16(OS_NXT_APP_WNDW);
+        //         }
+        //     }
+        //     break;
         case TGL_LYT:
             if (record->event.pressed) {
                 layer_off(HIGH);
@@ -809,7 +809,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
-        // Immediately un-register (shift) mods (don't wait for keypress release). This will prevent shifted symbols from happening during fast rolls on low layer.
+        // Immediately un-register (shift) mods (don't wait for keypress release). This will prevent shifted symbols from happening during fast rolls on low(symbol) layer.
         case KC_LT:
         case KC_GT:
         case KC_LCBR:

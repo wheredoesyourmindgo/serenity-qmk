@@ -250,6 +250,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // unregister_code(KC_TAB);
             }
             break;
+        case LT(LOWER, KC_ESC):
+            if (record->event.pressed) {
+                // Only on tap (ie. Not during LT(LOWER)
+                if (record->tap.count > 0) {
+                    // Cancel One Shot Mods (if active)
+                    if (ONESHOT_MODS_ACTIVE) {
+                        clear_oneshot_mods();
+                        // Only fire escape special mode is not active
+                        return false;
+                    }
+                }
+            }
+            break;
         case DF(BASE):
             // Waiting for release will prevent key from firing. eg. prevent extra Enter keypress when using Enter to return to Base layer
             if (!record->event.pressed) {

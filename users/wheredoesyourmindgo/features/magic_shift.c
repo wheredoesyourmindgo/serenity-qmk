@@ -102,33 +102,23 @@ bool process_magic_shift(uint16_t keycode, keyrecord_t* record) {
             // retro_tapping_counter++;
             return false;
         }
-        // Only on tap (ie. Not during LT(LOWER)
-        if (record->tap.count > 0) {
-            // Only fire escape special mode is not active
-            if (!ONESHOT_MODS_ACTIVE) {
-                return true;
-            }
-            // Cancel One Shot Mods (if active)
-            if (ONESHOT_MODS_ACTIVE) {
-                clear_oneshot_mods();
-            }
+        if (IS_LAYER_ON(HIGHER)) {
+            layer_off(HIGHER);
+            layer_on(OS);
             return false;
-        } else {
-            if (IS_LAYER_ON(HIGHER)) {
-                layer_off(HIGHER);
-                layer_on(OS);
-                return false;
-            }
         }
       } else {
           if (MODS_LSFT && alt_lshift_active) {
               alt_lshift_active = false;
               unregister_mods(MOD_BIT(KC_LSFT));
           }
-          if (IS_LAYER_ON(OS)) {
-              layer_off(OS);
-              layer_on(HIGHER);
-              return false;
+          // Only during layer hold
+          if (!(record->tap.count > 0)) {
+            if (IS_LAYER_ON(OS)) {
+                layer_off(OS);
+                layer_on(HIGHER);
+                return false;
+            }
           }
       }
       break;

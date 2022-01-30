@@ -250,6 +250,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // unregister_code(KC_TAB);
             }
             break;
+        case KC_ESC:
         case LT(LOWER, KC_ESC):
             if (record->event.pressed) {
                 // Only on tap (ie. Not during LT(LOWER)
@@ -272,28 +273,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case KC_ESC:
-            if (record->event.pressed) {
-                // Only fire escape special mode is not active
-                if (!ONESHOT_MODS_ACTIVE) {
-                    return true;
-                }
-                // Cancel One Shot Mods (if active)
-                if (ONESHOT_MODS_ACTIVE) {
-                    clear_oneshot_mods();
-                }
-                return false;
-            }
-            break;
-        // Enter, period (and escape) cancel caps word and caps sentence
-        case KC_ENT:
-            if (record->event.pressed) {
-                if (is_cmd_tab_active) {
-                    cancel_cmd_shift();
-                    return false;
-                }
-            }
-            break;
+
         // case DISP_FDIM:
         //     if (record->event.pressed) {
         //         int i;
@@ -321,7 +301,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //         }
         //     }
         //     break;
-
 
         case LT(HIGHEST, KC_RIGHT):
         case LT(HIGHEST, KC_SLSH):

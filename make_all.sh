@@ -8,3 +8,4 @@ qmk compile -kb boardsource/technik_o -km wheredoesyourmindgo $OPTS
 qmk compile -kb foostan/cornelius -km wheredoesyourmindgo $OPTS
 qmk compile -kb signum/3_0/elitec -km wheredoesyourmindgo $OPTS
 qmk compile -kb planck/rev6 -km wheredoesyourmindgo $OPTS
+# qmk compile -kb planck/rev6 -km wheredoesyourmindgo -j 2 -e MENU_ON_HIGHEST=yes -e QWERTY_BASE=yes

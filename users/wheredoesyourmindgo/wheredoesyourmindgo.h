@@ -3,6 +3,35 @@
 
 #include "quantum.h"
 
+
+#define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
+#define MODS_LSFT (get_mods() & MOD_BIT(KC_LSFT))
+#define MODS_RCTRL (get_mods() & MOD_BIT(KC_RCTRL))
+#define MODS_LCTRL (get_mods() & MOD_BIT(KC_LCTRL))
+#define MODS_RALT (get_mods() & MOD_BIT(KC_RALT))
+#define MODS_LALT (get_mods() & MOD_BIT(KC_LALT))
+#define MODS_RGUI (get_mods() & MOD_BIT(KC_RGUI))
+#define MODS_LGUI (get_mods() & MOD_BIT(KC_LGUI))
+#define MODS_SFT (MODS_LSFT || MODS_RSFT)
+#define MODS_CTRL (MODS_LCTRL || MODS_RCTRL)
+#define MODS_ALT (MODS_LALT || MODS_RALT)
+#define MODS_GUI (MODS_LGUI || MODS_RGUI)
+// #define ACTIVE_MODS (get_mods())
+// #define ONESHOT_LYR_ACTIVE (is_oneshot_layer_active())
+#define ONESHOT_MODS_ACTIVE (get_oneshot_mods())
+// #define ONESHOT_MODS_LSFT (get_oneshot_mods() & MOD_BIT(KC_LSFT))
+// #define ONESHOT_MODS_LGUI (get_oneshot_mods() & MOD_BIT(KC_LGUI))
+// #define ONESHOT_MODS_RGUI (get_oneshot_mods() & MOD_BIT(KC_RGUI))
+// #define ONESHOT_MODS_LALT (get_oneshot_mods() & MOD_BIT(KC_LALT))
+// #define ONESHOT_MODS_LCTL (get_oneshot_mods() & MOD_BIT(KC_LCTL))
+// #define ONESHOT_MODS_RSFT (get_oneshot_mods() & MOD_BIT(KC_RSFT))
+// #define ONESHOT_MODS_RALT (get_oneshot_mods() & MOD_BIT(KC_RALT))
+// #define ONESHOT_MODS_RCTL (get_oneshot_mods() & MOD_BIT(KC_RCTL))
+// #define ONESHOT_MODS_GUI (ONESHOT_MODS_LGUI || ONESHOT_MODS_RGUI)
+// #define ONESHOT_MODS_ALT (ONESHOT_MODS_LALT || ONESHOT_MODS_RALT)
+// #define ONESHOT_MODS_CTRL (ONESHOT_MODS_LCTL || ONESHOT_MODS_RCTL)
+// #define ONESHOT_MODS_SFT (ONESHOT_MODS_LSFT || ONESHOT_MODS_RSFT)
+
 // F16 is used to show deskop (set in macOS preferences)
 // F17-F18 are used with display brightness below (set in macOS preferences)
 // F19-F24 are reserved for use with other devices

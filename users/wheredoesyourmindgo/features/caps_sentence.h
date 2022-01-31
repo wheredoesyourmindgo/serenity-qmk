@@ -5,4 +5,4 @@
 
 #include QMK_KEYBOARD_H
 
-bool process_caps_sentence(uint16_t keycode, keyrecord_t* record);
+bool process_caps_sentence(uint16_t keycode, keyrecord_t* record, uint16_t CAPS_SENTENCE);

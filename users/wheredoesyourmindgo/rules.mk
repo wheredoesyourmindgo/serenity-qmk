@@ -27,6 +27,8 @@ ifneq ($(strip $(KEYBOARD)), binepad/bn003)
 	SRC += features/custom_shift_keys.c
 	SRC += features/custom_gui_keys.c
 	SRC += features/magic_shift.c
+	SRC += features/cmd_tab_switcher.c
+	SRC += features/symbol_rolls.c
 endif
 
 ifeq ($(strip $(KEYBOARD)), planck/rev6)

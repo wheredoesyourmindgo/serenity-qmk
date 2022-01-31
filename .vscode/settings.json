@@ -32,6 +32,8 @@
     "git.postCommitCommand": "push",
     "cmake.configureOnOpen": false,
     "cSpell.words": [
-        "LCTL"
+        "LCTL",
+        "LGUI",
+        "LSFT"
     ]
 }

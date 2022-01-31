@@ -16,4 +16,5 @@
 #define ONESHOT_MODS_RALT (get_oneshot_mods() & MOD_BIT(KC_RALT))
 #define ONESHOT_MODS_RCTL (get_oneshot_mods() & MOD_BIT(KC_RCTL))
 
-void process_oneshot_mods(uint16_t keycode, keyrecord_t* record);
+void oneshot_mods_layer_state(layer_state_t state);
+bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record);

@@ -5,6 +5,8 @@
 #include "features/custom_shift_keys.h"
 #include "features/custom_gui_keys.h"
 #include "features/magic_shift.h"
+#include "features/cmd_tab_switcher.h"
+#include "features/symbol_rolls.h"
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -13,12 +15,6 @@
 
 // extern int retro_tapping_counter;
 
-bool is_cmd_tab_active = false;
-bool is_cmd_tab_held = false;
-uint16_t cmd_tab_timer = 0;
-#define cmd_tab_timer_default_dur 1000;
-#define cmd_tab_timer_fast_dur 600;
-uint16_t cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
 
 
 void tap_code16_no_mod(uint16_t code) {
@@ -133,14 +129,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 // end of Tap Dance config
 
-void cancel_cmd_shift(void) {
-    unregister_mods(MOD_BIT(KC_LGUI));
-    if (MODS_LSFT) {
-        unregister_mods(MOD_BIT(KC_LSFT));
-    }
-    is_cmd_tab_active = false;
-    cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-}
 
 // Custom Shift Keys
 const custom_shift_key_t custom_shift_keys[] = {
@@ -169,110 +157,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_caps_word(keycode, record)) { return false; }
     if (!process_caps_sentence(keycode, record)) { return false; }
     if (!process_magic_shift(keycode, record)) { return false; }
-
-    process_oneshot_mods(keycode, record);
+    if (!process_cmd_tab_switcher(keycode, record)) { return false; }
+    if (!process_oneshot_mods(keycode, record)) { return false; }
+    if (!process_symbol_rolls(keycode, record, LOW)) { return false; }
 
     switch (keycode) {
-        case OS_PRV_SPC:
-        case OS_NXT_SPC:
-            if (record->event.pressed) {
-                is_cmd_tab_held = true;
-            } else {
-                cmd_tab_timer   = timer_read();
-                is_cmd_tab_held = false;
-            }
-            break;
-        case CMD_TAB_NXT:
-            if (record->event.pressed) {
-                if (!is_cmd_tab_active) {
-                    is_cmd_tab_active = true;
-                    register_mods(MOD_BIT(KC_LGUI));
-                } else {
-                    // Speed up timer when cmd+tab is already active (ie. when moving left and right in switcher)
-                    cmd_tab_timer_timeout = cmd_tab_timer_fast_dur;
-                }
-                is_cmd_tab_held = true;
-                unregister_mods(MOD_BIT(KC_LSFT));
-                // cmd_tab_timer = timer_read(); // Start the timer when the key is released, not pressed
-                tap_code(KC_TAB);
-            } else {
-                cmd_tab_timer   = timer_read();
-                is_cmd_tab_held = false;
-                // unregister_code(KC_TAB);
-            }
-            break;
-        // case CMD_TAB_HIDE:
-        //     if (record->event.pressed) {
-        //         if (is_cmd_tab_active) {
-        //             cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-        //             cmd_tab_timer = timer_read();
-        //             tap_code(KC_H);
-        //             return false;
-        //         }
-        //     }
-        //     break;
-        case OS_EXPOSE:
-            if (record->event.pressed) {
-                if (is_cmd_tab_active) {
-                    tap_code(KC_UP);
-                    return false;
-                }
-            }
-            break;
-        case OS_DOCK:
-            if (record->event.pressed) {
-                // Hide app during cmd+tab
-                if (is_cmd_tab_active) {
-                    cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-                    cmd_tab_timer = timer_read();
-                    tap_code(KC_H);
-                    return false;
-                }
-            }
-            break;
-        case CMD_TAB_PRV:
-            if (record->event.pressed) {
-                if (!is_cmd_tab_active) {
-                    is_cmd_tab_active = true;
-                    register_code(KC_LGUI);
-                } else {
-                    // Speed up timer when cmd+tab is already active (ie. when moving left and right in switcher)
-                    cmd_tab_timer_timeout = cmd_tab_timer_fast_dur;
-                }
-                register_mods(MOD_BIT(KC_LSFT));
-                tap_code(KC_TAB);
-                is_cmd_tab_held = true;
-                // cmd_tab_timer = timer_read();
-            } else {
-                cmd_tab_timer   = timer_read();
-                is_cmd_tab_held = false;
-                unregister_mods(MOD_BIT(KC_LSFT));
-                // unregister_code(KC_TAB);
-            }
-            break;
-        case KC_ESC:
-        case LT(LOWER, KC_ESC):
-            if (record->event.pressed) {
-                // Only on tap (ie. Not during LT(LOWER)
-                if (record->tap.count > 0) {
-                    // Cancel One Shot Mods (if active)
-                    if (ONESHOT_MODS_ACTIVE) {
-                        clear_oneshot_mods();
-                        // Only fire escape special mode is not active
-                        return false;
-                    }
-                }
-            }
-            break;
-        case DF(BASE):
-            // Waiting for release will prevent key from firing. eg. prevent extra Enter keypress when using Enter to return to Base layer
-            if (!record->event.pressed) {
-                // Immediately end cmd+tab when base layer is set
-                if (is_cmd_tab_active) {
-                    cancel_cmd_shift();
-                }
-            }
-            break;
 
         // case DISP_FDIM:
         //     if (record->event.pressed) {
@@ -610,21 +499,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
-        // Immediately un-register (shift) mods (don't wait for keypress release). This will prevent shifted symbols from happening during fast rolls on low(symbol) layer.
-        case KC_LT:
-        case KC_GT:
-        case KC_LCBR:
-        case KC_RCBR:
-        case KC_LBRC:
-        case KC_RBRC:
-            if (record->event.pressed) {
-                tap_code16(keycode);
-                uint8_t mod_state;
-                mod_state = get_mods();
-                unregister_mods(mod_state);
-                return false;
-            }
-            break;
+
     }
     return true;
 }
@@ -670,36 +545,25 @@ void keyboard_post_init_user(void) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
+    cmd_tab_switcher_layer_state(state);
+    oneshot_mods_layer_state(state);
+
     switch (get_highest_layer(state)) {
-        case BASE:
-            if (is_cmd_tab_active) {
-                // cancel app swithing when switching back to base layer
-                cancel_cmd_shift();
-            }
-            #ifdef KEY_LOCK_ENABLE
-                cancel_key_lock();
-            #endif
-            break;
+        // case BASE:
+        //     break;
         default: //  for any other layers, or the default layer
-            #ifdef KEY_LOCK_ENABLE
-                cancel_key_lock();
-            #endif
-            // Cancel One Shot Mods (if active) is necessary when switching to layers other than base layer. This will prevent an issue where the keyboard might get stuck in a layer.
-            if (ONESHOT_MODS_ACTIVE) {
-                clear_oneshot_mods();
-            }
+#ifdef KEY_LOCK_ENABLE
+            cancel_key_lock();
+#endif
             break;
     }
-  return state;
+
+    return state;
 }
 
 
 void matrix_scan_user(void) {
-    if (is_cmd_tab_active) {
-        if (timer_elapsed(cmd_tab_timer) > cmd_tab_timer_timeout && !is_cmd_tab_held) {
-            cancel_cmd_shift();
-        }
-    }
+  cmd_tab_switcher_matrix_scan_user();
 }
 
 

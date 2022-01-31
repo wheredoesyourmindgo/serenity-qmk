@@ -198,13 +198,9 @@ void tgl_select(qk_tap_dance_state_t *state, void *user_data);
 void multi_max_each(qk_tap_dance_state_t *state, void *user_data);
 void multi_rst_each(qk_tap_dance_state_t *state, void *user_data);
 
-bool is_cmd_tab_active;
-bool is_cmd_tab_held;
 void tap_code_no_mod(uint8_t);
 void tap_code16_no_mod(uint16_t);
 bool encoder_update_keymap(uint8_t index, bool clockwise);
-bool alt_lshift_active;
-bool alt_rshift_active;
 
 // Initialize variable holding the binary representation of active modifiers.
 uint8_t mod_state;

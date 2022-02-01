@@ -180,7 +180,8 @@ enum {
     TD_TGL_SEL,  // Toggle Select (similar to double, triple, and quadruple mouse click)
     TD_MULTI_MAX,
     TD_MULTI_RSTR,
-    TD_OOPSY
+    TD_OOPSY,
+    TD_PEMDAS
 };
 
 // Tap dance state
@@ -197,6 +198,7 @@ void oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
 void tgl_select(qk_tap_dance_state_t *state, void *user_data);
 void multi_max_each(qk_tap_dance_state_t *state, void *user_data);
 void multi_rst_each(qk_tap_dance_state_t *state, void *user_data);
+void pemdas_finished(qk_tap_dance_state_t *state, void *user_data);
 
 void tap_code_no_mod(uint8_t);
 void tap_code16_no_mod(uint16_t);

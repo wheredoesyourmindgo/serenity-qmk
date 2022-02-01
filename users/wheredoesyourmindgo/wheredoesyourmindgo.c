@@ -62,6 +62,27 @@ void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
+void pemdas_finished(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 1:
+            tap_code16(KC_ASTERISK);
+            break;
+        case 2:
+            tap_code(KC_SLASH);
+            break;
+        case 3:
+            tap_code16(KC_PLUS);
+            break;
+        case 4:
+        case 5:
+        case 6:
+            tap_code(KC_MINUS);
+            break;
+    }
+}
+
+
+
 void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
     if (IS_LAYER_ON(LOWEST)) {
         layer_off(LOWEST);
@@ -126,7 +147,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
     [TD_MULTI_MAX] = ACTION_TAP_DANCE_FN_ADVANCED(multi_max_each, NULL, NULL),
     [TD_MULTI_RSTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_rst_each, NULL, NULL),
-    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset)
+    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
+    [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL)
 };
 // end of Tap Dance config
 
@@ -608,10 +630,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TD(TD_TGL_SEL):
             return 225;
-        case TD(TD_OOPSY):
+        case TD(TD_OOPSY): // favor oopsy behavior
         case TD(TD_MULTI_MAX):
         case TD(TD_MULTI_RSTR):
-            return 300; // favor oopsy behavior
+        case TD(TD_PEMDAS):
+            return 300;
         default:
             return TAPPING_TERM;
     }

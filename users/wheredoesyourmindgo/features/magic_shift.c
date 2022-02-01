@@ -22,23 +22,10 @@ bool process_magic_shift(uint16_t keycode, keyrecord_t* record) {
               // retro_tapping_counter++;
               return false;
           }
-          // Only during layer hold
-          if (!(record->tap.count > 0)) {
-              if (IS_LAYER_ON(LOWER)) {
-                  layer_off(LOWER);
-                  layer_on(OS);
-                  return false;
-              }
-          }
       } else {
           if (MODS_RSFT && alt_rshift_active) {
               alt_rshift_active = false;
               unregister_mods(MOD_BIT(KC_RSFT));
-          }
-          if (IS_LAYER_ON(OS)) {
-              layer_off(OS);
-              layer_on(LOWER);
-              return false;
           }
       }
       break;
@@ -102,23 +89,10 @@ bool process_magic_shift(uint16_t keycode, keyrecord_t* record) {
             // retro_tapping_counter++;
             return false;
         }
-        if (IS_LAYER_ON(HIGHER)) {
-            layer_off(HIGHER);
-            layer_on(OS);
-            return false;
-        }
       } else {
           if (MODS_LSFT && alt_lshift_active) {
               alt_lshift_active = false;
               unregister_mods(MOD_BIT(KC_LSFT));
-          }
-          // Only during layer hold
-          if (!(record->tap.count > 0)) {
-            if (IS_LAYER_ON(OS)) {
-                layer_off(OS);
-                layer_on(HIGHER);
-                return false;
-            }
           }
       }
       break;

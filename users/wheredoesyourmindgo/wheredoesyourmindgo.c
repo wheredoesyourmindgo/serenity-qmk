@@ -7,6 +7,7 @@
 #include "features/magic_shift.h"
 #include "features/cmd_tab_switcher.h"
 #include "features/symbol_rolls.h"
+#include "features/lyr_on_dual.h"
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -160,6 +161,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_cmd_tab_switcher(keycode, record)) { return false; }
     if (!process_oneshot_mods(keycode, record)) { return false; }
     if (!process_symbol_rolls(keycode, record, LOW)) { return false; }
+    if (!process_layer_on_dual_hold(keycode, record)) { return false; }
 
     switch (keycode) {
 

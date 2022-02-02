@@ -148,7 +148,16 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_MULTI_MAX] = ACTION_TAP_DANCE_FN_ADVANCED(multi_max_each, NULL, NULL),
     [TD_MULTI_RSTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_rst_each, NULL, NULL),
     [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
-    [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL)
+    [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL),
+    [TD_F6_F16] = ACTION_TAP_DANCE_DOUBLE(KC_F6, KC_F16),
+    [TD_F7_F17] = ACTION_TAP_DANCE_DOUBLE(KC_F7, KC_F17),
+    [TD_F8_F18] = ACTION_TAP_DANCE_DOUBLE(KC_F8, KC_F18),
+    [TD_F9_F19] = ACTION_TAP_DANCE_DOUBLE(KC_F9, KC_F19),
+    [TD_F10_F20] = ACTION_TAP_DANCE_DOUBLE(KC_F10, KC_F20),
+    [TD_F11_F21] = ACTION_TAP_DANCE_DOUBLE(KC_F11, KC_F21),
+    [TD_F12_F22] = ACTION_TAP_DANCE_DOUBLE(KC_F12, KC_F22),
+    [TD_F13_F23] = ACTION_TAP_DANCE_DOUBLE(KC_F13, KC_F23),
+    [TD_F14_F24] = ACTION_TAP_DANCE_DOUBLE(KC_F14, KC_F24),
 };
 // end of Tap Dance config
 
@@ -231,13 +240,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     unregister_code(KC_MENU);
                 }
                 #endif
-                // Release layer hold if Highest_alt was toggled on during press
-                if (IS_LAYER_ON(HIGHEST)) {
-                    layer_off(HIGHEST);
-                }
-                if (IS_LAYER_ON(HIGHEST_ALT)) {
-                    layer_off(HIGHEST_ALT);
-                }
             }
             break;
 
@@ -384,127 +386,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     layer_off(BASE_QWRTY);
                     layer_on(BASE);
                     default_layer_set(BASE);
-                }
-                return false;
-            }
-            break;
-        case LT(HIGHEST_ALT, TGL_HIGHEST):
-            if (record->event.pressed) {
-                // Only on tap. See note below.
-                if (record->tap.count > 0) {
-                    if (IS_LAYER_ON(HIGHEST)) {
-                        layer_off(HIGHEST);
-                        layer_on(HIGHEST_ALT);
-                    } else {
-                        layer_off(HIGHEST_ALT);
-                        layer_on(HIGHEST);
-                    }
-                    // returning false on tap prevents KC_APP from firing (not sure why)
-                    return false;
-                } else {
-                    if (IS_LAYER_ON(HIGHEST)) {
-                        layer_off(HIGHEST);
-                        layer_on(HIGHEST_ALT);
-                    }
-                    return false;
-                }
-            } else {
-                if (!(record->tap.count > 0)) {
-                    if (IS_LAYER_ON(HIGHEST_ALT)) {
-                        layer_off(HIGHEST_ALT);
-                        layer_on(HIGHEST);
-                    }
-                }
-                return false;
-            }
-            break;
-        // Everything in LT(HIGHEST/LOWEST has been done manually. Consider moving this to a tap dance function in the future.
-        case LT(HIGHEST, TGL_HIGHEST):
-            if (record->event.pressed) {
-                // Only on tap. See note below.
-                if (record->tap.count > 0) {
-                    if (IS_LAYER_ON(HIGHEST)) {
-                        layer_off(HIGHEST);
-                        layer_on(HIGHEST_ALT);
-                    } else {
-                        layer_off(HIGHEST_ALT);
-                        layer_on(HIGHEST);
-                    }
-                    // returning false on tap prevents KC_APP from firing (not sure why)
-                    return false;
-                } else {
-                    if (IS_LAYER_ON(HIGHEST_ALT)) {
-                        layer_off(HIGHEST_ALT);
-                        layer_on(HIGHEST);
-                    }
-                    return false;
-                }
-            } else {
-                if (!(record->tap.count > 0)) {
-                    if (IS_LAYER_ON(HIGHEST)) {
-                        layer_off(HIGHEST);
-                        layer_on(HIGHEST_ALT);
-                    }
-                }
-                return false;
-            }
-            break;
-        case LT(LOWER_ALT, TGL_LOWER):
-            if (record->event.pressed) {
-                // Only on tap. See note below.
-                if (record->tap.count > 0) {
-                    if (IS_LAYER_ON(LOWER)) {
-                        layer_off(LOWER);
-                        layer_on(LOWER_ALT);
-                    } else {
-                        layer_off(LOWER_ALT);
-                        layer_on(LOWER);
-                    }
-                    // returning false on tap prevents KC_APP from firing (not sure why)
-                    return false;
-                } else {
-                    if (IS_LAYER_ON(LOWER)) {
-                        layer_off(LOWER);
-                        layer_on(LOWER_ALT);
-                    }
-                    return false;
-                }
-            } else {
-                if (!(record->tap.count > 0)) {
-                    if (IS_LAYER_ON(LOWER_ALT)) {
-                        layer_off(LOWER_ALT);
-                        layer_on(LOWER);
-                    }
-                }
-                return false;
-            }
-            break;
-        case LT(LOWER, TGL_LOWER):
-            if (record->event.pressed) {
-                // Only on tap. See note below.
-                if (record->tap.count > 0) {
-                    if (IS_LAYER_ON(LOWER)) {
-                        layer_off(LOWER);
-                        layer_on(LOWER_ALT);
-                    } else {
-                        layer_off(LOWER_ALT);
-                        layer_on(LOWER);
-                    }
-                    // returning false on tap prevents KC_APP from firing (not sure why)
-                    return false;
-                } else {
-                    if (IS_LAYER_ON(LOWER_ALT)) {
-                        layer_off(LOWER_ALT);
-                        layer_on(LOWER);
-                    }
-                    return false;
-                }
-            } else {
-                if (!(record->tap.count > 0)) {
-                    if (IS_LAYER_ON(LOWER)) {
-                        layer_off(LOWER);
-                        layer_on(LOWER_ALT);
-                    }
                 }
                 return false;
             }

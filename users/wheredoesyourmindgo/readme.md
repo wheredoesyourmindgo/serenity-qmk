@@ -18,7 +18,6 @@ This is a QMK layout that includes dedicated right and left shift keys. The Base
 - (macOS) Easy access to macOS command key using thumbs. macOS is chock-full of shortcuts that utilize the command key so I'm calling this a feature.
 - (macOS) Double left control tap hides active window and mutes volume. Left control is greedy in regard to interruption.
 - (macOS) An additional shortcut within the Higher layer on the "z" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
-- (macOS) Additional Layer for alternate OS movements. The Alternate Lower layer can be toggled on holding/tapping opposite command/gui key while temporarily activating Lower layer. The Lower_alt layer replaces arrow keys with OS back button (commonly used in web browsers and Finder), Finder Navigate elect folder shortcut, Finder Navigate Parent Folder shortcut, and OS forward button (again, commonly used with web browsers and Finder). The Page Down and Page Up shortcuts are replaced with Zoom In and Zoom Out. The dot shortcut is replaced with Zoom Reset. The 8 and 9 shortcuts are replaced with App Zoom In and App Zoom Out respectively while the 6 key is replaced with App Zoom Reset.
 - (macOS) Additional Layer for macOS shortcuts, activated with simultaneous lower and higher hold. See keymap.c
 - (macOS) Window Tiling/Management shortcuts using [Amethyst](https://ianyh.com/amethyst/)
 & [Rectangle](https://rectangleapp.com/) on the Higher layer. See [Reference](#WindowMgtRef) below for additional info.
@@ -84,14 +83,6 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 | LShift | \[Alt. Num/Nav Lyr\]** | RAlt (osm) | | *void* | Lock Num/Nav Lyr | | Home | Page down | Page up | End | Capslock \[RShft\] |
 | | LCtl | LAlt | LGui | Goto Base Lyr | enter | tab | space \[OS Lyr\] | | | | |
 
-#### Alt. Number/Nav. Layer (lower_alt)
-
-| |  |  |  |  |  |  |  |  |  |  | |
-|--- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | ---|
-|  |  |   | | |  | App Zoom Reset | | App Zoom In | App Zoom Out | | |
-| | |||| | | Back | Down Folder Lvl. | Up Folder Lvl. | Forward | |
-|| \[Num/Nav Lyr\]** |||| Lock Alt. Num/Nav Lyr | Zoom Reset | | Zoom In | Zoom Out |||
-| | LCtl | LAlt | LGui | Goto Base Lyr | enter | tab | space \[OS Lyr\] | | | | |
 
 #### Symbol Layer (low)
 

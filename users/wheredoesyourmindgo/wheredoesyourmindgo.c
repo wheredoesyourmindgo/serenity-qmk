@@ -404,6 +404,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
+        case OS_BSPC:
+            if (record->event.pressed) {
+                tap_code(KC_BACKSPACE);
+            }
+            break;
+        case OS_DEL:
+            if (record->event.pressed) {
+                tap_code(KC_DELETE);
+            }
+            break;
 
     }
     return true;

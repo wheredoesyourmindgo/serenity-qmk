@@ -35,6 +35,8 @@
         "LCTL",
         "LGUI",
         "LSFT",
-        "oopsy"
+        "oopsy",
+        "RCTL",
+        "RGUI"
     ]
 }

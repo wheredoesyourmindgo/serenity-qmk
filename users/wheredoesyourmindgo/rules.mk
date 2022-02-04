@@ -84,8 +84,8 @@ ifeq ($(strip $(KEYBOARD)), binepad/bn003)
 	KEY_LOCK_ENABLE = no
 endif
 
-ifeq ($(strip $(MENU_ON_HIGHEST)), yes)
-  OPT_DEFS += -DMENU_ON_HIGHEST
+ifeq ($(strip $(EXECUTE_ON_HIGHEST)), yes)
+  OPT_DEFS += -DEXECUTE_ON_HIGHEST
 endif
 
 ifeq ($(strip $(QWERTY_BASE)), yes)

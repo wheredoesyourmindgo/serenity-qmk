@@ -227,17 +227,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LT(HIGHEST, KC_RIGHT):
         case LT(HIGHEST, KC_SLSH):
             if (record->event.pressed) {
-                #if defined MENU_ON_HIGHEST
+                #if defined EXECUTE_ON_HIGHEST
                 // Only on hold during LT(HIGHEST)
                 if (!(record->tap.count > 0)) {
-                    register_code(KC_MENU);
+                    register_code(KC_EXEC);
                 }
                 #endif
                 // return true
             } else {
-                #if defined MENU_ON_HIGHEST
+                #if defined EXECUTE_ON_HIGHEST
                 if (!(record->tap.count > 0)) {
-                    unregister_code(KC_MENU);
+                    unregister_code(KC_EXEC);
                 }
                 #endif
             }

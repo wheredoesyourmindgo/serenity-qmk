@@ -32,13 +32,12 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 
 ### Case for Right Handed Space
 
-1. I'm right handed; and that's not uncommon.
+1. Right handedness is not uncommon.
 2. It is useful to be able to use space while using the navigation arrows without having to release the layer hold to re-press the same
    key, especially when returning to the lower layer repeatedly.
 3. The Lower & Low layers are used for numbers and symbols. It is faster/easier to follow these layer presses by tapping space with the opposite hand instead of releasing and re-tapping the same key.
-4. There are more letters on the left side of the keyboard that are used with word endings; R,D,G,S on the left vs. E,N on the right. It's easier to use the opposite hand when tapping space after word ending.
-5. Allows for setting tapping term much lower (0) on frequently used numbers and symbols layers since those are mapped to Esc and Enter respectively. By using Retro tap, the result is Lower (number) and Low (symbol) are more greedy than Enter presses and Escape presses, while the Space (and Tab) taps can be more greedy on the right side of the keyboard.
-6. Related, having enter key next to space is not ideal due to the chance of miss-tap resulting from the proximity; thus, tab joins space on right side, enter with escape on left.
+4. Allows for setting tapping term much lower (0) on frequently used numbers and symbols layers since those are mapped to Esc and Enter respectively. By using Retro tap, the result is Lower (number) and Low (symbol) are more greedy than Enter presses and Escape presses, while the Space (and Tab) taps can be more greedy on the right side of the keyboard.
+5. Related, having enter key next to space is not ideal due to the chance of miss-tap resulting from the proximity; thus, tab joins space on right side, enter with escape on left.
 
 ## Reference
 

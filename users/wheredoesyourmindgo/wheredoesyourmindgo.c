@@ -315,11 +315,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (IS_LAYER_ON(BASE)) {
                     // dprint("BASE layer is on prior to switch");
                     layer_off(BASE);
-                    layer_on(BASE_QWRTY);
-                    default_layer_set(BASE_QWRTY);
+                    layer_on(QWRTY);
+                    default_layer_set(QWRTY);
                 } else {
-                    // dprint("BASE_QWRTY layer is on prior to switch");
-                    layer_off(BASE_QWRTY);
+                    // dprint("QWRTY layer is on prior to switch");
+                    layer_off(QWRTY);
                     layer_on(BASE);
                     default_layer_set(BASE);
                 }
@@ -396,12 +396,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
 
 void keyboard_post_init_user(void) {
-    #ifdef QWERTY_BASE
+#ifdef QWERTY_BASE
     // Call the post init code.
     layer_off(BASE);
-    layer_on(BASE_QWRTY);
-    default_layer_set(BASE_QWRTY);
-    #endif
+    layer_on(QWRTY);
+    default_layer_set(QWRTY);
+#endif
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {

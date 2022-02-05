@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #include "caps_word.h"
+#include "wheredoesyourmindgo.h"
 
 bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
   static bool caps_word_enabled = false;
@@ -24,6 +25,7 @@ bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
   }
 
   if (!record->event.pressed) { return true; }
+  if (!IS_LAYER_ON(BASE)) { return true; } // only activate on base layer
 
   if (!((get_mods() | get_oneshot_mods()) & ~MOD_MASK_SHIFT)) {
     switch (keycode) {

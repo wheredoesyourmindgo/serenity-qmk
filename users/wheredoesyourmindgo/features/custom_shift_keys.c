@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #include "custom_shift_keys.h"
+#include "wheredoesyourmindgo.h"
 
 bool process_custom_shift_keys(uint16_t keycode, keyrecord_t *record) {
   static uint16_t registered_keycode = KC_NO;
@@ -18,6 +19,8 @@ bool process_custom_shift_keys(uint16_t keycode, keyrecord_t *record) {
   for (int i = 0; i < NUM_CUSTOM_SHIFT_KEYS; ++i) {
     if (keycode == custom_shift_keys[i].keycode) {
       if (record->event.pressed) {
+        if (IS_LAYER_ON(QWRTY)) { return true; } // don't activate on qwerty layer
+
         const uint8_t mods = get_mods();
 #ifndef NO_ACTION_ONESHOT
         if ((mods | get_oneshot_mods()) & MOD_MASK_SHIFT) {

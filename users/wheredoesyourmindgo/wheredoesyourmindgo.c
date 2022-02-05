@@ -350,7 +350,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_DELETE);
             }
             break;
-
+        case OS_BCK_FWD:
+            if (record->event.pressed) {
+                clear_oneshot_mods();
+                if (MODS_SFT) {
+                    tap_code16_no_mod(LGUI(KC_RIGHT_BRACKET));
+                } else {
+                    tap_code16(LGUI(KC_LEFT_BRACKET));
+                }
+            }
+            break;
     }
     return true;
 }

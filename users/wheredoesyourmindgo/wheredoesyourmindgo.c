@@ -342,12 +342,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case OS_BSPC:
             if (record->event.pressed) {
-                tap_code(KC_BACKSPACE);
+                register_code(KC_BACKSPACE);
+            } else {
+                unregister_code(KC_BACKSPACE);
             }
             break;
         case OS_DEL:
             if (record->event.pressed) {
-                tap_code(KC_DELETE);
+                register_code(KC_DELETE);
+            } else {
+                unregister_code(KC_DELETE);
             }
             break;
         case OS_BCK_FWD:

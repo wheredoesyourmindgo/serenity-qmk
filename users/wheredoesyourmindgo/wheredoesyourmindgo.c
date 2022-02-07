@@ -148,16 +148,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_MULTI_MAX] = ACTION_TAP_DANCE_FN_ADVANCED(multi_max_each, NULL, NULL),
     [TD_MULTI_RSTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_rst_each, NULL, NULL),
     [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
-    [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL),
-    [TD_F6_F16] = ACTION_TAP_DANCE_DOUBLE(KC_F6, KC_F16),
-    [TD_F7_F17] = ACTION_TAP_DANCE_DOUBLE(KC_F7, KC_F17),
-    [TD_F8_F18] = ACTION_TAP_DANCE_DOUBLE(KC_F8, KC_F18),
-    [TD_F9_F19] = ACTION_TAP_DANCE_DOUBLE(KC_F9, KC_F19),
-    [TD_F10_F20] = ACTION_TAP_DANCE_DOUBLE(KC_F10, KC_F20),
-    [TD_F11_F21] = ACTION_TAP_DANCE_DOUBLE(KC_F11, KC_F21),
-    [TD_F12_F22] = ACTION_TAP_DANCE_DOUBLE(KC_F12, KC_F22),
-    [TD_F13_F23] = ACTION_TAP_DANCE_DOUBLE(KC_F13, KC_F23),
-    [TD_F14_F24] = ACTION_TAP_DANCE_DOUBLE(KC_F14, KC_F24),
+    [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL)
 };
 // end of Tap Dance config
 
@@ -170,7 +161,16 @@ const custom_shift_key_t custom_shift_keys[] = {
   {KC_9, KC_RIGHT_PAREN}, // Shift 9 is )
   {KC_0, KC_ASTERISK}, // Shift 0 is *
   {KC_BACKSPACE, LALT(KC_BACKSPACE)}, // Shift Backspace is delete previous word
-  {KC_DELETE, LALT(KC_DELETE)} // Shift Delete is delete previous word
+  {KC_DELETE, LALT(KC_DELETE)}, // Shift Delete is delete previous word
+  {KC_F6, KC_F16}, // Shift F-* is +10 F-*
+  {KC_F7, KC_F17},
+  {KC_F8, KC_F18},
+  {KC_F9, KC_F19},
+  {KC_F10, KC_F20},
+  {KC_F11, KC_F21},
+  {KC_F12, KC_F22},
+  {KC_F13, KC_F23},
+  {KC_F14, KC_F24},
 };
 uint8_t NUM_CUSTOM_SHIFT_KEYS =
     sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);

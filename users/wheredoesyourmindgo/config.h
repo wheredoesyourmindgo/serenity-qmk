@@ -23,6 +23,9 @@
 #define MOUSEKEY_MAX_SPEED 6
 #undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX 64
+// Invert scroll axis (doesn't do what I was expecting)
+// #define PS2_MOUSE_INVERT_H
+// #define PS2_MOUSE_INVERT_V
 
 // #define RGBLIGHT_SLEEP true
 // #define DEBUG_ACTION

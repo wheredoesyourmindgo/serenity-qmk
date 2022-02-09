@@ -485,7 +485,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(LOWER, KC_ESC):
         case LT(LOW, KC_ENT):
-        case LT(HIGH, KC_TAB):
+        // case LT(HIGH, KC_TAB):
         // case LT(HIGHER, KC_SPC):
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
@@ -503,7 +503,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(LOWER, KC_ESC):
         case LT(LOW, KC_ENT):
-        case LT(HIGH, KC_TAB):
+        // case LT(HIGH, KC_TAB):
         // case LT(HIGHER, KC_SPC):
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):

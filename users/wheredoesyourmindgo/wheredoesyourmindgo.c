@@ -281,15 +281,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 clear_oneshot_mods();
                 if (MODS_LSFT) {
                     // tap_code16_no_mod(TLNG_FSCRN);
-                    tap_code16_no_mod(TLNG_FLT);
+                    tap_code16_no_mod(WNDW_LFT_HLF);
                 } else if (MODS_LGUI) {
-                    tap_code16_no_mod(TLNG_TGL_FLT_FCS);
+                    tap_code16_no_mod(WNDW_BTTM_HLF);
                 } else if (MODS_LALT) {
-                    tap_code16_no_mod(TLNG_MSE_FCS);
+                    tap_code16_no_mod(WNDW_TOP_HLF);
                 } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(TLNG_RVLT);
+                    tap_code16_no_mod(WNDW_RGHT_HLF);
                 } else {
-                    tap_code16(TLNG_SWP_FCS_MN);
+                    tap_code16(WNDW_CNTR_HLF);
                 }
             }
             break;
@@ -297,15 +297,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 clear_oneshot_mods();
                 if (MODS_LSFT) {
-                    tap_code16_no_mod(TLNG_LYT_FWD);
+                    tap_code16_no_mod(WNDW_LFT_TTHRD);
                 } else if (MODS_LGUI) {
-                    tap_code16_no_mod(TLNG_EXP);
+                    // tap_code16_no_mod(WNDW_BTTM_HLF);
                 } else if (MODS_LALT) {
-                    tap_code16_no_mod(TLNG_INCR_MN_CT);
+                    // tap_code16_no_mod(WNDW_TOP_HLF);
                 } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(TLNG_THRW_RGHT);
+                    tap_code16_no_mod(WNDW_RGHT_TTHRD);
                 } else {
-                    tap_code16(TLNG_MV_FCS_CLK);
+                    tap_code16_no_mod(WNDW_LFT_TTHRD);
+                    tap_code16(WNDW_CNTR);
                 }
             }
             break;

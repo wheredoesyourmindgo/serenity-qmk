@@ -263,16 +263,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 clear_oneshot_mods();
                 if (MODS_LSFT) {
-                    tap_code16_no_mod(TLNG_LYT_INF);
+                    tap_code16_no_mod(WNDW_LFT_THRD);
                 } else if (MODS_LGUI) {
-                    tap_code16_no_mod(KC_NO);
                     // tap_code16_no_mod(WNDW_RSTR);
                 } else if (MODS_LALT) {
-                    tap_code16_no_mod(TLNG_GLBL_TLNG);
+                    // tap_code16_no_mod(TLNG_GLBL_TLNG);
                 } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(TLNG_RLD);
+                    tap_code16_no_mod(WNDW_RGNT_THRD);
                 } else {
-                    tap_code16(TLNG_MV_FCS_MN);
+                    tap_code16(WNDW_CNTR_THRD);
                 }
             }
             break;
@@ -305,8 +304,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else if (MODS_LCTRL) {
                     tap_code16_no_mod(WNDW_RGHT_TTHRD);
                 } else {
-                    tap_code16_no_mod(WNDW_LFT_TTHRD);
-                    tap_code16(WNDW_CNTR);
+                    tap_code16(WNDW_ALMST_MAX);
+                    tap_code16(WNDW_VRT_MAX);
                 }
             }
             break;

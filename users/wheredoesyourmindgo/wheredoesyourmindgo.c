@@ -48,10 +48,16 @@ void tap_code_no_mod(uint8_t code) {
 
 void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (!state->pressed && !state->interrupted && state->count == 1) {
-        tap_code16(KC_APP);
+        // KC_MUTE will toggle, instead, lower volume
+        int i;
+        for (i = 1; i <= 20; ++i) {
+            // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
+            tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
+        }
     } else if (!state->pressed && !state->interrupted && state->count >= 2) {
+        // hide window first, then mute
         tap_code16(LGUI(KC_H));  // Hide Active Window
-        // KC_MUTE will toggle on double tap which isn't ideal here
+        // KC_MUTE will toggle, instead, lower volume
         int i;
         for (i = 1; i <= 20; ++i) {
             // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
@@ -114,11 +120,7 @@ void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
 void multi_rst_each(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
         case 1:
-            if (MODS_SFT) {
-                tap_code16_no_mod(WNDW_ALMST_MAX);
-            } else {
-                tap_code16_no_mod(WNDW_CNTR);
-            }
+            tap_code16_no_mod(WNDW_CNTR);
             break;
         case 2:
             tap_code16_no_mod(WNDW_RSTR);
@@ -129,12 +131,7 @@ void multi_rst_each(qk_tap_dance_state_t *state, void *user_data) {
 void multi_max_each(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
         case 1:
-            if (MODS_SFT) {
-                tap_code16_no_mod(WNDW_ALMST_MAX);
-                tap_code16_no_mod(WNDW_VRT_MAX);
-            } else {
-                tap_code16_no_mod(WNDW_VRT_MAX);
-            }
+            tap_code16_no_mod(WNDW_VRT_MAX);
             break;
         case 2:
             tap_code16_no_mod(WNDW_MAX);
@@ -242,20 +239,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 #endif
             }
             break;
-
         case TLNG_LFT:
             if (record->event.pressed) {
                 clear_oneshot_mods();
                 if (MODS_LSFT) {
-                    tap_code16_no_mod(TLNG_LYT_BCK);
+                    tap_code16_no_mod(WNDW_LFT_TTHRD);
                 } else if (MODS_LGUI) {
-                    tap_code16_no_mod(TLNG_SHRNK);
+                    tap_code16_no_mod(WNDW_LFT_HLF);
                 } else if (MODS_LALT) {
-                    tap_code16_no_mod(TLNG_DCR_MN_CT);
+                    tap_code16_no_mod(WNDW_LFT_THRD);
                 } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(TLNG_THRW_LFT);
+                    // tap_code16_no_mod(TLNG_THRW_LFT);
                 } else {
-                    tap_code16(TLNG_MV_FCS_CCLK);
+                    tap_code16(WNDW_ALMST_MAX);
                 }
             }
             break;
@@ -263,13 +259,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 clear_oneshot_mods();
                 if (MODS_LSFT) {
-                    tap_code16_no_mod(WNDW_LFT_THRD);
+                    tap_code16_no_mod(WNDW_SMLLR);
                 } else if (MODS_LGUI) {
-                    // tap_code16_no_mod(WNDW_RSTR);
+                    tap_code16_no_mod(WNDW_BTTM_HLF);
                 } else if (MODS_LALT) {
-                    // tap_code16_no_mod(TLNG_GLBL_TLNG);
+
                 } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(WNDW_RGNT_THRD);
+                    // tap_code16_no_mod(WNDW_RGNT_THRD);
                 } else {
                     tap_code16(WNDW_CNTR_THRD);
                 }
@@ -279,14 +275,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 clear_oneshot_mods();
                 if (MODS_LSFT) {
-                    // tap_code16_no_mod(TLNG_FSCRN);
-                    tap_code16_no_mod(WNDW_LFT_HLF);
+                    tap_code16_no_mod(WNDW_LRGR);
                 } else if (MODS_LGUI) {
-                    tap_code16_no_mod(WNDW_BTTM_HLF);
-                } else if (MODS_LALT) {
                     tap_code16_no_mod(WNDW_TOP_HLF);
+                } else if (MODS_LALT) {
+                    // tap_code16_no_mod(WNDW_TOP_HLF);
                 } else if (MODS_LCTRL) {
-                    tap_code16_no_mod(WNDW_RGHT_HLF);
+                    // tap_code16_no_mod();
                 } else {
                     tap_code16(WNDW_CNTR_HLF);
                 }
@@ -296,13 +291,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 clear_oneshot_mods();
                 if (MODS_LSFT) {
-                    tap_code16_no_mod(WNDW_LFT_TTHRD);
-                } else if (MODS_LGUI) {
-                    // tap_code16_no_mod(WNDW_BTTM_HLF);
-                } else if (MODS_LALT) {
-                    // tap_code16_no_mod(WNDW_TOP_HLF);
-                } else if (MODS_LCTRL) {
                     tap_code16_no_mod(WNDW_RGHT_TTHRD);
+                } else if (MODS_LGUI) {
+                    tap_code16_no_mod(WNDW_RGHT_HLF);
+                } else if (MODS_LALT) {
+                    tap_code16_no_mod(WNDW_RGNT_THRD);
+                } else if (MODS_LCTRL) {
+                    // tap_code16_no_mod();
                 } else {
                     tap_code16(WNDW_ALMST_MAX);
                     tap_code16(WNDW_VRT_MAX);
@@ -469,8 +464,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TD(TD_TGL_SEL):
+        case TD(TD_OOPSY):
             return 225;
-        case TD(TD_OOPSY): // favor oopsy behavior
         case TD(TD_MULTI_MAX):
         case TD(TD_MULTI_RSTR):
         case TD(TD_PEMDAS):

@@ -18,5 +18,6 @@
 
 #include "quantum.h"
 
+void cancel_key_lock(void);
 bool process_key_lock(uint16_t *keycode, keyrecord_t *record);
 void cancel_key_lock(void);

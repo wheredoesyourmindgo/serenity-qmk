@@ -84,6 +84,14 @@ ifeq ($(strip $(KEYBOARD)), binepad/bn003)
 	KEY_LOCK_ENABLE = no
 endif
 
+ifeq ($(strip $(KEYBOARD)), vitamins_included/rev2)
+	OPT_DEFS += -DVITAMINS_INCLUDED_KEYBOARD
+# KEY_LOCK_ENABLE = no
+	AUDIO_ENABLE = no
+	NKRO_ENABLE = no
+	SRC += layout_4x12.c
+endif
+
 ifeq ($(strip $(EXECUTE_ON_HIGHEST)), yes)
   OPT_DEFS += -DEXECUTE_ON_HIGHEST
 endif

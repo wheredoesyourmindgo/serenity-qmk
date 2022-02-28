@@ -19,7 +19,7 @@ This is a QMK layout that includes dedicated right and left shift keys. The Base
 - (macOS) Double left control tap hides active window and mutes volume. Left control is greedy in regard to interruption.
 - (macOS) An additional shortcut within the Higher layer on the "z" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
 - (macOS) Additional Layer for macOS shortcuts, activated with simultaneous lower and higher hold. See keymap.c
-- (macOS) Window Tiling/Management shortcuts using [Amethyst](https://ianyh.com/amethyst/)
+- (macOS) Window Management shortcuts using [Rectangle](https://rectangleapp.com)
 & [Rectangle](https://rectangleapp.com/) on the Higher layer. See [Reference](#WindowMgtRef) below for additional info.
 - (macOS) Shortcuts for quick access to word & line backspace and word & line delete forward. These are activated from Lower, Lowest, Higher, and Highest layers, respectively. For convenience, the word delete will not trigger when entering numbers in Lower layer, which is ideal for using backspace within Lower layer (the side effect is that words that end with a number can't be word-deleted until Lower hold is released and held again).
 - (make option) Hold the Execute key (KC_EXECUTE) while holding down the function key. This can be enabled by building firmware with `EXECUTE_ON_HIGHEST=yes` option. The Execute keycode is not used by MacOS, but it will register, so it can be converted to something else such as the Function "fn" key via a Karabiner-Elements rule which will enable further customization via Karabiner-Elements with additional rules.
@@ -36,15 +36,15 @@ Control, Alt/Option, GUI/Command mods are mirrored, located on bottom left and r
 2. It is useful to be able to use space while using the navigation arrows without having to release the layer hold to re-press the same
    key, especially when returning to the lower layer repeatedly.
 3. The Lower & Low layers are used for numbers and symbols. It is faster/easier to follow these layer presses by tapping space with the opposite hand instead of releasing and re-tapping the same key.
-4. Allows for setting tapping term much lower (0) on frequently used numbers and symbols layers since those are mapped to Esc and Enter respectively. By using Retro tap, the result is Lower (number) and Low (symbol) are more greedy than Enter presses and Escape presses, while the Space (and Tab) taps can be more greedy on the right side of the keyboard.
+4. Allows for setting tapping term much lower (0) on frequently used numbers and symbols layers since those are mapped to Esc and Enter respectively. By using Permissive Hold, the result is Lower (number) and Low (symbol) are more greedy than Enter presses and Escape presses, while the Space (and Tab) taps can be more greedy on the right side of the keyboard.
 5. Related, having enter key next to space is not ideal due to the chance of miss-tap resulting from the proximity; thus, tab joins space on right side, enter with escape on left.
 
 ## Reference
 
 
-### Amethyst & Rectangle
+### Rectangle
 
-Amethyst shortcuts are arranged on the Higher layer on the left-hand side on home row. Alternate shortcuts can be triggered using the mods on the home row on the right side within the Higher layer. Below is a map of the commands and mod presses.
+Rectangle shortcuts are arranged on the Higher layer on the left-hand side on home row. Alternate shortcuts can be triggered using the mods on the home row on the right side within the Higher layer. Below is a map of the commands and mod presses.
 
 | **Mod** | `S` | `R`  | `H` | `N` |
 |--- | --- | --- | --- | ---|

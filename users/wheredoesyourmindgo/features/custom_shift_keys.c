@@ -24,7 +24,7 @@ bool process_custom_shift_keys(uint16_t keycode, keyrecord_t *record) {
         const uint8_t mods = get_mods();
 #ifndef NO_ACTION_ONESHOT
         if ((mods | get_weak_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
-          unregister_oneshot_mods(MOD_MASK_SHIFT);
+          del_oneshot_mods(MOD_MASK_SHIFT);
 #else
         if (mods & MOD_MASK_SHIFT) {
 #endif  // NO_ACTION_ONESHOT

@@ -26,7 +26,7 @@ bool process_custom_shift_keys(uint16_t keycode, keyrecord_t *record) {
         if ((mods | get_weak_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
           del_oneshot_mods(MOD_MASK_SHIFT);
 #else
-        if (mods & MOD_MASK_SHIFT) {
+        if ((mods | get_weak_mods()) & MOD_MASK_SHIFT) {
 #endif  // NO_ACTION_ONESHOT
           // del_mods() won't work. use unregister_mods() instead
           unregister_mods(MOD_MASK_SHIFT);
@@ -34,6 +34,7 @@ bool process_custom_shift_keys(uint16_t keycode, keyrecord_t *record) {
           registered_keycode = custom_shift_keys[i].shifted_keycode;
         } else {
           registered_keycode = custom_shift_keys[i].keycode;
+          // allow other macros to run
           return true;
         }
 

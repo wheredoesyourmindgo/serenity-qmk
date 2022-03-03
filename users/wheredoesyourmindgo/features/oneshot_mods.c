@@ -291,6 +291,15 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
             }
             return false;
         case KC_ESC:
+            if (record->event.pressed) {
+                // Cancel One Shot Mods (if active)
+                if (ONESHOT_MODS_ACTIVE) {
+                    clear_oneshot_mods();
+                    // Only fire escape special mode is not active
+                    return false;
+                }
+            }
+            break;
         case LT(LOWER, KC_ESC):
             if (record->event.pressed) {
                 // Only on tap (ie. Not during LT(LOWER)

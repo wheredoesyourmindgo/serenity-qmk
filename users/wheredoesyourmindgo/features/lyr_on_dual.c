@@ -6,7 +6,6 @@
 
 bool process_layer_on_dual_hold(uint16_t keycode, keyrecord_t* record) {
 
-    // Immediately un-register (shift) mods (don't wait for keypress release). This will prevent shifted symbols from happening during fast rolls on low(symbol) layer for keys that require a shift press followed by a key that doesn't, eg. /, \, [, and ].
     switch (keycode) {
         case LT(LOWER, KC_ESC):
             if (record->event.pressed) {

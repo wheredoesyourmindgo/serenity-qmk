@@ -25,7 +25,7 @@ bool process_layer_on_dual_hold(uint16_t keycode, keyrecord_t* record) {
                 }
             }
             break;
-        case LT(HIGHER, KC_SPC):
+        case LT(HIGHER, KC_TAB):
             if (record->event.pressed) {
                 // Only during layer hold
                 if (!(record->tap.count > 0)) {

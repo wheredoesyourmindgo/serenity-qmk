@@ -480,8 +480,8 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(LOWER, KC_ESC):
         case LT(LOW, KC_ENT):
-        // case LT(HIGH, KC_TAB):
-        // case LT(HIGHER, KC_SPC):
+        // case LT(HIGHER, KC_TAB):
+        // case LT(HIGH, KC_SPC):
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
@@ -498,8 +498,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(LOWER, KC_ESC):
         case LT(LOW, KC_ENT):
-        // case LT(HIGH, KC_TAB):
-        // case LT(HIGHER, KC_SPC):
+        // case LT(HIGHER, KC_TAB):
+        // case LT(HIGH, KC_SPC):
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
@@ -514,7 +514,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 // bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
 //     switch (keycode) {
 //         // Might roll through space
-//         case LT(HIGHER, KC_SPC):
+//         case LT(HIGH, KC_SPC):
 //             return true;
 //         default:
 //             return false;
@@ -541,8 +541,8 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case LT(LOWER, KC_ESC):
         case LT(LOW, KC_ENT):
         // case LT(LOWEST, KC_APP):
-        case LT(HIGH, KC_TAB):
-        case LT(HIGHER, KC_SPC):
+        case LT(HIGHER, KC_TAB):
+        case LT(HIGH, KC_SPC):
             return true;
         default:
             return false;

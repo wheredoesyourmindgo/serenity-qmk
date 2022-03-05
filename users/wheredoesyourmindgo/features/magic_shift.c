@@ -12,7 +12,7 @@ bool process_magic_shift(uint16_t keycode, keyrecord_t* record) {
 
   switch (keycode) {
     // Higher (right side)
-    case LT(HIGHER, KC_SPC):
+    case LT(HIGHER, KC_TAB):
       if (record->event.pressed) {
           if (MODS_RCTRL || MODS_RALT || MODS_RGUI) {
               layer_on(BASE);

@@ -184,7 +184,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // only activate on base and qwerty layers
     if (IS_LAYER_ON(BASE) || IS_LAYER_ON(QWRTY)) {
         if (!process_caps_word(keycode, record)) { return false; }
-        // if (!process_caps_sentence(keycode, record, CAPS_SENTENCE)) { return false; }
+        if (!process_caps_sentence(keycode, record, CAPS_SENTENCE)) { return false; }
     }
     // don't activate on qwerty layer
     if (!IS_LAYER_ON(QWRTY)) {

@@ -10,10 +10,13 @@
 #undef MOUSEKEY_INTERVAL
 #define MOUSEKEY_INTERVAL 16
 #if defined SIGNUM_KEYBOARD
-#    undef MOUSEKEY_MOVE_DELTA
-#    define MOUSEKEY_MOVE_DELTA 5
+#undef MOUSEKEY_MOVE_DELTA
+#define MOUSEKEY_MOVE_DELTA 5
 #elif defined BOARDWALK_KEYBOARD
 // #define MOUSEKEY_INTERVAL       12
+/* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed, defaults to 5 for Boardwalk */
+//  #undef DEBOUNCE
+//  #define DEBOUNCE 10
 #else
 // #define MOUSEKEY_INTERVAL       16
 #endif

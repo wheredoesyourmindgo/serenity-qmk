@@ -1,79 +1,159 @@
-// Copyright 2021 Google LLC.
-// SPDX-License-Identifier: Apache-2.0
+/// Copyright 2021-2022 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//
+// For full documentation, see
+// https://getreuer.info/posts/keyboards/caps-word
 
 #include "caps_sentence.h"
 
-bool process_caps_sentence(uint16_t keycode, keyrecord_t* record, uint16_t CAPS_SENTENCE) {
-  static bool caps_sentence_enabled = false;
+static bool caps_sentence_active = false;
 
-  void cancel_caps_sentence(void) {
-    // Disable caps sentence.
-    caps_sentence_enabled = false;
+#if CAPS_SENTENCE_IDLE_TIMEOUT > 0
+#if CAPS_SENTENCE_IDLE_TIMEOUT < 100 || CAPS_SENTENCE_IDLE_TIMEOUT > 30000
+// Constrain timeout to a sensible range. With the 16-bit timer, the longest
+// representable timeout is 32768 ms, rounded here to 30000 ms = half a minute.
+#error "caps_sentence: CAPS_SENTENCE_IDLE_TIMEOUT must be between 100 and 30000 ms"
+#endif
+
+static uint16_t idle_timer = 0;
+
+void caps_sentence_task(void) {
+  if (caps_sentence_active && timer_expired(timer_read(), idle_timer)) {
+    caps_sentence_set(false);
   }
+}
+#endif  // CAPS_SENTENCE_IDLE_TIMEOUT > 0
 
-  if (!caps_sentence_enabled) {
-    if (keycode
-        == CAPS_SENTENCE) {
-      clear_mods();
-      clear_oneshot_mods();
-      caps_sentence_enabled = true;
+bool process_caps_sentence(uint16_t keycode, keyrecord_t* record, uint16_t CAPS_SENTENCE) {
+#ifndef NO_ACTION_ONESHOT
+  const uint8_t mods = get_mods() | get_oneshot_mods();
+#else
+  const uint8_t mods = get_mods();
+#endif  // NO_ACTION_ONESHOT
+
+  if (!caps_sentence_active) {
+    if (keycode == CAPS_SENTENCE) {
+      caps_sentence_set(true);  // Activate Caps Word.
       return false;
     }
     return true;
+  } else {
+#if CAPS_SENTENCE_IDLE_TIMEOUT > 0
+    idle_timer = record->event.time + CAPS_SENTENCE_IDLE_TIMEOUT;
+#endif  // CAPS_SENTENCE_IDLE_TIMEOUT > 0
   }
 
   if (!record->event.pressed) { return true; }
-  if (keycode == CAPS_SENTENCE) { return false; }
 
-  switch (keycode) {
-    // don't strip out shift press
-    // case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-    // do strip out layer press
-    case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
-      // Earlier return if this has not been considered tapped yet.
-      if (record->tap.count == 0) { return true; }
-      // Get the base tapping keycode of a mod- or layer-tap key.
-      keycode &= 0xff;
+  if (!(mods & ~MOD_MASK_SHIFT)) {
+    switch (keycode) {
+      // Ignore MO, TO, TG, TT, and OSL layer switch keys.
+      case QK_MOMENTARY ... QK_MOMENTARY_MAX:
+      case QK_TO ... QK_TO_MAX:
+      case QK_TOGGLE_LAYER ... QK_TOGGLE_LAYER_MAX:
+      case QK_LAYER_TAP_TOGGLE ... QK_LAYER_TAP_TOGGLE_MAX:
+      case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
+        return true;
+
+#ifndef NO_ACTION_TAPPING
+      case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+        if (record->tap.count == 0) {
+          // Deactivate if a mod becomes active through holding a mod-tap key.
+          caps_sentence_set(false);
+          return true;
+        }
+        keycode &= 0xff;
+        break;
+
+#ifndef NO_ACTION_LAYER
+      case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+#endif  // NO_ACTION_LAYER
+        if (record->tap.count == 0) { return true; }
+        keycode &= 0xff;
+        break;
+#endif  // NO_ACTION_TAPPING
+
+#ifdef SWAP_HANDS_ENABLE
+      case QK_SWAP_HANDS ... QK_SWAP_HANDS_MAX:
+        if (keycode > 0x56F0 || record->tap.count == 0) { return true; }
+        keycode &= 0xff;
+        break;
+#endif  // SWAP_HANDS_ENABLE
+    }
+
+    if (caps_sentence_press_user(keycode)) {
+      return true;
+    }
   }
 
+  caps_sentence_set(false);  // Deactivate Caps Word.
+  return true;
+}
+
+void caps_sentence_set(bool active) {
+  if (active != caps_sentence_active) {
+    if (active) {
+      clear_mods();
+#ifndef NO_ACTION_ONESHOT
+      clear_oneshot_mods();
+#endif  // NO_ACTION_ONESHOT
+#if CAPS_SENTENCE_IDLE_TIMEOUT > 0
+      idle_timer = timer_read() + CAPS_SENTENCE_IDLE_TIMEOUT;
+#endif  // CAPS_SENTENCE_IDLE_TIMEOUT > 0
+    } else if ((get_weak_mods() & MOD_BIT(KC_RSFT)) != 0) {
+      // If the weak shift mod is still on, turn it off and send an update to
+      // the host computer.
+      del_weak_mods(MOD_BIT(KC_RSFT));
+      send_keyboard_report();
+    }
+
+    caps_sentence_active = active;
+    caps_sentence_set_user(active);
+  }
+}
+
+bool caps_sentence_get(void) { return caps_sentence_active; }
+
+__attribute__((weak)) void caps_sentence_set_user(bool active) {}
+
+__attribute__((weak)) bool caps_sentence_press_user(uint16_t keycode) {
   switch (keycode) {
-    case KC_LSFT:
-    case KC_RSFT:
+    // Keycodes that continue Caps Word, with shift applied.
+    case KC_A ... KC_Z:
+      register_weak_mods(MOD_BIT(KC_RSFT));  // Apply shift to the next key.
       return true;
 
-    // case label must be integer constant, see above
-    // case CAPS_SENTENCE:
-    //   return false;
-
-    // Letter keys should be shifted.
-    case KC_A ... KC_Z:
-      tap_code16(LSFT(keycode));
-      return false;
-
-    // Keycodes that continue caps sentence but shouldn't get shifted.
+    // Keycodes that continue Caps Word, without shifting.
     case KC_1 ... KC_0:
     case KC_BSPACE:
     case KC_MINUS:
     case KC_UNDERSCORE:
+    //  Additional keycodes
     case KC_QUOTE:
+    // caps sentence specific
     // opening braces
     case KC_LEFT_PAREN:
     case KC_LBRACKET:
     case KC_LEFT_CURLY_BRACE:
     case KC_LEFT_ANGLE_BRACKET:
-    // caps sentence specific
+    // punctuation
     case KC_SPACE:
     case KC_COMMA:
       return true;
 
-    // Just cancel caps sentence and don't send keycode.
-    //   case KC_ESC:
-    //     cancel_caps_sentence();
-    //     return false;
-
-    // Any other keycode disables caps sentence.
+    default:
+      return false;  // Deactivate Caps Word.
   }
-
-  cancel_caps_sentence();
-  return true;
 }

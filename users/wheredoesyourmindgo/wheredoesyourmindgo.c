@@ -181,10 +181,16 @@ uint8_t NUM_CUSTOM_GUI_KEYS =
 
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_custom_gui_keys(keycode, record)) { return false; }
-    if (!process_custom_shift_keys(keycode, record)) { return false; }
-    if (!process_caps_word(keycode, record)) { return false; }
-    if (!process_caps_sentence(keycode, record, CAPS_SENTENCE)) { return false; }
+    // only activate on base layer
+    if (IS_LAYER_ON(BASE)) {
+        if (!process_caps_word(keycode, record)) { return false; }
+        if (!process_caps_sentence(keycode, record, CAPS_SENTENCE)) { return false; }
+    }
+    // don't activate on qwerty layer
+    if (!IS_LAYER_ON(QWRTY)) {
+        if (!process_custom_gui_keys(keycode, record)) { return false; }
+        if (!process_custom_shift_keys(keycode, record)) { return false; }
+    }
     if (!process_magic_shift(keycode, record)) { return false; }
     if (!process_cmd_tab_switcher(keycode, record)) { return false; }
     if (!process_oneshot_mods(keycode, record)) { return false; }

@@ -8,6 +8,7 @@
 #include "features/cmd_tab_switcher.h"
 #include "features/symbol_rolls.h"
 #include "features/lyr_on_dual.h"
+#include "features/layer_lock.h"
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -68,6 +69,13 @@ void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
+
+void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
+    if (IS_LAYER_ON(LOWEST)) {
+        layer_off(LOWEST);
+    }
+}
+
 void pemdas_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
         case 1:
@@ -84,14 +92,6 @@ void pemdas_finished(qk_tap_dance_state_t *state, void *user_data) {
         case 6:
             tap_code(KC_MINUS);
             break;
-    }
-}
-
-
-
-void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (IS_LAYER_ON(LOWEST)) {
-        layer_off(LOWEST);
     }
 }
 
@@ -255,6 +255,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (!process_custom_gui_keys(keycode, record)) { return false; }
         if (!process_custom_shift_keys(keycode, record)) { return false; }
     }
+    if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
     if (!process_magic_shift(keycode, record)) { return false; }
     if (!process_cmd_tab_switcher(keycode, record)) { return false; }
     if (!process_oneshot_mods(keycode, record)) { return false; }

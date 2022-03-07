@@ -47,7 +47,7 @@
 #include QMK_KEYBOARD_H
 
 // Call this function from `process_record_user()` to implement Caps Word.
-bool process_caps_sentence(uint16_t keycode, keyrecord_t* record);
+bool process_caps_sentence(uint16_t keycode, keyrecord_t* record, uint16_t CAPS_SENTENCE);
 
 // If CAPS_SENTENCE_IDLE_TIMEOUT is set, call `caps_sentence_task()` from
 // `matrix_scan_user()` as described above.

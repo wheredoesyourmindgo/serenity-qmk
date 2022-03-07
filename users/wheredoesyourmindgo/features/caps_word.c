@@ -1,4 +1,4 @@
-/// Copyright 2021-2022 Google LLC
+// Copyright 2021-2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -96,8 +96,8 @@ bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
 
     clear_weak_mods();
     if (caps_word_press_user(keycode)) {
-        send_keyboard_report();
-        return true;
+      send_keyboard_report();
+      return true;
     }
   }
 
@@ -116,8 +116,8 @@ void caps_word_set(bool active) {
       idle_timer = timer_read() + CAPS_WORD_IDLE_TIMEOUT;
 #endif  // CAPS_WORD_IDLE_TIMEOUT > 0
     } else {
-       // Make sure weak shift is off.
-       unregister_weak_mods(MOD_BIT(KC_LSFT));
+      // Make sure weak shift is off.
+      unregister_weak_mods(MOD_BIT(KC_LSFT));
     }
 
     caps_word_active = active;
@@ -131,11 +131,6 @@ __attribute__((weak)) void caps_word_set_user(bool active) {}
 
 __attribute__((weak)) bool caps_word_press_user(uint16_t keycode) {
   switch (keycode) {
-    // ignore shift presses (ie. double quote)
-    case KC_LSFT:
-    case KC_RSFT:
-      return true;
-
     // Keycodes that continue Caps Word, with shift applied.
     case KC_A ... KC_Z:
       add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to the next key.
@@ -146,8 +141,6 @@ __attribute__((weak)) bool caps_word_press_user(uint16_t keycode) {
     case KC_BSPC:
     case KC_MINS:
     case KC_UNDS:
-    //  Additional keycodes
-    case KC_QUOT:
       return true;
 
     default:

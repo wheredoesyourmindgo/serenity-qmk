@@ -179,6 +179,70 @@ const custom_gui_key_t custom_gui_keys[] = {
 uint8_t NUM_CUSTOM_GUI_KEYS =
     sizeof(custom_gui_keys) / sizeof(custom_gui_key_t);
 
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // ignore shift presses (ie. double quote)
+        case KC_LSFT:
+        case KC_RSFT:
+            return true;
+
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to the next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_MINS:
+        case KC_UNDS:
+        //  Additional keycodes
+        case KC_QUOT:
+            return true;
+
+        default:
+            return false;  // Deactivate Caps Word.
+    }
+}
+bool caps_sentence_press_user(uint16_t keycode) {
+    switch (keycode) {
+          // ignore shift presses (ie. double quote)
+        case KC_LSFT:
+        case KC_RSFT:
+            return true;
+
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+            add_weak_mods(MOD_BIT(KC_RSFT));  // Apply shift to the next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPACE:
+        case KC_MINUS:
+        case KC_UNDERSCORE:
+        //  Additional keycodes
+        case KC_QUOTE:
+        // case KC_DOUBLE_QUOTE:
+        case KC_GRAVE:
+        // caps sentence specific
+        // opening braces
+        case KC_LEFT_PAREN:
+        case KC_LBRACKET:
+        case KC_LEFT_CURLY_BRACE:
+        case KC_LEFT_ANGLE_BRACKET:
+        // punctuation
+        case KC_SPACE:
+        case KC_COMMA:
+            return true;
+
+        default:
+            return false;  // Deactivate Caps Word.
+    }
+}
+
+
+
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // only activate on base and qwerty layers

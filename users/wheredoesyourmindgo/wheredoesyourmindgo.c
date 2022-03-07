@@ -71,7 +71,7 @@ void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 
 void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (IS_LAYER_ON(LOWEST)) {
+    if (IS_LAYER_ON(LOWEST) && !is_layer_locked(LOWEST)) {
         layer_off(LOWEST);
     }
 }

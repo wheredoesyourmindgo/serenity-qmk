@@ -93,8 +93,10 @@ bool process_caps_sentence(uint16_t keycode, keyrecord_t* record, uint16_t CAPS_
 #endif  // SWAP_HANDS_ENABLE
     }
 
+    clear_weak_mods();
     if (caps_sentence_press_user(keycode)) {
-      return true;
+        send_keyboard_report();
+        return true;
     }
   }
 
@@ -112,11 +114,9 @@ void caps_sentence_set(bool active) {
 #if CAPS_SENTENCE_IDLE_TIMEOUT > 0
       idle_timer = timer_read() + CAPS_SENTENCE_IDLE_TIMEOUT;
 #endif  // CAPS_SENTENCE_IDLE_TIMEOUT > 0
-    } else if ((get_weak_mods() & MOD_BIT(KC_RSFT)) != 0) {
-      // If the weak shift mod is still on, turn it off and send an update to
-      // the host computer.
-      del_weak_mods(MOD_BIT(KC_RSFT));
-      send_keyboard_report();
+     } else {
+       // Make sure weak shift is off.
+       unregister_weak_mods(MOD_BIT(KC_RSFT));
     }
 
     caps_sentence_active = active;
@@ -138,7 +138,7 @@ __attribute__((weak)) bool caps_sentence_press_user(uint16_t keycode) {
 
     // Keycodes that continue Caps Word, with shift applied.
     case KC_A ... KC_Z:
-      register_weak_mods(MOD_BIT(KC_RSFT));  // Apply shift to the next key.
+      add_weak_mods(MOD_BIT(KC_RSFT));  // Apply shift to the next key.
       return true;
 
     // Keycodes that continue Caps Word, without shifting.
@@ -159,15 +159,9 @@ __attribute__((weak)) bool caps_sentence_press_user(uint16_t keycode) {
     // punctuation
     case KC_SPACE:
     case KC_COMMA:
-    // I need this
-      del_weak_mods(MOD_BIT(KC_RSFT));
-      send_keyboard_report();
       return true;
 
     default:
-      // I need this
-      del_weak_mods(MOD_BIT(KC_RSFT));
-      send_keyboard_report();
       return false;  // Deactivate Caps Word.
   }
 }

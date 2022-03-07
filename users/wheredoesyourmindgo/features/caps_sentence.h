@@ -47,14 +47,14 @@
 #include QMK_KEYBOARD_H
 
 // Call this function from `process_record_user()` to implement Caps Word.
-bool process_caps_sentence(uint16_t keycode, keyrecord_t* record, uint16_t CAPS_SENTENCE);
+bool process_caps_sentence(uint16_t keycode, keyrecord_t* record);
 
-// If CAPS_WORD_IDLE_TIMEOUT is set, call `caps_sentence_task()` from
+// If CAPS_SENTENCE_IDLE_TIMEOUT is set, call `caps_sentence_task()` from
 // `matrix_scan_user()` as described above.
 //
-// If CAPS_WORD_IDLE_TIMEOUT isn't set, calling this function has no effect (but
+// If CAPS_SENTENCE_IDLE_TIMEOUT isn't set, calling this function has no effect (but
 // will still compile).
-#if CAPS_WORD_IDLE_TIMEOUT > 0
+#if CAPS_SENTENCE_IDLE_TIMEOUT > 0
 void caps_sentence_task(void);
 #else
 static inline void caps_sentence_task(void) {}
@@ -94,16 +94,16 @@ void caps_sentence_set_user(bool active);
 
 // An optional callback which is called on every key press while Caps Word is
 // active. When the key should be shifted (that is, a letter key), the callback
-// should call `register_weak_mods(MOD_BIT(KC_LSFT))` to shift the key. The
-// callback also determines whether the key should continue Caps Word. Returning
-// true continues the current "sentence", while returning false is "sentence breaking"
-// and deactivates Caps Word. The default callback is
+// should call `add_weak_mods(MOD_BIT(KC_LSFT))` to shift the key. The callback
+// also determines whether the key should continue Caps Word. Returning true
+// continues the current "sentence", while returning false is "sentence breaking" and
+// deactivates Caps Word. The default callback is
 //
 //   bool caps_sentence_press_user(uint16_t keycode) {
 //     switch (keycode) {
 //       // Keycodes that continue Caps Word, with shift applied.
 //       case KC_A ... KC_Z:
-//         register_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+//         add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to the next key.
 //         return true;
 //
 //       // Keycodes that continue Caps Word, without shifting.
@@ -124,3 +124,4 @@ void caps_sentence_set_user(bool active);
 // NOTE: Outside of this callback, you can use `caps_sentence_set(false)` to
 // deactivate Caps Word.
 bool caps_sentence_press_user(uint16_t keycode);
+

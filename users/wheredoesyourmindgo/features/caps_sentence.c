@@ -130,6 +130,12 @@ __attribute__((weak)) void caps_sentence_set_user(bool active) {}
 
 __attribute__((weak)) bool caps_sentence_press_user(uint16_t keycode) {
   switch (keycode) {
+    // ignore shift presses (ie. double quote)
+    case KC_LSFT:
+    case KC_RSFT:
+      return true;
+
+
     // Keycodes that continue Caps Word, with shift applied.
     case KC_A ... KC_Z:
       register_weak_mods(MOD_BIT(KC_RSFT));  // Apply shift to the next key.
@@ -142,6 +148,8 @@ __attribute__((weak)) bool caps_sentence_press_user(uint16_t keycode) {
     case KC_UNDERSCORE:
     //  Additional keycodes
     case KC_QUOTE:
+    // case KC_DOUBLE_QUOTE:
+    case KC_GRAVE:
     // caps sentence specific
     // opening braces
     case KC_LEFT_PAREN:
@@ -151,9 +159,15 @@ __attribute__((weak)) bool caps_sentence_press_user(uint16_t keycode) {
     // punctuation
     case KC_SPACE:
     case KC_COMMA:
+    // I need this
+      del_weak_mods(MOD_BIT(KC_RSFT));
+      send_keyboard_report();
       return true;
 
     default:
+      // I need this
+      del_weak_mods(MOD_BIT(KC_RSFT));
+      send_keyboard_report();
       return false;  // Deactivate Caps Word.
   }
 }

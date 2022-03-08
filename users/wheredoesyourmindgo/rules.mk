@@ -87,9 +87,9 @@ endif
 
 ifeq ($(strip $(KEYBOARD)), vitamins_included/rev2)
 	OPT_DEFS += -DVITAMINS_INCLUDED_KEYBOARD
-# KEY_LOCK_ENABLE = no
+	KEY_LOCK_ENABLE = no
 	AUDIO_ENABLE = no
-	NKRO_ENABLE = no
+# NKRO_ENABLE = no
 	SRC += layout_4x12.c
 endif
 
@@ -99,5 +99,9 @@ endif
 
 ifeq ($(strip $(QWERTY_BASE)), yes)
   OPT_DEFS += -DQWERTY_BASE
+endif
+
+ifeq ($(strip $(LOWER_LEFT_ENCODER)), yes)
+  OPT_DEFS += -DLOWER_LEFT_ENCODER
 endif
 

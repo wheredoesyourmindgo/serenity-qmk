@@ -504,16 +504,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     if (!encoder_update_keymap(index, clockwise)) { return false; }
 	if(index == 0) {
 		if (clockwise) {
-            if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
-                tap_code16_no_mod(DISP_DIM);
-            } else if (MODS_CTRL) {
-                tap_code16_no_mod(ZOOM_OUT);
-            } else if (MODS_ALT) {
-                tap_code16_no_mod(ZOOM_OUT_APP);
-            } else {
-                tap_code16(KC_VOLD);
-            }
-		} else {
             if (IS_LAYER_ON(HIGHER) ||  MODS_GUI) {
                 tap_code16_no_mod(DISP_BRI);
             } else if (MODS_CTRL) {
@@ -522,6 +512,16 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 tap_code16_no_mod(ZOOM_IN_APP);
             } else {
                 tap_code16(KC_VOLU);
+            }
+		} else {
+            if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
+                tap_code16_no_mod(DISP_DIM);
+            } else if (MODS_CTRL) {
+                tap_code16_no_mod(ZOOM_OUT);
+            } else if (MODS_ALT) {
+                tap_code16_no_mod(ZOOM_OUT_APP);
+            } else {
+                tap_code16(KC_VOLD);
             }
 		}
     }
@@ -546,7 +546,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// Allow Permissive Hold per key
+// Allow Permissive Hold per key (quickly use a layer hold)
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(LOWER, KC_ESC):
@@ -594,12 +594,13 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // Allow per key spamming for arrow keys (return false, default behaviour)
+        // Allow per key spamming for arrow keys (return false, default behaviour) and grave/tilde
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
         case LT(HIGHEST, KC_RIGHT):
         case LT(HIGHEST, KC_SLSH):
+        case LT(LOWEST, KC_GRAVE):
             return false;
         // Force hold by default
         default:

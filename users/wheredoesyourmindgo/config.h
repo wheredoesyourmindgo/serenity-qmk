@@ -9,17 +9,6 @@
 #define MOUSEKEY_DELAY 0
 #undef MOUSEKEY_INTERVAL
 #define MOUSEKEY_INTERVAL 16
-#if defined SIGNUM_KEYBOARD
-#undef MOUSEKEY_MOVE_DELTA
-#define MOUSEKEY_MOVE_DELTA 5
-#elif defined BOARDWALK_KEYBOARD
-// #define MOUSEKEY_INTERVAL       12
-/* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed, defaults to 5 for Boardwalk */
-//  #undef DEBOUNCE
-//  #define DEBOUNCE 10
-#else
-// #define MOUSEKEY_INTERVAL       16
-#endif
 #undef MOUSEKEY_WHEEL_DELAY
 #define MOUSEKEY_WHEEL_DELAY 0
 #undef MOUSEKEY_MAX_SPEED
@@ -40,3 +29,20 @@
 
 // #define LEADER_PER_KEY_TIMING
 // #define LEADER_TIMEOUT 250
+
+// Keyboard specific
+#if defined SIGNUM_KEYBOARD
+#undef MOUSEKEY_MOVE_DELTA
+#define MOUSEKEY_MOVE_DELTA 5
+#elif defined BOARDWALK_KEYBOARD
+// #define MOUSEKEY_INTERVAL       12
+/* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed, defaults to 5 for Boardwalk */
+//  #undef DEBOUNCE
+//  #define DEBOUNCE 10
+#elif defined PLANCK_KEYBOARD
+    #if ENCODER_ENABLE
+    #define ENCODER_RESOLUTION 2
+    #endif
+#elif defined RISTRETTO_KEYBOARD
+#define ENCODER_DIRECTION_FLIP
+#endif

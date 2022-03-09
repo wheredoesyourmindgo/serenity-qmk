@@ -430,36 +430,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case JIGGLE_MOUSE:
+        case SHAKE_MOUSE:
             if (record->event.pressed) {
-                tap_code16(KC_MS_ACCEL2);
+                register_code16(KC_MS_ACCEL1);
                 int u;
                 int i;
-                for (i = 1; i <= 10; ++i) {
+                int distance = 4;
+                for (i = 1; i <= distance; ++i) {
                     tap_code(KC_MS_LEFT);
                 }
-                for (u = 1; u <= 10; ++u) {
-                    for (i = 1; i <= 10; ++i) {
+                for (u = 1; u <= 6; ++u) {
+                    for (i = 1; i <= distance; ++i) {
                         tap_code(KC_MS_RIGHT);
                         tap_code(KC_MS_UP);
                     }
-                    for (i = 1; i <= 10; ++i) {
+                    for (i = 1; i <= distance; ++i) {
                         tap_code(KC_MS_RIGHT);
                         tap_code(KC_MS_DOWN);
                     }
-                    for (i = 1; i <= 10; ++i) {
+                    for (i = 1; i <= distance; ++i) {
                         tap_code(KC_MS_LEFT);
                         tap_code(KC_MS_DOWN);
                     }
-                    for (i = 1; i <= 10; ++i) {
+                    for (i = 1; i <= distance; ++i) {
                         tap_code(KC_MS_LEFT);
                         tap_code(KC_MS_UP);
                     }
                 }
-                for (i = 1; i <= 10; ++i) {
+                for (i = 1; i <= distance; ++i) {
                     tap_code(KC_MS_RIGHT);
                 }
-                tap_code16(KC_MS_ACCEL0);
+                unregister_code16(KC_MS_ACCEL1);
             }
             break;
     }

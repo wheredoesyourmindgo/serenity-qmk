@@ -191,7 +191,8 @@ enum {
     TD_TGL_SEL,  // Toggle Select (similar to double, triple, and quadruple mouse click)
     TD_MULTI_MAX,
     TD_MULTI_RSTR,
-    TD_OOPSY,
+    // TD_OOPSY,
+    TD_OOPS,
     TD_PEMDAS,
     TD_F6_F16,
     TD_F7_F17,

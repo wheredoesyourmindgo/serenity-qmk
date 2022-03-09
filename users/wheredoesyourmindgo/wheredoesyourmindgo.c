@@ -47,32 +47,63 @@ void tap_code_no_mod(uint8_t code) {
     register_mods(mod_state);
 }
 
-void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (!state->pressed && !state->interrupted && state->count == 1) {
-        // KC_MUTE will toggle, instead, lower volume
-        int i;
-        for (i = 1; i <= 20; ++i) {
-            // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
-            tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
-        }
-    } else if (!state->pressed && !state->interrupted && state->count >= 2) {
-        // hide window first, then mute
-        tap_code16(LGUI(KC_H));  // Hide Active Window
-        // KC_MUTE will toggle, instead, lower volume
-        int i;
-        for (i = 1; i <= 20; ++i) {
-            // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
-            tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
-        }
-    } else {
-        layer_on(LOWEST);
-    }
-}
+// void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
+//     if (!state->pressed && !state->interrupted && state->count == 1) {
+//         // KC_MUTE will toggle, instead, lower volume
+//         int i;
+//         for (i = 1; i <= 20; ++i) {
+//             // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
+//             tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
+//         }
+//     } else if (!state->pressed && !state->interrupted && state->count >= 2) {
+//         // hide window first, then mute
+//         tap_code16(LGUI(KC_H));  // Hide Active Window
+//         // KC_MUTE will toggle, instead, lower volume
+//         int i;
+//         for (i = 1; i <= 20; ++i) {
+//             // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
+//             tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
+//         }
+//     } else {
+//         layer_on(LOWEST);
+//     }
+// }
 
 
-void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
-    if (IS_LAYER_ON(LOWEST) && !is_layer_locked(LOWEST)) {
-        layer_off(LOWEST);
+// void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
+//     if (IS_LAYER_ON(LOWEST) && !is_layer_locked(LOWEST)) {
+//         layer_off(LOWEST);
+//     }
+// }
+
+void oops_each(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
+            tap_code16_no_mod(OS_DRKMD_TGL);
+        } else if (MODS_CTRL) {
+            tap_code16_no_mod(ZOOM_RESET);
+        } else if (MODS_ALT) {
+            tap_code16_no_mod(ZOOM_RESET_APP);
+        } else {
+            tap_code(KC_MUTE);
+        }
+    } else if (state->count == 2) {
+        if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
+            // nothing
+        } else if (MODS_CTRL) {
+            // nothing
+        } else if (MODS_ALT) {
+            // nothing
+        } else {
+            // hide window first, then mute
+            tap_code16(LGUI(KC_H));  // Hide Active Window
+            // KC_MUTE will toggle, instead, lower volume
+            int i;
+            for (i = 1; i <= 20; ++i) {
+                // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
+                tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
+            }
+        }
     }
 }
 
@@ -144,8 +175,9 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
     [TD_MULTI_MAX] = ACTION_TAP_DANCE_FN_ADVANCED(multi_max_each, NULL, NULL),
     [TD_MULTI_RSTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_rst_each, NULL, NULL),
-    [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
-    [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL)
+    // [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
+    [TD_OOPS] = ACTION_TAP_DANCE_FN_ADVANCED(oops_each, NULL, NULL),
+    [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL),
 };
 // end of Tap Dance config
 
@@ -568,11 +600,12 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TD(TD_TGL_SEL):
-        case TD(TD_OOPSY):
+        // case TD(TD_OOPSY):
             return 225;
         case TD(TD_MULTI_MAX):
         case TD(TD_MULTI_RSTR):
         case TD(TD_PEMDAS):
+        case TD(TD_OOPS):
             return 300;
         default:
             return TAPPING_TERM;
@@ -634,6 +667,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case LT(HIGHEST, KC_RIGHT):
         case LT(HIGHEST, KC_SLSH):
         case LT(LOWEST, KC_GRAVE):
+        case LT(LOWEST, KC_MINS):
             return false;
         // Force hold by default
         default:

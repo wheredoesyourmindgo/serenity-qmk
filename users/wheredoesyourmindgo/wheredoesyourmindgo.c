@@ -24,13 +24,19 @@ void tap_code16_no_mod(uint16_t code) {
     uint8_t mod_state;
     // Store the current modifier state in the variable for later reference
     mod_state = get_mods();
-    // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
-    // del_mods(mod_state);
-    unregister_mods(mod_state);
-    tap_code16(code);
-    // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
-    // set_mods(mod_state);
-    register_mods(mod_state);
+    if (mod_state) {
+        // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
+        // unregister_mods(mod_state);
+        // del_weak_mods(mod_state);
+        del_mods(mod_state);
+        send_keyboard_report();
+        tap_code16(code);
+        // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
+        // set_mods(mod_state);
+        register_mods(mod_state);
+    } else {
+        tap_code16(code);
+    }
 }
 
 void tap_code_no_mod(uint8_t code) {
@@ -38,13 +44,19 @@ void tap_code_no_mod(uint8_t code) {
     uint8_t mod_state;
     // Store the current modifier state in the variable for later reference
     mod_state = get_mods();
-    // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
-    // del_mods(mod_state);
-    unregister_mods(mod_state);
-    tap_code(code);
-    // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
-    // set_mods(mod_state);
-    register_mods(mod_state);
+    if (mod_state) {
+        // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
+        // unregister_mods(mod_state);
+        // del_weak_mods(mod_state);
+        del_mods(mod_state);
+        send_keyboard_report();
+        tap_code(code);
+        // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
+        // set_mods(mod_state);
+        register_mods(mod_state);
+    } else {
+        tap_code(code);
+    }
 }
 
 // void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -78,8 +90,15 @@ void tap_code_no_mod(uint8_t code) {
 
 void oops_each(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
+        if (MODS_SFT) {
             tap_code16_no_mod(OS_DRKMD_TGL);
+        } else if (MODS_GUI) {
+            // hide works well during command-tab switching (hide & un-hide) and independently (hide)
+            if (is_cmd_tab_active) {
+                cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
+                cmd_tab_timer = timer_read();
+            }
+            tap_code(KC_H);
         } else if (MODS_CTRL) {
             tap_code16_no_mod(ZOOM_RESET);
         } else if (MODS_ALT) {
@@ -88,7 +107,9 @@ void oops_each(qk_tap_dance_state_t *state, void *user_data) {
             tap_code(KC_MUTE);
         }
     } else if (state->count == 2) {
-        if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
+        if (MODS_SFT) {
+            // nothing
+        } else if (MODS_GUI) {
             // nothing
         } else if (MODS_CTRL) {
             // nothing
@@ -569,22 +590,42 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     if (!encoder_update_keymap(index, clockwise)) { return false; }
 	if(index == 0) {
 		if (clockwise) {
-            if (IS_LAYER_ON(HIGHER) ||  MODS_GUI) {
+            if (MODS_GUI) {
+                tap_code16(LGUI(KC_TAB));
+            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH))) {
                 tap_code16_no_mod(DISP_BRI);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_IN);
             } else if (MODS_ALT) {
                 tap_code16_no_mod(ZOOM_IN_APP);
+            } else if (IS_LAYER_ON(HIGHER)) {
+                tap_code16(REDO);
+            } else if (IS_LAYER_ON(HIGH)) {
+                if (MODS_SFT) {
+                    tap_code_no_mod(KC_RIGHT);
+                } else {
+                    tap_code(KC_DOWN);
+                }
             } else {
                 tap_code16(KC_VOLU);
             }
 		} else {
-            if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
+            if (MODS_GUI) {
+                tap_code16(LGUI(LSFT(KC_TAB)));
+            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH))) {
                 tap_code16_no_mod(DISP_DIM);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_OUT);
             } else if (MODS_ALT) {
                 tap_code16_no_mod(ZOOM_OUT_APP);
+            } else if (IS_LAYER_ON(HIGHER)) {
+                tap_code16(UNDO);
+            } else if (IS_LAYER_ON(HIGH)) {
+                if (MODS_SFT) {
+                    tap_code_no_mod(KC_LEFT);
+                } else {
+                    tap_code(KC_UP);
+                }
             } else {
                 tap_code16(KC_VOLD);
             }

@@ -68,31 +68,10 @@ bool process_cmd_tab_switcher(uint16_t keycode, keyrecord_t* record) {
                 // unregister_code(KC_TAB);
             }
             break;
-        // case CMD_TAB_HIDE:
-        //     if (record->event.pressed) {
-        //         if (is_cmd_tab_active) {
-        //             cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-        //             cmd_tab_timer = timer_read();
-        //             tap_code(KC_H);
-        //             return false;
-        //         }
-        //     }
-        //     break;
         case OS_EXPOSE:
             if (record->event.pressed) {
                 if (is_cmd_tab_active) {
                     tap_code(KC_UP);
-                    return false;
-                }
-            }
-            break;
-        case OS_DOCK:
-            if (record->event.pressed) {
-                // Hide app during cmd+tab
-                if (is_cmd_tab_active) {
-                    cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-                    cmd_tab_timer = timer_read();
-                    tap_code(KC_H);
                     return false;
                 }
             }

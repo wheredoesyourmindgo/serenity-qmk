@@ -28,32 +28,7 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
         case XOSM_LSFT:
             if (record->event.pressed) {
                 register_mods(MOD_BIT(KC_LSFT));
-                if (ONESHOT_MODS_ACTIVE) {
-                    if (ONESHOT_MODS_LGUI && ONESHOT_MODS_LALT && ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LSFT | MOD_LGUI | MOD_LALT | MOD_LCTL));
-                    } else if (ONESHOT_MODS_LGUI && ONESHOT_MODS_LALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LSFT | MOD_LGUI | MOD_LALT));
-                    } else if (ONESHOT_MODS_LGUI && ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LSFT | MOD_LGUI | MOD_LCTL));
-                    } else if (ONESHOT_MODS_LALT && ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LSFT | MOD_LALT | MOD_LCTL));
-                    } else if (ONESHOT_MODS_LGUI) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LSFT | MOD_LGUI));
-                    } else if (ONESHOT_MODS_LALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LSFT | MOD_LALT));
-                    } else if (ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LSFT | MOD_LCTL));
-                    }
-                } else {
-                    set_oneshot_mods(MOD_LSFT);
-                }
+                add_oneshot_mods(MOD_BIT(KC_LSFT));
             } else {
                 unregister_mods(MOD_BIT(KC_LSFT));
             }
@@ -61,32 +36,7 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
         case XOSM_LGUI:
             if (record->event.pressed) {
                 register_mods(MOD_BIT(KC_LGUI));
-                if (ONESHOT_MODS_ACTIVE) {
-                    if (ONESHOT_MODS_LSFT && ONESHOT_MODS_LALT && ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LGUI | MOD_LSFT | MOD_LALT | MOD_LCTL));
-                    } else if (ONESHOT_MODS_LSFT && ONESHOT_MODS_LALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LGUI | MOD_LSFT | MOD_LALT));
-                    } else if (ONESHOT_MODS_LSFT && ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LGUI | MOD_LSFT | MOD_LCTL));
-                    } else if (ONESHOT_MODS_LALT && ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LGUI | MOD_LALT | MOD_LCTL));
-                    } else if (ONESHOT_MODS_LSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LGUI | MOD_LSFT));
-                    } else if (ONESHOT_MODS_LALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LGUI | MOD_LALT));
-                    } else if (ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LGUI | MOD_LCTL));
-                    }
-                } else {
-                    set_oneshot_mods(MOD_LGUI);
-                }
+                add_oneshot_mods(MOD_BIT(KC_LGUI));
             } else {
                 unregister_mods(MOD_BIT(KC_LGUI));
             }
@@ -94,32 +44,7 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
         case XOSM_LALT:
             if (record->event.pressed) {
                 register_mods(MOD_BIT(KC_LALT));
-                if (ONESHOT_MODS_ACTIVE) {
-                    if (ONESHOT_MODS_LGUI && ONESHOT_MODS_LSFT && ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LALT | MOD_LGUI | MOD_LSFT | MOD_LCTL));
-                    } else if (ONESHOT_MODS_LGUI && ONESHOT_MODS_LSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LALT | MOD_LGUI | MOD_LSFT));
-                    } else if (ONESHOT_MODS_LGUI && ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LALT | MOD_LGUI | MOD_LCTL));
-                    } else if (ONESHOT_MODS_LSFT && ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LALT | MOD_LSFT | MOD_LCTL));
-                    } else if (ONESHOT_MODS_LGUI) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LALT | MOD_LGUI));
-                    } else if (ONESHOT_MODS_LSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LALT | MOD_LSFT));
-                    } else if (ONESHOT_MODS_LCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LALT | MOD_LCTL));
-                    }
-                } else {
-                    set_oneshot_mods(MOD_LALT);
-                }
+                add_oneshot_mods(MOD_BIT(KC_LALT));
             } else {
                 unregister_mods(MOD_BIT(KC_LALT));
             }
@@ -127,32 +52,7 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
         case XOSM_LCTL:
             if (record->event.pressed) {
                 register_mods(MOD_BIT(KC_LCTL));
-                if (ONESHOT_MODS_ACTIVE) {
-                    if (ONESHOT_MODS_LGUI && ONESHOT_MODS_LALT && ONESHOT_MODS_LSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LCTL | MOD_LGUI | MOD_LALT | MOD_LSFT));
-                    } else if (ONESHOT_MODS_LGUI && ONESHOT_MODS_LALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LCTL | MOD_LGUI | MOD_LALT));
-                    } else if (ONESHOT_MODS_LGUI && ONESHOT_MODS_LSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LCTL | MOD_LGUI | MOD_LSFT));
-                    } else if (ONESHOT_MODS_LALT && ONESHOT_MODS_LSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LCTL | MOD_LALT | MOD_LSFT));
-                    } else if (ONESHOT_MODS_LGUI) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LCTL | MOD_LGUI));
-                    } else if (ONESHOT_MODS_LALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LCTL | MOD_LALT));
-                    } else if (ONESHOT_MODS_LSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_LCTL | MOD_LSFT));
-                    }
-                } else {
-                    set_oneshot_mods(MOD_LCTL);
-                }
+                add_oneshot_mods(MOD_BIT(KC_LCTL));
             } else {
                 unregister_mods(MOD_BIT(KC_LCTL));
             }
@@ -161,32 +61,7 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
         case XOSM_RSFT:
             if (record->event.pressed) {
                 register_mods(MOD_BIT(KC_RSFT));
-                if (ONESHOT_MODS_ACTIVE) {
-                    if (ONESHOT_MODS_RGUI && ONESHOT_MODS_RALT && ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RSFT | MOD_RGUI | MOD_RALT | MOD_RCTL));
-                    } else if (ONESHOT_MODS_RGUI && ONESHOT_MODS_RALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RSFT | MOD_RGUI | MOD_RALT));
-                    } else if (ONESHOT_MODS_RGUI && ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RSFT | MOD_RGUI | MOD_RCTL));
-                    } else if (ONESHOT_MODS_RALT && ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RSFT | MOD_RALT | MOD_RCTL));
-                    } else if (ONESHOT_MODS_RGUI) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RSFT | MOD_RGUI));
-                    } else if (ONESHOT_MODS_RALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RSFT | MOD_RALT));
-                    } else if (ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RSFT | MOD_RCTL));
-                    }
-                } else {
-                    set_oneshot_mods(MOD_RSFT);
-                }
+                add_oneshot_mods(MOD_BIT(KC_RSFT));
             } else {
                 unregister_mods(MOD_BIT(KC_RSFT));
             }
@@ -194,32 +69,7 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
         case XOSM_RGUI:
             if (record->event.pressed) {
                 register_mods(MOD_BIT(KC_RGUI));
-                if (ONESHOT_MODS_ACTIVE) {
-                    if (ONESHOT_MODS_RSFT && ONESHOT_MODS_RALT && ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RGUI | MOD_RSFT | MOD_RALT | MOD_RCTL));
-                    } else if (ONESHOT_MODS_RSFT && ONESHOT_MODS_RALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RGUI | MOD_RSFT | MOD_RALT));
-                    } else if (ONESHOT_MODS_RSFT && ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RGUI | MOD_RSFT | MOD_RCTL));
-                    } else if (ONESHOT_MODS_RALT && ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RGUI | MOD_RALT | MOD_RCTL));
-                    } else if (ONESHOT_MODS_RSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RGUI | MOD_RSFT));
-                    } else if (ONESHOT_MODS_RALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RGUI | MOD_RALT));
-                    } else if (ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RGUI | MOD_RCTL));
-                    }
-                } else {
-                    set_oneshot_mods(MOD_RGUI);
-                }
+                add_oneshot_mods(MOD_BIT(KC_RGUI));
             } else {
                 unregister_mods(MOD_BIT(KC_RGUI));
             }
@@ -227,32 +77,7 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
         case XOSM_RALT:
             if (record->event.pressed) {
                 register_mods(MOD_BIT(KC_RALT));
-                if (ONESHOT_MODS_ACTIVE) {
-                    if (ONESHOT_MODS_RGUI && ONESHOT_MODS_RSFT && ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RALT | MOD_RGUI | MOD_RSFT | MOD_RCTL));
-                    } else if (ONESHOT_MODS_RGUI && ONESHOT_MODS_RSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RALT | MOD_RGUI | MOD_RSFT));
-                    } else if (ONESHOT_MODS_RGUI && ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RALT | MOD_RGUI | MOD_RCTL));
-                    } else if (ONESHOT_MODS_RSFT && ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RALT | MOD_RSFT | MOD_RCTL));
-                    } else if (ONESHOT_MODS_RGUI) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RALT | MOD_RGUI));
-                    } else if (ONESHOT_MODS_RSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RALT | MOD_RSFT));
-                    } else if (ONESHOT_MODS_RCTL) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RALT | MOD_RCTL));
-                    }
-                } else {
-                    set_oneshot_mods(MOD_RALT);
-                }
+                add_oneshot_mods(MOD_BIT(KC_RALT));
             } else {
                 unregister_mods(MOD_BIT(KC_RALT));
             }
@@ -260,32 +85,7 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
         case XOSM_RCTL:
             if (record->event.pressed) {
                 register_mods(MOD_BIT(KC_RCTL));
-                if (ONESHOT_MODS_ACTIVE) {
-                    if (ONESHOT_MODS_RGUI && ONESHOT_MODS_RALT && ONESHOT_MODS_RSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RCTL | MOD_RGUI | MOD_RALT | MOD_RSFT));
-                    } else if (ONESHOT_MODS_RGUI && ONESHOT_MODS_RALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RCTL | MOD_RGUI | MOD_RALT));
-                    } else if (ONESHOT_MODS_RGUI && ONESHOT_MODS_RSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RCTL | MOD_RGUI | MOD_RSFT));
-                    } else if (ONESHOT_MODS_RALT && ONESHOT_MODS_RSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RCTL | MOD_RALT | MOD_RSFT));
-                    } else if (ONESHOT_MODS_RGUI) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RCTL | MOD_RGUI));
-                    } else if (ONESHOT_MODS_RALT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RCTL | MOD_RALT));
-                    } else if (ONESHOT_MODS_RSFT) {
-                        clear_oneshot_mods();
-                        set_oneshot_mods((MOD_RCTL | MOD_RSFT));
-                    }
-                } else {
-                    set_oneshot_mods(MOD_RCTL);
-                }
+                add_oneshot_mods(MOD_BIT(KC_RCTL));
             } else {
                 unregister_mods(MOD_BIT(KC_RCTL));
             }

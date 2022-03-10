@@ -22,18 +22,27 @@
 void tap_code16_no_mod(uint16_t code) {
     // Initialize variable holding the binary representation of active modifiers.
     uint8_t mod_state;
+    uint8_t w_mod_state;
     // Store the current modifier state in the variable for later reference
     mod_state = get_mods();
-    if (mod_state) {
+    w_mod_state = get_weak_mods();
+    clear_oneshot_mods();
+    if (mod_state || w_mod_state) {
         // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
         // unregister_mods(mod_state);
         // del_weak_mods(mod_state);
         del_mods(mod_state);
+        del_weak_mods(w_mod_state);
+        // del_oneshot_mods(oneshot_mod_state);
         send_keyboard_report();
         tap_code16(code);
         // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
         // set_mods(mod_state);
-        register_mods(mod_state);
+        // register_mods(mod_state);
+        add_mods(mod_state);
+        add_weak_mods(w_mod_state);
+        send_keyboard_report();
+        // set_oneshot_mods(oneshot_mod_state);
     } else {
         tap_code16(code);
     }
@@ -42,18 +51,27 @@ void tap_code16_no_mod(uint16_t code) {
 void tap_code_no_mod(uint8_t code) {
     // Initialize variable holding the binary representation of active modifiers.
     uint8_t mod_state;
+    uint8_t w_mod_state;
     // Store the current modifier state in the variable for later reference
     mod_state = get_mods();
-    if (mod_state) {
+    w_mod_state = get_weak_mods();
+    clear_oneshot_mods();
+    if (mod_state || w_mod_state) {
         // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
         // unregister_mods(mod_state);
         // del_weak_mods(mod_state);
         del_mods(mod_state);
+        del_weak_mods(w_mod_state);
+        // del_oneshot_mods(oneshot_mod_state);
         send_keyboard_report();
         tap_code(code);
         // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
         // set_mods(mod_state);
-        register_mods(mod_state);
+        // register_mods(mod_state);
+        add_mods(mod_state);
+        add_weak_mods(w_mod_state);
+        send_keyboard_report();
+        // set_oneshot_mods(oneshot_mod_state);
     } else {
         tap_code(code);
     }
@@ -90,7 +108,7 @@ void tap_code_no_mod(uint8_t code) {
 
 void oops_each(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        if (MODS_SFT) {
+        if (MODS_SFT && !(IS_LAYER_ON(HIGH))) {
             tap_code16_no_mod(OS_DRKMD_TGL);
         } else if (MODS_GUI) {
             // hide works well during command-tab switching (hide & un-hide) and independently (hide)
@@ -103,6 +121,14 @@ void oops_each(qk_tap_dance_state_t *state, void *user_data) {
             tap_code16_no_mod(ZOOM_RESET);
         } else if (MODS_ALT) {
             tap_code16_no_mod(ZOOM_RESET_APP);
+        } else if (IS_LAYER_ON(HIGHER)) {
+            tap_code16(LGUI(KC_S));
+        } else if (IS_LAYER_ON(HIGH)) {
+            if (MODS_SFT) {
+                tap_code_no_mod(KC_END);
+            } else {
+                tap_code(KC_HOME);
+            }
         } else {
             tap_code(KC_MUTE);
         }
@@ -114,6 +140,10 @@ void oops_each(qk_tap_dance_state_t *state, void *user_data) {
         } else if (MODS_CTRL) {
             // nothing
         } else if (MODS_ALT) {
+            // nothing
+        } else if (IS_LAYER_ON(HIGHER)) {
+            // nothing
+        } else if (IS_LAYER_ON(HIGH)) {
             // nothing
         } else {
             // hide window first, then mute

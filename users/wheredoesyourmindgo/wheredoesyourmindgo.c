@@ -23,26 +23,24 @@ void tap_code16_no_mod(uint16_t code) {
     // Initialize variable holding the binary representation of active modifiers.
     uint8_t mod_state;
     uint8_t w_mod_state;
+    uint8_t o_mod_state;
     // Store the current modifier state in the variable for later reference
     mod_state = get_mods();
     w_mod_state = get_weak_mods();
-    clear_oneshot_mods();
-    if (mod_state || w_mod_state) {
+    o_mod_state = get_oneshot_mods();
+    // clear_oneshot_mods();
+    if (mod_state || w_mod_state || o_mod_state) {
         // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
-        // unregister_mods(mod_state);
-        // del_weak_mods(mod_state);
         del_mods(mod_state);
         del_weak_mods(w_mod_state);
-        // del_oneshot_mods(oneshot_mod_state);
+        del_oneshot_mods(o_mod_state);
         send_keyboard_report();
         tap_code16(code);
         // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
-        // set_mods(mod_state);
-        // register_mods(mod_state);
         add_mods(mod_state);
         add_weak_mods(w_mod_state);
+        set_oneshot_mods(o_mod_state);
         send_keyboard_report();
-        // set_oneshot_mods(oneshot_mod_state);
     } else {
         tap_code16(code);
     }
@@ -52,26 +50,24 @@ void tap_code_no_mod(uint8_t code) {
     // Initialize variable holding the binary representation of active modifiers.
     uint8_t mod_state;
     uint8_t w_mod_state;
+    uint8_t o_mod_state;
     // Store the current modifier state in the variable for later reference
     mod_state = get_mods();
     w_mod_state = get_weak_mods();
-    clear_oneshot_mods();
-    if (mod_state || w_mod_state) {
+    o_mod_state = get_oneshot_mods();
+    // clear_oneshot_mods();
+    if (mod_state || w_mod_state || o_mod_state) {
         // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
-        // unregister_mods(mod_state);
-        // del_weak_mods(mod_state);
         del_mods(mod_state);
         del_weak_mods(w_mod_state);
-        // del_oneshot_mods(oneshot_mod_state);
+        del_oneshot_mods(o_mod_state);
         send_keyboard_report();
-        tap_code(code);
+        tap_code16(code);
         // Reapplying modifier state so that the held shift key(s) still work even after having sent the tap code.
-        // set_mods(mod_state);
-        // register_mods(mod_state);
         add_mods(mod_state);
         add_weak_mods(w_mod_state);
+        set_oneshot_mods(o_mod_state);
         send_keyboard_report();
-        // set_oneshot_mods(oneshot_mod_state);
     } else {
         tap_code(code);
     }

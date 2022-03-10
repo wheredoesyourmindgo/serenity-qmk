@@ -104,7 +104,7 @@ void tap_code_no_mod(uint8_t code) {
 
 void oops_each(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        if (MODS_SFT && !(IS_LAYER_ON(HIGH))) {
+        if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER))) {
             tap_code16_no_mod(OS_DRKMD_TGL);
         } else if (MODS_GUI) {
             // hide works well during command-tab switching (hide & un-hide) and independently (hide)
@@ -118,7 +118,11 @@ void oops_each(qk_tap_dance_state_t *state, void *user_data) {
         } else if (MODS_ALT) {
             tap_code16_no_mod(ZOOM_RESET_APP);
         } else if (IS_LAYER_ON(HIGHER)) {
-            tap_code16(LGUI(KC_S));
+            if (MODS_SFT) {
+                tap_code16_no_mod(LGUI(KC_S));
+            } else {
+                tap_code16(LGUI(KC_W));
+            }
         } else if (IS_LAYER_ON(HIGH)) {
             if (MODS_SFT) {
                 tap_code_no_mod(KC_END);
@@ -618,14 +622,18 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 		if (clockwise) {
             if (MODS_GUI) {
                 tap_code16(LGUI(KC_TAB));
-            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER))) {
                 tap_code16_no_mod(DISP_BRI);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_IN);
             } else if (MODS_ALT) {
                 tap_code16_no_mod(ZOOM_IN_APP);
             } else if (IS_LAYER_ON(HIGHER)) {
-                tap_code16(REDO);
+                if (MODS_SFT) {
+                    tap_code16_no_mod(REDO);
+                } else {
+                    tap_code16(OS_NXT_TAB);
+                }
             } else if (IS_LAYER_ON(HIGH)) {
                 if (MODS_SFT) {
                     tap_code_no_mod(KC_RIGHT);
@@ -638,14 +646,18 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 		} else {
             if (MODS_GUI) {
                 tap_code16(LGUI(LSFT(KC_TAB)));
-            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER))) {
                 tap_code16_no_mod(DISP_DIM);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_OUT);
             } else if (MODS_ALT) {
                 tap_code16_no_mod(ZOOM_OUT_APP);
             } else if (IS_LAYER_ON(HIGHER)) {
-                tap_code16(UNDO);
+                if (MODS_SFT) {
+                    tap_code16_no_mod(UNDO);
+                } else {
+                    tap_code16(OS_PRV_TAB);
+                }
             } else if (IS_LAYER_ON(HIGH)) {
                 if (MODS_SFT) {
                     tap_code_no_mod(KC_LEFT);

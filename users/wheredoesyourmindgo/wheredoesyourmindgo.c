@@ -108,10 +108,6 @@ void oops_each(qk_tap_dance_state_t *state, void *user_data) {
             tap_code16_no_mod(OS_DRKMD_TGL);
         } else if (MODS_GUI) {
             // hide works well during command-tab switching (hide & un-hide) and independently (hide)
-            if (is_cmd_tab_active) {
-                cmd_tab_timer_timeout = cmd_tab_timer_default_dur;
-                cmd_tab_timer = timer_read();
-            }
             tap_code(KC_H);
         } else if (MODS_CTRL) {
             tap_code16_no_mod(ZOOM_RESET);
@@ -136,7 +132,10 @@ void oops_each(qk_tap_dance_state_t *state, void *user_data) {
         if (MODS_SFT) {
             // nothing
         } else if (MODS_GUI) {
-            // nothing
+            // if native cmd tab is not open this will close the app behind the focused app which is wonky since the first app will get hidden, so only run if cmd+tab is open
+            if (is_cmd_tab_active) {
+                tap_code(KC_Q);
+            }
         } else if (MODS_CTRL) {
             // nothing
         } else if (MODS_ALT) {
@@ -475,20 +474,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
-        case ENC_BTN:
-            if (record->event.pressed) {
-                if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
-                    tap_code16_no_mod(OS_DRKMD_TGL);
-                } else if (MODS_CTRL) {
-                    tap_code16_no_mod(ZOOM_RESET);
-                } else if (MODS_ALT) {
-                    tap_code16_no_mod(ZOOM_RESET_APP);
-                } else {
-                    tap_code(KC_MUTE);
-                }
-                return false;
-            }
-            break;
         case OS_BSPC:
             if (record->event.pressed) {
                 register_code(KC_BACKSPACE);
@@ -621,7 +606,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 	if(index == 0) {
 		if (clockwise) {
             if (MODS_GUI) {
-                tap_code16(LGUI(KC_TAB));
+                // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
+                // tap_code16(LGUI(KC_TAB));
+                cmd_tab_next();
             } else if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER))) {
                 tap_code16_no_mod(DISP_BRI);
             } else if (MODS_CTRL) {
@@ -645,7 +632,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             }
 		} else {
             if (MODS_GUI) {
-                tap_code16(LGUI(LSFT(KC_TAB)));
+                // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
+                // tap_code16(LGUI(LSFT(KC_TAB)));
+                cmd_tab_previous();
             } else if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER))) {
                 tap_code16_no_mod(DISP_DIM);
             } else if (MODS_CTRL) {

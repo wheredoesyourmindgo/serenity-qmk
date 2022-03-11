@@ -101,7 +101,3 @@ ifeq ($(strip $(QWERTY_BASE)), yes)
   OPT_DEFS += -DQWERTY_BASE
 endif
 
-ifeq ($(strip $(LOWER_LEFT_ENCODER)), yes)
-  OPT_DEFS += -DLOWER_LEFT_ENCODER
-endif
-

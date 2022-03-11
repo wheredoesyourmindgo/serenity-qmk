@@ -125,6 +125,8 @@ void oops_each(qk_tap_dance_state_t *state, void *user_data) {
             } else {
                 tap_code(KC_HOME);
             }
+        } else if (IS_LAYER_ON(HIGHEST)) {
+            tap_code(KC_BTN1);
         } else {
             tap_code(KC_MUTE);
         }
@@ -143,6 +145,8 @@ void oops_each(qk_tap_dance_state_t *state, void *user_data) {
         } else if (IS_LAYER_ON(HIGHER)) {
             // nothing
         } else if (IS_LAYER_ON(HIGH)) {
+            // nothing
+        } else if (IS_LAYER_ON(HIGHEST)) {
             // nothing
         } else {
             // hide window first, then mute
@@ -609,7 +613,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
                 // tap_code16(LGUI(KC_TAB));
                 cmd_tab_next();
-            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER)) && !(IS_LAYER_ON(HIGHEST))) {
                 tap_code16_no_mod(DISP_BRI);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_IN);
@@ -627,6 +631,12 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 } else {
                     tap_code(KC_DOWN);
                 }
+            } else if (IS_LAYER_ON(HIGHEST)) {
+                if (MODS_SFT) {
+                    tap_code(KC_WH_L);
+                } else {
+                    tap_code(KC_WH_U);
+                }
             } else {
                 tap_code16(KC_VOLU);
             }
@@ -635,7 +645,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
                 // tap_code16(LGUI(LSFT(KC_TAB)));
                 cmd_tab_previous();
-            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER)) && !(IS_LAYER_ON(HIGHEST))) {
                 tap_code16_no_mod(DISP_DIM);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_OUT);
@@ -652,6 +662,12 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                     tap_code_no_mod(KC_LEFT);
                 } else {
                     tap_code(KC_UP);
+                }
+            } else if (IS_LAYER_ON(HIGHEST)) {
+                if (MODS_SFT) {
+                    tap_code(KC_WH_R);
+                } else {
+                    tap_code(KC_WH_D);
                 }
             } else {
                 tap_code16(KC_VOLD);

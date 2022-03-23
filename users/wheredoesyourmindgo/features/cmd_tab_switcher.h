@@ -5,7 +5,7 @@
 
 #include QMK_KEYBOARD_H
 
-#define cmd_tab_timer_default_dur 1000;
+#define cmd_tab_timer_default_dur 2000;
 #define cmd_tab_timer_fast_dur 600;
 
 #define MODS_RGUI (get_mods() & MOD_BIT(KC_RGUI))

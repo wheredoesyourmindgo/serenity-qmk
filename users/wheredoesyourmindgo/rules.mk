@@ -5,6 +5,7 @@ EXTRAKEY_ENABLE = yes 		# + Audio control and System control
 AUTO_SHIFT_ENABLE = no 		# - Auto Shift
 KEY_LOCK_ENABLE = yes 		# Key lock
 LTO_ENABLE = yes
+COMMAND_ENABLE = no			# - Command Mode
 # free up some space for ristretto
 SPACE_CADET_ENABLE = no
 GRAVE_ESC_ENABLE = no

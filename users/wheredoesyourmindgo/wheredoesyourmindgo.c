@@ -238,11 +238,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 // Custom Shift Keys
 const custom_shift_key_t custom_shift_keys[] = {
-  {KC_COMMA, KC_SEMICOLON}, // Shift . is
-  {KC_DOT, KC_COLON}, // Shift . is :
-  {KC_8, KC_LEFT_PAREN}, // Shift 8 is (
-  {KC_9, KC_RIGHT_PAREN}, // Shift 9 is )
-  {KC_0, KC_ASTERISK}, // Shift 0 is *
+//   {KC_COMMA, KC_SEMICOLON}, // Shift . is
+//   {KC_DOT, KC_COLON}, // Shift . is :
+//   {KC_8, KC_LEFT_PAREN}, // Shift 8 is (
+//   {KC_9, KC_RIGHT_PAREN}, // Shift 9 is )
+//   {KC_0, KC_ASTERISK}, // Shift 0 is *
   {KC_BACKSPACE, LALT(KC_BACKSPACE)}, // Shift Backspace is delete previous word
   {KC_DELETE, LALT(KC_DELETE)}, // Shift Delete is delete previous word
   {KC_F6, KC_F16}, // Shift F-* is +10 F-*

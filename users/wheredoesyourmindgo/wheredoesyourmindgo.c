@@ -744,14 +744,13 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // Allow per key spamming for arrow keys (return false, default behaviour) and grave/tilde
+        // Allow per key spamming for arrow keys (return false, default behaviour) and dash
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
         case LT(HIGHEST, KC_RIGHT):
-        case LT(HIGHEST, KC_SLSH):
-        case LT(LOWEST, KC_GRAVE):
-        case LT(LOWEST, KC_MINS):
+        case LT(HIGHEST, KC_SLASH):
+        case LT(LOWEST, KC_MINUS):
             return false;
         // Force hold by default
         default:

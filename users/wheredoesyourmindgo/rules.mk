@@ -56,6 +56,11 @@ ifeq ($(strip $(KEYBOARD)), foostan/cornelius)
 	SRC += layout_4x12.c
 endif
 
+ifeq ($(strip $(KEYBOARD)), checkerboards/quark)
+	OPT_DEFS += -DQUARK_KEYBOARD
+	SRC += layout_4x12.c
+endif
+
 # with usb startup disabled we won't be able to wake computer from sleep but we will be able to use key lock
 ifeq ($(strip $(KEYBOARD)), ristretto)
 	OPT_DEFS += -DRISTRETTO_KEYBOARD

@@ -335,9 +335,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (IS_LAYER_ON(BASE) || IS_LAYER_ON(QWRTY)) {
         if (!process_caps_word(keycode, record)) { return false; }
     }
-    if (IS_LAYER_ON(LOWER) || IS_LAYER_ON(HIGHER)) {
-        if (!process_caps_sentence(keycode, record, CAPS_SENTENCE)) { return false; }
-    }
+    if (!process_caps_sentence(keycode, record, CAPS_SENTENCE)) { return false; }
     // don't activate on qwerty layer
     if (!IS_LAYER_ON(QWRTY)) {
         if (!process_custom_gui_keys(keycode, record)) { return false; }

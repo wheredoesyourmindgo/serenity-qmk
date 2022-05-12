@@ -89,6 +89,9 @@ ifeq ($(strip $(KEYBOARD)), binepad/bn003)
 	MOUSEKEY_ENABLE = no
 	EXTRAKEY_ENABLE = no
 	KEY_LOCK_ENABLE = no
+    ifeq ($(strip $(BN003_USB_LEFT)), yes)
+    	OPT_DEFS += -DBN003_USB_LEFT
+	endif
 endif
 
 ifeq ($(strip $(KEYBOARD)), vitamins_included/rev2)
@@ -107,4 +110,6 @@ endif
 ifeq ($(strip $(QWERTY_BASE)), yes)
   OPT_DEFS += -DQWERTY_BASE
 endif
+
+
 

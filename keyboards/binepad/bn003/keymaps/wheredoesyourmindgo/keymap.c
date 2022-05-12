@@ -2,9 +2,15 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
+    #if defined BN003_USB_LEFT
+        KC_F24,
+        KC_F23,
+        KC_F22
+    #else
         KC_F22,
         KC_F23,
         KC_F24
+    #endif
     ),
     [1] = LAYOUT(
         KC_NO,

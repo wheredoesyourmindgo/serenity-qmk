@@ -584,12 +584,27 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     oneshot_mods_layer_state(state);
 
     switch (get_highest_layer(state)) {
-        // case BASE:
-        //     break;
-        default: //  for any other layers, or the default layer
-#ifdef KEY_LOCK_ENABLE
-            cancel_key_lock();
-#endif
+        case BASE:
+            #if defined EXECUTE_ON_HIGHEST
+                unregister_code(KC_EXEC);
+            #endif
+            #ifdef KEY_LOCK_ENABLE
+                 cancel_key_lock();
+            #endif
+            break;
+        case HIGHEST:
+            // don't unregister_code(KC_EXEC) on this layer
+            #ifdef KEY_LOCK_ENABLE
+                 cancel_key_lock();
+            #endif
+            break;
+        default: //  for any other layers
+            #if defined EXECUTE_ON_HIGHEST
+                unregister_code(KC_EXEC);
+            #endif
+            #ifdef KEY_LOCK_ENABLE
+                 cancel_key_lock();
+            #endif
             break;
     }
 

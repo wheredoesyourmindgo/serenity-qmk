@@ -765,7 +765,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case RCTL_T(KC_UP):
         case LT(HIGHEST, KC_RIGHT):
         case LT(HIGHEST, KC_SLASH):
-        case LT(LOWEST, KC_GRAVE):
+        case LT(LOWEST, KC_MINUS):
             return false;
         // Force hold by default
         default:

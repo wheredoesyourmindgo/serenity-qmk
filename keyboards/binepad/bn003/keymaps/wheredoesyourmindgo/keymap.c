@@ -1,4 +1,7 @@
 #include QMK_KEYBOARD_H
+/*
+0x4287 product_id conflicts with BNR1, so pid 0x4286 is specifed in info.json
+*/
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(

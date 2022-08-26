@@ -698,6 +698,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case LT(HIGH, KC_SPC):
+            return 400;
         case TD(TD_TGL_SEL):
         // case TD(TD_OOPSY):
             return 225;
@@ -714,14 +716,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key (quickly use a layer hold)
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOWER, KC_ESC):
-        case LT(LOW, KC_ENT):
+        case LT(LOWER, KC_ESC): // quickly use numbers
+        case LT(LOW, KC_ENT): // quickly use symbols
         // case LT(HIGHER, KC_TAB):
         // case LT(HIGH, KC_SPC):
-        case RGUI_T(KC_LEFT):
+        case RGUI_T(KC_LEFT): // quickly use modifiers
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
-        case LT(HIGHEST, KC_RIGHT):
+        case LT(HIGHEST, KC_RIGHT): // quickly use function keys
         case LT(HIGHEST, KC_SLSH):
             return true;
         default:
@@ -759,12 +761,13 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // Allow per key spamming for arrow keys (return false, default behaviour) and dash
+        // Allow per key spamming for arrow keys, space, and dash
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
         case LT(HIGHEST, KC_RIGHT):
-        case LT(HIGHEST, KC_SLASH):
+        // case LT(HIGHEST, KC_SLASH):
+        case LT(HIGH, KC_SPC):
         case LT(LOWEST, KC_MINUS):
             return false;
         // Force hold by default

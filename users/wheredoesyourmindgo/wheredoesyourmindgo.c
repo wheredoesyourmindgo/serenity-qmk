@@ -183,10 +183,12 @@ void doteql_finished(qk_tap_dance_state_t *state, void *user_data) {
             tap_code(KC_DOT);
             break;
         case 2:
+            tap_code(KC_EQL);
+            break;
         case 3:
         case 4:
         case 5:
-            tap_code(KC_EQL);
+            tap_code16(KC_PERC);
             break;
     }
 }

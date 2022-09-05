@@ -245,15 +245,15 @@ const custom_shift_key_t custom_shift_keys[] = {
 //   {KC_0, KC_ASTERISK}, // Shift 0 is *
   {KC_BACKSPACE, LALT(KC_BACKSPACE)}, // Shift Backspace is delete previous word
   {KC_DELETE, LALT(KC_DELETE)}, // Shift Delete is delete previous word
-  {KC_F6, KC_F16}, // Shift F-* is +10 F-*
-  {KC_F7, KC_F17},
-  {KC_F8, KC_F18},
-  {KC_F9, KC_F19},
-  {KC_F10, KC_F20},
-  {KC_F11, KC_F21},
-  {KC_F12, KC_F22},
-  {KC_F13, KC_F23},
-  {KC_F14, KC_F24},
+//   {KC_F6, KC_F16}, // Shift F-* is +10 F-*
+//   {KC_F7, KC_F17},
+//   {KC_F8, KC_F18},
+//   {KC_F9, KC_F19},
+//   {KC_F10, KC_F20},
+//   {KC_F11, KC_F21},
+//   {KC_F12, KC_F22},
+//   {KC_F13, KC_F23},
+//   {KC_F14, KC_F24},
 };
 uint8_t NUM_CUSTOM_SHIFT_KEYS =
     sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);

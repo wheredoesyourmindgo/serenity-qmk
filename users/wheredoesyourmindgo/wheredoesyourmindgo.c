@@ -412,6 +412,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        /*
         case TLNG_ILFT:
             if (record->event.pressed) {
                 clear_oneshot_mods();
@@ -444,6 +445,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        */
         case TLNG_RGHT:
             if (record->event.pressed) {
                 clear_oneshot_mods();

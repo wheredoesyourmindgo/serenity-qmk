@@ -184,6 +184,7 @@ enum {
     // TD_OOPSY,
     TD_OOPS,
     TD_PEMDAS,
+    TD_DOTEQL,
     TD_F6_F16,
     TD_F7_F17,
     TD_F8_F18,

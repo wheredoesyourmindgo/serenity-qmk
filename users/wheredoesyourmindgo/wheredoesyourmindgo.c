@@ -170,15 +170,28 @@ void pemdas_finished(qk_tap_dance_state_t *state, void *user_data) {
             tap_code(KC_SLASH);
             break;
         case 3:
-            tap_code16(KC_PLUS);
-            break;
         case 4:
         case 5:
-        case 6:
-            tap_code(KC_MINUS);
+            tap_code16(KC_PLUS);
             break;
     }
 }
+
+void doteql_finished(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 1:
+            tap_code(KC_DOT);
+            break;
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+            tap_code(KC_EQL);
+            break;
+    }
+}
+
+
 
 void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
@@ -232,6 +245,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
     [TD_OOPS] = ACTION_TAP_DANCE_FN_ADVANCED(oops_each, NULL, NULL),
     [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL),
+    [TD_DOTEQL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, doteql_finished, NULL),
 };
 // end of Tap Dance config
 
@@ -703,11 +717,12 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LT(HIGH, KC_SPC):
             return 400;
         case TD(TD_TGL_SEL):
+        case TD(TD_PEMDAS):
+        case TD(TD_DOTEQL):
         // case TD(TD_OOPSY):
             return 225;
         case TD(TD_MULTI_MAX):
         case TD(TD_MULTI_RSTR):
-        case TD(TD_PEMDAS):
         case TD(TD_OOPS):
             return 300;
         default:

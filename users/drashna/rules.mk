@@ -36,10 +36,6 @@ ifeq ($(strip $(PROTOCOL)), VUSB)
     NKRO_ENABLE       := no
 endif
 
-ifeq ($(strip $(PER_KEY_TAPPING)), yes)
-    OPT_DEFS += -DPER_KEY_TAPPING
-endif
-
 CUSTOM_UNICODE_ENABLE ?= yes
 ifeq ($(strip $(CUSTOM_UNICODE_ENABLE)), yes)
     UNICODE_ENABLE        := no
@@ -87,11 +83,6 @@ ifdef CONSOLE_ENABLE
     endif
 endif
 
-ifeq ($(strip $(I2C_SCANNER_ENABLE)), yes)
-    OPT_DEFS += -DI2C_SCANNER_ENABLE
-    CONSOLE_ENABLE := yes
-endif
-
 CUSTOM_OLED_DRIVER ?= yes
 ifeq ($(strip $(OLED_ENABLE)), yes)
     ifeq ($(strip $(OLED_DRIVER)), custom)
@@ -132,8 +123,4 @@ ifeq ($(strip $(AUTOCORRECTION_ENABLE)), yes)
     SRC += $(USER_PATH)/keyrecords/autocorrection/autocorrection.c
     $(shell touch $(USER_PATH)/keyrecords/autocorrection/autocorrection.c)
     OPT_DEFS += -DAUTOCORRECTION_ENABLE
-endif
-
-ifeq ($(strip $(BOOTMAGIC_ENABLE)), yes)
-    SRC += bootmagic_better.c
 endif

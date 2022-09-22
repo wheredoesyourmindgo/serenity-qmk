@@ -36,7 +36,7 @@ enum custom_keycodes {
 #define KC_LOWER LOWER
 #define KC_RAISE RAISE
 #define KC_ADJ ADJUST
-#define KC_RST QK_BOOT
+#define KC_RST RESET
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 

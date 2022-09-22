@@ -22,6 +22,7 @@
 
 #define MATRIX_ROW_PINS { B1, B2 }
 #define MATRIX_COL_PINS { B3, B4 }
+#define UNUSED_PINS
 
 #define RGB_DI_PIN B5
 #define RGBLED_NUM 12

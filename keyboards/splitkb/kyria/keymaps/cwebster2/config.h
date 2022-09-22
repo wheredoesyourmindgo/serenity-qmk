@@ -47,6 +47,8 @@
   #define COMBO_COUNT 5
 #endif
 
+#define QMK_KEYS_PER_SCAN 4
+
 #define EE_HANDS
 
 //#define DEBUG_MATRIX_SCAN_RATE

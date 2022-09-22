@@ -27,8 +27,6 @@ void     eeprom_update_block(const void *__src, void *__dst, size_t __n);
 #        error EEPROM_SIZE has not been defined for custom driver.
 #    endif
 #    define TOTAL_EEPROM_BYTE_COUNT (EEPROM_SIZE)
-#elif defined(EEPROM_WEAR_LEVELING)
-#    define TOTAL_EEPROM_BYTE_COUNT (WEAR_LEVELING_LOGICAL_SIZE)
 #elif defined(EEPROM_TRANSIENT)
 #    include "eeprom_transient.h"
 #    define TOTAL_EEPROM_BYTE_COUNT (TRANSIENT_EEPROM_SIZE)

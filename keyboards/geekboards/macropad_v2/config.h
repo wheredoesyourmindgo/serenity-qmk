@@ -20,6 +20,7 @@
 #define MATRIX_COLS 4
 
 #define DIRECT_PINS {{B13, B15, B3, B5}, {B12, B14, A13, B7}}
+#define UNUSED_PINS
 
 #define RGBLED_NUM 42
 #define DRIVER_LED_TOTAL 42

@@ -169,9 +169,10 @@ __attribute__((weak)) uint8_t matrix_scan(void) {
     bool changed = matrix_scan_custom(raw_matrix);
 
 #ifdef SPLIT_KEYBOARD
-    changed = debounce(raw_matrix, matrix + thisHand, ROWS_PER_HAND, changed) | matrix_post_scan();
+    debounce(raw_matrix, matrix + thisHand, ROWS_PER_HAND, changed);
+    changed = (changed || matrix_post_scan());
 #else
-    changed = debounce(raw_matrix, matrix, ROWS_PER_HAND, changed);
+    debounce(raw_matrix, matrix, ROWS_PER_HAND, changed);
     matrix_scan_quantum();
 #endif
 

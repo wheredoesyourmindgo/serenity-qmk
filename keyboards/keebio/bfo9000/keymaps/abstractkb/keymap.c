@@ -42,7 +42,7 @@ void matrix_post_init_user(void) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  switch (get_highest_layer(state)) {
+  switch (biton32(state)) {
     case _LIST:
       rgblight_sethsv_noeeprom(0,255,255);
       rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL);
@@ -87,3 +87,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return true;
   }
 }
+
+
+

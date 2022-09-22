@@ -20,3 +20,4 @@
 
 #define MATRIX_COL_PINS { C2 }
 #define MATRIX_ROW_PINS { C3 }
+#define UNUSED_PINS

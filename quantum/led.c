@@ -15,7 +15,6 @@
  */
 #include "led.h"
 #include "host.h"
-#include "timer.h"
 #include "debug.h"
 #include "gpio.h"
 
@@ -54,14 +53,6 @@ static void handle_backlight_caps_lock(led_t led_state) {
     backlight_set(bl_toggle_lvl);
 }
 #endif
-
-static uint32_t last_led_modification_time = 0;
-uint32_t        last_led_activity_time(void) {
-    return last_led_modification_time;
-}
-uint32_t last_led_activity_elapsed(void) {
-    return timer_elapsed32(last_led_modification_time);
-}
 
 /** \brief Lock LED set callback - keymap/user level
  *
@@ -183,8 +174,7 @@ void led_task(void) {
     // update LED
     uint8_t led_status = host_keyboard_leds();
     if (last_led_status != led_status) {
-        last_led_status            = led_status;
-        last_led_modification_time = timer_read32();
+        last_led_status = led_status;
 
         if (debug_keyboard) {
             debug("led_task: ");

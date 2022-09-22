@@ -3,6 +3,9 @@
 #define EE_HANDS
 #define SPLIT_USB_DETECT
 
+#undef USE_I2C
+#undef SSD1306OLED
+
 #define USE_SERIAL_PD2
 
 #define IGNORE_MOD_TAP_INTERRUPT

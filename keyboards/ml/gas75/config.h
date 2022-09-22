@@ -38,6 +38,9 @@
 /* Forcing to use NKRO instead 6KRO */
 #define FORCE_NKRO
 
+/* Larger keys per scan */
+#define QMK_KEYS_PER_SCAN 12
+
 /* Encoder pins */
 #define ENCODERS_PAD_A { F0 }
 #define ENCODERS_PAD_B { F1 }

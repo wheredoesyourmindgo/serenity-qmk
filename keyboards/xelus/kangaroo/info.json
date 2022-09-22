@@ -1,10 +1,12 @@
 {
+    "keyboard_name": "Kangaroo", 
     "manufacturer": "Xelus",
-    "url": "https://github.com/qmk/qmk_firmware/tree/master/keyboards/xelus/kangaroo",
-    "maintainer": "qmk",
+    "url": "https://github.com/qmk/qmk_firmware/tree/master/keyboards/xelus/kangaroo", 
+    "maintainer": "qmk", 
     "usb": {
         "vid": "0x5845",
-        "pid": "0x524F"
+        "pid": "0x524F",
+        "device_version": "0.0.1"
     },
     "layouts": {
         "LAYOUT_all": {

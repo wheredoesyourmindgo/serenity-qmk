@@ -37,4 +37,5 @@
 #define ENCODERS_PAD_B { D3 }
 #define ENCODER_RESOLUTION 1
 
+#define UNUSED_PINS
 

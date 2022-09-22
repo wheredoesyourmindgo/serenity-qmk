@@ -204,7 +204,7 @@ void matrix_init_user(void) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     ergodox_led_all_off();
-    switch (get_highest_layer(state)) {
+    switch (biton32(state)) {
       case FN:
           // Red led on Pro Micro for Fn layer
           ergodox_board_led_on();

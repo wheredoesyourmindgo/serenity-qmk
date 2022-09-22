@@ -69,7 +69,7 @@ Additionally, if one side does not have an encoder, you can specify `{}` for the
 
 ## Encoder map :id=encoder-map
 
-Encoder mapping may be added to your `keymap.c`, which replicates the normal keyswitch layer handling functionality, but with encoders. Add this to your keymap's `rules.mk`:
+Encoder mapping may be added to your `keymap.c`, which replicates the normal keyswitch layer handling functionality, but with encoders. Add this to your `rules.mk`:
 
 ```make
 ENCODER_MAP_ENABLE = yes
@@ -87,8 +87,6 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
 };
 #endif
 ```
-
-?> This should only be enabled at the keymap level.
 
 ## Callbacks
 

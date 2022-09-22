@@ -25,6 +25,7 @@
     {D4}, \
     {C6}  \
 }
+#define UNUSED_PINS
 
 #ifdef RGBLIGHT_ENABLE
 #define RGB_DI_PIN B6

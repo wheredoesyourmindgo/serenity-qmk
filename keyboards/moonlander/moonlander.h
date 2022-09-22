@@ -82,5 +82,3 @@ typedef union {
 } keyboard_config_t;
 
 extern keyboard_config_t keyboard_config;
-
-bool is_transport_connected(void);

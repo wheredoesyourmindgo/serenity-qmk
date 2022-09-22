@@ -65,6 +65,10 @@
 #    define ONESHOT_TIMEOUT 3000
 #endif  // !ONESHOT_TIMEOUT
 
+#if !defined(QMK_KEYS_PER_SCAN)
+#    define QMK_KEYS_PER_SCAN 4
+#endif  // !QMK_KEYS_PER_SCAN
+
 #define IGNORE_MOD_TAP_INTERRUPT
 #undef PERMISSIVE_HOLD
 

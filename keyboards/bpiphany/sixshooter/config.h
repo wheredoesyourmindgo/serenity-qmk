@@ -11,6 +11,7 @@
     { F7, F6, F1 }, \
     { F5, F4, F0 } \
 }
+#define UNUSED_PINS
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5

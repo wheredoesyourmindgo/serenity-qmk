@@ -45,15 +45,11 @@ bool process_magic(uint16_t keycode, keyrecord_t *record) {
             case MAGIC_SWAP_LCTL_LGUI ... MAGIC_EE_HANDS_RIGHT:
             case MAGIC_TOGGLE_GUI:
             case MAGIC_TOGGLE_CONTROL_CAPSLOCK:
-            case MAGIC_SWAP_ESCAPE_CAPSLOCK ... MAGIC_TOGGLE_ESCAPE_CAPSLOCK:
                 /* keymap config */
                 keymap_config.raw = eeconfig_read_keymap();
                 switch (keycode) {
                     case MAGIC_SWAP_CONTROL_CAPSLOCK:
                         keymap_config.swap_control_capslock = true;
-                        break;
-                    case MAGIC_SWAP_ESCAPE_CAPSLOCK:
-                        keymap_config.swap_escape_capslock = true;
                         break;
                     case MAGIC_CAPSLOCK_TO_CONTROL:
                         keymap_config.capslock_to_control = true;
@@ -97,9 +93,6 @@ bool process_magic(uint16_t keycode, keyrecord_t *record) {
                         break;
                     case MAGIC_UNSWAP_CONTROL_CAPSLOCK:
                         keymap_config.swap_control_capslock = false;
-                        break;
-                    case MAGIC_UNSWAP_ESCAPE_CAPSLOCK:
-                        keymap_config.swap_escape_capslock = false;
                         break;
                     case MAGIC_UNCAPSLOCK_TO_CONTROL:
                         keymap_config.capslock_to_control = false;
@@ -178,9 +171,6 @@ bool process_magic(uint16_t keycode, keyrecord_t *record) {
                         break;
                     case MAGIC_TOGGLE_CONTROL_CAPSLOCK:
                         keymap_config.swap_control_capslock = !keymap_config.swap_control_capslock;
-                        break;
-                    case MAGIC_TOGGLE_ESCAPE_CAPSLOCK:
-                        keymap_config.swap_escape_capslock = !keymap_config.swap_escape_capslock;
                         break;
                 }
 

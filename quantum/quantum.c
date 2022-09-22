@@ -93,25 +93,14 @@ __attribute__((weak)) void unregister_code16(uint16_t code) {
     }
 }
 
-/** \brief Tap a keycode with a delay.
- *
- * \param code The modded keycode to tap.
- * \param delay The amount of time in milliseconds to leave the keycode registered, before unregistering it.
- */
-__attribute__((weak)) void tap_code16_delay(uint16_t code, uint16_t delay) {
+__attribute__((weak)) void tap_code16(uint16_t code) {
     register_code16(code);
-    for (uint16_t i = delay; i > 0; i--) {
-        wait_ms(1);
+    if (code == KC_CAPS_LOCK) {
+        wait_ms(TAP_HOLD_CAPS_DELAY);
+    } else if (TAP_CODE_DELAY > 0) {
+        wait_ms(TAP_CODE_DELAY);
     }
     unregister_code16(code);
-}
-
-/** \brief Tap a keycode with the default delay.
- *
- * \param code The modded keycode to tap. If `code` is `KC_CAPS_LOCK`, the delay will be `TAP_HOLD_CAPS_DELAY`, otherwise `TAP_CODE_DELAY`, if defined.
- */
-__attribute__((weak)) void tap_code16(uint16_t code) {
-    tap_code16_delay(code, code == KC_CAPS_LOCK ? TAP_HOLD_CAPS_DELAY : TAP_CODE_DELAY);
 }
 
 __attribute__((weak)) bool process_action_kb(keyrecord_t *record) {
@@ -318,6 +307,9 @@ bool process_record_quantum(keyrecord_t *record) {
 #ifdef DYNAMIC_TAPPING_TERM_ENABLE
             process_dynamic_tapping_term(keycode, record) &&
 #endif
+#ifdef TERMINAL_ENABLE
+            process_terminal(keycode, record) &&
+#endif
 #ifdef SPACE_CADET_ENABLE
             process_space_cadet(keycode, record) &&
 #endif
@@ -411,9 +403,6 @@ bool process_record_quantum(keyrecord_t *record) {
                     SEND_STRING_DELAY(" compile ", TAP_CODE_DELAY);
                 }
                 SEND_STRING_DELAY("-kb " QMK_KEYBOARD " -km " QMK_KEYMAP SS_TAP(X_ENTER), TAP_CODE_DELAY);
-                if (temp_mod & MOD_MASK_SHIFT && temp_mod & MOD_MASK_CTRL) {
-                    reset_keyboard();
-                }
             }
 #endif
         }

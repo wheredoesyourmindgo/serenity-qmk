@@ -18,7 +18,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 __attribute__ ((weak))
-layer_state_t layer_state_set_keymap (layer_state_t state) {
+uint32_t layer_state_set_keymap (uint32_t state) {
   return state;
 }
 __attribute__ ((weak))
@@ -107,3 +107,4 @@ layer_state_t layer_state_set_user (layer_state_t state) {
 void led_set_user(uint8_t usb_led) {
    led_set_keymap(usb_led);
 }
+

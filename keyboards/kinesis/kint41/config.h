@@ -60,6 +60,7 @@
             LINE_PIN6   /* COL_6 */ \
     }
 
+#define UNUSED_PINS
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW

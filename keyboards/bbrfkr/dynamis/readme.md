@@ -1,13 +1,13 @@
 # dynamis
 
 ## general information
-![dynamis](https://i.imgur.com/GRPE5hzh.jpg)
+![dynamis](https://i.imgur.com/q2C3D2ul.jpg)
 
 Gasket mounted 65% row staggered keyboard integrated a trackball
 
 * Keyboard Maintainer: [bbrfkr](https://github.com/bbrfkr/)
 * Hardware Supported: dynamis PCBs
-* Hardware Availability: https://github.com/bbrfkr/dynamis-keyboard
+* Hardware Availability: http://github.com/bbrfkr/keyboards
 
 ## bootloader
 

@@ -26,3 +26,4 @@
 #define DIRECT_PINS { \
     {B4, B5, B6, B7} \
 }
+#define UNUSED_PINS

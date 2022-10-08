@@ -244,7 +244,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
     [TD_MULTI_MAX] = ACTION_TAP_DANCE_FN_ADVANCED(multi_max_each, NULL, NULL),
     [TD_MULTI_RSTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_rst_each, NULL, NULL),
-    // [TD_OOPSY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oopsy_finished, oopsy_reset),
     [TD_OOPS] = ACTION_TAP_DANCE_FN_ADVANCED(oops_each, NULL, NULL),
     [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL),
     [TD_DOTEQL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, doteql_finished, NULL),
@@ -381,18 +380,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //             tap_code(DISP_BRI);
         //         }
         //     }
-        // Un-used, see TD_OOPSY
-        // case OOPS:
-        //     if (record->event.pressed) {
-        //         tap_code16(LGUI(KC_H));  // Hide Active Window
-        //         // KC_MUTE will toggle on double tap which isn't ideal here
-        //         int i;
-        //         for (i = 1; i <= 20; ++i) {
-        //             // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
-        //             tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
-        //         }
-        //     }
-        //     break;
 
         case LT(HIGHEST, KC_RIGHT):
         case LT(HIGHEST, KC_SLSH):
@@ -721,7 +708,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_TGL_SEL):
         case TD(TD_PEMDAS):
         case TD(TD_DOTEQL):
-        // case TD(TD_OOPSY):
             return 225;
         case TD(TD_MULTI_MAX):
         case TD(TD_MULTI_RSTR):

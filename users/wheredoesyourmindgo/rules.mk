@@ -106,8 +106,8 @@ ifeq ($(strip $(KEYBOARD)), vitamins_included/rev2)
 # SRC += layout_4x12.c
 endif
 
-ifeq ($(strip $(EXECUTE_ON_HIGHEST)), yes)
-  OPT_DEFS += -DEXECUTE_ON_HIGHEST
+ifeq ($(strip $(EXECUTE_ON_FUNC)), yes)
+  OPT_DEFS += -DEXECUTE_ON_FUNC
 endif
 
 ifeq ($(strip $(QWERTY_BASE)), yes)

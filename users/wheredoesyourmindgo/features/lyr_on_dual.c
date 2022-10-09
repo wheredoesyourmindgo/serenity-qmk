@@ -7,12 +7,12 @@
 bool process_layer_on_dual_hold(uint16_t keycode, keyrecord_t* record) {
 
     switch (keycode) {
-        case LT(LOWER, KC_ESC):
+        case LT(NUMNAV, KC_ESC):
             if (record->event.pressed) {
                 // Only during layer hold
                 if (!(record->tap.count > 0)) {
-                    if (IS_LAYER_ON(HIGHER)) {
-                        layer_off(HIGHER);
+                    if (IS_LAYER_ON(AUX)) {
+                        layer_off(AUX);
                         layer_on(OS);
                         return false;
                     }
@@ -20,17 +20,17 @@ bool process_layer_on_dual_hold(uint16_t keycode, keyrecord_t* record) {
             } else {
                 if (IS_LAYER_ON(OS)) {
                     layer_off(OS);
-                    layer_on(HIGHER);
+                    layer_on(AUX);
                     return false;
                 }
             }
             break;
-        case LT(HIGHER, KC_TAB):
+        case LT(AUX, KC_TAB):
             if (record->event.pressed) {
                 // Only during layer hold
                 if (!(record->tap.count > 0)) {
-                    if (IS_LAYER_ON(LOWER)) {
-                        layer_off(LOWER);
+                    if (IS_LAYER_ON(NUMNAV)) {
+                        layer_off(NUMNAV);
                         layer_on(OS);
                         return false;
                     }
@@ -38,7 +38,7 @@ bool process_layer_on_dual_hold(uint16_t keycode, keyrecord_t* record) {
             } else {
                 if (IS_LAYER_ON(OS)) {
                     layer_off(OS);
-                    layer_on(LOWER);
+                    layer_on(NUMNAV);
                     return false;
                 }
             }

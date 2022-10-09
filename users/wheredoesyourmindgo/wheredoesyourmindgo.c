@@ -91,20 +91,20 @@ void tap_code_no_mod(uint8_t code) {
 //             tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
 //         }
 //     } else {
-//         layer_on(LOWEST);
+//         layer_on(MOUSE);
 //     }
 // }
 
 
 // void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
-//     if (IS_LAYER_ON(LOWEST) && !is_layer_locked(LOWEST)) {
-//         layer_off(LOWEST);
+//     if (IS_LAYER_ON(MOUSE) && !is_layer_locked(MOUSE)) {
+//         layer_off(MOUSE);
 //     }
 // }
 
 void oops_each(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER))) {
+        if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX))) {
             tap_code16_no_mod(OS_DRKMD_TGL);
         } else if (MODS_GUI) {
             // hide works well during command-tab switching (hide & un-hide) and independently (hide)
@@ -113,19 +113,19 @@ void oops_each(qk_tap_dance_state_t *state, void *user_data) {
             tap_code16_no_mod(ZOOM_RESET);
         } else if (MODS_ALT) {
             tap_code16_no_mod(ZOOM_RESET_APP);
-        } else if (IS_LAYER_ON(HIGHER)) {
+        } else if (IS_LAYER_ON(AUX)) {
             if (MODS_SFT) {
                 tap_code16_no_mod(LGUI(KC_S));
             } else {
                 tap_code16(LGUI(KC_W));
             }
-        } else if (IS_LAYER_ON(HIGH)) {
+        } else if (IS_LAYER_ON(HRDWR)) {
             if (MODS_SFT) {
                 tap_code_no_mod(KC_END);
             } else {
                 tap_code(KC_HOME);
             }
-        } else if (IS_LAYER_ON(HIGHEST)) {
+        } else if (IS_LAYER_ON(FUNC2)) {
             tap_code(KC_BTN1);
         } else {
             tap_code(KC_MUTE);
@@ -142,11 +142,11 @@ void oops_each(qk_tap_dance_state_t *state, void *user_data) {
             // nothing
         } else if (MODS_ALT) {
             // nothing
-        } else if (IS_LAYER_ON(HIGHER)) {
+        } else if (IS_LAYER_ON(AUX)) {
             // nothing
-        } else if (IS_LAYER_ON(HIGH)) {
+        } else if (IS_LAYER_ON(HRDWR)) {
             // nothing
-        } else if (IS_LAYER_ON(HIGHEST)) {
+        } else if (IS_LAYER_ON(FUNC2)) {
             // nothing
         } else {
             // hide window first, then mute
@@ -360,7 +360,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_magic_shift(keycode, record)) { return false; }
     if (!process_cmd_tab_switcher(keycode, record)) { return false; }
     if (!process_oneshot_mods(keycode, record)) { return false; }
-    if (!process_symbol_rolls(keycode, record, LOW)) { return false; }
+    if (!process_symbol_rolls(keycode, record, SYMBL)) { return false; }
     if (!process_layer_on_dual_hold(keycode, record)) { return false; }
 
     switch (keycode) {
@@ -381,18 +381,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //         }
         //     }
 
-        case LT(HIGHEST, KC_RIGHT):
-        case LT(HIGHEST, KC_SLSH):
+        case LT(FUNC2, KC_RIGHT):
+        case LT(FUNC2, KC_SLSH):
             if (record->event.pressed) {
-                #if defined EXECUTE_ON_HIGHEST
-                // Only on hold during LT(HIGHEST)
+                #if defined EXECUTE_ON_FUNC
+                // Only on hold during LT(FUNC2)
                 if (!(record->tap.count > 0)) {
                     register_code(KC_EXEC);
                 }
                 #endif
                 // return true
             } else {
-                #if defined EXECUTE_ON_HIGHEST
+                #if defined EXECUTE_ON_FUNC
                 if (!(record->tap.count > 0)) {
                     unregister_code(KC_EXEC);
                 }
@@ -468,7 +468,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case TGL_LYT:
             if (record->event.pressed) {
-                layer_off(HIGH);
+                layer_off(HRDWR);
                 if (IS_LAYER_ON(BASE)) {
                     // dprint("BASE layer is on prior to switch");
                     layer_off(BASE);
@@ -590,21 +590,21 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
     switch (get_highest_layer(state)) {
         case BASE:
-            #if defined EXECUTE_ON_HIGHEST
+            #if defined EXECUTE_ON_FUNC
                 unregister_code(KC_EXEC);
             #endif
             #ifdef KEY_LOCK_ENABLE
                  cancel_key_lock();
             #endif
             break;
-        case HIGHEST:
+        case FUNC2:
             // don't unregister_code(KC_EXEC) on this layer
             #ifdef KEY_LOCK_ENABLE
                  cancel_key_lock();
             #endif
             break;
         default: //  for any other layers
-            #if defined EXECUTE_ON_HIGHEST
+            #if defined EXECUTE_ON_FUNC
                 unregister_code(KC_EXEC);
             #endif
             #ifdef KEY_LOCK_ENABLE
@@ -633,25 +633,25 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
                 // tap_code16(LGUI(KC_TAB));
                 cmd_tab_next();
-            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER)) && !(IS_LAYER_ON(HIGHEST))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(FUNC2))) {
                 tap_code16_no_mod(DISP_BRI);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_IN);
             } else if (MODS_ALT) {
                 tap_code16_no_mod(ZOOM_IN_APP);
-            } else if (IS_LAYER_ON(HIGHER)) {
+            } else if (IS_LAYER_ON(AUX)) {
                 if (MODS_SFT) {
                     tap_code16_no_mod(REDO);
                 } else {
                     tap_code16(OS_NXT_TAB);
                 }
-            } else if (IS_LAYER_ON(HIGH)) {
+            } else if (IS_LAYER_ON(HRDWR)) {
                 if (MODS_SFT) {
                     tap_code_no_mod(KC_RIGHT);
                 } else {
                     tap_code(KC_DOWN);
                 }
-            } else if (IS_LAYER_ON(HIGHEST)) {
+            } else if (IS_LAYER_ON(FUNC2)) {
                 if (MODS_SFT) {
                     tap_code(KC_WH_L);
                 } else {
@@ -665,25 +665,25 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
                 // tap_code16(LGUI(LSFT(KC_TAB)));
                 cmd_tab_previous();
-            } else if (MODS_SFT && !(IS_LAYER_ON(HIGH)) && !(IS_LAYER_ON(HIGHER)) && !(IS_LAYER_ON(HIGHEST))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(FUNC2))) {
                 tap_code16_no_mod(DISP_DIM);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_OUT);
             } else if (MODS_ALT) {
                 tap_code16_no_mod(ZOOM_OUT_APP);
-            } else if (IS_LAYER_ON(HIGHER)) {
+            } else if (IS_LAYER_ON(AUX)) {
                 if (MODS_SFT) {
                     tap_code16_no_mod(UNDO);
                 } else {
                     tap_code16(OS_PRV_TAB);
                 }
-            } else if (IS_LAYER_ON(HIGH)) {
+            } else if (IS_LAYER_ON(HRDWR)) {
                 if (MODS_SFT) {
                     tap_code_no_mod(KC_LEFT);
                 } else {
                     tap_code(KC_UP);
                 }
-            } else if (IS_LAYER_ON(HIGHEST)) {
+            } else if (IS_LAYER_ON(FUNC2)) {
                 if (MODS_SFT) {
                     tap_code(KC_WH_R);
                 } else {
@@ -703,7 +703,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(HIGH, KC_SPC):
+        case LT(HRDWR, KC_SPC):
             return 400;
         case TD(TD_TGL_SEL):
         case TD(TD_PEMDAS):
@@ -721,15 +721,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key (quickly use a layer hold)
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOWER, KC_ESC): // quickly use numbers
-        case LT(LOW, KC_ENT): // quickly use symbols
-        // case LT(HIGHER, KC_TAB):
-        // case LT(HIGH, KC_SPC):
+        case LT(NUMNAV, KC_ESC): // quickly use numbers
+        case LT(SYMBL, KC_ENT): // quickly use symbols
+        // case LT(AUX, KC_TAB):
+        // case LT(HRDWR, KC_SPC):
         case RGUI_T(KC_LEFT): // quickly use modifiers
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
-        case LT(HIGHEST, KC_RIGHT): // quickly use function keys
-        case LT(HIGHEST, KC_SLSH):
+        case LT(FUNC2, KC_RIGHT): // quickly use function keys
+        case LT(FUNC2, KC_SLSH):
             return true;
         default:
             return false;
@@ -739,15 +739,15 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 // Mirror settings for get_permissive_hold()
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOWER, KC_ESC):
-        case LT(LOW, KC_ENT):
-        // case LT(HIGHER, KC_TAB):
-        // case LT(HIGH, KC_SPC):
+        case LT(NUMNAV, KC_ESC):
+        case LT(SYMBL, KC_ENT):
+        // case LT(AUX, KC_TAB):
+        // case LT(HRDWR, KC_SPC):
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
-        case LT(HIGHEST, KC_RIGHT):
-        case LT(HIGHEST, KC_SLSH):
+        case LT(FUNC2, KC_RIGHT):
+        case LT(FUNC2, KC_SLSH):
             return true;
         default:
             return false;
@@ -757,7 +757,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 // bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
 //     switch (keycode) {
 //         // Might roll through space
-//         case LT(HIGH, KC_SPC):
+//         case LT(HRDWR, KC_SPC):
 //             return true;
 //         default:
 //             return false;
@@ -770,10 +770,10 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
-        case LT(HIGHEST, KC_RIGHT):
-        // case LT(HIGHEST, KC_SLASH):
-        case LT(HIGH, KC_SPC):
-        case LT(LOWEST, KC_MINUS):
+        case LT(FUNC2, KC_RIGHT):
+        // case LT(FUNC2, KC_SLASH):
+        case LT(HRDWR, KC_SPC):
+        case LT(MOUSE, KC_MINUS):
             return false;
         // Force hold by default
         default:
@@ -783,11 +783,11 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 
 /* bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(LOWER, KC_ESC):
-        case LT(LOW, KC_ENT):
-        // case LT(LOWEST, KC_APP):
-        case LT(HIGHER, KC_TAB):
-        case LT(HIGH, KC_SPC):
+        case LT(NUMNAV, KC_ESC):
+        case LT(SYMBL, KC_ENT):
+        // case LT(MOUSE, KC_APP):
+        case LT(AUX, KC_TAB):
+        case LT(HRDWR, KC_SPC):
             return true;
         default:
             return false;

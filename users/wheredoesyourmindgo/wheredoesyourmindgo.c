@@ -522,10 +522,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
                 if (MODS_SFT) {
                     tap_code16_no_mod(OS_DRKMD_TGL);
-                // } else if (MODS_CTRL) {
-                //     tap_code16_no_mod(ZOOM_RESET);
-                // } else if (MODS_ALT) {
-                //     tap_code16_no_mod(ZOOM_RESET_APP);
+                } else if (MODS_CTRL) {
+                    tap_code16_no_mod(ZOOM_RESET);
+                } else if (MODS_ALT) {
+                    tap_code16_no_mod(ZOOM_RESET_APP);
+                } else if (MODS_GUI) {
+                    tap_code16(KC_H); // command-h
                 } else {
                     tap_code(KC_MUTE);
                 }

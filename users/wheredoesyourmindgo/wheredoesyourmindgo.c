@@ -520,7 +520,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case ENC_BTN:
             if (record->event.pressed) {
                 // if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
-                if (MODS_RSFT) {
+                if (MODS_SFT) {
                     tap_code16_no_mod(OS_DRKMD_TGL);
                 // } else if (MODS_CTRL) {
                 //     tap_code16_no_mod(ZOOM_RESET);

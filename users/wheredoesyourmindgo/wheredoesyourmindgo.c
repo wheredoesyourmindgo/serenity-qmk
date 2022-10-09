@@ -517,6 +517,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        case ENC_BTN:
+            if (record->event.pressed) {
+                // if (IS_LAYER_ON(HIGHER) || MODS_GUI) {
+                //     tap_code16_no_mod(OS_DRKMD_TGL);
+                // } else if (MODS_CTRL) {
+                //     tap_code16_no_mod(ZOOM_RESET);
+                // } else if (MODS_ALT) {
+                //     tap_code16_no_mod(ZOOM_RESET_APP);
+                // } else {
+                tap_code(KC_MUTE);
+                // }
+                return false;
+            }
+            break;
         case SHAKE_MOUSE:
             if (record->event.pressed) {
                 register_code16(KC_MS_ACCEL1);

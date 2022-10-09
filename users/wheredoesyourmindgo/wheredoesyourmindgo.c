@@ -96,59 +96,53 @@ void tap_code_no_mod(uint8_t code) {
 // }
 
 
-// void oopsy_reset(qk_tap_dance_state_t *state, void *user_data) {
-//     if (IS_LAYER_ON(MOUSE) && !is_layer_locked(MOUSE)) {
-//         layer_off(MOUSE);
-//     }
-// }
-
-void oops_each(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX))) {
-            tap_code16_no_mod(OS_DRKMD_TGL);
-        } else if (MODS_GUI) {
-            // hide works well during command-tab switching (hide & un-hide) and independently (hide)
-            tap_code(KC_H);
-        } else if (MODS_CTRL) {
-            tap_code16_no_mod(ZOOM_RESET);
-        } else if (MODS_ALT) {
-            tap_code16_no_mod(ZOOM_RESET_APP);
-        } else if (IS_LAYER_ON(AUX)) {
-            if (MODS_SFT) {
-                tap_code16_no_mod(LGUI(KC_S));
-            } else {
-                tap_code16(LGUI(KC_W));
-            }
-        } else if (IS_LAYER_ON(HRDWR)) {
-            if (MODS_SFT) {
-                tap_code_no_mod(KC_END);
-            } else {
-                tap_code(KC_HOME);
-            }
-        } else if (IS_LAYER_ON(FUNC2)) {
-            tap_code(KC_BTN1);
-        } else {
+void oops_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (!state->pressed && !state->interrupted && state->count == 1) {
+        // if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX))) {
+        //     tap_code16_no_mod(OS_DRKMD_TGL);
+        // } else if (MODS_GUI) {
+        //     // hide works well during command-tab switching (hide & un-hide) and independently (hide)
+        //     tap_code(KC_H);
+        // } else if (MODS_CTRL) {
+        //     tap_code16_no_mod(ZOOM_RESET);
+        // } else if (MODS_ALT) {
+        //     tap_code16_no_mod(ZOOM_RESET_APP);
+        // } else if (IS_LAYER_ON(AUX)) {
+        //     if (MODS_SFT) {
+        //         tap_code16_no_mod(LGUI(KC_S));
+        //     } else {
+        //         tap_code16(LGUI(KC_W));
+        //     }
+        // } else if (IS_LAYER_ON(HRDWR)) {
+        //     if (MODS_SFT) {
+        //         tap_code_no_mod(KC_END);
+        //     } else {
+        //         tap_code(KC_HOME);
+        //     }
+        // } else if (IS_LAYER_ON(FUNCXTR)) {
+        //     tap_code(KC_BTN1);
+        // } else {
             tap_code(KC_MUTE);
-        }
-    } else if (state->count == 2) {
-        if (MODS_SFT) {
-            // nothing
-        } else if (MODS_GUI) {
-            // if native cmd tab is not open this will close the app behind the focused app which is wonky since the first app will get hidden, so only run if cmd+tab is open
-            if (is_cmd_tab_active) {
-                tap_code(KC_Q);
-            }
-        } else if (MODS_CTRL) {
-            // nothing
-        } else if (MODS_ALT) {
-            // nothing
-        } else if (IS_LAYER_ON(AUX)) {
-            // nothing
-        } else if (IS_LAYER_ON(HRDWR)) {
-            // nothing
-        } else if (IS_LAYER_ON(FUNC2)) {
-            // nothing
-        } else {
+        // }
+    } else if (!state->pressed && !state->interrupted && state->count >= 2) {
+        // if (MODS_SFT) {
+        //     // nothing
+        // } else if (MODS_GUI) {
+        //     // if native cmd tab is not open this will close the app behind the focused app which is wonky since the first app will get hidden, so only run if cmd+tab is open
+        //     if (is_cmd_tab_active) {
+        //         tap_code(KC_Q);
+        //     }
+        // } else if (MODS_CTRL) {
+        //     // nothing
+        // } else if (MODS_ALT) {
+        //     // nothing
+        // } else if (IS_LAYER_ON(AUX)) {
+        //     // nothing
+        // } else if (IS_LAYER_ON(HRDWR)) {
+        //     // nothing
+        // } else if (IS_LAYER_ON(FUNCXTR)) {
+        //     // nothing
+        // } else {
             // hide window first, then mute
             tap_code16(LGUI(KC_H));  // Hide Active Window
             // KC_MUTE will toggle, instead, lower volume
@@ -157,8 +151,24 @@ void oops_each(qk_tap_dance_state_t *state, void *user_data) {
                 // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
                 tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
             }
-        }
+        // }
+    } else {
+        #if defined EXECUTE_ON_FUNC
+            register_code(KC_EXEC);
+        #endif
+        layer_on(FUNC);
     }
+}
+
+void oops_reset(qk_tap_dance_state_t *state, void *user_data) {
+    // if (state->pressed || state->interrupted) {
+    if (IS_LAYER_ON(FUNC) && !is_layer_locked(FUNC)) {
+        layer_off(FUNC);
+    }
+    #if defined EXECUTE_ON_FUNC
+        unregister_code(KC_EXEC);
+    #endif
+    // }
 }
 
 void pemdas_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -244,7 +254,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
     [TD_MULTI_MAX] = ACTION_TAP_DANCE_FN_ADVANCED(multi_max_each, NULL, NULL),
     [TD_MULTI_RSTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_rst_each, NULL, NULL),
-    [TD_OOPS] = ACTION_TAP_DANCE_FN_ADVANCED(oops_each, NULL, NULL),
+    [TD_OOPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oops_finished, oops_reset),
     [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL),
     [TD_DOTEQL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, doteql_finished, NULL),
 };
@@ -381,11 +391,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //         }
         //     }
 
-        case LT(FUNC2, KC_RIGHT):
-        case LT(FUNC2, KC_SLSH):
+        case LT(FUNCXTR, KC_RIGHT):
+        case LT(FUNCXTR, KC_SLSH):
             if (record->event.pressed) {
                 #if defined EXECUTE_ON_FUNC
-                // Only on hold during LT(FUNC2)
+                // Only on hold during LT(FUNCXTR)
                 if (!(record->tap.count > 0)) {
                     register_code(KC_EXEC);
                 }
@@ -597,7 +607,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
                  cancel_key_lock();
             #endif
             break;
-        case FUNC2:
+        case FUNC:
+        case FUNCXTR:
             // don't unregister_code(KC_EXEC) on this layer
             #ifdef KEY_LOCK_ENABLE
                  cancel_key_lock();
@@ -633,7 +644,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
                 // tap_code16(LGUI(KC_TAB));
                 cmd_tab_next();
-            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(FUNC2))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(FUNCXTR))) {
                 tap_code16_no_mod(DISP_BRI);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_IN);
@@ -651,7 +662,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 } else {
                     tap_code(KC_DOWN);
                 }
-            } else if (IS_LAYER_ON(FUNC2)) {
+            } else if (IS_LAYER_ON(FUNCXTR)) {
                 if (MODS_SFT) {
                     tap_code(KC_WH_L);
                 } else {
@@ -665,7 +676,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
                 // tap_code16(LGUI(LSFT(KC_TAB)));
                 cmd_tab_previous();
-            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(FUNC2))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(FUNCXTR))) {
                 tap_code16_no_mod(DISP_DIM);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_OUT);
@@ -683,7 +694,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 } else {
                     tap_code(KC_UP);
                 }
-            } else if (IS_LAYER_ON(FUNC2)) {
+            } else if (IS_LAYER_ON(FUNCXTR)) {
                 if (MODS_SFT) {
                     tap_code(KC_WH_R);
                 } else {
@@ -708,10 +719,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_TGL_SEL):
         case TD(TD_PEMDAS):
         case TD(TD_DOTEQL):
+        case TD(TD_OOPS):
             return 225;
         case TD(TD_MULTI_MAX):
         case TD(TD_MULTI_RSTR):
-        case TD(TD_OOPS):
             return 300;
         default:
             return TAPPING_TERM;
@@ -728,8 +739,8 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         case RGUI_T(KC_LEFT): // quickly use modifiers
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
-        case LT(FUNC2, KC_RIGHT): // quickly use function keys
-        case LT(FUNC2, KC_SLSH):
+        case LT(FUNCXTR, KC_RIGHT): // quickly use function keys
+        case LT(FUNCXTR, KC_SLSH):
             return true;
         default:
             return false;
@@ -746,8 +757,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
-        case LT(FUNC2, KC_RIGHT):
-        case LT(FUNC2, KC_SLSH):
+        case LT(FUNCXTR, KC_RIGHT):
+        case LT(FUNCXTR, KC_SLSH):
             return true;
         default:
             return false;
@@ -770,8 +781,8 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
-        case LT(FUNC2, KC_RIGHT):
-        // case LT(FUNC2, KC_SLASH):
+        case LT(FUNCXTR, KC_RIGHT):
+        // case LT(FUNCXTR, KC_SLASH):
         case LT(HRDWR, KC_SPC):
         case LT(MOUSE, KC_MINUS):
             return false;

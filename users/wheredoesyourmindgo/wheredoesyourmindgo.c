@@ -732,7 +732,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(HRDWR, KC_SPC):
-            return 400;
+            return 350;
         case TD(TD_TGL_SEL):
         case TD(TD_PEMDAS):
         case TD(TD_DOTEQL):
@@ -751,13 +751,6 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(NUMNAV, KC_ESC): // quickly use numbers
         case LT(SYMBL, KC_ENT): // quickly use symbols
-        // case LT(AUX, KC_TAB):
-        // case LT(HRDWR, KC_SPC):
-        case RGUI_T(KC_LEFT): // quickly use modifiers
-        case RALT_T(KC_DOWN):
-        case RCTL_T(KC_UP):
-        case LT(FUNCXTR, KC_RIGHT): // quickly use function keys
-        case LT(FUNCXTR, KC_SLSH):
             return true;
         default:
             return false;
@@ -769,28 +762,23 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(NUMNAV, KC_ESC):
         case LT(SYMBL, KC_ENT):
-        // case LT(AUX, KC_TAB):
-        // case LT(HRDWR, KC_SPC):
-        case RGUI_T(KC_LEFT):
-        case RALT_T(KC_DOWN):
-        case RCTL_T(KC_UP):
-        case LT(FUNCXTR, KC_RIGHT):
-        case LT(FUNCXTR, KC_SLSH):
             return true;
         default:
             return false;
     }
 }
 
-// bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
-//     switch (keycode) {
-//         // Might roll through space
-//         case LT(HRDWR, KC_SPC):
-//             return true;
-//         default:
-//             return false;
-//     }
-// }
+bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // Might roll through arrow keys
+        case RGUI_T(KC_LEFT):
+        case RALT_T(KC_DOWN):
+        case RCTL_T(KC_UP):
+            return true;
+        default:
+            return false;
+    }
+}
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {

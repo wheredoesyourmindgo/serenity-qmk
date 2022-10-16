@@ -139,8 +139,8 @@ __attribute__((weak)) bool caps_word_press_user(uint16_t keycode) {
     // Keycodes that continue Caps Word, without shifting.
     case KC_1 ... KC_0:
     case KC_BSPC:
-    case KC_MINS:
-    case KC_UNDS:
+    // case KC_MINS:
+    // case KC_UNDS:
       return true;
 
     default:

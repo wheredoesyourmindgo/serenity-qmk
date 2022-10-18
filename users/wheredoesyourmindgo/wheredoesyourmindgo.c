@@ -7,7 +7,6 @@
 #include "features/magic_shift.h"
 #include "features/cmd_tab_switcher.h"
 #include "features/symbol_rolls.h"
-#include "features/lyr_on_dual.h"
 #include "features/layer_lock.h"
 
 #ifdef CONSOLE_ENABLE
@@ -353,7 +352,6 @@ bool caps_sentence_press_user(uint16_t keycode) {
 }
 
 
-
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // only activate on base and qwerty layers
@@ -371,7 +369,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_cmd_tab_switcher(keycode, record)) { return false; }
     if (!process_oneshot_mods(keycode, record)) { return false; }
     if (!process_symbol_rolls(keycode, record, SYMBL)) { return false; }
-    if (!process_layer_on_dual_hold(keycode, record)) { return false; }
 
     switch (keycode) {
 
@@ -614,6 +611,8 @@ void keyboard_post_init_user(void) {
 layer_state_t layer_state_set_user(layer_state_t state) {
     cmd_tab_switcher_layer_state(state);
     oneshot_mods_layer_state(state);
+
+    state = update_tri_layer_state(state, NUMNAV, AUX, OS);
 
     switch (get_highest_layer(state)) {
         case BASE:

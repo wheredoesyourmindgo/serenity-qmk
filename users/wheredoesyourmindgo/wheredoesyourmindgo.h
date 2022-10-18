@@ -3,7 +3,6 @@
 
 #include "quantum.h"
 
-
 #define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
 #define MODS_LSFT (get_mods() & MOD_BIT(KC_LSFT))
 #define MODS_RCTRL (get_mods() & MOD_BIT(KC_RCTRL))

@@ -14,6 +14,7 @@ SPACE_CADET_ENABLE = no
 GRAVE_ESC_ENABLE = no
 # If more space is needed consider the following option. See https://github.com/qmk/qmk_firmware/blob/develop/docs/squeezing_avr.md for more info.
 # MAGIC_ENABLE = no
+CAPS_WORD_ENABLE = yes
 
 # LTO_ENABLE = yes
 # CONSOLE_ENABLE = yes
@@ -24,8 +25,8 @@ GRAVE_ESC_ENABLE = no
 ifneq ($(strip $(KEYBOARD)), binepad/bn003)
 	SRC += wheredoesyourmindgo.c
 # use caps word/sentence
-	SRC += features/caps_word.c
-	SRC += features/caps_sentence.c
+# SRC += features/caps_word.c
+# SRC += features/caps_sentence.c
 # use oneshot mods fix
 	SRC += features/oneshot_mods.c
 	SRC += features/custom_shift_keys.c

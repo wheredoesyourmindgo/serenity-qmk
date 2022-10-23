@@ -477,18 +477,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 layer_off(HRDWR);
                 if (IS_LAYER_ON(BASE)) {
+                    // set_single_persistent_default_layer(QWRTY);
                     // dprint("BASE layer is on prior to switch");
                     layer_off(BASE);
                     layer_on(QWRTY);
                     default_layer_set(QWRTY);
                 } else {
+                    // set_single_persistent_default_layer(BASE);
                     // dprint("QWRTY layer is on prior to switch");
                     layer_off(QWRTY);
                     layer_on(BASE);
                     default_layer_set(BASE);
                 }
-                return false;
             }
+            return false;
             break;
         case OS_BSPC:
             if (record->event.pressed) {

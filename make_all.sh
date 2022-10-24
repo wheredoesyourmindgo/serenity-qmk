@@ -1,6 +1,7 @@
 #!/bin/sh
 OPTS='-j 2 -e EXECUTE_ON_FUNC=yes -e QWERTY_BASE=no'
-qmk compile -kb binepad/bn003 -km wheredoesyourmindgo -e BN003_USB_LEFT=yes
+qmk compile -kb binepad/bn003 -km wheredoesyourmindgo
+# qmk compile -kb binepad/bn003 -km wheredoesyourmindgo -e BN003_USB_LEFT=yes
 # qmk compile -kb binepad/bnr1 -km wheredoesyourmindgo
 qmk compile -kb boardwalk -km wheredoesyourmindgo $OPTS
 qmk compile -kb ristretto -km wheredoesyourmindgo $OPTS

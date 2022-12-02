@@ -5,8 +5,8 @@
 
 #define MODS_RSFT (get_mods() & MOD_BIT(KC_RSFT))
 #define MODS_LSFT (get_mods() & MOD_BIT(KC_LSFT))
-#define MODS_RCTRL (get_mods() & MOD_BIT(KC_RCTRL))
-#define MODS_LCTRL (get_mods() & MOD_BIT(KC_LCTRL))
+#define MODS_RCTRL (get_mods() & MOD_BIT(KC_RCTL))
+#define MODS_LCTRL (get_mods() & MOD_BIT(KC_LCTL))
 #define MODS_RALT (get_mods() & MOD_BIT(KC_RALT))
 #define MODS_LALT (get_mods() & MOD_BIT(KC_LALT))
 #define MODS_RGUI (get_mods() & MOD_BIT(KC_RGUI))

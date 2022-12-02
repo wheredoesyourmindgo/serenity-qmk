@@ -11,10 +11,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
-//
-// For full documentation, see
-// https://getreuer.info/posts/keyboards/custom-shift-keys
+
+/**
+ * @file custom_shift_keys.c
+ * @brief Custom Shift Keys implementation
+ *
+ * For full documentation, see
+ * <https://getreuer.info/posts/keyboards/custom-shift-keys>
+ */
 
 #include "custom_shift_keys.h"
 
@@ -26,10 +30,6 @@ bool process_custom_shift_keys(uint16_t keycode, keyrecord_t *record) {
   // the currently registered key.
   if (registered_keycode != KC_NO) {
     unregister_code16(registered_keycode);
-    if (keycode == registered_keycode && !record->event.pressed) {
-      registered_keycode = KC_NO;
-      return false;
-    }
     registered_keycode = KC_NO;
   }
 
@@ -43,6 +43,12 @@ bool process_custom_shift_keys(uint16_t keycode, keyrecord_t *record) {
       // Search for a custom key with keycode equal to `keycode`.
       for (int i = 0; i < NUM_CUSTOM_SHIFT_KEYS; ++i) {
         if (keycode == custom_shift_keys[i].keycode) {
+          // Continue default handling if this is a tap-hold key being held.
+          if (((QK_MOD_TAP <= keycode && keycode <= QK_MOD_TAP_MAX) ||
+               (QK_LAYER_TAP <= keycode && keycode <= QK_LAYER_TAP_MAX)) &&
+              record->tap.count == 0) {
+            return true;
+          }
 #ifndef NO_ACTION_ONESHOT
           del_oneshot_mods(MOD_MASK_SHIFT);
 #endif  // NO_ACTION_ONESHOT

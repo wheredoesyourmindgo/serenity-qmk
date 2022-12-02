@@ -78,7 +78,7 @@ void tap_code_no_mod(uint8_t code) {
 //         int i;
 //         for (i = 1; i <= 20; ++i) {
 //             // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
-//             tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
+//             tap_code(KC_VOLDOWN);  // Mute audio (needed for Planck, not sure why)
 //         }
 //     } else if (!state->pressed && !state->interrupted && state->count >= 2) {
 //         // hide window first, then mute
@@ -87,7 +87,7 @@ void tap_code_no_mod(uint8_t code) {
 //         int i;
 //         for (i = 1; i <= 20; ++i) {
 //             // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
-//             tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
+//             tap_code(KC_VOLDOWN);  // Mute audio (needed for Planck, not sure why)
 //         }
 //     } else {
 //         layer_on(MOUSE);
@@ -147,8 +147,7 @@ void oops_finished(qk_tap_dance_state_t *state, void *user_data) {
             // KC_MUTE will toggle, instead, lower volume
             int i;
             for (i = 1; i <= 20; ++i) {
-                // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
-                tap_code(KC__VOLDOWN);  // Mute audio (needed for Planck, not sure why)
+                tap_code(KC_VOLD);
             }
         // }
     } else {

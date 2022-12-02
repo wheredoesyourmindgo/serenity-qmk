@@ -5,7 +5,6 @@
 
 #include QMK_KEYBOARD_H
 
-
 #define ONESHOT_MODS_ACTIVE (get_oneshot_mods())
 #define ONESHOT_MODS_LSFT (get_oneshot_mods() & MOD_BIT(KC_LSFT))
 #define ONESHOT_MODS_LGUI (get_oneshot_mods() & MOD_BIT(KC_LGUI))

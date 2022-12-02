@@ -18,10 +18,6 @@
 
 #include "config_common.h"
 
-/* USB Device descriptor parameter */
-#define DEVICE_VER      0x0001
-#define PRODUCT         BN003
-
 /* Key matrix size */
 #define MATRIX_ROWS 1
 #define MATRIX_COLS 3
@@ -32,13 +28,11 @@
 /* COL2ROW, ROW2COL*/
 #define DIODE_DIRECTION COL2ROW
 
-
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
 
 /* define if matrix has ghost (lacks anti-ghosting diodes) */
 //#define MATRIX_HAS_GHOST
-
 
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 #define LOCKING_SUPPORT_ENABLE

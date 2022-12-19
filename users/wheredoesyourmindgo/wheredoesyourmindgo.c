@@ -591,7 +591,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
         } };
         // Turn off bottom leds
-        for (uint8_t i = 0; i < DRIVER_LED_TOTAL; ++i) {
+        for (uint8_t i = 0; i < RGB_MATRIX_LED_COUNT; ++i) {
             if (g_led_config.flags[i] == LED_FLAG_UNDERGLOW) {
                 g_led_config.flags[i] = LED_FLAG_NONE;
             }

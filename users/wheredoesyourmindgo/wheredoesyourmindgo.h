@@ -173,14 +173,13 @@
 
 enum layers { BASE, QWRTY, NUMNAV, SYMBL, MOUSE, AUX, HRDWR, FUNC, FUNCXTR, OS };
 
-enum custom_keycodes { CMD_TAB_PRV = SAFE_RANGE, CAPS_SENTENCE, TGL_LYT, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, XWNDW_MAX, WNDW_LFT, WNDW_RGHT, WNDW_ILFT, WNDW_IRGHT, OS_BSPC, OS_DEL, OS_BCK_FWD, LLOCK, ENC_BTN, SHAKE_MOUSE};
+enum custom_keycodes { CMD_TAB_PRV = SAFE_RANGE, CAPS_SENTENCE, TGL_LYT, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, XWNDW_MAX, WNDW_LFT, WNDW_RGHT, WNDW_ILFT, WNDW_IRGHT, OS_BSPC, OS_DEL, OS_BCK_FWD, LLOCK, ENC_BTN, SHAKE_MOUSE, NO_VOL};
 
 // Tap Dance declarations
 enum {
     TD_TGL_SEL,  // Toggle Select (similar to double, triple, and quadruple mouse click)
     TD_MULTI_MAX,
     TD_MULTI_RSTR,
-    TD_OOPS,
     TD_PEMDAS,
     TD_DOTEQL,
     TD_F6_F16,
@@ -203,8 +202,6 @@ enum {
 // } td_tap_t;
 
 // Functions associated with individual tap dances
-void oopsy_finished(qk_tap_dance_state_t *state, void *user_data);
-void oopsy_reset(qk_tap_dance_state_t *state, void *user_data);
 void tgl_select(qk_tap_dance_state_t *state, void *user_data);
 void multi_max_each(qk_tap_dance_state_t *state, void *user_data);
 void multi_rst_each(qk_tap_dance_state_t *state, void *user_data);

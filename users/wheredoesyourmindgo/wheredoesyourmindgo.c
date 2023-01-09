@@ -8,6 +8,7 @@
 #include "features/cmd_tab_switcher.h"
 #include "features/symbol_rolls.h"
 #include "features/layer_lock.h"
+#include "features/hide_and_mute.h"
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -95,80 +96,6 @@ void tap_code_no_mod(uint8_t code) {
 // }
 
 
-void oops_finished(qk_tap_dance_state_t *state, void *user_data) {
-    if (!state->pressed && !state->interrupted && state->count == 1) {
-        // if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX))) {
-        //     tap_code16_no_mod(OS_DRKMD_TGL);
-        // } else if (MODS_GUI) {
-        //     // hide works well during command-tab switching (hide & un-hide) and independently (hide)
-        //     tap_code(KC_H);
-        // } else if (MODS_CTRL) {
-        //     tap_code16_no_mod(ZOOM_RESET);
-        // } else if (MODS_ALT) {
-        //     tap_code16_no_mod(ZOOM_RESET_APP);
-        // } else if (IS_LAYER_ON(AUX)) {
-        //     if (MODS_SFT) {
-        //         tap_code16_no_mod(LGUI(KC_S));
-        //     } else {
-        //         tap_code16(LGUI(KC_W));
-        //     }
-        // } else if (IS_LAYER_ON(HRDWR)) {
-        //     if (MODS_SFT) {
-        //         tap_code_no_mod(KC_END);
-        //     } else {
-        //         tap_code(KC_HOME);
-        //     }
-        // } else if (IS_LAYER_ON(FUNCXTR)) {
-        //     tap_code(KC_BTN1);
-        // } else {
-            tap_code(KC_MUTE);
-        // }
-    } else if (!state->pressed && !state->interrupted && state->count >= 2) {
-        // if (MODS_SFT) {
-        //     // nothing
-        // } else if (MODS_GUI) {
-        //     // if native cmd tab is not open this will close the app behind the focused app which is wonky since the first app will get hidden, so only run if cmd+tab is open
-        //     if (is_cmd_tab_active) {
-        //         tap_code(KC_Q);
-        //     }
-        // } else if (MODS_CTRL) {
-        //     // nothing
-        // } else if (MODS_ALT) {
-        //     // nothing
-        // } else if (IS_LAYER_ON(AUX)) {
-        //     // nothing
-        // } else if (IS_LAYER_ON(HRDWR)) {
-        //     // nothing
-        // } else if (IS_LAYER_ON(FUNCXTR)) {
-        //     // nothing
-        // } else {
-            // hide window first, then mute
-            tap_code16(LGUI(KC_H));  // Hide Active Window
-            // KC_MUTE will toggle, instead, lower volume
-            int i;
-            for (i = 1; i <= 20; ++i) {
-                tap_code(KC_VOLD);
-            }
-        // }
-    } else {
-        #if defined EXECUTE_ON_FUNC
-            register_code(KC_EXEC);
-        #endif
-        layer_on(FUNC);
-    }
-}
-
-void oops_reset(qk_tap_dance_state_t *state, void *user_data) {
-    // if (state->pressed || state->interrupted) {
-    if (IS_LAYER_ON(FUNC) && !is_layer_locked(FUNC)) {
-        layer_off(FUNC);
-    }
-    #if defined EXECUTE_ON_FUNC
-        unregister_code(KC_EXEC);
-    #endif
-    // }
-}
-
 void pemdas_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (state->count) {
         case 1:
@@ -252,7 +179,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
     [TD_MULTI_MAX] = ACTION_TAP_DANCE_FN_ADVANCED(multi_max_each, NULL, NULL),
     [TD_MULTI_RSTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_rst_each, NULL, NULL),
-    [TD_OOPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, oops_finished, oops_reset),
     [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL),
     [TD_DOTEQL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, doteql_finished, NULL),
 };
@@ -368,9 +294,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_cmd_tab_switcher(keycode, record)) { return false; }
     if (!process_oneshot_mods(keycode, record)) { return false; }
     if (!process_symbol_rolls(keycode, record, SYMBL)) { return false; }
+    if (!hide_and_mute(keycode, record, LT(FUNC,KC_MUTE))) { return false; }
+
 
     switch (keycode) {
-
         // case DISP_FDIM:
         //     if (record->event.pressed) {
         //         int i;
@@ -387,24 +314,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //         }
         //     }
 
-        case LT(FUNCXTR, KC_RIGHT):
-        case LT(FUNCXTR, KC_SLSH):
-            if (record->event.pressed) {
-                #if defined EXECUTE_ON_FUNC
-                // Only on hold during LT(FUNCXTR)
-                if (!(record->tap.count > 0)) {
-                    register_code(KC_EXEC);
-                }
-                #endif
-                // return true
-            } else {
-                #if defined EXECUTE_ON_FUNC
-                if (!(record->tap.count > 0)) {
-                    unregister_code(KC_EXEC);
-                }
-                #endif
-            }
-            break;
         case TLNG_LFT:
             if (record->event.pressed) {
                 clear_oneshot_mods();
@@ -615,31 +524,28 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
     state = update_tri_layer_state(state, NUMNAV, AUX, OS);
 
-    switch (get_highest_layer(state)) {
-        case BASE:
+    // Use `static` variable to remember the previous status.
+    static bool func_on = false;
+
+    if (func_on != (IS_LAYER_ON_STATE(state, FUNC) || (IS_LAYER_ON_STATE(state, FUNCXTR)))) {
+        func_on = !func_on;
+        if (func_on) {
+            // Just entered one of the FUNC layers.
             #if defined EXECUTE_ON_FUNC
-                unregister_code(KC_EXEC);
+            register_code(KC_EXEC);
             #endif
-            #ifdef KEY_LOCK_ENABLE
-                 cancel_key_lock();
-            #endif
-            break;
-        case FUNC:
-        case FUNCXTR:
-            // don't unregister_code(KC_EXEC) on this layer
-            #ifdef KEY_LOCK_ENABLE
-                 cancel_key_lock();
-            #endif
-            break;
-        default: //  for any other layers
+        } else {
+            // Just exited the one of FUNC layers.
             #if defined EXECUTE_ON_FUNC
-                unregister_code(KC_EXEC);
+            unregister_code(KC_EXEC);
             #endif
-            #ifdef KEY_LOCK_ENABLE
-                 cancel_key_lock();
-            #endif
-            break;
+        }
     }
+
+    // always call cancel_key_lock()
+    #ifdef KEY_LOCK_ENABLE
+    cancel_key_lock();
+    #endif
 
     return state;
 }
@@ -736,7 +642,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_TGL_SEL):
         case TD(TD_PEMDAS):
         case TD(TD_DOTEQL):
-        case TD(TD_OOPS):
             return 225;
         case TD(TD_MULTI_MAX):
         case TD(TD_MULTI_RSTR):

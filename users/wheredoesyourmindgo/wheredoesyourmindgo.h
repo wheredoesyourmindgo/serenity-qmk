@@ -93,6 +93,7 @@
 #define WNDW_RGNT_THRD LCA(KC_G)    // Right third
 #define WNDW_LFT_HLF LCA(KC_LEFT)   // Left half
 #define WNDW_CNTR_HLF HYPR(KC_G)    // Center
+#define WNDW_LST HYPR(KC_V)         // Last
 #define WNDW_RGHT_HLF LCA(KC_RGHT)  // Right half
 #define WNDW_TOP_HLF LCA(KC_UP)     // Top half
 #define WNDW_BTTM_HLF LCA(KC_DOWN)  // Bottom half
@@ -105,12 +106,12 @@
 #define WNDW_TOP_RGHT LCA(KC_I)     // Top right
 #define WNDW_BTM_LFT LCA(KC_J)      // Bottom left
 #define WNDW_BTM_RGHT LCA(KC_K)     // Bottom right
-// #define WNDW_FST_FRTH HYPR(KC_Z)    // First fourth
-// #define WNDW_SCND_FRTH HYPR(KC_X)   // Second fourth
-// #define WNDW_THRD_FRTH HYPR(KC_C)   // Third fourth
-// #define WNDW_FRTH_FRTH HYPR(KC_D)   // Fourth fourth
-// #define WNDW_FST_TFRTH HYPR(KC_LBRC)   // First three-fourth
-// #define WNDW_LST_TFRTH HYPR(KC_RBRC)   // Last three-fourth
+// #define WNDW_FST_FRTH HYPR(KC_?)    // First fourth
+// #define WNDW_SCND_FRTH HYPR(KC_?)   // Second fourth
+// #define WNDW_THRD_FRTH HYPR(KC_?)   // Third fourth
+// #define WNDW_FRTH_FRTH HYPR(KC_?)   // Fourth fourth
+// #define WNDW_FST_TFRTH HYPR(KC_?)   // First three-fourth
+// #define WNDW_LST_TFRTH HYPR(KC_?)   // Last three-fourth
 
 // OS (MacOS)
 #define OS_PRV_SPC LCTL(KC_LEFT)               // Previous Space
@@ -132,10 +133,11 @@
 // #define OS_NXT_APP LGUI(KC_TAB) // Next App Window
 // #define OS_PRVS_APP SGUI(KC_TAB) // Previous App Window
 #define OS_NXT_APP_WNDW LGUI(KC_GRV)    // Next (Same)App Window
-#define OS_PRV_APP_WNDW LGUI(KC_TILD)  // Previous (Same)App Window
+#define OS_PRV_APP_WNDW LGUI(KC_TILD)   // Previous (Same)App Window
 #define OS_NXT_WNDW LCTL(KC_F4)         // Next Window
 #define OS_PRVS_WNDW LSFT(LCTL(KC_F4))  // Previous Window
 #define OS_SPTLGHT LGUI(KC_SPC)         // Spotlight
+#define OS_SPTLGHT_FNDR LALT(LGUI(KC_SPC))    // Spotlight in new Finder window
 #define OS_BCK LGUI(KC_LBRC)            // Back
 #define OS_FWD LGUI(KC_RBRC)            // Forward
 #define OS_BCK_FLDR LGUI(KC_UP)         // Back Folder
@@ -149,10 +151,12 @@
 #define OS_DRKMD_TGL HYPR(KC_D)              // Toggle Dark Mode via AppleScript
 #define OS_MAIL HYPR(KC_J)                   // Show Mail via Service
 #define OS_WEB HYPR(KC_W)                    // Show Web Browser via Service
-#define OS_CODE HYPR(KC_V)                   // Show VSCode via Service
+// #define OS_CODE HYPR(KC_C)                   // Show VSCode via Service
 #define OS_WEB_DEV HYPR(KC_F)                // Show Firefox Developer Edition via Service
 #define OS_FLLSCRN LCTL(LGUI(KC_F))          // Fullscreen (green button)
 #define OS_MIN LGUI(KC_M)                    // Minimize (yellow button)
+#define OS_TL_WNDW_L HYPR(KC_LBRC)           // Tile Window Left (split screen)
+#define OS_TL_WNDW_R HYPR(KC_RBRC)           // Tile Window Right (split screen)
 #define OS_CLOSE LGUI(KC_W)                  // Close active app
 #define OS_CLOSE_WIN LGUI(LSFT(KC_W))        // Close win active app (red button-ish)
 #define OS_CLOSE_ALL LGUI(LSFT(LALT(KC_W)))  // Close all win active app
@@ -171,118 +175,30 @@
 
 #define PRV_APP LGUI(KC_TAB)
 
+// Long taps
+#define QUOT_LP LT(0, KC_QUOT)
+#define DOT_LP LT(0, KC_DOT)
+#define MSN_LP_FLLSCRN LT(0, KC_1) // Using non-basic keycode with long press so utility func will not work here, see https://getreuer.info/posts/keyboards/triggers/index.html#tap-vs.-long-press for more info
+#define WNDW_LP_MAX LT(0, KC_2)
+#define WNDW_LP_RST LT(0, KC_3)
+#define WNDW_LP_CNTR LT(0, KC_4)
+#define WNDW_LP_SMLR LT(0, KC_5)
+#define WNDW_LP_LGR LT(0, KC_6)
+#define PRV_SPC_LP LT(0, KC_7)
+#define NXT_SPC_LP LT(0, KC_8)
+#define TGL_SELECT_LP LT(0, KC_9)
+
 enum layers { BASE, QWRTY, NUMNAV, SYMBL, MOUSE, AUX, HRDWR, FUNC, FUNCXTR, OS };
 
-enum custom_keycodes { CMD_TAB_PRV = SAFE_RANGE, CAPS_SENTENCE, TGL_LYT, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, WNDW_FSCRN, TLNG_LFT, TLNG_RGHT, XWNDW_MAX, WNDW_LFT, WNDW_RGHT, WNDW_ILFT, WNDW_IRGHT, OS_BSPC, OS_DEL, OS_BCK_FWD, LLOCK, ENC_BTN, SHAKE_MOUSE, NO_VOL};
-
-// Tap Dance declarations
-enum {
-    TD_TGL_SEL,  // Toggle Select (similar to double, triple, and quadruple mouse click)
-    TD_MULTI_MAX,
-    TD_MULTI_RSTR,
-    TD_PEMDAS,
-    TD_DOTEQL,
-    TD_F6_F16,
-    TD_F7_F17,
-    TD_F8_F18,
-    TD_F9_F19,
-    TD_F10_F20,
-    TD_F11_F21,
-    TD_F12_F22,
-    TD_F13_F23,
-    TD_F14_F24
+enum custom_keycodes {
+    CMD_TAB_PRV = SAFE_RANGE, TGL_LYT, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL,
+    XOSM_RSFT, XOSM_RGUI, XOSM_RALT, XOSM_RCTL, WNDW_FSCRN, OS_BSPC, OS_DEL, OS_BCK_FWD, LLOCK, ENC_BTN, SHAKE_MOUSE, NO_VOL
 };
 
-// Tap dance state
-// typedef enum { TD_NONE, TD_INTERRUPTED, TD_NOT_INTERRUPTED } td_state_t;
-
-// typedef struct {
-//     bool    is_press_action;
-//     uint8_t state;
-// } td_tap_t;
-
-// Functions associated with individual tap dances
-void tgl_select(qk_tap_dance_state_t *state, void *user_data);
-void multi_max_each(qk_tap_dance_state_t *state, void *user_data);
-void multi_rst_each(qk_tap_dance_state_t *state, void *user_data);
-void pemdas_finished(qk_tap_dance_state_t *state, void *user_data);
-
+bool process_tap_or_long_press_key(keyrecord_t* record, uint16_t long_press_keycode);
 void tap_code_no_mod(uint8_t);
 void tap_code16_no_mod(uint16_t);
 bool encoder_update_keymap(uint8_t index, bool clockwise);
-
-#if defined PLANCK_KEYBOARD
-#define LAYOUT_4x12(k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, k0a, k0b, k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, k1a, k1b, k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, k2a, k2b, k30, k31, k32, k33, k34, k35, k36, k37, k38, k39, k3a, k3b)      \
-        {                                                                                                                                                                                                                                                                    \
-            {k00, k01, k02, k03, k04, k05}, {k10, k11, k12, k13, k14, k15}, {k20, k21, k22, k23, k24, k25}, {k30, k31, k32, k39, k3a, k3b}, {k06, k07, k08, k09, k0a, k0b}, {k16, k17, k18, k19, k1a, k1b}, {k26, k27, k28, k29, k2a, k2b}, { k36, k37, k38, k33, k34, k35 } \
-        }
-#elif defined TECHNIK_KEYBOARD
-#define LAYOUT_4x12(K00, K01, K02, K03, K04, K05, K06, K07, K08, K09, K10, K11, K12, K13, K14, K15, K16, K17, K18, K19, K20, K21, K22, K23, K24, K25, K26, K27, K28, K29, K30, K31, K32, K33, K34, K35, K36, K37, K38, K39, K40, K41, K42, K43, K44, K45, K46, K47) \
-        {                                                                                                                                                                                                                                                               \
-            {K00, K01, K02, K03, K04, K05, K06, K07, K08, K09, K10, K11}, {K12, K13, K14, K15, K16, K17, K18, K19, K20, K21, K22, K23}, {K24, K25, K26, K27, K28, K29, K30, K31, K32, K33, K34, K35}, { K36, K37, K38, K39, K40, K41, K42, K43, K44, K45, K46, K47 }    \
-        }
-#elif defined CORNELIUS_KEYBOARD
-#define LAYOUT_4x12( \
-	K000, K001, K002, K003, K004, K005, K006, K007, K008, K009, K010, K011, \
-	K100, K101, K102, K103, K104, K105, K106, K107, K108, K109, K110, K111, \
-	K200, K201, K202, K203, K204, K205, K206, K207, K208, K209, K210, K211, \
-	K300, K301, K302, K303, K304, K305, K306, K307, K308, K309, K310, K311 \
-) \
-{ \
-	{ K000,  K001,  K002,  K003,  K004,  K005,  K006,  K007,  K008,  K009,  K010,  K011 }, \
-	{ K100,  K101,  K102,  K103,  K104,  K105,  K106,  K107,  K108,  K109,  K110,  K111 }, \
-	{ K200,  K201,  K202,  K203,  K204,  K205,  K206,  K207,  K208,  K209,  K210,  K211 }, \
-	{ K300,  K301,  K302,  K303,  K304,  K305,  K306,  K307,  K308,  K309,  K310,  K311 } \
-}
-#elif defined SIGNUM_KEYBOARD
-#define LAYOUT_4x12(K000, K001, K002, K003, K004, K005, K006, K007, K008, K009, K010, K011, K100, K101, K102, K103, K104, K105, K106, K107, K108, K109, K110, K111, K200, K201, K202, K203, K204, K205, K206, K207, K208, K209, K210, K211, K300, K301, K302, K303, K304, K305, K306, K307, K308, K309, K310, K311) \
-        {                                                                                                                                                                                                                                                                                                               \
-            {K000, K001, K002, K003, K004, K005, K006, K007, K008, K009, K010, K011}, {K100, K101, K102, K103, K104, K105, K106, K107, K108, K109, K110, K111}, {K200, K201, K202, K203, K204, K205, K206, K207, K208, K209, K210, K211}, { K300, K301, K302, K303, K304, K305, K306, K307, K308, K309, K310, K311 }    \
-        }
-#elif defined RISTRETTO_KEYBOARD
-#define LAYOUT_4x12_enc( \
-		K000, K001, K002, K003, K004, K005, 	  K007, K008, K009, K010, K011, K012, \
-		K100, K101, K102, K103, K104, K105,		  K107, K108, K109, K110, K111, K112, \
-		K200, K201, K202, K203, K204, K205,		  K207, K208, K209, K210, K211, K212, \
-		K300, K301, K302, K303, K304, K305, K306, K307, K308, K309, K310, K311, K312  \
-) { \
-		{K000, K001, K002, K003, K004, K005, KC_NO, K007, K008, K009, K010, K011, K012}, \
-		{K100, K101, K102, K103, K104, K105, KC_NO, K107, K108, K109, K110, K111, K112}, \
-		{K200, K201, K202, K203, K204, K205, KC_NO, K207, K208, K209, K210, K211, K212}, \
-		{K300, K301, K302, K303, K304, K305, K306 , K307, K308, K309, K310, K311, K312}  \
-}
-#elif defined VITAMINS_INCLUDED_KEYBOARD
-#define LAYOUT_4x12( \
-	L00, L01, L02, L03, L04, L05, R00, R01, R02, R03, R04, R05, \
-	L10, L11, L12, L13, L14, L15, R10, R11, R12, R13, R14, R15, \
-	L20, L21, L22, L23, L24, L25, R20, R21, R22, R23, R24, R25, \
-	L30, L31, L32, L33, L34, L35, R30, R31, R32, R33, R34, R35 \
-	) \
-	{ \
-		{ L00, L01, L02, L03, L04, L05 }, \
-		{ L10, L11, L12, L13, L14, L15 }, \
-		{ L20, L21, L22, L23, L24, L25 }, \
-		{ L30, L31, L32, L33, L34, L35 }, \
-		{ R00, R01, R02, R03, R04, R05 }, \
-		{ R10, R11, R12, R13, R14, R15 }, \
-		{ R20, R21, R22, R23, R24, R25 }, \
-		{ R30, R31, R32, R33, R34, R35 } \
-  }
-#elif defined QUARK_KEYBOARD
-#define LAYOUT_4x12( \
-    k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, k0A, k0B, \
-    k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, k1A, k1B, \
-    k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, k2A, k2B, \
-    k30, k31, k32, k33, k34, k35, k36, k37, k38, k39, k3A, k3B \
-) { \
-    { k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, k0A, k0B }, \
-    { k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, k1A, k1B }, \
-    { k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, k2A, k2B }, \
-    { k30, k31, k32, k33, k34, k35, k36, k37, k38, k39, k3A, k3B }, \
-    { XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX } \
-}
-
-#endif
 
 
 #endif

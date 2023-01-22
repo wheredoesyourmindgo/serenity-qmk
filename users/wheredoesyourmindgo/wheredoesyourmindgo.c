@@ -17,6 +17,18 @@
 
 // extern int retro_tapping_counter;
 
+// Helper for implementing tap vs. long-press keys. Given a tap-hold
+// key event, replaces the hold function with `long_press_keycode`.
+bool process_tap_or_long_press_key(
+    keyrecord_t* record, uint16_t long_press_keycode) {
+  if (record->tap.count == 0) {  // Key is being held.
+    if (record->event.pressed) {
+      tap_code16(long_press_keycode);
+    }
+    return false;  // Skip default handling.
+  }
+  return true;  // Continue default handling.
+}
 
 
 void tap_code16_no_mod(uint16_t code) {
@@ -72,117 +84,6 @@ void tap_code_no_mod(uint8_t code) {
         tap_code(code);
     }
 }
-
-// void oopsy_finished(qk_tap_dance_state_t *state, void *user_data) {
-//     if (!state->pressed && !state->interrupted && state->count == 1) {
-//         // KC_MUTE will toggle, instead, lower volume
-//         int i;
-//         for (i = 1; i <= 20; ++i) {
-//             // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
-//             tap_code(KC_VOLDOWN);  // Mute audio (needed for Planck, not sure why)
-//         }
-//     } else if (!state->pressed && !state->interrupted && state->count >= 2) {
-//         // hide window first, then mute
-//         tap_code16(LGUI(KC_H));  // Hide Active Window
-//         // KC_MUTE will toggle, instead, lower volume
-//         int i;
-//         for (i = 1; i <= 20; ++i) {
-//             // tap_code(KC_VOLD); // Mute audio (works w/ Boardwalk)
-//             tap_code(KC_VOLDOWN);  // Mute audio (needed for Planck, not sure why)
-//         }
-//     } else {
-//         layer_on(MOUSE);
-//     }
-// }
-
-
-void pemdas_finished(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 1:
-            tap_code16(KC_ASTERISK);
-            break;
-        case 2:
-            tap_code(KC_SLASH);
-            break;
-        case 3:
-        case 4:
-        case 5:
-            tap_code16(KC_PLUS);
-            break;
-    }
-}
-
-void doteql_finished(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 1:
-            tap_code(KC_DOT);
-            break;
-        case 2:
-            tap_code(KC_EQL);
-            break;
-        case 3:
-        case 4:
-        case 5:
-            tap_code16(KC_PERC);
-            break;
-    }
-}
-
-
-
-void tgl_select(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 1:
-            // right once fixes toggle select on word/line beginnings
-            tap_code(KC_RIGHT);
-            tap_code16(LALT(KC_LEFT));
-            tap_code16(LALT(LSFT(KC_RGHT)));
-            break;
-        case 2:
-            tap_code(KC_RIGHT);
-            tap_code16(LGUI(KC_LEFT));
-            tap_code16(LGUI(LSFT(KC_RGHT)));
-            break;
-        case 3:
-            tap_code(KC_RIGHT);
-            tap_code16(LGUI(KC_UP));
-            tap_code16(LGUI(LSFT(KC_DOWN)));
-            reset_tap_dance(state);
-            break;
-    }
-}
-
-void multi_rst_each(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 1:
-            tap_code16_no_mod(WNDW_CNTR);
-            break;
-        case 2:
-            tap_code16_no_mod(WNDW_RSTR);
-            break;
-    }
-}
-
-void multi_max_each(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 1:
-            tap_code16_no_mod(WNDW_VRT_MAX);
-            break;
-        case 2:
-            tap_code16_no_mod(WNDW_MAX);
-            break;
-    }
-}
-
-// Tap once for Word Select, twice for Line Select, three times for all
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_TGL_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(tgl_select, NULL, NULL),
-    [TD_MULTI_MAX] = ACTION_TAP_DANCE_FN_ADVANCED(multi_max_each, NULL, NULL),
-    [TD_MULTI_RSTR] = ACTION_TAP_DANCE_FN_ADVANCED(multi_rst_each, NULL, NULL),
-    [TD_PEMDAS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pemdas_finished, NULL),
-    [TD_DOTEQL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, doteql_finished, NULL),
-};
-// end of Tap Dance config
 
 
 // Custom Shift Keys
@@ -298,89 +199,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 
     switch (keycode) {
-        // case DISP_FDIM:
-        //     if (record->event.pressed) {
-        //         int i;
-        //         for (i = 1; i <= 20; ++i) {
-        //             tap_code(DISP_DIM);
-        //         }
-        //     }
-        //     break;
-        // case DISP_FBRI:
-        //     if (record->event.pressed) {
-        //         int i;
-        //         for (i = 1; i <= 20; ++i) {
-        //             tap_code(DISP_BRI);
-        //         }
-        //     }
-
-        case TLNG_LFT:
-            if (record->event.pressed) {
-                clear_oneshot_mods();
-                if (MODS_LSFT) {
-                    tap_code16_no_mod(WNDW_LFT_TTHRD);
-                } else if (MODS_LGUI) {
-                    tap_code16_no_mod(WNDW_LFT_HLF);
-                } else if (MODS_LALT) {
-                    tap_code16_no_mod(WNDW_LFT_THRD);
-                } else if (MODS_LCTRL) {
-                    // tap_code16_no_mod(TLNG_THRW_LFT);
-                } else {
-                    tap_code16(WNDW_ALMST_MAX);
-                }
-            }
-            break;
-        /*
-        case TLNG_ILFT:
-            if (record->event.pressed) {
-                clear_oneshot_mods();
-                if (MODS_LSFT) {
-                    tap_code16_no_mod(WNDW_SMLLR);
-                } else if (MODS_LGUI) {
-                    tap_code16_no_mod(WNDW_BTTM_HLF);
-                } else if (MODS_LALT) {
-
-                } else if (MODS_LCTRL) {
-                    // tap_code16_no_mod(WNDW_RGNT_THRD);
-                } else {
-                    tap_code16(WNDW_CNTR_THRD);
-                }
-            }
-            break;
-        case TLNG_IRGHT:
-            if (record->event.pressed) {
-                clear_oneshot_mods();
-                if (MODS_LSFT) {
-                    tap_code16_no_mod(WNDW_LRGR);
-                } else if (MODS_LGUI) {
-                    tap_code16_no_mod(WNDW_TOP_HLF);
-                } else if (MODS_LALT) {
-                    // tap_code16_no_mod(WNDW_TOP_HLF);
-                } else if (MODS_LCTRL) {
-                    // tap_code16_no_mod();
-                } else {
-                    tap_code16(WNDW_CNTR_HLF);
-                }
-            }
-            break;
-        */
-        case TLNG_RGHT:
-            if (record->event.pressed) {
-                clear_oneshot_mods();
-                if (MODS_LSFT) {
-                    tap_code16_no_mod(WNDW_RGHT_TTHRD);
-                } else if (MODS_LGUI) {
-                    tap_code16_no_mod(WNDW_RGHT_HLF);
-                } else if (MODS_LALT) {
-                    tap_code16_no_mod(WNDW_RGNT_THRD);
-                } else if (MODS_LCTRL) {
-                    // tap_code16_no_mod();
-                } else {
-                    tap_code16(WNDW_ALMST_MAX);
-                    tap_code16(WNDW_VRT_MAX);
-                }
-            }
-            break;
         case TGL_LYT:
             if (record->event.pressed) {
                 layer_off(HRDWR);
@@ -412,16 +230,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 register_code(KC_DELETE);
             } else {
                 unregister_code(KC_DELETE);
-            }
-            break;
-        case OS_BCK_FWD:
-            if (record->event.pressed) {
-                clear_oneshot_mods();
-                if (MODS_SFT) {
-                    tap_code16_no_mod(LGUI(KC_RIGHT_BRACKET));
-                } else {
-                    tap_code16(LGUI(KC_LEFT_BRACKET));
-                }
             }
             break;
         case ENC_BTN:
@@ -473,6 +281,171 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 unregister_code16(KC_MS_ACCEL1);
             }
+            break;
+        case WNDW_LP_MAX:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    tap_code16(WNDW_MAX);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    tap_code16(WNDW_VRT_MAX);
+                }
+            }
+            return false;  // Skip default handling.
+            break;
+        case WNDW_LP_CNTR:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    tap_code16(WNDW_CNTR);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    tap_code16(WNDW_ALMST_MAX);
+                }
+            }
+            return false;  // Skip default handling.
+            break;
+        case WNDW_LP_RST:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    tap_code16(WNDW_RSTR);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    tap_code16(WNDW_LST);
+                }
+            }
+            return false;  // Skip default handling.
+            break;
+        case WNDW_LP_SMLR:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    tap_code16(WNDW_SMLLR);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    tap_code16(WNDW_LFT_HLF);
+                }
+            }
+            return false;  // Skip default handling.
+            break;
+        case WNDW_LP_LGR:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    tap_code16(WNDW_LRGR);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    tap_code16(WNDW_RGHT_HLF);
+                }
+            }
+            return false;  // Skip default handling.
+            break;
+        case MSN_LP_FLLSCRN:  // Mission Control on tap, OS full screen on long press
+            // return process_tap_or_long_press_key(record, OS_FLLSCRN);
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    tap_code16(OS_MSN_CNTRL);
+                } else {
+                    // Handle tap release event...
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    tap_code16(OS_FLLSCRN);
+                } else {
+                    // Handle hold release event...
+                }
+            }
+            return false;  // Skip default handling.
+            break;
+        case PRV_SPC_LP:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    tap_code16(OS_PRV_SPC);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    tap_code16(OS_TL_WNDW_L);
+                }
+            }
+            return false;  // Skip default handling.
+            break;
+        case NXT_SPC_LP:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    tap_code16(OS_NXT_SPC);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    tap_code16(OS_TL_WNDW_R);
+                }
+            }
+            return false;  // Skip default handling.
+            break;
+        case QUOT_LP:
+            return process_tap_or_long_press_key(record, KC_DOUBLE_QUOTE);
+            break;
+        case DOT_LP:
+            return process_tap_or_long_press_key(record, KC_COMM);
+            break;
+        // Cancel Layer Lock on Escape
+        case KC_ESC:
+            if (record->event.pressed) {
+                const uint8_t layer = get_highest_layer(layer_state);
+                if (is_layer_locked(layer)) {
+                    layer_lock_off(layer);
+                    return false;  // Skip default handling.
+                }
+            }
+            break;
+        case LT(NUMNAV, KC_ESC):
+            if (record->tap.count > 0) {
+                if (record->event.pressed) {
+                    const uint8_t layer = get_highest_layer(layer_state);
+                    if (is_layer_locked(layer)) {
+                        layer_lock_off(layer);
+                        return false;  // Skip default handling.
+                    }
+                }
+            }
+            break;
+        case TGL_SELECT_LP:
+            if (record->tap.count > 0) {
+                if (record->event.pressed) {
+                    // right once fixes toggle select on word/line beginnings
+                    tap_code(KC_RIGHT);
+                    tap_code16(LALT(KC_LEFT));
+                    tap_code16(LALT(LSFT(KC_RGHT)));
+                }
+            } else {
+                if (record->event.pressed) {
+                    tap_code(KC_RIGHT);
+                    tap_code16(LGUI(KC_LEFT));
+                    tap_code16(LGUI(LSFT(KC_RGHT)));
+                    // select all
+                    // tap_code(KC_RIGHT);
+                    // tap_code16(LGUI(KC_UP));
+                    // tap_code16(LGUI(LSFT(KC_DOWN)));
+                }
+            }
+            return false;  // Skip default handling.
             break;
     }
     return true;
@@ -639,13 +612,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(HRDWR, KC_SPC):
             return 350;
-        case TD(TD_TGL_SEL):
-        case TD(TD_PEMDAS):
-        case TD(TD_DOTEQL):
-            return 225;
-        case TD(TD_MULTI_MAX):
-        case TD(TD_MULTI_RSTR):
-            return 300;
         default:
             return TAPPING_TERM;
     }

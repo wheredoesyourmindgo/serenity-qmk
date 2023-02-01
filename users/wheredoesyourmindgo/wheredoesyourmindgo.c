@@ -195,7 +195,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_cmd_tab_switcher(keycode, record)) { return false; }
     if (!process_oneshot_mods(keycode, record)) { return false; }
     if (!process_symbol_rolls(keycode, record, SYMBL)) { return false; }
-    if (!hide_and_mute(keycode, record, LT(FUNC,KC_MUTE))) { return false; }
+    if (!hide_and_mute(keycode, record, LT(MOUSE,KC_MUTE))) { return false; }
 
 
     switch (keycode) {
@@ -305,7 +305,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {                        // Key is being held.
                 if (record->event.pressed) {
                     // Handle hold press event...
-                    tap_code16(WNDW_ALMST_MAX);
+                    tap_code16(WNDW_LST);
                 }
             }
             return false;  // Skip default handling.
@@ -318,8 +318,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             } else {                        // Key is being held.
                 if (record->event.pressed) {
+                    tap_code16(WNDW_ALMST_MAX);
                     // Handle hold press event...
-                    tap_code16(WNDW_LST);
                 }
             }
             return false;  // Skip default handling.
@@ -484,10 +484,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void keyboard_post_init_user(void) {
 #ifdef QWERTY_BASE
-    // Call the post init code.
-    layer_off(BASE);
-    layer_on(QWRTY);
-    default_layer_set(QWRTY);
+// Call the post init code.
+layer_off(BASE);
+layer_on(QWRTY);
+default_layer_set(QWRTY);
 #endif
 }
 
@@ -496,11 +496,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     oneshot_mods_layer_state(state);
 
     state = update_tri_layer_state(state, NUMNAV, AUX, OS);
+    state = update_tri_layer_state(state, HRDWR, SYMBL, FUNC);
 
     // Use `static` variable to remember the previous status.
     static bool func_on = false;
 
-    if (func_on != (IS_LAYER_ON_STATE(state, FUNC) || (IS_LAYER_ON_STATE(state, FUNCXTR)))) {
+    if (func_on != IS_LAYER_ON_STATE(state, FUNC)) {
         func_on = !func_on;
         if (func_on) {
             // Just entered one of the FUNC layers.
@@ -540,7 +541,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
                 // tap_code16(LGUI(KC_TAB));
                 cmd_tab_next();
-            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(FUNCXTR))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(NUMPAD))) {
                 tap_code16_no_mod(DISP_BRI);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_IN);
@@ -558,7 +559,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 } else {
                     tap_code(KC_DOWN);
                 }
-            } else if (IS_LAYER_ON(FUNCXTR)) {
+            } else if (IS_LAYER_ON(NUMPAD)) {
                 if (MODS_SFT) {
                     tap_code(KC_WH_L);
                 } else {
@@ -572,7 +573,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
                 // tap_code16(LGUI(LSFT(KC_TAB)));
                 cmd_tab_previous();
-            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(FUNCXTR))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(NUMPAD))) {
                 tap_code16_no_mod(DISP_DIM);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_OUT);
@@ -590,7 +591,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 } else {
                     tap_code(KC_UP);
                 }
-            } else if (IS_LAYER_ON(FUNCXTR)) {
+            } else if (IS_LAYER_ON(NUMPAD)) {
                 if (MODS_SFT) {
                     tap_code(KC_WH_R);
                 } else {
@@ -657,8 +658,8 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
-        case LT(FUNCXTR, KC_RIGHT):
-        // case LT(FUNCXTR, KC_SLASH):
+        case LT(NUMPAD, KC_RIGHT):
+        case LT(NUMPAD, KC_SLASH): // why not
         case LT(HRDWR, KC_SPC):
         case LT(MOUSE, KC_MINUS):
             return false;

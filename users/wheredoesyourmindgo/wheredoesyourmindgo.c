@@ -447,6 +447,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;  // Skip default handling.
             break;
+        case LP_TAB:
+            if (record->tap.count > 0) {
+                if (record->event.pressed) {
+                    tap_code16(LGUI(KC_T));
+                }
+            } else {
+                if (record->event.pressed) {
+                    tap_code16(LGUI(KC_W));
+                }
+            }
+            return false;  // Skip default handling.
+            break;
     }
     return true;
 }

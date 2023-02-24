@@ -187,6 +187,7 @@
 #define PRV_SPC_LP LT(0, KC_7)
 #define NXT_SPC_LP LT(0, KC_8)
 #define TGL_SELECT_LP LT(0, KC_9)
+#define LP_TAB LT(0, KC_0)
 
 enum layers { BASE, QWRTY, NUMNAV, SYMBL, AUX, HRDWR, FUNC, MOUSE, NUMPAD, OS };
 

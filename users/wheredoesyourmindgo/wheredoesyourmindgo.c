@@ -652,17 +652,17 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        // Might roll through arrow keys
-        case RGUI_T(KC_LEFT):
-        case RALT_T(KC_DOWN):
-        case RCTL_T(KC_UP):
-            return true;
-        default:
-            return false;
-    }
-}
+// bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         // Might roll through arrow keys
+//         case RGUI_T(KC_LEFT):
+//         case RALT_T(KC_DOWN):
+//         case RCTL_T(KC_UP):
+//             return true;
+//         default:
+//             return false;
+//     }
+// }
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {

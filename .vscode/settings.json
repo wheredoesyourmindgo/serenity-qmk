@@ -40,5 +40,12 @@
         "RCTL",
         "RGUI",
         "RISTRETTO"
+    ],
+    "python.formatting.provider": "yapf",
+    "[json]": {
+        "editor.formatOnSave": false
+    },
+    "clangd.arguments": [
+        "--header-insertion=never"
     ]
 }

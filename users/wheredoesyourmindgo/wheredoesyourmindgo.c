@@ -3,7 +3,7 @@
 // #include "features/caps_sentence.h"
 #include "features/oneshot_mods.h"
 #include "features/custom_shift_keys.h"
-#include "features/custom_gui_keys.h"
+// #include "features/custom_gui_keys.h"
 #include "features/magic_shift.h"
 #include "features/cmd_tab_switcher.h"
 #include "features/symbol_rolls.h"
@@ -93,8 +93,9 @@ const custom_shift_key_t custom_shift_keys[] = {
 //   {KC_8, KC_LEFT_PAREN}, // Shift 8 is (
 //   {KC_9, KC_RIGHT_PAREN}, // Shift 9 is )
 //   {KC_0, KC_ASTERISK}, // Shift 0 is *
-  {KC_BACKSPACE, LALT(KC_BACKSPACE)}, // Shift Backspace is delete previous word
-  {KC_DELETE, LALT(KC_DELETE)}, // Shift Delete is delete previous word
+//   {KC_BACKSPACE, LALT(KC_BACKSPACE)}, // Shift Backspace is delete previous word
+//   {KC_DELETE, LALT(KC_DELETE)}, // Shift Delete is delete previous word
+  {KC_BACKSPACE, KC_DELETE} // Shift Delete is delete forward
 //   {KC_F6, KC_F16}, // Shift F-* is +10 F-*
 //   {KC_F7, KC_F17},
 //   {KC_F8, KC_F18},
@@ -109,11 +110,11 @@ uint8_t NUM_CUSTOM_SHIFT_KEYS =
     sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
 
 // Custom Gui Keys
-const custom_gui_key_t custom_gui_keys[] = {
-  {KC_DELETE, LCTL(KC_K)}, // Gui Delete is delete line forward
-};
-uint8_t NUM_CUSTOM_GUI_KEYS =
-    sizeof(custom_gui_keys) / sizeof(custom_gui_key_t);
+// const custom_gui_key_t custom_gui_keys[] = {
+//   {KC_DELETE, LCTL(KC_K)}, // Gui Delete is delete line forward
+// };
+// uint8_t NUM_CUSTOM_GUI_KEYS =
+//     sizeof(custom_gui_keys) / sizeof(custom_gui_key_t);
 
 bool caps_word_press_user(uint16_t keycode) {
     switch (keycode) {
@@ -180,6 +181,14 @@ bool caps_word_press_user(uint16_t keycode) {
 
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (keycode == KC_BSPC) {
+        if (record->event.pressed) {
+          if (MODS_SFT && MODS_GUI) {
+            tap_code16_no_mod(LCTL(KC_K));  // Gui shift backspace becomes delete line forward
+            return false;            // don't continue with custom shift keycodes below
+          }
+        }
+    }
     // only activate on base and qwerty layers
     if (IS_LAYER_ON(BASE) || IS_LAYER_ON(QWRTY)) {
         if (!process_caps_word(keycode, record)) { return false; }
@@ -187,7 +196,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // if (!process_caps_sentence(keycode, record, CAPS_SENTENCE)) { return false; }
     // don't activate on qwerty layer
     if (!IS_LAYER_ON(QWRTY)) {
-        if (!process_custom_gui_keys(keycode, record)) { return false; }
+        // if (!process_custom_gui_keys(keycode, record)) { return false; }
         if (!process_custom_shift_keys(keycode, record)) { return false; }
     }
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
@@ -507,8 +516,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     cmd_tab_switcher_layer_state(state);
     oneshot_mods_layer_state(state);
 
-    state = update_tri_layer_state(state, NUMNAV, AUX, OS);
-    state = update_tri_layer_state(state, HRDWR, SYMBL, FUNC);
+    state = update_tri_layer_state(state, NUMNAV, SYMBL, OS);
+    state = update_tri_layer_state(state, HRDWR, AUX, FUNC);
 
     // Use `static` variable to remember the previous status.
     static bool func_on = false;
@@ -553,7 +562,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
                 // tap_code16(LGUI(KC_TAB));
                 cmd_tab_next();
-            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(NUMPAD))) {
+            // } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(NUMPAD))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX))) {
                 tap_code16_no_mod(DISP_BRI);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_IN);
@@ -571,12 +581,12 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 } else {
                     tap_code(KC_DOWN);
                 }
-            } else if (IS_LAYER_ON(NUMPAD)) {
-                if (MODS_SFT) {
-                    tap_code(KC_WH_L);
-                } else {
-                    tap_code(KC_WH_U);
-                }
+            // } else if (IS_LAYER_ON(NUMPAD)) {
+            //     if (MODS_SFT) {
+            //         tap_code(KC_WH_L);
+            //     } else {
+            //         tap_code(KC_WH_U);
+            //     }
             } else {
                 tap_code16(KC_VOLU);
             }
@@ -585,7 +595,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 // use cmd tab switcher so that is_command_tab_active() can be used with encoder and double tap to solely close apps when cmd tab is actually in use
                 // tap_code16(LGUI(LSFT(KC_TAB)));
                 cmd_tab_previous();
-            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(NUMPAD))) {
+            // } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX)) && !(IS_LAYER_ON(NUMPAD))) {
+            } else if (MODS_SFT && !(IS_LAYER_ON(HRDWR)) && !(IS_LAYER_ON(AUX))) {
                 tap_code16_no_mod(DISP_DIM);
             } else if (MODS_CTRL) {
                 tap_code16_no_mod(ZOOM_OUT);
@@ -603,12 +614,12 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
                 } else {
                     tap_code(KC_UP);
                 }
-            } else if (IS_LAYER_ON(NUMPAD)) {
-                if (MODS_SFT) {
-                    tap_code(KC_WH_R);
-                } else {
-                    tap_code(KC_WH_D);
-                }
+            // } else if (IS_LAYER_ON(NUMPAD)) {
+            //     if (MODS_SFT) {
+            //         tap_code(KC_WH_R);
+            //     } else {
+            //         tap_code(KC_WH_D);
+            //     }
             } else {
                 tap_code16(KC_VOLD);
             }
@@ -624,6 +635,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(HRDWR, KC_SPC):
+        case LT(AUX, KC_SPC):
             return 350;
         default:
             return TAPPING_TERM;
@@ -633,8 +645,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key (quickly use a layer hold)
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(NUMNAV, KC_ESC): // quickly use numbers
-        case LT(SYMBL, KC_ENT): // quickly use symbols
+        // case LT(NUMNAV, KC_ESC): // quickly use numbers
+        // case LT(SYMBL, KC_ENT): // quickly use symbols
+        case RSFT_T(KC_ENT):  // quickly use right shift
             return true;
         default:
             return false;
@@ -644,8 +657,9 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 // Mirror settings for get_permissive_hold()
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(NUMNAV, KC_ESC):
-        case LT(SYMBL, KC_ENT):
+        // case LT(NUMNAV, KC_ESC):
+        // case LT(SYMBL, KC_ENT):
+        case RSFT_T(KC_ENT):  // quickly use right shift
             return true;
         default:
             return false;
@@ -670,9 +684,10 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
-        case LT(NUMPAD, KC_RIGHT):
-        case LT(NUMPAD, KC_SLASH): // why not
+        // case LT(NUMPAD, KC_RIGHT):
+        // case LT(NUMPAD, KC_SLASH): // why not
         case LT(HRDWR, KC_SPC):
+        case LT(AUX, KC_SPC):
         case LT(MOUSE, KC_MINUS):
             return false;
         // Force hold by default

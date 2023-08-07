@@ -424,17 +424,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case LT(NUMNAV, KC_ESC):
-            if (record->tap.count > 0) {
-                if (record->event.pressed) {
-                    const uint8_t layer = get_highest_layer(layer_state);
-                    if (is_layer_locked(layer)) {
-                        layer_lock_off(layer);
-                        return false;  // Skip default handling.
-                    }
-                }
-            }
-            break;
+        // case LT(NUMNAV, KC_ESC):
+        //     if (record->tap.count > 0) {
+        //         if (record->event.pressed) {
+        //             const uint8_t layer = get_highest_layer(layer_state);
+        //             if (is_layer_locked(layer)) {
+        //                 layer_lock_off(layer);
+        //                 return false;  // Skip default handling.
+        //             }
+        //         }
+        //     }
+        //     break;
         case TGL_SELECT_LP:
             if (record->tap.count > 0) {
                 if (record->event.pressed) {

@@ -100,19 +100,19 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
                 }
             }
             break;
-        case LT(NUMNAV, KC_ESC):
-            if (record->event.pressed) {
-                // Only on tap (ie. Not during LT(NUMNAV)
-                if (record->tap.count > 0) {
-                    // Cancel One Shot Mods (if active)
-                    if (ONESHOT_MODS_ACTIVE) {
-                        clear_oneshot_mods();
-                        // Only fire escape special mode is not active
-                        return false;
-                    }
-                }
-            }
-            break;
+        // case LT(NUMNAV, KC_ESC):
+        //     if (record->event.pressed) {
+        //         // Only on tap (ie. Not during LT(NUMNAV)
+        //         if (record->tap.count > 0) {
+        //             // Cancel One Shot Mods (if active)
+        //             if (ONESHOT_MODS_ACTIVE) {
+        //                 clear_oneshot_mods();
+        //                 // Only fire escape special mode is not active
+        //                 return false;
+        //             }
+        //         }
+        //     }
+        //     break;
     }
 
     return true;

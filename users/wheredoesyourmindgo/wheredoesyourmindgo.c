@@ -95,7 +95,7 @@ const custom_shift_key_t custom_shift_keys[] = {
 //   {KC_0, KC_ASTERISK}, // Shift 0 is *
 //   {KC_BACKSPACE, LALT(KC_BACKSPACE)}, // Shift Backspace is delete previous word
 //   {KC_DELETE, LALT(KC_DELETE)}, // Shift Delete is delete previous word
-  {KC_BACKSPACE, KC_DELETE} // Shift Delete is delete forward
+  {KC_BACKSPACE, KC_DELETE} // Shift Backspace is delete forward
 //   {KC_F6, KC_F16}, // Shift F-* is +10 F-*
 //   {KC_F7, KC_F17},
 //   {KC_F8, KC_F18},
@@ -181,10 +181,18 @@ bool caps_word_press_user(uint16_t keycode) {
 
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (keycode == KC_BSPC) {
+    if (keycode == KC_BACKSPACE) {
         if (record->event.pressed) {
           if (MODS_SFT && MODS_GUI) {
             tap_code16_no_mod(LCTL(KC_K));  // Gui shift backspace becomes delete line forward
+            return false;            // don't continue with custom shift keycodes below
+          }
+        }
+    }
+    if (keycode == KC_DELETE) {
+        if (record->event.pressed) {
+          if (MODS_GUI) {
+            tap_code16_no_mod(LCTL(KC_K));  // Gui delete becomes delete line forward
             return false;            // don't continue with custom shift keycodes below
           }
         }

@@ -1,16 +1,6 @@
 {
 	"files": [
 		{
-			"path": "keyboards/ristretto/keymaps/wheredoesyourmindgo/keymap.c",
-			"bookmarks": [
-				{
-					"line": 0,
-					"column": 0,
-					"label": "Ristretto"
-				}
-			]
-		},
-		{
 			"path": "keyboards/boardwalk/keymaps/wheredoesyourmindgo/keymap.c",
 			"bookmarks": [
 				{

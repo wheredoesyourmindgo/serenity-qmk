@@ -183,20 +183,28 @@ bool caps_word_press_user(uint16_t keycode) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (keycode == KC_BACKSPACE) {
         if (record->event.pressed) {
-          if (MODS_SFT && MODS_GUI) {
-            tap_code16_no_mod(LCTL(KC_K));  // Gui shift backspace becomes delete line forward
-            return false;            // don't continue with custom shift keycodes below
-          }
+            if (MODS_SFT && MODS_GUI) {
+                tap_code16_no_mod(LCTL(KC_K));  // Gui shift backspace becomes delete line forward
+                return false;            // don't continue with custom shift keycodes below
+            }
+        } else {
+            if (ONESHOT_MODS_ACTIVE) {
+                clear_oneshot_mods();
+            }
         }
     }
-    if (keycode == KC_DELETE) {
-        if (record->event.pressed) {
-          if (MODS_GUI) {
-            tap_code16_no_mod(LCTL(KC_K));  // Gui delete becomes delete line forward
-            return false;            // don't continue with custom shift keycodes below
-          }
-        }
-    }
+    // if (keycode == KC_DELETE) {
+    //     if (record->event.pressed) {
+    //       if (MODS_GUI) {
+    //         tap_code16_no_mod(LCTL(KC_K));  // Gui delete becomes delete line forward
+    //         return false;            // don't continue with custom shift keycodes below
+    //       }
+    //     } else {
+    //         if (ONESHOT_MODS_ACTIVE) {
+    //             clear_oneshot_mods();
+    //         }
+    //     }
+    // }
     // only activate on base and qwerty layers
     if (IS_LAYER_ON(BASE) || IS_LAYER_ON(QWRTY)) {
         if (!process_caps_word(keycode, record)) { return false; }

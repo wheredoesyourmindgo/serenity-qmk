@@ -755,7 +755,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         // case LT(NUMPAD, KC_SLASH): // why not
         case LT(HRDWR, KC_SPC):
         case LT(AUX, KC_SPC):
-        case LT(MOUSE, KC_MINUS):
+        // case LT(MOUSE, KC_MINUS):
             return false;
         // Force hold by default
         default:

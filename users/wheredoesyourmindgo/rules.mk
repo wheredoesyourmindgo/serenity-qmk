@@ -35,6 +35,7 @@ ifneq ($(strip $(KEYBOARD)), binepad/bn003)
 	SRC += features/magic_shift.c
 	SRC += features/cmd_tab_switcher.c
 	SRC += features/symbol_rolls.c
+	SRC += features/mash_arrows.c
 	SRC += features/layer_lock.c
 	SRC += features/hide_and_mute.c
 endif

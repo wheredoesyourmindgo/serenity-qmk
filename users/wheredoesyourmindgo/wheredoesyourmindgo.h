@@ -199,6 +199,8 @@ enum custom_keycodes {
 bool process_tap_or_long_press_key(keyrecord_t* record, uint16_t long_press_keycode);
 void tap_code_no_mod(uint8_t);
 void tap_code16_no_mod(uint16_t);
+void tap_code_unset_mod(uint8_t);
+void tap_code16_unset_mod(uint16_t);
 bool encoder_update_keymap(uint8_t index, bool clockwise);
 
 

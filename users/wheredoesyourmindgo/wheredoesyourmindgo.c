@@ -245,11 +245,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     //     }
     // }
     // only activate on base and qwerty layers
-    if (IS_LAYER_ON(BASE) || IS_LAYER_ON(QWRTY)) {
-        if (!process_caps_word(keycode, record)) {
-            return false;
-        }
-    }
+    // if (IS_LAYER_ON(BASE) || IS_LAYER_ON(QWRTY)) {
+    //     if (!process_caps_word(keycode, record)) {
+    //         return false;
+    //     }
+    // }
     // if (!process_caps_sentence(keycode, record, CAPS_SENTENCE)) { return false; }
     // don't activate on qwerty layer
     if (!IS_LAYER_ON(QWRTY)) {
@@ -301,6 +301,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
+            break;
+        case LSFT(LGUI(KC_BSPC)):
+            if (record->event.pressed) {
+                tap_code16(LCTL(KC_K)); // Gui shift backspace becomes delete line forward
+            }
             break;
         case OS_BSPC:
             if (record->event.pressed) {
@@ -531,18 +536,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false; // Skip default handling.
             break;
-        case LP_TAB:
-            if (record->tap.count > 0) {
-                if (record->event.pressed) {
-                    tap_code16(LGUI(KC_T));
-                }
-            } else {
-                if (record->event.pressed) {
-                    tap_code16(LGUI(KC_W));
-                }
-            }
-            return false; // Skip default handling.
-            break;
+        // This was used with 3 button macro pad, bn003
+        // case LP_TAB:
+        //     if (record->tap.count > 0) {
+        //         if (record->event.pressed) {
+        //             tap_code16(LGUI(KC_T));
+        //         }
+        //     } else {
+        //         if (record->event.pressed) {
+        //             tap_code16(LGUI(KC_W));
+        //         }
+        //     }
+        //     return false; // Skip default handling.
+        //     break;
     }
     return true;
 }
@@ -755,7 +761,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         // case LT(NUMPAD, KC_SLASH): // why not
         case LT(HRDWR, KC_SPC):
         case LT(AUX, KC_SPC):
-        // case LT(MOUSE, KC_MINUS):
+            // case LT(MOUSE, KC_MINUS):
             return false;
         // Force hold by default
         default:

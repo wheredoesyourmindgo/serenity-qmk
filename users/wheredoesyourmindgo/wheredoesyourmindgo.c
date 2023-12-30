@@ -252,12 +252,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // }
     // if (!process_caps_sentence(keycode, record, CAPS_SENTENCE)) { return false; }
     // don't activate on qwerty layer
-    if (!IS_LAYER_ON(QWRTY)) {
-        // if (!process_custom_gui_keys(keycode, record)) { return false; }
-        if (!process_custom_shift_keys(keycode, record)) {
-            return false;
-        }
+    // if (!IS_LAYER_ON(QWRTY)) {
+       // // if (!process_custom_gui_keys(keycode, record)) { return false; }
+    if (!process_custom_shift_keys(keycode, record)) {
+        return false;
     }
+    //}
     if (!process_layer_lock(keycode, record, LLOCK)) {
         return false;
     }
@@ -283,25 +283,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
-        case TGL_LYT:
-            if (record->event.pressed) {
-                layer_off(HRDWR);
-                if (IS_LAYER_ON(BASE)) {
-                    // set_single_persistent_default_layer(QWRTY);
-                    // dprint("BASE layer is on prior to switch");
-                    layer_off(BASE);
-                    layer_on(QWRTY);
-                    default_layer_set(QWRTY);
-                } else {
-                    // set_single_persistent_default_layer(BASE);
-                    // dprint("QWRTY layer is on prior to switch");
-                    layer_off(QWRTY);
-                    layer_on(BASE);
-                    default_layer_set(BASE);
-                }
-            }
-            return false;
-            break;
+        // case TGL_LYT:
+        //     if (record->event.pressed) {
+        //         layer_off(HRDWR);
+        //         if (IS_LAYER_ON(BASE)) {
+        //             // set_single_persistent_default_layer(QWRTY);
+        //             // dprint("BASE layer is on prior to switch");
+        //             layer_off(BASE);
+        //             layer_on(QWRTY);
+        //             default_layer_set(QWRTY);
+        //         } else {
+        //             // set_single_persistent_default_layer(BASE);
+        //             // dprint("QWRTY layer is on prior to switch");
+        //             layer_off(QWRTY);
+        //             layer_on(BASE);
+        //             default_layer_set(BASE);
+        //         }
+        //     }
+        //     return false;
+        //     break;
         case LSFT(LGUI(KC_BSPC)):
             if (record->event.pressed) {
                 tap_code16(LCTL(KC_K)); // Gui shift backspace becomes delete line forward
@@ -568,14 +568,14 @@ void matrix_init_user(void) {
 #    endif
 #endif
 
-void keyboard_post_init_user(void) {
-#ifdef QWERTY_BASE
-    // Call the post init code.
-    layer_off(BASE);
-    layer_on(QWRTY);
-    default_layer_set(QWRTY);
-#endif
-}
+// void keyboard_post_init_user(void) {
+// #ifdef QWERTY_BASE
+//     // Call the post init code.
+//     layer_off(BASE);
+//     layer_on(QWRTY);
+//     default_layer_set(QWRTY);
+// #endif
+// }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     cmd_tab_switcher_layer_state(state);

@@ -47,5 +47,6 @@
     },
     "clangd.arguments": [
         "--header-insertion=never"
-    ]
+    ],
+    "git.ignoreLimitWarning": true
 }

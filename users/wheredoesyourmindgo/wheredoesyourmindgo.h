@@ -106,6 +106,8 @@
 #define WNDW_TOP_RGHT LCA(KC_I)     // Top right
 #define WNDW_BTM_LFT LCA(KC_J)      // Bottom left
 #define WNDW_BTM_RGHT LCA(KC_K)     // Bottom right
+#define WNDW_NXT_SPC HYPR(KC_RIGHT) // Next Space
+#define WNDW_PRV_SPC HYPR(KC_LEFT)  // Previous Space
 // #define WNDW_FST_FRTH HYPR(KC_?)    // First fourth
 // #define WNDW_SCND_FRTH HYPR(KC_?)   // Second fourth
 // #define WNDW_THRD_FRTH HYPR(KC_?)   // Third fourth

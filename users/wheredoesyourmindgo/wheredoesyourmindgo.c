@@ -375,12 +375,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count > 0) { // Key is being tapped.
                 if (record->event.pressed) {
                     // Handle tap press event...
-                    tap_code16(WNDW_MAX);
+                    tap_code16(WNDW_VRT_MAX);
                 }
             } else { // Key is being held.
                 if (record->event.pressed) {
                     // Handle hold press event...
-                    tap_code16(WNDW_VRT_MAX);
+                    tap_code16(WNDW_MAX);
                 }
             }
             return false; // Skip default handling.
@@ -389,12 +389,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count > 0) { // Key is being tapped.
                 if (record->event.pressed) {
                     // Handle tap press event...
-                    tap_code16(WNDW_CNTR);
+                    tap_code16(WNDW_ALMST_MAX);
                 }
             } else { // Key is being held.
                 if (record->event.pressed) {
                     // Handle hold press event...
-                    tap_code16(WNDW_LST);
+                    tap_code16(WNDW_CNTR);
                 }
             }
             return false; // Skip default handling.
@@ -403,12 +403,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count > 0) { // Key is being tapped.
                 if (record->event.pressed) {
                     // Handle tap press event...
-                    tap_code16(WNDW_RSTR);
+                    tap_code16(WNDW_LST);
                 }
             } else { // Key is being held.
                 if (record->event.pressed) {
-                    tap_code16(WNDW_ALMST_MAX);
                     // Handle hold press event...
+                    tap_code16(WNDW_RSTR);
                 }
             }
             return false; // Skip default handling.

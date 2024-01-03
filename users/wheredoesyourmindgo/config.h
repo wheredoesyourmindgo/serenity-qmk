@@ -25,8 +25,10 @@
 #define TAPPING_FORCE_HOLD_PER_KEY
 // #define RETRO_TAPPING_PER_KEY
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
-#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
+// Capsword, using RSFT_T(KC_ENT) so both shifts is not ideal, use double tap left shift instead
+// #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 
 // #define LEADER_PER_KEY_TIMING
 // #define LEADER_TIMEOUT 250

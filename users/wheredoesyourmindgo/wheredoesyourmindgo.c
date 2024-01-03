@@ -278,7 +278,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         }
     }
-    if (!hide_and_mute(keycode, record, LT(MOUSE, KC_MUTE))) {
+    if (!hide_and_mute(keycode, record, KC_MUTE)) {
         return false;
     }
 
@@ -504,6 +504,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        case LT(MOUSE, KC_ESC):
+            if (record->tap.count > 0) { // Key is being tapped.
+                if (record->event.pressed) {
+                    const uint8_t layer = get_highest_layer(layer_state);
+                    if (is_layer_locked(layer)) {
+                        layer_lock_off(layer);
+                        return false; // Skip default handling.
+                    }
+                }
+            }
+            break;
         // case LT(NUMNAV, KC_ESC):
         //     if (record->tap.count > 0) {
         //         if (record->event.pressed) {
@@ -703,6 +714,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(HRDWR, KC_SPC):
         case LT(AUX, KC_SPC):
+        case LT(MOUSE, KC_ESC):
             return 350;
         default:
             return TAPPING_TERM;
@@ -753,7 +765,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // Allow per key spamming for arrow keys, space, and dash
+        // Allow per key spamming for arrow keys, space, escape, and dash
         case RGUI_T(KC_LEFT):
         case RALT_T(KC_DOWN):
         case RCTL_T(KC_UP):
@@ -761,7 +773,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         // case LT(NUMPAD, KC_SLASH): // why not
         case LT(HRDWR, KC_SPC):
         case LT(AUX, KC_SPC):
-            // case LT(MOUSE, KC_MINUS):
+        case LT(MOUSE, KC_ESC):
             return false;
         // Force hold by default
         default:

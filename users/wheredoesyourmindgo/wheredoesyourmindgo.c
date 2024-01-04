@@ -710,16 +710,17 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 }
 #endif
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case LT(HRDWR, KC_SPC):
-        case LT(AUX, KC_SPC):
-        case LT(MOUSE, KC_ESC):
-            return 350;
-        default:
-            return TAPPING_TERM;
-    }
-}
+// uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         // case LT(HRDWR, KC_SPC):
+//         // case LT(AUX, KC_SPC):
+//         case LT(HRDWR, KC_LEFT):
+//         case LT(MOUSE, KC_ESC):
+//             return 350;
+//         default:
+//             return TAPPING_TERM;
+//     }
+// }
 
 // Allow Permissive Hold per key (quickly use a layer hold)
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
@@ -727,9 +728,10 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         // case LT(NUMNAV, KC_ESC): // quickly use numbers
         // case LT(SYMBL, KC_ENT): // quickly use symbols
         case RSFT_T(KC_ENT):  // quickly use right shift
-        case RGUI_T(KC_LEFT): // quickly use mods on arrow cluster
-        case RALT_T(KC_DOWN):
-        case RCTL_T(KC_UP):
+        case LT(HRDWR, KC_LEFT): // quickly use mods on arrow cluster
+        case RGUI_T(KC_DOWN):
+        case RALT_T(KC_UP):
+        case RCTL_T(KC_RIGHT):
             return true;
         default:
             return false;
@@ -742,9 +744,10 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         // case LT(NUMNAV, KC_ESC):
         // case LT(SYMBL, KC_ENT):
         case RSFT_T(KC_ENT):  // quickly use right shift
-        case RGUI_T(KC_LEFT): // quickly use mods on arrow cluster
-        case RALT_T(KC_DOWN):
-        case RCTL_T(KC_UP):
+        case LT(HRDWR, KC_LEFT): // quickly use mods on arrow cluster
+        case RGUI_T(KC_DOWN):
+        case RALT_T(KC_UP):
+        case RCTL_T(KC_RIGHT):
             return true;
         default:
             return false;
@@ -765,14 +768,15 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // Allow per key spamming for arrow keys, space, escape, and dash
-        case RGUI_T(KC_LEFT):
-        case RALT_T(KC_DOWN):
-        case RCTL_T(KC_UP):
+        // Allow per key spamming for arrow keys and escape
+        case LT(HRDWR, KC_LEFT): // quickly use mods on arrow cluster
+        case RGUI_T(KC_DOWN):
+        case RALT_T(KC_UP):
+        case RCTL_T(KC_RIGHT):
         // case LT(NUMPAD, KC_RIGHT):
         // case LT(NUMPAD, KC_SLASH): // why not
-        case LT(HRDWR, KC_SPC):
-        case LT(AUX, KC_SPC):
+        // case LT(HRDWR, KC_SPC):
+        // case LT(AUX, KC_SPC):
         case LT(MOUSE, KC_ESC):
             return false;
         // Force hold by default

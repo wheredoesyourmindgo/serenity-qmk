@@ -504,6 +504,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
+        case MT(MOD_LCTL, KC_ESC):
         case LT(MOUSE, KC_ESC):
             if (record->tap.count > 0) { // Key is being tapped.
                 if (record->event.pressed) {
@@ -778,6 +779,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         // case LT(HRDWR, KC_SPC):
         // case LT(AUX, KC_SPC):
         case LT(MOUSE, KC_ESC):
+        case MT(MOD_LCTL, KC_ESC):
             return false;
         // Force hold by default
         default:

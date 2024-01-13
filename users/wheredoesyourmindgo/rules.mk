@@ -62,6 +62,12 @@ ifeq ($(strip $(KEYBOARD)), foostan/cornelius)
 # SRC += layout_4x12.c
 endif
 
+ifeq ($(strip $(KEYBOARD)), crkbd/rev1)
+	OPT_DEFS += -DCORNE_KEYBOARD
+	RGB_MATRIX_ENABLE = no
+	RGBLIGHT_ENABLE = no
+endif
+
 ifeq ($(strip $(KEYBOARD)), checkerboards/quark)
 	OPT_DEFS += -DQUARK_KEYBOARD
 # SRC += layout_4x12.c

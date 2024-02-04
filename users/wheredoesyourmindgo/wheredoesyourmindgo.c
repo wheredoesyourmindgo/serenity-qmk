@@ -711,17 +711,20 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 }
 #endif
 
-// uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-//     switch (keycode) {
-//         // case LT(HRDWR, KC_SPC):
-//         // case LT(AUX, KC_SPC):
-//         case LT(HRDWR, KC_LEFT):
-//         case LT(MOUSE, KC_ESC):
-//             return 350;
-//         default:
-//             return TAPPING_TERM;
-//     }
-// }
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // // case LT(HRDWR, KC_SPC):
+        // // case LT(AUX, KC_SPC):
+        // case LT(HRDWR, KC_LEFT):
+        // case LT(MOUSE, KC_ESC):
+            // return 350;
+        // Increase Caps word accessibility
+        case KC_LSFT:
+            return 400;
+        default:
+            return TAPPING_TERM;
+    }
+}
 
 // Allow Permissive Hold per key (quickly use a layer hold)
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {

@@ -9,7 +9,7 @@
 #include "features/symbol_rolls.h"
 #include "features/mash_arrows.h"
 #include "features/layer_lock.h"
-#include "features/hide_and_mute.h"
+// #include "features/hide_and_mute.h"
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -278,9 +278,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         }
     }
-    if (!hide_and_mute(keycode, record, KC_MUTE)) {
-        return false;
-    }
+    // if (!hide_and_mute(keycode, record, KC_MUTE)) {
+    //     return false;
+    // }
 
     switch (keycode) {
         case TGL_LYT:

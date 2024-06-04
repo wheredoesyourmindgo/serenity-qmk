@@ -69,6 +69,16 @@
 					"label": "Let's Tango"
 				}
 			]
+		},
+		{
+			"path": "keyboards/crkbd/keymaps/wheredoesyourmindgo/keymap.c",
+			"bookmarks": [
+				{
+					"line": 0,
+					"column": 0,
+					"label": "Corne"
+				}
+			]
 		}
 	]
 }

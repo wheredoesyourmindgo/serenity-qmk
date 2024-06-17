@@ -408,7 +408,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else { // Key is being held.
                 if (record->event.pressed) {
                     // Handle hold press event...
-                    tap_code16(WNDW_RSTR);
+                    tap_code16(WNDW_LFT_HLF);
                 }
             }
             return false; // Skip default handling.
@@ -422,7 +422,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else { // Key is being held.
                 if (record->event.pressed) {
                     // Handle hold press event...
-                    tap_code16(WNDW_LFT_HLF);
+                    tap_code16(WNDW_RSTR);
                 }
             }
             return false; // Skip default handling.

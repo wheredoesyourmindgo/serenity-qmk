@@ -93,7 +93,7 @@
 #define WNDW_RGNT_THRD LCA(KC_G)    // Right third
 #define WNDW_LFT_HLF LCA(KC_LEFT)   // Left half
 #define WNDW_CNTR_HLF HYPR(KC_G)    // Center
-#define WNDW_LST HYPR(KC_V)         // Last
+#define WNDW_LWP HYPR(KC_V)         // Last
 #define WNDW_RGHT_HLF LCA(KC_RGHT)  // Right half
 #define WNDW_TOP_HLF LCA(KC_UP)     // Top half
 #define WNDW_BTTM_HLF LCA(KC_DOWN)  // Bottom half
@@ -113,7 +113,7 @@
 // #define WNDW_THRD_FRTH HYPR(KC_?)   // Third fourth
 // #define WNDW_FRTH_FRTH HYPR(KC_?)   // Fourth fourth
 // #define WNDW_FST_TFRTH HYPR(KC_?)   // First three-fourth
-// #define WNDW_LST_TFRTH HYPR(KC_?)   // Last three-fourth
+// #define WNDW_LWP_TFRTH HYPR(KC_?)   // Last three-fourth
 
 // OS (MacOS)
 #define OS_PRV_SPC LCTL(KC_LEFT)               // Previous Space
@@ -181,9 +181,9 @@
 #define QUOT_LP LT(0, KC_QUOT)
 #define DOT_LP LT(0, KC_DOT)
 #define MSN_LP_FLLSCRN LT(0, KC_1) // Using non-basic keycode with long press so utility func will not work here, see https://getreuer.info/posts/keyboards/triggers/index.html#tap-vs.-long-press for more info
-#define WNDW_LP_MAX LT(0, KC_2)
-#define WNDW_LP_RST LT(0, KC_3)
-#define WNDW_LP_CNTR LT(0, KC_4)
+#define WNDW_LP_VRT_MAX LT(0, KC_2)
+#define WNDW_LP_LWP LT(0, KC_3)
+#define WNDW_LP_ALMST_MAX LT(0, KC_4)
 #define WNDW_LP_SMLR LT(0, KC_5)
 #define WNDW_LP_LGR LT(0, KC_6)
 #define PRV_SPC_LP LT(0, KC_7)

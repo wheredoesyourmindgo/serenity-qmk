@@ -561,6 +561,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //     }
         //     return false; // Skip default handling.
         //     break;
+        case OS_LP_SCRN_SHT_FULL:
+            if (record->tap.count > 0) { // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    tap_code16(OS_SCRN_SHT);
+                }
+            } else { // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    tap_code16(OS_SCRN_SHT_CLP);
+                }
+            }
+            return false;
+            break;
+        case OS_LP_SCRN_SHT_SLCT:
+            if (record->tap.count > 0) { // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    tap_code16(OS_SCRN_SHT_SLCT);
+                }
+            } else { // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    tap_code16(OS_SCRN_SHT_CLP_SLCT);
+                }
+            }
+            return false;
+            break;
     }
     return true;
 }

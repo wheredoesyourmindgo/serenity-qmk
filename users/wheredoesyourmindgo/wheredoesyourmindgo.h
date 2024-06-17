@@ -180,7 +180,8 @@
 // Long taps
 #define QUOT_LP LT(0, KC_QUOT)
 #define DOT_LP LT(0, KC_DOT)
-#define MSN_LP_FLLSCRN LT(0, KC_1) // Using non-basic keycode with long press so utility func will not work here, see https://getreuer.info/posts/keyboards/triggers/index.html#tap-vs.-long-press for more info
+// For the following, using non-basic keycodes with long press so utility func will not work here, see https://getreuer.info/posts/keyboards/triggers/index.html#tap-vs.-long-press for more info
+#define MSN_LP_FLLSCRN LT(0, KC_1)
 #define WNDW_LP_VRT_MAX LT(0, KC_2)
 #define WNDW_LP_LWP LT(0, KC_3)
 #define WNDW_LP_ALMST_MAX LT(0, KC_4)
@@ -189,6 +190,9 @@
 #define PRV_SPC_LP LT(0, KC_7)
 #define NXT_SPC_LP LT(0, KC_8)
 #define TGL_SELECT_LP LT(0, KC_9)
+#define OS_LP_SCRN_SHT_FULL LT(0, KC_A)
+#define OS_LP_SCRN_SHT_SLCT LT(0, KC_B)
+
 
 enum layers { BASE, QWRTY, NUMNAV, SYMBL, AUX, HRDWR, FUNC, OS, MOUSE };
 

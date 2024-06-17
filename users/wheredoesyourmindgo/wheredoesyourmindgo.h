@@ -120,7 +120,7 @@
 #define OS_NXT_SPC LCTL(KC_RGHT)               // Next Space
 #define OS_EXPOSE LCTL(KC_DOWN)                // App Windows
 #define OS_MSN_CNTRL LCTL(KC_UP)               // Mission Control
-#define OS_DSKTP KC_F16                        // Show Desktop
+#define OS_DSKTP KC_F11                        // Show Desktop
 #define OS_SCRN_SHT_OPT SGUI(KC_5)             // Screenshot Options
 #define OS_SCRN_SHT_SLCT SGUI(KC_4)            // Screenshot of selected area
 #define OS_SCRN_SHT SGUI(KC_3)                 // Screenshot

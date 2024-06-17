@@ -813,7 +813,7 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
         case RALT_T(KC_UP):
         case RCTL_T(KC_RIGHT):
         case LT(MOUSE, KC_ESC):
-            return QUICK_TAP_TERM;
+            return QUICK_TAP_TERM - 20;
         // By default, remove the auto-repeat ability and activate the hold function instead.
         default:
             return 0;

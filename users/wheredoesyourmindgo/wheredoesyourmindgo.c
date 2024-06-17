@@ -372,43 +372,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case WNDW_LP_VRT_MAX:
-            if (record->tap.count > 0) { // Key is being tapped.
-                if (record->event.pressed) {
+            if (record->event.pressed) {
+                // Key is being tapped.
+                if (record->tap.count == 1) {
+                    // Handle tap press event...
+                    tap_code16(WNDW_ALMST_MAX);
+                } else if (record->tap.count > 1) {
                     // Handle tap press event...
                     tap_code16(WNDW_VRT_MAX);
-                }
-            } else { // Key is being held.
-                if (record->event.pressed) {
+                // Key is being held.
+                } else {
                     // Handle hold press event...
-                    tap_code16(WNDW_MAX);
+                    tap_code16(WNDW_VRT_MAX);
                 }
             }
             return false; // Skip default handling.
             break;
         case WNDW_LP_ALMST_MAX:
-            if (record->tap.count > 0) { // Key is being tapped.
-                if (record->event.pressed) {
+            if (record->event.pressed) {
+                if (record->tap.count > 0) { // Key is being tapped.
                     // Handle tap press event...
-                    tap_code16(WNDW_ALMST_MAX);
-                }
-            } else { // Key is being held.
-                if (record->event.pressed) {
-                    // Handle hold press event...
                     tap_code16(WNDW_LFT_HLF);
-                }
-            }
-            return false; // Skip default handling.
-            break;
-        case WNDW_LP_LWP:
-            if (record->tap.count > 0) { // Key is being tapped.
-                if (record->event.pressed) {
-                    // Handle tap press event...
-                    tap_code16(WNDW_LWP);
-                }
-            } else { // Key is being held.
-                if (record->event.pressed) {
+                } else { // Key is being held.
                     // Handle hold press event...
-                    tap_code16(WNDW_RGHT_HLF);
+                    tap_code16(WNDW_MAX);
                 }
             }
             return false; // Skip default handling.
@@ -437,6 +424,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (record->event.pressed) {
                     // Handle hold press event...
                     tap_code16(WNDW_RSTR);
+                }
+            }
+            return false; // Skip default handling.
+            break;
+        case WNDW_LP_LWP:
+            if (record->tap.count > 0) { // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    tap_code16(WNDW_RGHT_HLF);
+                }
+            } else { // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    tap_code16(WNDW_LWP);
                 }
             }
             return false; // Skip default handling.
@@ -589,6 +590,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
+        // case OS_LP_SPTLGHT:
+        //     if (record->tap.count > 0) { // Key is being tapped.
+        //         if (record->event.pressed) {
+        //             // Handle tap press event...
+        //             tap_code16(OS_SPTLGHT);
+        //         }
+        //     } else { // Key is being held.
+        //         if (record->event.pressed) {
+        //             // Handle hold press event...
+        //             tap_code16(OS_SPTLGHT_FNDR);
+        //         }
+        //     }
+        //     return false;
+        //     break;
     }
     return true;
 }
@@ -818,15 +833,12 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-/* bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
+bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(NUMNAV, KC_ESC):
-        case LT(SYMBL, KC_ENT):
-        // case LT(MOUSE, KC_APP):
-        case LT(AUX, KC_TAB):
-        case LT(HRDWR, KC_SPC):
+        // why not (but check firmware size in case this pushes that over)
+        case LT(MOUSE, KC_ESC):
             return true;
         default:
             return false;
     }
-} */
+}

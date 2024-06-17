@@ -23,7 +23,7 @@
 #define PERMISSIVE_HOLD_PER_KEY
 // Enable per key rapid switch from tap to hold, disables double tap hold auto-repeat.
 #define TAPPING_FORCE_HOLD_PER_KEY
-// #define RETRO_TAPPING_PER_KEY
+#define RETRO_TAPPING_PER_KEY
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 // Capsword, using RSFT_T(KC_ENT) so both shifts is not ideal, use double tap left shift instead

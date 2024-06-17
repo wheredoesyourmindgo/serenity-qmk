@@ -505,7 +505,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             break;
-        case MT(MOD_LCTL, KC_ESC):
         case LT(MOUSE, KC_ESC):
             if (record->tap.count > 0) { // Key is being tapped.
                 if (record->event.pressed) {
@@ -756,14 +755,11 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // // case LT(HRDWR, KC_SPC):
-        // // case LT(AUX, KC_SPC):
-        // case LT(HRDWR, KC_LEFT):
         // case LT(MOUSE, KC_ESC):
             // return 350;
         // Increase Caps word accessibility
         case KC_LSFT:
-            return 400;
+            return 300;
         default:
             return TAPPING_TERM;
     }
@@ -772,8 +768,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key (quickly use a layer hold)
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LT(NUMNAV, KC_ESC): // quickly use numbers
-        // case LT(SYMBL, KC_ENT): // quickly use symbols
         case RSFT_T(KC_ENT):  // quickly use right shift
         case LT(HRDWR, KC_LEFT): // quickly use mods on arrow cluster
         case RGUI_T(KC_DOWN):
@@ -788,8 +782,6 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 // Mirror settings for get_permissive_hold()
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LT(NUMNAV, KC_ESC):
-        // case LT(SYMBL, KC_ENT):
         case RSFT_T(KC_ENT):  // quickly use right shift
         case LT(HRDWR, KC_LEFT): // quickly use mods on arrow cluster
         case RGUI_T(KC_DOWN):
@@ -813,23 +805,18 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 //     }
 // }
 
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Allow per key spamming for arrow keys and escape
         case LT(HRDWR, KC_LEFT): // quickly use mods on arrow cluster
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):
         case RCTL_T(KC_RIGHT):
-        // case LT(NUMPAD, KC_RIGHT):
-        // case LT(NUMPAD, KC_SLASH): // why not
-        // case LT(HRDWR, KC_SPC):
-        // case LT(AUX, KC_SPC):
         case LT(MOUSE, KC_ESC):
-        case MT(MOD_LCTL, KC_ESC):
-            return false;
-        // Force hold by default
+            return QUICK_TAP_TERM;
+        // By default, remove the auto-repeat ability and activate the hold function instead.
         default:
-            return true;
+            return 0;
     }
 }
 

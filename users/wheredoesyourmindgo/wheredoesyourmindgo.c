@@ -29,6 +29,17 @@ bool process_tap_or_long_press_key(keyrecord_t *record, uint16_t long_press_keyc
     return true; // Continue default handling.
 }
 
+// Helper for custom backspace forward behavior
+bool check_mods_sft_and_gui(void) {
+    uint8_t mods = get_mods();
+    uint8_t oneshot_mods = get_oneshot_mods();
+
+    bool is_shift_active = (mods & MOD_MASK_SHIFT) || (oneshot_mods & MOD_MASK_SHIFT);
+    bool is_gui_active = (mods & MOD_MASK_GUI) || (oneshot_mods & MOD_MASK_GUI);
+
+    return is_shift_active && is_gui_active;
+}
+
 void tap_code16_no_mod(uint16_t code) {
     // Initialize variable holding the binary representation of active modifiers.
     uint8_t mod_state;
@@ -38,7 +49,6 @@ void tap_code16_no_mod(uint16_t code) {
     mod_state   = get_mods();
     w_mod_state = get_weak_mods();
     o_mod_state = get_oneshot_mods();
-    // clear_oneshot_mods();
     if (mod_state || w_mod_state || o_mod_state) {
         // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
         del_mods(mod_state);
@@ -65,7 +75,6 @@ void tap_code_no_mod(uint8_t code) {
     mod_state   = get_mods();
     w_mod_state = get_weak_mods();
     o_mod_state = get_oneshot_mods();
-    // clear_oneshot_mods();
     if (mod_state || w_mod_state || o_mod_state) {
         // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
         del_mods(mod_state);
@@ -92,7 +101,6 @@ void tap_code16_unset_mod(uint16_t code) {
     mod_state   = get_mods();
     w_mod_state = get_weak_mods();
     o_mod_state = get_oneshot_mods();
-    // clear_oneshot_mods();
     if (mod_state || w_mod_state || o_mod_state) {
         // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
         del_mods(mod_state);
@@ -114,7 +122,6 @@ void tap_code_unset_mod(uint8_t code) {
     mod_state   = get_mods();
     w_mod_state = get_weak_mods();
     o_mod_state = get_oneshot_mods();
-    // clear_oneshot_mods();
     if (mod_state || w_mod_state || o_mod_state) {
         // First temporarily canceling both shifts so that shift isn't applied to the keycode/shortcut
         del_mods(mod_state);
@@ -222,25 +229,32 @@ bool caps_word_press_user(uint16_t keycode) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (keycode == KC_BACKSPACE) {
         if (record->event.pressed) {
-            if (MODS_SFT && MODS_GUI) {
+            if (check_mods_sft_and_gui()) {
                 tap_code16_no_mod(LCTL(KC_K)); // Gui shift backspace becomes delete line forward
                 return false;                  // don't continue with custom shift keycodes below
             }
         } else {
-            if (ONESHOT_MODS_ACTIVE) {
-                clear_oneshot_mods();
+            if (check_mods_sft_and_gui()) {
+                // Since we are returning false above, we will need to cancel one shot mods if they are active.
+                if (ONESHOT_MODS_ACTIVE) {
+                    clear_oneshot_mods();
+                    send_keyboard_report();
+                }
             }
         }
     }
     // if (keycode == KC_DELETE) {
     //     if (record->event.pressed) {
-    //       if (MODS_GUI) {
+    //       if (check_mods_gui) {
     //         tap_code16_no_mod(LCTL(KC_K));  // Gui delete becomes delete line forward
     //         return false;            // don't continue with custom shift keycodes below
     //       }
     //     } else {
-    //         if (ONESHOT_MODS_ACTIVE) {
-    //             clear_oneshot_mods();
+    //         if (check_mods_gui()) {
+    //            if (ONESHOT_MODS_ACTIVE) {
+    //              clear_oneshot_mods();
+    //              send_keyboard_report();
+    //            }
     //         }
     //     }
     // }

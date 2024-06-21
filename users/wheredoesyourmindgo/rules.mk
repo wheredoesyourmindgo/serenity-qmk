@@ -17,6 +17,7 @@ GRAVE_ESC_ENABLE = no
 # MAGIC_ENABLE = no
 CAPS_WORD_ENABLE = yes
 
+
 # LTO_ENABLE = yes
 # CONSOLE_ENABLE = yes
 # COMBO_ENABLE = yes # Combos

@@ -107,7 +107,6 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
                 }
             }
             return false;
-        // The R*Mod variants are not working. Just using the L*Mod variants in keymap with High* layers
         case XOSM_RSFT:
             if (record->event.pressed) {
                 // Key has been pressed, start the timer and mark the key as active

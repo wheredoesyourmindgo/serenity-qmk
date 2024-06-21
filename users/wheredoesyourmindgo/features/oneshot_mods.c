@@ -38,10 +38,6 @@ static uint16_t rsft_timer;
 
 
 bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
-    // This fixes issue where two shifted alphas occur (instead of one) after using sentence_end tap function
-    // if (ONESHOT_MODS_ACTIVE & MOD_BIT(KC_LSFT) && record->event.pressed) {
-    //     clear_oneshot_mods();
-    // }
     switch (keycode) {
         case XOSM_LSFT:
             if (record->event.pressed) {
@@ -176,6 +172,7 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
                 // Cancel One Shot Mods (if active)
                 if (ONESHOT_MODS_ACTIVE) {
                     clear_oneshot_mods();
+                    send_keyboard_report();
                     // Only fire escape special mode is not active
                     return false;
                 }
@@ -195,6 +192,7 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
                     if (ONESHOT_MODS_ACTIVE) {
                         dprint("clearing one shot mods\n");
                         clear_oneshot_mods();
+                        send_keyboard_report();
                         // Only fire escape special mode is not active
                         return false;
                     }

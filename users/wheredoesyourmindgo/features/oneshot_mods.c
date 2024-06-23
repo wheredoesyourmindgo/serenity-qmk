@@ -41,128 +41,120 @@ bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case XOSM_LSFT:
             if (record->event.pressed) {
-                // Key has been pressed, start the timer and mark the key as active
+                // Key has been pressed, start the timer
                 lsft_timer = timer_read();
-                register_mods(MOD_BIT(KC_LSFT));
+                add_oneshot_mods(MOD_BIT(KC_LSFT));
+                send_keyboard_report();
             } else {
-                unregister_mods(MOD_BIT(KC_LSFT));
                 // Key has been released
-                if (timer_elapsed(lsft_timer) < OSM_TAPPING_TERM) {
-                    // Key was released before the tapping term expired
-                    // Perform the tap action
-                    add_oneshot_mods(MOD_BIT(KC_LSFT));
+                if (timer_elapsed(lsft_timer) > OSM_TAPPING_TERM) {
+                    // Key was released after the tapping term expired
+                    del_oneshot_mods(MOD_BIT(KC_LSFT));
                     send_keyboard_report();
                 }
             }
             return false;
         case XOSM_LGUI:
             if (record->event.pressed) {
-                // Key has been pressed, start the timer and mark the key as active
+                // Key has been pressed, start the timer
                 lgui_timer = timer_read();
-                register_mods(MOD_BIT(KC_LGUI));
+                add_oneshot_mods(MOD_BIT(KC_LGUI));
+                send_keyboard_report();
             } else {
-                unregister_mods(MOD_BIT(KC_LGUI));
                 // Key has been released
-                if (timer_elapsed(lgui_timer) < OSM_TAPPING_TERM) {
-                    // Key was released before the tapping term expired
-                    // Perform the tap action
-                    add_oneshot_mods(MOD_BIT(KC_LGUI));
+                if (timer_elapsed(lgui_timer) > OSM_TAPPING_TERM) {
+                    // Key was released after the tapping term expired
+                    del_oneshot_mods(MOD_BIT(KC_LGUI));
                     send_keyboard_report();
                 }
             }
             return false;
         case XOSM_LALT:
             if (record->event.pressed) {
-                // Key has been pressed, start the timer and mark the key as active
+                // Key has been pressed, start the timer
                 lalt_timer = timer_read();
-                register_mods(MOD_BIT(KC_LALT));
+                add_oneshot_mods(MOD_BIT(KC_LALT));
+                send_keyboard_report();
             } else {
-                unregister_mods(MOD_BIT(KC_LALT));
                 // Key has been released
-                if (timer_elapsed(lalt_timer) < OSM_TAPPING_TERM) {
-                    // Key was released before the tapping term expired
-                    // Perform the tap action
-                    add_oneshot_mods(MOD_BIT(KC_LALT));
+                if (timer_elapsed(lalt_timer) > OSM_TAPPING_TERM) {
+                    // Key was released after the tapping term expired
+                    del_oneshot_mods(MOD_BIT(KC_LALT));
                     send_keyboard_report();
                 }
             }
             return false;
         case XOSM_LCTL:
             if (record->event.pressed) {
-                // Key has been pressed, start the timer and mark the key as active
+                // Key has been pressed, start the timer
                 lctrl_timer = timer_read();
-                register_mods(MOD_BIT(KC_LCTL)); // Register left control
+                add_oneshot_mods(MOD_BIT(KC_LCTL)); // Register left control
+                send_keyboard_report();
             } else {
-                unregister_mods(MOD_BIT(KC_LCTL));
                 // Key has been released
-                if (timer_elapsed(lctrl_timer) < OSM_TAPPING_TERM) {
-                    // Key was released before the tapping term expired
-                    // Perform the tap action
-                    add_oneshot_mods(MOD_BIT(KC_LCTL));
+                if (timer_elapsed(lctrl_timer) > OSM_TAPPING_TERM) {
+                    // Key was released after the tapping term expired
+                    del_oneshot_mods(MOD_BIT(KC_LCTL));
                     send_keyboard_report();
                 }
             }
             return false;
         case XOSM_RSFT:
             if (record->event.pressed) {
-                // Key has been pressed, start the timer and mark the key as active
+                // Key has been pressed, start the timer
                 rsft_timer = timer_read();
-                register_mods(MOD_BIT(KC_RSFT));
+                add_oneshot_mods(MOD_BIT(KC_RSFT));
+                send_keyboard_report();
             } else {
-                unregister_mods(MOD_BIT(KC_RSFT));
                 // Key has been released
-                if (timer_elapsed(rsft_timer) < OSM_TAPPING_TERM) {
-                    // Key was released before the tapping term expired
-                    // Perform the tap action
-                    add_oneshot_mods(MOD_BIT(KC_RSFT));
+                if (timer_elapsed(rsft_timer) > OSM_TAPPING_TERM) {
+                    // Key was released after the tapping term expired
+                    del_oneshot_mods(MOD_BIT(KC_RSFT));
                     send_keyboard_report();
                 }
             }
             return false;
         case XOSM_RGUI:
             if (record->event.pressed) {
-                // Key has been pressed, start the timer and mark the key as active
+                // Key has been pressed, start the timer
                 rgui_timer = timer_read();
-                register_mods(MOD_BIT(KC_RGUI));
+                add_oneshot_mods(MOD_BIT(KC_RGUI));
+                send_keyboard_report();
             } else {
-                unregister_mods(MOD_BIT(KC_RGUI));
                 // Key has been released
-                if (timer_elapsed(rgui_timer) < OSM_TAPPING_TERM) {
-                    // Key was released before the tapping term expired
-                    // Perform the tap action
-                    add_oneshot_mods(MOD_BIT(KC_RGUI));
+                if (timer_elapsed(rgui_timer) > OSM_TAPPING_TERM) {
+                    // Key was released after the tapping term expired
+                    del_oneshot_mods(MOD_BIT(KC_RGUI));
                     send_keyboard_report();
                 }
             }
             return false;
         case XOSM_RALT:
             if (record->event.pressed) {
-                // Key has been pressed, start the timer and mark the key as active
+                // Key has been pressed, start the timer
                 ralt_timer = timer_read();
-                register_mods(MOD_BIT(KC_RALT));
+                add_oneshot_mods(MOD_BIT(KC_RALT));
+                send_keyboard_report();
             } else {
-                unregister_mods(MOD_BIT(KC_RALT));
                 // Key has been released
-                if (timer_elapsed(ralt_timer) < OSM_TAPPING_TERM) {
-                    // Key was released before the tapping term expired
-                    // Perform the tap action
-                    add_oneshot_mods(MOD_BIT(KC_RALT));
+                if (timer_elapsed(ralt_timer) > OSM_TAPPING_TERM) {
+                    // Key was released after the tapping term expired
+                    del_oneshot_mods(MOD_BIT(KC_RALT));
                     send_keyboard_report();
                 }
             }
             return false;
         case XOSM_RCTL:
             if (record->event.pressed) {
-                // Key has been pressed, start the timer and mark the key as active
+                // Key has been pressed, start the timer
                 rctrl_timer = timer_read();
-                register_mods(MOD_BIT(KC_RCTL)); // Register right control
+                add_oneshot_mods(MOD_BIT(KC_RCTL)); // Register right control
+                send_keyboard_report();
             } else {
-                unregister_mods(MOD_BIT(KC_RCTL));
                 // Key has been released
-                if (timer_elapsed(rctrl_timer) < OSM_TAPPING_TERM) {
-                    // Key was released before the tapping term expired
-                    // Perform the tap action
-                    add_oneshot_mods(MOD_BIT(KC_RCTL));
+                if (timer_elapsed(rctrl_timer) > OSM_TAPPING_TERM) {
+                    // Key was released after the tapping term expired
+                    del_oneshot_mods(MOD_BIT(KC_RCTL));
                     send_keyboard_report();
                 }
             }

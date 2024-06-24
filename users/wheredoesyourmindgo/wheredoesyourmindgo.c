@@ -235,7 +235,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         } else {
             if (check_mods_sft_and_gui()) {
-                // Since we are returning false above, we will need to cancel one shot mods if they are active.
+                // Since mods are re-applied after tap_code16_no_mod, we will need to cancel one shot mods if they are active.
                 if (ONESHOT_MODS_ACTIVE) {
                     clear_oneshot_mods();
                     send_keyboard_report();

@@ -91,10 +91,10 @@
 #define WNDW_LFT_THRD LCA(KC_D)     // Left third
 #define WNDW_CNTR_THRD LCA(KC_F)    // Center third
 #define WNDW_RGNT_THRD LCA(KC_G)    // Right third
-#define WNDW_LFT_HLF LCA(KC_LEFT)   // Left half
+#define WNDW_LFT_HLF LCTL(LALT(LGUI(KC_LEFT)))  // Left half
 #define WNDW_CNTR_HLF HYPR(KC_G)    // Center
 #define WNDW_LWP HYPR(KC_V)         // Last
-#define WNDW_RGHT_HLF LCA(KC_RGHT)  // Right half
+#define WNDW_RGHT_HLF LCTL(LALT(LGUI(KC_RGHT))) // Right half
 #define WNDW_TOP_HLF LCA(KC_UP)     // Top half
 #define WNDW_BTTM_HLF LCA(KC_DOWN)  // Bottom half
 #define WNDW_CNTR LCA(KC_C)         // Center
@@ -195,7 +195,7 @@
 // #define OS_LP_SPTLGHT LT(0, KC_C)
 
 
-enum layers { BASE, QWRTY, NUMNAV, SYMBL, AUX, HRDWR, FUNC, OS, MOUSE };
+enum layers { BASE, QWRTY, NUMNAV, BASE_L, BASE_R, SYMBL, AUX, HRDWR, FUNC, OS, MOUSE };
 
 enum custom_keycodes {
     CMD_TAB_PRV = SAFE_RANGE, TGL_LYT, CMD_TAB_NXT, DISP_FDIM, DISP_FBRI, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL,

@@ -42,80 +42,9 @@ ifneq ($(strip $(KEYBOARD)), binepad/bn003)
 # SRC += features/hide_and_mute.c
 endif
 
-ifeq ($(strip $(KEYBOARD)), planck/rev6)
-	OPT_DEFS += -DPLANCK_KEYBOARD
-	RGBLIGHT_ENABLE = no
-# SRC += muse.c
-# SRC += layout_4x12.c
-endif
-
 # ifeq ($(strip $(SWAP_HANDS_ENABLE)), yes)
 # 	SRC += swap_hands.c
 # endif
-
-ifeq ($(strip $(KEYBOARD)), boardwalk)
-	OPT_DEFS += -DBOARDWALK_KEYBOARD
-	RGBLIGHT_ENABLE = no
-# SRC += layout_boardwalk_hs.c
-endif
-
-ifeq ($(strip $(KEYBOARD)), foostan/cornelius)
-	OPT_DEFS += -DCORNELIUS_KEYBOARD
-# SRC += layout_4x12.c
-endif
-
-ifeq ($(strip $(KEYBOARD)), crkbd/rev1)
-	OPT_DEFS += -DCORNE_KEYBOARD
-	RGB_MATRIX_ENABLE = no
-	RGBLIGHT_ENABLE = no
-endif
-
-ifeq ($(strip $(KEYBOARD)), checkerboards/quark)
-	OPT_DEFS += -DQUARK_KEYBOARD
-# SRC += layout_4x12.c
-endif
-
-# with usb startup disabled we won't be able to wake computer from sleep but we will be able to use key lock
-ifeq ($(strip $(KEYBOARD)), ristretto)
-	OPT_DEFS += -DRISTRETTO_KEYBOARD
-	CONSOLE_ENABLE = no
-# KEY_LOCK_ENABLE = yes
-# NO_USB_STARTUP_CHECK = yes
-	ENCODER_ENABLE = yes
-# SRC += layout_4x12_enc.c
-endif
-
-ifeq ($(strip $(KEYBOARD)), boardsource/technik_o)
-	OPT_DEFS += -DTECHNIK_KEYBOARD
-# CONSOLE_ENABLE = no
-	RGB_MATRIX_ENABLE = no
-# KEY_LOCK_ENABLE = no
-# SRC += layout_4x12.c
-endif
-
-ifeq ($(strip $(KEYBOARD)), signum/3_0/elitec)
-	OPT_DEFS += -DSIGNUM_KEYBOARD
-# SRC += layout_4x12.c
-endif
-
-ifeq ($(strip $(KEYBOARD)), binepad/bn003)
-	TAP_DANCE_ENABLE = no
-	MOUSEKEY_ENABLE = no
-	EXTRAKEY_ENABLE = no
-	KEY_LOCK_ENABLE = no
-    ifeq ($(strip $(BN003_USB_LEFT)), yes)
-    	OPT_DEFS += -DBN003_USB_LEFT
-	endif
-endif
-
-ifeq ($(strip $(KEYBOARD)), vitamins_included/rev2)
-	OPT_DEFS += -DVITAMINS_INCLUDED_KEYBOARD
-# KEY_LOCK_ENABLE = no
-	AUDIO_ENABLE = no
-	RGBLIGHT_ENABLE = no
-# NKRO_ENABLE = no
-# SRC += layout_4x12.c
-endif
 
 ifeq ($(strip $(EXECUTE_ON_FUNC)), yes)
   OPT_DEFS += -DEXECUTE_ON_FUNC

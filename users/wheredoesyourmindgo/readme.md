@@ -2,25 +2,21 @@
 
 ## About
 
-This is a QMK layout that includes dedicated right and left shift keys. The Base layer uses the Serenity alpha layout. This layout is configured for use with macOS and would generally be used with a 42+ key layout.
+This is a QMK layout that includes dedicated right and left shift keys. The Base layer uses a [custom layout](https://serenity-layout.vercel.app). This layout is configured for use with macOS and would generally be used with a 42+ key layout.
 
 ## Features
 
-- 6+ layers, including: Lower (Numbers/Navigation), Low (Symbols), Lowest (Mouse Mode), Higher (Cut-copy-paste/Special), High (Media/Keyboard), and Highest (Function). See below for 3 additional macOS layers.
-- One Shot Mods on Home Row when activating any of the 6 principle layers. These are particularly useful for same hand mod presses (eg. "Command + 1..5") that require use of the same hand.
+- 8 layers, including: Numbers/Navigation, Symbols, Mouse Controls, Aux/Window Management, Media/Keyboard, Function keys, OS Shortcuts, and Qwerty layers. See below for 3 additional macOS layers.
+- One Shot Mods on Home Row when tapped activating any of the 6 principle layers. These are particularly useful for same hand mod presses (eg. "Command + 1..5") that require use of the same hand. These mods function as regular mods when held (when tapping term expires).
 - Control, Alt, GUI, and Shift Mods on both sides. Arrow keys on bottom right double as Layer/Mod toggle when held. All four arrow keys can be spammed when tapped twice.
-- Two dual use keys. The Lower Layer and Higher layer keys can be used as Shift keys for improved dexterity and better ergonomics. When using a multi-key combo with mods the inner adjacent key that is used for activating the Lowest (left) and Highest layer (right) can be used as a Shift mod key. It doesn't matter which order you press the sequence of mod keys. As long as 1 or more mod keys is pressed in conjunction with the adjacent Lower/Higher Layer key, that key press will immediately become a Shift mod press until the key is released. See below for use case.
-- Layers can be held/stuck using the "y" & "g" keys while activating a layer. Use cases include persistence of the Keyboard Mouse, or performing numerical data entry with the Lower_layer active for extended periods. Un-stick layers by tapping the respective layer key again.
-- Easy and flexible capslock; Capslock can be toggled on/off with a opposite shift tap when Low or High layer is active. Additionally,
-  - Caps-word can be toggled with a simultaneous left and right tap. Caps-word will disable at the first occurrence of a space, comma, semi-colon, colon, period(dot), escape, tab, or enter tap. Left shift is greedy in regard to interruption.
-  - Caps-sentence can be toggled with a opposite shift tap when Lower or Higher layer is active. Caps-sentence will disable at the first occurrence of a period(dot), escape, or enter tap. Right shift is greedy in regard to interruption.
+- Two dual use keys. The Aux/Window Mgmt. Layer and Media layer keys can be used as Shift keys for improved dexterity and better ergonomics. When using a multi-key combo with mods the inner adjacent key that is used for activating the Lowest (left) and Highest layer (right) can be used as a Shift mod key. It doesn't matter which order you press the sequence of mod keys. As long as 1 or more mod keys is pressed in conjunction with the adjacent Lower/Higher Layer key, that key press will immediately become a Shift mod press until the key is released. See below for use case. This would only apply to the 48 key layout (not 42, eg. Corne).
+- Layers can be held/stuck using the "y" & "g" keys while activating a layer. Use cases include persistent use of the Keyboard Mouse, or performing numerical data entry with the Num/Nav layer active for extended periods. Un-stick layers by tapping the respective layer key again.
+- Caps-word can be toggled with a double left tap.
 - Key lock on Mouse layer for dexterity and ease of use with text selections or holding mouse button clicks.
 - (macOS) Easy access to macOS command key using thumbs. macOS is chock-full of shortcuts that utilize the command key so I'm calling this a feature.
-- (macOS) Double left control tap hides active window and mutes volume. Left control is greedy in regard to interruption.
-- (macOS) An additional shortcut within the Higher layer on the "z" key doubles as a word, line, all select when single, double, and triple tapped respectively. This text select expansion functionality is reminiscent to how double, triple, and quadruple mouse clicks behaves (note - line select via double tap may not work as intended on lines that soft wrap).
-- (macOS) Additional Layer for macOS shortcuts, activated with simultaneous lower and higher hold. See keymap.c
+- (macOS) Additional Layer for macOS shortcuts, activated with simultaneous Num/Nav and Symbols layers hold. See keymap.c
 - (macOS) Window Management shortcuts using [Rectangle](https://rectangleapp.com)
-& [Rectangle](https://rectangleapp.com/) on the Higher layer. See [Reference](#WindowMgtRef) below for additional info.
+& [Rectangle](https://rectangleapp.com/) on the Aux layer. See [Reference](#WindowMgtRef) below for additional info.
 - (macOS) Shortcuts for quick access to word & line backspace and word & line delete forward. These are activated from Lower, Lowest, Higher, and Highest layers, respectively. For convenience, the word delete will not trigger when entering numbers in Lower layer, which is ideal for using backspace within Lower layer (the side effect is that words that end with a number can't be word-deleted until Lower hold is released and held again).
 - (make option) Hold the Execute key (KC_EXECUTE) while holding down the function key. This can be enabled by building firmware with `EXECUTE_ON_FUNC=yes` option. The Execute keycode is not used by MacOS, but it will register, so it can be converted to something else such as the Function "fn" key via a Karabiner-Elements rule which will enable further customization via Karabiner-Elements with additional rules.
 

@@ -192,6 +192,7 @@
 #define TGL_SELECT_LP LT(0, KC_9)
 #define OS_LP_SCRN_SHT_FULL LT(0, KC_A)
 #define OS_LP_SCRN_SHT_SLCT LT(0, KC_B)
+#define OS_LP_SCRN_SHT_WNDW LT(0, KC_C)
 // #define OS_LP_SPTLGHT LT(0, KC_C)
 
 

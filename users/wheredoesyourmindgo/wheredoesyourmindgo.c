@@ -607,6 +607,48 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
+        case OS_LP_SCRN_SHT_WNDW:
+            if (record->tap.count > 0) { // Key is being tapped.
+                if (record->event.pressed) {
+                    // Handle tap press event...
+                    // Send Command + Shift + 4
+                    register_code(KC_LGUI);  // Command key (LGUI on macOS)
+                    register_code(KC_LSFT);  // Shift key
+                    register_code(KC_4);     // 4 key
+                    unregister_code(KC_4);
+                    unregister_code(KC_LSFT);
+                    unregister_code(KC_LGUI);
+
+                    // Add a short delay before pressing Space
+                    wait_ms(100);  // Adjust the delay if necessary
+
+                    // Press Space
+                    register_code(KC_SPC);
+                    unregister_code(KC_SPC);
+                }
+            } else { // Key is being held.
+                if (record->event.pressed) {
+                    // Handle hold press event...
+                    // Send Command + Shift + 4
+                    register_code(KC_LCTL); // Control key
+                    register_code(KC_LGUI);  // Command key (LGUI on macOS)
+                    register_code(KC_LSFT);  // Shift key
+                    register_code(KC_4);     // 4 key
+                    unregister_code(KC_4);
+                    unregister_code(KC_LSFT);
+                    unregister_code(KC_LGUI);
+                    unregister_code(KC_LCTL);
+
+                    // Add a short delay before pressing Space
+                    wait_ms(100);  // Adjust the delay if necessary
+
+                    // Press Space
+                    register_code(KC_SPC);
+                    unregister_code(KC_SPC);
+                }
+            }
+            return false;
+            break;
         // case OS_LP_SPTLGHT:
         //     if (record->tap.count > 0) { // Key is being tapped.
         //         if (record->event.pressed) {

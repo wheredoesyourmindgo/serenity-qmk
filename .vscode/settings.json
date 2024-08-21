@@ -10,6 +10,8 @@
         "**/*.uf2": true
     },
     "files.associations": {
+        "*.html": "html",
+        ".vimrc": "viml",
         "*.h": "c",
         "*.c": "c",
         "*.inc": "c",
@@ -18,17 +20,33 @@
         "xstddef": "c",
         "type_traits": "c",
         "utility": "c",
-        "ranges": "c"
+        "ranges": "c",
+        "chrono": "c",
+        "unordered_map": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,
         "files.trimTrailingWhitespace": false
     },
+    "git.detectSubmodules": false,
+    "editor.formatOnSave": false,
+    "git.postCommitCommand": "push",
+    "cmake.configureOnOpen": false,
+    "cSpell.words": [
+        "LCTL",
+        "LGUI",
+        "LSFT",
+        "oopsy",
+        "RCTL",
+        "RGUI",
+        "RISTRETTO"
+    ],
     "python.formatting.provider": "yapf",
     "[json]": {
         "editor.formatOnSave": false
     },
     "clangd.arguments": [
         "--header-insertion=never"
-    ]
+    ],
+    "git.ignoreLimitWarning": true
 }

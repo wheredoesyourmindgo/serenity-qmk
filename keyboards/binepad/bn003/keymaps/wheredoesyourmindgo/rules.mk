@@ -1,0 +1,7 @@
+TAP_DANCE_ENABLE = no
+MOUSEKEY_ENABLE = no
+EXTRAKEY_ENABLE = no
+KEY_LOCK_ENABLE = no
+ifeq ($(strip $(BN003_USB_LEFT)), yes)
+   	OPT_DEFS += -DBN003_USB_LEFT
+endif

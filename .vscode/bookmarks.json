@@ -1,0 +1,84 @@
+{
+	"files": [
+		{
+			"path": "keyboards/ristretto/keymaps/wheredoesyourmindgo/keymap.c",
+			"bookmarks": [
+				{
+					"line": 0,
+					"column": 0,
+					"label": "Ristretto"
+				}
+			]
+		},
+		{
+			"path": "keyboards/boardwalk/keymaps/wheredoesyourmindgo/keymap.c",
+			"bookmarks": [
+				{
+					"line": 0,
+					"column": 0,
+					"label": "Boardwalk"
+				}
+			]
+		},
+		{
+			"path": "keyboards/boardsource/technik_o/keymaps/wheredoesyourmindgo/keymap.c",
+			"bookmarks": [
+				{
+					"line": 0,
+					"column": 0,
+					"label": "Technik"
+				}
+			]
+		},
+		{
+			"path": "keyboards/foostan/cornelius/keymaps/wheredoesyourmindgo/keymap.c",
+			"bookmarks": [
+				{
+					"line": 0,
+					"column": 0,
+					"label": "Cornelius"
+				}
+			]
+		},
+		{
+			"path": "keyboards/planck/keymaps/wheredoesyourmindgo/keymap.c",
+			"bookmarks": [
+				{
+					"line": 0,
+					"column": 0,
+					"label": "Planck"
+				}
+			]
+		},
+		{
+			"path": "keyboards/signum/3_0/keymaps/wheredoesyourmindgo/keymap.c",
+			"bookmarks": [
+				{
+					"line": 0,
+					"column": 0,
+					"label": "Signum 3"
+				}
+			]
+		},
+		{
+			"path": "keyboards/vitamins_included/keymaps/wheredoesyourmindgo/keymap.c",
+			"bookmarks": [
+				{
+					"line": 0,
+					"column": 0,
+					"label": "Let's Tango"
+				}
+			]
+		},
+		{
+			"path": "keyboards/crkbd/keymaps/wheredoesyourmindgo/keymap.c",
+			"bookmarks": [
+				{
+					"line": 0,
+					"column": 0,
+					"label": "Corne"
+				}
+			]
+		}
+	]
+}

@@ -5,7 +5,7 @@
   "maintainer": "binepad",
   "usb": {
     "vid": "0x4249",
-    "pid": "0x4287",
+    "pid": "0x4286",
     "device_version": "0.0.1"
   },
   "features": {

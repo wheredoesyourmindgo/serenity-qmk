@@ -56,7 +56,11 @@ jobs:
 
     - name: Deploy
       if: ${{ github.event_name == 'push' && github.repository == 'qmk/qmk_firmware' }}
+<<<<<<< HEAD
       uses: JamesIves/github-pages-deploy-action@v4.6.4
+=======
+      uses: JamesIves/github-pages-deploy-action@v4.6.8
+>>>>>>> upstream/master
       with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages

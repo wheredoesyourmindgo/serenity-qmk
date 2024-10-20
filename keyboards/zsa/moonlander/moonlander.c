@@ -399,12 +399,19 @@ void keyboard_post_init_kb(void) {
     }
 #ifdef RGB_MATRIX_ENABLE
     rgb_matrix_enable_noeeprom();
+<<<<<<< HEAD
+#endif
+#if defined(DEFERRED_EXEC_ENABLE)
+    is_launching = true;
+    defer_exec(500, startup_exec, NULL);
+=======
+>>>>>>> upstream/master
 #endif
 #if defined(DEFERRED_EXEC_ENABLE)
     is_launching = true;
     defer_exec(500, startup_exec, NULL);
 #endif
-    matrix_init_user();
+    keyboard_post_init_user();
 }
 
 void eeconfig_init_kb(void) {  // EEPROM is getting reset!

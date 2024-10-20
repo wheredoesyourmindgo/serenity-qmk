@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:keyboards/hineybush/h87a/config.h
 /* Copyright 2020 Josh Hinnebusch
+========
+/* Copyright 2018 Josh Hinnebusch
+>>>>>>>> upstream/master:keyboards/hineybush/h660s/config.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

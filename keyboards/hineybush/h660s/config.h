@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:keyboards/hineybush/h660s/config.h
 /* Copyright 2018 Josh Hinnebusch
+========
+/* Copyright 2019 hineybush
+>>>>>>>> upstream/master:keyboards/hineybush/h75_singa/config.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

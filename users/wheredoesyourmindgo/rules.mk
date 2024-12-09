@@ -1,6 +1,5 @@
 USER_NAME := wheredoesyourmindgo
 
-
 # LEADER_ENABLE = yes 		# + Leaders
 # TAP_DANCE_ENABLE = yes 		# + Tap Dance
 TAP_DANCE_ENABLE = no 		# + Tap Dance

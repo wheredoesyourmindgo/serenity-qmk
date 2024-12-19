@@ -6,7 +6,7 @@ QMK_OPTS='-e EXECUTE_ON_FUNC=yes -e QWERTY_BASE=no'
 qmk compile -kb boardwalk -km wheredoesyourmindgo $QMK_OPTS
 qmk compile -kb ristretto -km wheredoesyourmindgo $QMK_OPTS
 qmk compile -kb boardsource/technik_o -km wheredoesyourmindgo $QMK_OPTS
-# qmk compile -kb boardsource/technik_o -km wheredoesyourmindgo -j 2 -e EXECUTE_ON_FUNC=yes -e QWERTY_BASE=no -e RGB_MATRIX_ENABLE=yes
+# qmk compile -kb boardsource/technik_o -km wheredoesyourmindgo -j 2 -e EXECUTE_ON_FUNC=yes -e QWERTY_BASE=no -e RGB_MATRIX_ENABLE=yes MOUSEKEY_ENABLE=no
 qmk compile -kb vitamins_included/rev2 -km wheredoesyourmindgo $QMK_OPTS
 qmk compile -kb foostan/cornelius -km wheredoesyourmindgo $QMK_OPTS
 qmk compile -kb crkbd -km wheredoesyourmindgo $QMK_OPTS -e CONVERT_TO=elite_pi

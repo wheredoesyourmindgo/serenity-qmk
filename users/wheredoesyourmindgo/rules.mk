@@ -45,10 +45,6 @@ endif
 # 	SRC += swap_hands.c
 # endif
 
-ifeq ($(strip $(EXECUTE_ON_FUNC)), yes)
-  OPT_DEFS += -DEXECUTE_ON_FUNC
-endif
-
 ifeq ($(strip $(QWERTY_BASE)), yes)
   OPT_DEFS += -DQWERTY_BASE
 endif

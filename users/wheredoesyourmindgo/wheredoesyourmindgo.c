@@ -32,11 +32,11 @@ bool process_tap_or_long_press_key(keyrecord_t *record, uint16_t long_press_keyc
 
 // Helper for custom backspace forward behavior
 bool check_mods_sft_and_gui(void) {
-    uint8_t mods = get_mods();
+    uint8_t mods         = get_mods();
     uint8_t oneshot_mods = get_oneshot_mods();
 
     bool is_shift_active = (mods & MOD_MASK_SHIFT) || (oneshot_mods & MOD_MASK_SHIFT);
-    bool is_gui_active = (mods & MOD_MASK_GUI) || (oneshot_mods & MOD_MASK_GUI);
+    bool is_gui_active   = (mods & MOD_MASK_GUI) || (oneshot_mods & MOD_MASK_GUI);
 
     return is_shift_active && is_gui_active;
 }
@@ -398,7 +398,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else if (record->tap.count > 1) {
                     // Handle tap press event...
                     tap_code16(WNDW_VRT_MAX);
-                // Key is being held.
+                    // Key is being held.
                 } else {
                     // Handle hold press event...
                     tap_code16(WNDW_VRT_MAX);
@@ -612,15 +612,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (record->event.pressed) {
                     // Handle tap press event...
                     // Send Command + Shift + 4
-                    register_code(KC_LGUI);  // Command key (LGUI on macOS)
-                    register_code(KC_LSFT);  // Shift key
-                    register_code(KC_4);     // 4 key
+                    register_code(KC_LGUI); // Command key (LGUI on macOS)
+                    register_code(KC_LSFT); // Shift key
+                    register_code(KC_4);    // 4 key
                     unregister_code(KC_4);
                     unregister_code(KC_LSFT);
                     unregister_code(KC_LGUI);
 
                     // Add a short delay before pressing Space
-                    wait_ms(100);  // Adjust the delay if necessary
+                    wait_ms(100); // Adjust the delay if necessary
 
                     // Press Space
                     register_code(KC_SPC);
@@ -631,16 +631,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     // Handle hold press event...
                     // Send Command + Shift + 4
                     register_code(KC_LCTL); // Control key
-                    register_code(KC_LGUI);  // Command key (LGUI on macOS)
-                    register_code(KC_LSFT);  // Shift key
-                    register_code(KC_4);     // 4 key
+                    register_code(KC_LGUI); // Command key (LGUI on macOS)
+                    register_code(KC_LSFT); // Shift key
+                    register_code(KC_4);    // 4 key
                     unregister_code(KC_4);
                     unregister_code(KC_LSFT);
                     unregister_code(KC_LGUI);
                     unregister_code(KC_LCTL);
 
                     // Add a short delay before pressing Space
-                    wait_ms(100);  // Adjust the delay if necessary
+                    wait_ms(100); // Adjust the delay if necessary
 
                     // Press Space
                     register_code(KC_SPC);
@@ -649,24 +649,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
-        // case OS_LP_SPTLGHT:
-        //     if (record->tap.count > 0) { // Key is being tapped.
-        //         if (record->event.pressed) {
-        //             // Handle tap press event...
-        //             tap_code16(OS_SPTLGHT);
-        //         }
-        //     } else { // Key is being held.
-        //         if (record->event.pressed) {
-        //             // Handle hold press event...
-        //             tap_code16(OS_SPTLGHT_FNDR);
-        //         }
-        //     }
-        //     return false;
-        //     break;
+            // case OS_LP_SPTLGHT:
+            //     if (record->tap.count > 0) { // Key is being tapped.
+            //         if (record->event.pressed) {
+            //             // Handle tap press event...
+            //             tap_code16(OS_SPTLGHT);
+            //         }
+            //     } else { // Key is being held.
+            //         if (record->event.pressed) {
+            //             // Handle hold press event...
+            //             tap_code16(OS_SPTLGHT_FNDR);
+            //         }
+            //     }
+            //     return false;
+            //     break;
     }
     return true;
 }
-
 
 void keyboard_post_init_user(void) {
 #ifdef QWERTY_BASE
@@ -683,24 +682,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
     state = update_tri_layer_state(state, NUMNAV, SYMBL, OS);
     state = update_tri_layer_state(state, HRDWR, AUX, FUNC);
-
-    // Use `static` variable to remember the previous status.
-    static bool func_on = false;
-
-    if (func_on != IS_LAYER_ON_STATE(state, FUNC)) {
-        func_on = !func_on;
-        if (func_on) {
-// Just entered one of the FUNC layers.
-#if defined EXECUTE_ON_FUNC
-            register_code(KC_EXEC);
-#endif
-        } else {
-// Just exited the one of FUNC layers.
-#if defined EXECUTE_ON_FUNC
-            unregister_code(KC_EXEC);
-#endif
-        }
-    }
 
 // always call cancel_key_lock()
 #ifdef KEY_LOCK_ENABLE
@@ -802,7 +783,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // case LT(MOUSE, KC_ESC):
-            // return 350;
+        // return 350;
         // Increase Caps word accessibility
         case KC_LSFT:
             return 300;
@@ -814,7 +795,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Allow Permissive Hold per key (quickly use a layer hold)
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case RSFT_T(KC_ENT):  // quickly use right shift
+        case RSFT_T(KC_ENT):     // quickly use right shift
         case LT(HRDWR, KC_LEFT): // quickly use mods on arrow cluster
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):
@@ -828,7 +809,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 // Mirror settings for get_permissive_hold()
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case RSFT_T(KC_ENT):  // quickly use right shift
+        case RSFT_T(KC_ENT):     // quickly use right shift
         case LT(HRDWR, KC_LEFT): // quickly use mods on arrow cluster
         case RGUI_T(KC_DOWN):
         case RALT_T(KC_UP):

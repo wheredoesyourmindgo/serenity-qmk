@@ -249,11 +249,64 @@ bool spi_start_extended(spi_start_config_t *start_config) {
 #elif defined(AT32F415)
     spiConfig.ctrl1 = 0;
 
-    if (lsbFirst) {
+    if (start_config->lsb_first) {
         spiConfig.ctrl1 |= SPI_CTRL1_LTF;
     }
 
-    switch (mode) {
+    switch (start_config->mode) {
+        case 0:
+            break;
+        case 1:
+            spiConfig.ctrl1 |= SPI_CTRL1_CLKPHA;
+            break;
+        case 2:
+            spiConfig.ctrl1 |= SPI_CTRL1_CLKPOL;
+            break;
+        case 3:
+            spiConfig.ctrl1 |= SPI_CTRL1_CLKPHA | SPI_CTRL1_CLKPOL;
+            break;
+    }
+
+    switch (roundedDivisor) {
+        case 2:
+            break;
+        case 4:
+            spiConfig.ctrl1 |= SPI_CTRL1_MDIV_0;
+            break;
+        case 8:
+            spiConfig.ctrl1 |= SPI_CTRL1_MDIV_1;
+            break;
+        case 16:
+            spiConfig.ctrl1 |= SPI_CTRL1_MDIV_1 | SPI_CTRL1_MDIV_0;
+            break;
+        case 32:
+            spiConfig.ctrl1 |= SPI_CTRL1_MDIV_2;
+            break;
+        case 64:
+            spiConfig.ctrl1 |= SPI_CTRL1_MDIV_2 | SPI_CTRL1_MDIV_0;
+            break;
+        case 128:
+            spiConfig.ctrl1 |= SPI_CTRL1_MDIV_2 | SPI_CTRL1_MDIV_1;
+            break;
+        case 256:
+            spiConfig.ctrl1 |= SPI_CTRL1_MDIV_2 | SPI_CTRL1_MDIV_1 | SPI_CTRL1_MDIV_0;
+            break;
+        case 512:
+            spiConfig.ctrl2 |= SPI_CTRL1_MDIV_3;
+            break;
+        case 1024:
+            spiConfig.ctrl2 |= SPI_CTRL1_MDIV_3;
+            spiConfig.ctrl1 |= SPI_CTRL1_MDIV_0;
+            break;
+    }
+#else
+    spiConfig.cr1 = 0;
+
+    if (start_config->lsb_first) {
+        spiConfig.cr1 |= SPI_CR1_LSBFIRST;
+    }
+
+    switch (start_config->mode) {
         case 0:
             break;
         case 1:

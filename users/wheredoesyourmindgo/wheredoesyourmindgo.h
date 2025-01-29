@@ -40,8 +40,8 @@
 #define BSPC_PRV_LN LGUI(KC_BSPC)   // Backspace previous line
 #define MAC_MSTP KC_MPLY            // KC_MSTP does't work on macOS
 // Issue with External LG Monitor/display. Karabiner seems to block Control-brightness. Easiest workaround is to map display brightness controls in macOS system preferences to a function key.
-#define DISP_DIM KC_F17             // Dim Display
-#define DISP_BRI KC_F18             // Brighten Display
+#define DISP_DIM KC_F14             // Dim Display
+#define DISP_BRI KC_F15             // Brighten Display
 #define ZOOM_IN_APP LGUI(KC_PLUS)       // Zoom in app
 #define ZOOM_OUT_APP LGUI(KC_MINUS)     // Zoom out app
 #define ZOOM_RESET_APP LGUI(KC_P0)      // Zoom reset app

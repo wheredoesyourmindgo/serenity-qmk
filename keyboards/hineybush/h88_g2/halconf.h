@@ -1,4 +1,4 @@
-/* Copyright 2023 QMK
+/* Copyright 2024 Josh Hinnebusch
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -13,10 +13,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
- 
 #pragma once
 
-#define HAL_USE_I2C TRUE
+#define HAL_USE_PWM TRUE
 
 #include_next <halconf.h>
-

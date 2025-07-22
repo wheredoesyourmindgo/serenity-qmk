@@ -516,6 +516,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // Cancel Layer Lock on Escape
         case KC_ESC:
             if (record->event.pressed) {
+                // cancel oneshot mods if active
+                if (cancel_oneshot_mods_if_active()) {
+                    return false; // suppress actual Esc press
+                }
+                // cancel layer lock if active
                 const uint8_t layer = get_highest_layer(layer_state);
                 if (is_layer_locked(layer)) {
                     layer_lock_off(layer);
@@ -526,6 +531,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LT(MOUSE, KC_ESC):
             if (record->tap.count > 0) { // Key is being tapped.
                 if (record->event.pressed) {
+                    // cancel oneshot mods if active
+                    if (cancel_oneshot_mods_if_active()) {
+                        return false; // suppress actual Esc press
+                    }
+                    // cancel layer lock if active
                     const uint8_t layer = get_highest_layer(layer_state);
                     if (is_layer_locked(layer)) {
                         layer_lock_off(layer);
@@ -678,7 +688,18 @@ void keyboard_post_init_user(void) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     cmd_tab_switcher_layer_state(state);
-    oneshot_mods_layer_state(state);
+
+    // one shot mods cancellation
+    switch (get_highest_layer(state)) {
+        case BASE:
+        case QWRTY:
+        case AUX:
+        case HRDWR:
+            break; // preserve OSM (AUX & HRDWR needed for function keys)
+        default:
+            cancel_oneshot_mods_if_active();
+            break;
+    }
 
     state = update_tri_layer_state(state, NUMNAV, SYMBL, OS);
     state = update_tri_layer_state(state, HRDWR, AUX, FUNC);

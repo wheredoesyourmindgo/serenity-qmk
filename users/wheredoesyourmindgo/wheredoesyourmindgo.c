@@ -714,6 +714,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 void matrix_scan_user(void) {
     cmd_tab_switcher_matrix_scan_user();
+    // Enforce oneshot timeout each scan
+    oneshot_mods_task();
 }
 
 #ifdef ENCODER_ENABLE

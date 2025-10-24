@@ -137,23 +137,7 @@ void tap_code_unset_mod(uint8_t code) {
 
 // Custom Shift Keys
 const custom_shift_key_t custom_shift_keys[] = {
-    //   {KC_COMMA, KC_SEMICOLON}, // Shift . is
-    //   {KC_DOT, KC_COLON}, // Shift . is :
-    //   {KC_8, KC_LEFT_PAREN}, // Shift 8 is (
-    //   {KC_9, KC_RIGHT_PAREN}, // Shift 9 is )
-    //   {KC_0, KC_ASTERISK}, // Shift 0 is *
-    //   {KC_BACKSPACE, LALT(KC_BACKSPACE)}, // Shift Backspace is delete previous word
-    //   {KC_DELETE, LALT(KC_DELETE)}, // Shift Delete is delete previous word
     {KC_BACKSPACE, KC_DELETE} // Shift Backspace is delete forward
-    //   {KC_F6, KC_F16}, // Shift F-* is +10 F-*
-    //   {KC_F7, KC_F17},
-    //   {KC_F8, KC_F18},
-    //   {KC_F9, KC_F19},
-    //   {KC_F10, KC_F20},
-    //   {KC_F11, KC_F21},
-    //   {KC_F12, KC_F22},
-    //   {KC_F13, KC_F23},
-    //   {KC_F14, KC_F24},
 };
 uint8_t NUM_CUSTOM_SHIFT_KEYS = sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
 
@@ -188,43 +172,7 @@ bool caps_word_press_user(uint16_t keycode) {
             return false; // Deactivate Caps Word.
     }
 }
-// bool caps_sentence_press_user(uint16_t keycode) {
-//     switch (keycode) {
-//           // ignore shift presses (ie. double quote)
-//         case KC_LSFT:
-//         case KC_RSFT:
-//             return true;
 
-//         // Keycodes that continue Caps Word, with shift applied.
-//         case KC_A ... KC_Z:
-//             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to the next key.
-//             return true;
-
-//         // Keycodes that continue Caps Word, without shifting.
-//         case KC_1 ... KC_0:
-//         case KC_BSPACE:
-//         case KC_DELETE:
-//         case KC_MINUS:
-//         case KC_UNDERSCORE:
-//         //  Additional keycodes
-//         case KC_QUOTE:
-//         // case KC_DOUBLE_QUOTE:
-//         case KC_GRAVE:
-//         // caps sentence specific
-//         // opening braces
-//         case KC_LEFT_PAREN:
-//         case KC_LBRACKET:
-//         case KC_LEFT_CURLY_BRACE:
-//         case KC_LEFT_ANGLE_BRACKET:
-//         // punctuation
-//         case KC_SPACE:
-//         case KC_COMMA:
-//             return true;
-
-//         default:
-//             return false;  // Deactivate Caps Word.
-//     }
-// }
 
 /* Macros */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -244,28 +192,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
     }
-    // if (keycode == KC_DELETE) {
-    //     if (record->event.pressed) {
-    //       if (check_mods_gui) {
-    //         tap_code16_no_mod(LCTL(KC_K));  // Gui delete becomes delete line forward
-    //         return false;            // don't continue with custom shift keycodes below
-    //       }
-    //     } else {
-    //         if (check_mods_gui()) {
-    //            if (ONESHOT_MODS_ACTIVE) {
-    //              clear_oneshot_mods();
-    //              send_keyboard_report();
-    //            }
-    //         }
-    //     }
-    // }
-    // only activate on base and qwerty layers
-    // if (IS_LAYER_ON(BASE) || IS_LAYER_ON(QWRTY)) {
-    //     if (!process_caps_word(keycode, record)) {
-    //         return false;
-    //     }
-    // }
-    // if (!process_caps_sentence(keycode, record, CAPS_SENTENCE)) { return false; }
+
     // don't activate on qwerty layer
     if (!IS_LAYER_ON(QWRTY)) {
         // if (!process_custom_gui_keys(keycode, record)) { return false; }

@@ -16,3 +16,4 @@ qmk compile -kb signum/3_0/elitec -km wheredoesyourmindgo $QMK_OPTS
 # qmk compile -kb planck/rev6 -km wheredoesyourmindgo $QMK_OPTS -e ENCODER_ENABLE=yes
 qmk compile -kb planck/rev6 -km wheredoesyourmindgo $QMK_OPTS
 # qmk compile -kb planck/rev6 -km wheredoesyourmindgo -j 2 -e QWERTY_BASE=no -e ENCODER_ENABLE=no
+qmk compile -kb hhkb/ansi/32u2 -km wheredoesyourmindgo $QMK_OPTS

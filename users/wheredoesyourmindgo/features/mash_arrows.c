@@ -10,7 +10,6 @@ bool process_mash_arrows(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
          case LT(HRDWR, KC_LEFT):
             if (record->tap.count > 0) {
-            //   if (record->event.pressed) {
                   if (MODS_RALT || MODS_RGUI || MODS_RCTRL) {
                     // Un-register mods
                     if (MODS_RALT) {
@@ -28,7 +27,6 @@ bool process_mash_arrows(uint16_t keycode, keyrecord_t* record) {
                       return true;
                   }
                   return false;
-            //   }
             }
             break;
         case RALT_T(KC_UP):
@@ -72,9 +70,10 @@ bool process_mash_arrows(uint16_t keycode, keyrecord_t* record) {
             }
             break;
         case RCTL_T(KC_RIGHT):
+            if (record->tap.count > 0) {
                 if (MODS_RALT || MODS_RGUI || IS_LAYER_ON(HRDWR)) {
                     if (MODS_RALT) {
-                      tap_code16_unset_mod(KC_UP);
+                        tap_code16_unset_mod(KC_UP);
                     }
                     if (MODS_RGUI) {
                         tap_code16_unset_mod(KC_DOWN);
@@ -88,6 +87,7 @@ bool process_mash_arrows(uint16_t keycode, keyrecord_t* record) {
                     return true;
                 }
                 return false;
+            }
             break;
     }
 

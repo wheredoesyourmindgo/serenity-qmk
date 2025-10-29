@@ -57,5 +57,6 @@
             "url": "./data/schemas/keymap.jsonschema"
         }
     ],
-    "makefile.configureOnOpen": false
+    "makefile.configureOnOpen": false,
+    "cmake.sourceDirectory": "/Users/ahendricks/Development/serenity-qmk/lib/googletest"
 }

@@ -108,6 +108,8 @@
 #define WNDW_BTM_RGHT LCA(KC_K)     // Bottom right
 #define WNDW_NXT_SPC HYPR(KC_RIGHT) // Next Space
 #define WNDW_PRV_SPC HYPR(KC_LEFT)  // Previous Space
+#define WNDW_RGHT_FILL LCTL(LALT(LGUI(KC_R)))       // Right Fill
+#define WNDW_LFT_FILL LCTL(LALT(LGUI(KC_L)))        // Left Fill
 // #define WNDW_FST_FRTH HYPR(KC_?)    // First fourth
 // #define WNDW_SCND_FRTH HYPR(KC_?)   // Second fourth
 // #define WNDW_THRD_FRTH HYPR(KC_?)   // Third fourth
@@ -193,6 +195,10 @@
 #define OS_LP_SCRN_SHT_FULL LT(0, KC_A)
 #define OS_LP_SCRN_SHT_SLCT LT(0, KC_B)
 #define OS_LP_SCRN_SHT_WNDW LT(0, KC_C)
+#define WNDW_LP_FLLSCRN LT(0, KC_D)
+#define WNDW_LP_CNTR LT(0, KC_E)
+#define WNDW_LP_LEFT LT(0, KC_F)
+#define WNDW_LP_RIGHT LT(0, KC_G)
 // #define OS_LP_SPTLGHT LT(0, KC_C)
 
 

@@ -2,13 +2,6 @@
 {
     // Unofficially, QMK uses spaces for indentation
     "editor.insertSpaces": true,
-    // Configure glob patterns for excluding files and folders.
-    "files.exclude": {
-        "**/.build": true,
-        "**/*.hex": true,
-        "**/*.bin": true,
-        "**/*.uf2": true
-    },
     "files.associations": {
         // QMK Filetypes
         "keyboard.json": "jsonc",
@@ -58,5 +51,34 @@
         }
     ],
     "makefile.configureOnOpen": false,
-    "cmake.sourceDirectory": "/Users/ahendricks/Development/serenity-qmk/lib/googletest"
+    "cmake.sourceDirectory": "/Users/ahendricks/Development/serenity-qmk/lib/googletest",
+    // Prevent VS Code from showing each submodule as its own Git repo
+    "git.autoRepositoryDetection": false,
+
+    // (Optional) Also explicitly ignore these repos if auto-detection is still enabled globally
+    "git.ignoredRepositories": [
+        "lib/chibios",
+        "lib/chibios-contrib",
+        "lib/googletest",
+        "lib/lufa",
+        "lib/vusb",
+        "lib/printf",
+        "lib/pico-sdk",
+        "lib/lvgl"
+    ],
+    // Hide from the file explorer and search
+    "files.exclude": {
+        "**/.build": true,
+        "**/*.hex": true,
+        "**/*.bin": true,
+        "**/*.uf2": true,
+        "lib/chibios": true,
+        "lib/chibios-contrib": true,
+        "lib/googletest": true,
+        "lib/lufa": true,
+        "lib/vusb": true,
+        "lib/printf": true,
+        "lib/pico-sdk": true,
+        "lib/lvgl": true
+    }
 }

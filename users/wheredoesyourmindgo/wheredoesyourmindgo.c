@@ -316,6 +316,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code16(MS_ACL1);
             }
             break;
+        case WNDW_LP_FLLSCRN:
+            if (record->event.pressed) {
+                if (record->tap.count > 0) { // Key is being tapped.
+                    // Handle tap press event...
+                    tap_code16(WNDW_MAX);
+                } else { // Key is being held.
+                    // Handle hold press event...
+                    tap_code16(WNDW_RSTR);
+                }
+            }
+            return false; // Skip default handling.
+            break;
+        case WNDW_LP_CNTR:
+            if (record->event.pressed) {
+                if (record->tap.count > 0) { // Key is being tapped.
+                    // Handle tap press event...
+                    tap_code16(WNDW_CNTR);
+                } else { // Key is being held.
+                    // Handle hold press event...
+                    tap_code16(WNDW_LWP);
+                }
+            }
+            return false; // Skip default handling.
+            break;
         case WNDW_LP_VRT_MAX:
             if (record->event.pressed) {
                 // Key is being tapped.
@@ -333,47 +357,47 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false; // Skip default handling.
             break;
-        case WNDW_LP_ALMST_MAX:
+        case WNDW_LP_LEFT:
             if (record->event.pressed) {
                 if (record->tap.count > 0) { // Key is being tapped.
                     // Handle tap press event...
                     tap_code16(WNDW_LFT_HLF);
                 } else { // Key is being held.
                     // Handle hold press event...
-                    tap_code16(WNDW_MAX);
+                    tap_code16(WNDW_LFT_FILL);
                 }
             }
             return false; // Skip default handling.
             break;
-        case WNDW_LP_SMLR:
-            if (record->tap.count > 0) { // Key is being tapped.
-                if (record->event.pressed) {
-                    // Handle tap press event...
-                    tap_code16(WNDW_SMLLR);
-                }
-            } else { // Key is being held.
-                if (record->event.pressed) {
-                    // Handle hold press event...
-                    tap_code16(WNDW_CNTR);
-                }
-            }
-            return false; // Skip default handling.
-            break;
-        case WNDW_LP_LGR:
-            if (record->tap.count > 0) { // Key is being tapped.
-                if (record->event.pressed) {
-                    // Handle tap press event...
-                    tap_code16(WNDW_LRGR);
-                }
-            } else { // Key is being held.
-                if (record->event.pressed) {
-                    // Handle hold press event...
-                    tap_code16(WNDW_RSTR);
-                }
-            }
-            return false; // Skip default handling.
-            break;
-        case WNDW_LP_LWP:
+        // case WNDW_LP_SMLR:
+        //     if (record->tap.count > 0) { // Key is being tapped.
+        //         if (record->event.pressed) {
+        //             // Handle tap press event...
+        //             tap_code16(WNDW_SMLLR);
+        //         }
+        //     } else { // Key is being held.
+        //         if (record->event.pressed) {
+        //             // Handle hold press event...
+        //             tap_code16(WNDW_CNTR);
+        //         }
+        //     }
+        //     return false; // Skip default handling.
+        //     break;
+        // case WNDW_LP_LGR:
+        //     if (record->tap.count > 0) { // Key is being tapped.
+        //         if (record->event.pressed) {
+        //             // Handle tap press event...
+        //             tap_code16(WNDW_LRGR);
+        //         }
+        //     } else { // Key is being held.
+        //         if (record->event.pressed) {
+        //             // Handle hold press event...
+        //             tap_code16(WNDW_RSTR);
+        //         }
+        //     }
+        //     return false; // Skip default handling.
+        //     break;
+        case WNDW_LP_RIGHT:
             if (record->tap.count > 0) { // Key is being tapped.
                 if (record->event.pressed) {
                     // Handle tap press event...
@@ -382,26 +406,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else { // Key is being held.
                 if (record->event.pressed) {
                     // Handle hold press event...
-                    tap_code16(WNDW_LWP);
-                }
-            }
-            return false; // Skip default handling.
-            break;
-        case MSN_LP_FLLSCRN: // Mission Control on tap, OS full screen on long press
-            // return process_tap_or_long_press_key(record, OS_FLLSCRN);
-            if (record->tap.count > 0) { // Key is being tapped.
-                if (record->event.pressed) {
-                    // Handle tap press event...
-                    tap_code16(OS_MSN_CNTRL);
-                } else {
-                    // Handle tap release event...
-                }
-            } else { // Key is being held.
-                if (record->event.pressed) {
-                    // Handle hold press event...
-                    tap_code16(OS_FLLSCRN);
-                } else {
-                    // Handle hold release event...
+                    tap_code16(WNDW_RGHT_FILL);
                 }
             }
             return false; // Skip default handling.

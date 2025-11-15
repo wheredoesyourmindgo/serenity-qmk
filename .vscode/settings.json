@@ -2,14 +2,14 @@
 {
     // Unofficially, QMK uses spaces for indentation
     "editor.insertSpaces": true,
-    // Configure glob patterns for excluding files and folders.
-    "files.exclude": {
-        "**/.build": true,
-        "**/*.hex": true,
-        "**/*.bin": true,
-        "**/*.uf2": true
-    },
     "files.associations": {
+        // QMK Filetypes
+        "keyboard.json": "jsonc",
+        "info.json": "jsonc",
+        "keymap.json": "jsonc",
+        "qmk.json": "jsonc",
+        "qmk_module.json": "jsonc",
+        // Standard filetypes
         "*.h": "c",
         "*.c": "c",
         "*.inc": "c",
@@ -24,12 +24,59 @@
         "editor.trimAutoWhitespace": false,
         "files.trimTrailingWhitespace": false
     },
-    "python.formatting.provider": "yapf",
     "[json]": {
         "editor.formatOnSave": false
     },
-    "clangd.arguments": [
-        "--header-insertion=never"
+    "bookmarks.saveBookmarksInProject": true,
+    "[c]": {
+        "editor.formatOnSave": false
+    },
+    "clangd.arguments": ["--header-insertion=never"],
+    "json.schemas": [
+        {
+            "fileMatch": ["qmk.json"],
+            "url": "./data/schemas/user_repo_v1_1.jsonschema"
+        },
+        {
+            "fileMatch": ["qmk_module.json"],
+            "url": "./data/schemas/community_module.jsonschema"
+        },
+        {
+            "fileMatch": ["keyboard.json", "info.json"],
+            "url": "./data/schemas/keyboard.jsonschema"
+        },
+        {
+            "fileMatch": ["keymap.json"],
+            "url": "./data/schemas/keymap.jsonschema"
+        }
     ],
-    "bookmarks.saveBookmarksInProject": true
+    "cmake.sourceDirectory": "/Users/ahendricks/Development/serenity-qmk/lib/googletest",
+    // Prevent VS Code from showing each submodule as its own Git repo
+    "git.autoRepositoryDetection": false,
+    // (Optional) Also explicitly ignore these repos if auto-detection is still enabled globally
+    "git.ignoredRepositories": [
+        "lib/chibios",
+        "lib/chibios-contrib",
+        "lib/googletest",
+        "lib/lufa",
+        "lib/vusb",
+        "lib/printf",
+        "lib/pico-sdk",
+        "lib/lvgl"
+    ],
+    // Hide from the file explorer and search
+    "files.exclude": {
+        "**/.build": true,
+        "**/*.hex": true,
+        "**/*.bin": true,
+        "**/*.uf2": true,
+        "lib/chibios": true,
+        "lib/chibios-contrib": true,
+        "lib/googletest": true,
+        "lib/lufa": true,
+        "lib/vusb": true,
+        "lib/printf": true,
+        "lib/pico-sdk": true,
+        "lib/lvgl": true
+    }
 }

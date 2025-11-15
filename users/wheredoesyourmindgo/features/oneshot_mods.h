@@ -12,5 +12,15 @@
 #define ONESHOT_MODS_RALT (get_oneshot_mods() & MOD_BIT(KC_RALT))
 #define ONESHOT_MODS_RCTL (get_oneshot_mods() & MOD_BIT(KC_RCTL))
 
-void oneshot_mods_layer_state(layer_state_t state);
-bool process_oneshot_mods(uint16_t keycode, keyrecord_t* record);
+bool cancel_oneshot_mods_if_active(void);
+bool process_oneshot_mods(uint16_t keycode, keyrecord_t *record);
+
+#ifndef OSM_DEFAULT_TIMEOUT_MS
+#    define OSM_DEFAULT_TIMEOUT_MS 3000
+#endif
+
+// Set the oneshot timeout in milliseconds (overrides the default).
+void set_oneshot_timeout(uint16_t ms);
+
+// Call this periodically (e.g., from matrix_scan_user) to enforce timeout.
+void oneshot_mods_task(void);

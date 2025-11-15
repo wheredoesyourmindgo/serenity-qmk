@@ -1,6 +1,5 @@
 USER_NAME := wheredoesyourmindgo
 
-
 # LEADER_ENABLE = yes 		# + Leaders
 # TAP_DANCE_ENABLE = yes 		# + Tap Dance
 TAP_DANCE_ENABLE = no 		# + Tap Dance
@@ -45,10 +44,6 @@ endif
 # ifeq ($(strip $(SWAP_HANDS_ENABLE)), yes)
 # 	SRC += swap_hands.c
 # endif
-
-ifeq ($(strip $(EXECUTE_ON_FUNC)), yes)
-  OPT_DEFS += -DEXECUTE_ON_FUNC
-endif
 
 ifeq ($(strip $(QWERTY_BASE)), yes)
   OPT_DEFS += -DQWERTY_BASE

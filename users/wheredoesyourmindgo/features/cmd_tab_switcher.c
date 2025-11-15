@@ -132,8 +132,10 @@ bool process_cmd_tab_switcher(uint16_t keycode, keyrecord_t* record) {
         // instantly switch to app after RGUI is let go when cmd tab is activated using encoder and RGUI
         case KC_RGUI:
         case RGUI_T(KC_LEFT):
-            if (!(record->event.pressed)) {
-                cancel_cmd_shift();
+            if (!record->event.pressed) {
+                if (is_cmd_tab_active && !MODS_LGUI) {
+                    cancel_cmd_shift();
+                }
             }
             break;
 

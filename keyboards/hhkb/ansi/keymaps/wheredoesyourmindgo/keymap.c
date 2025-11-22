@@ -28,9 +28,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [BASE] = LAYOUT( //  default layer
         KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_LBRC, KC_RBRC, KC_BSLS, KC_DEL,
-        KC_TAB, KC_Q, KC_L, KC_M, KC_W, KC_V, KC_J, KC_F, KC_O, KC_U, KC_MINS, KC_EQL, KC_SLSH, KC_BSPC,
+        KC_TAB, KC_Q, KC_L, KC_D, KC_W, KC_V, KC_J, KC_F, KC_O, KC_U, KC_MINS, KC_EQL, KC_SLSH, KC_BSPC,
         LT(RAISE,KC_ESC), KC_R, KC_N, KC_T, KC_S, KC_G, KC_Y, KC_H, KC_E, KC_A, KC_I, KC_SCLN, KC_ENT,
-        KC_LSFT, KC_X, KC_Z, KC_D, KC_C, KC_B, KC_K, KC_P, KC_QUOT, KC_COMM, KC_DOT, RSFT_T(KC_ENT), KC_RCTL,
+        KC_LSFT, KC_X, KC_Z, KC_M, KC_C, KC_B, KC_K, KC_P, KC_QUOT, KC_COMM, KC_DOT, RSFT_T(KC_ENT), KC_RCTL,
         KC_LALT, KC_LGUI, /*        */ LT(LOWER, KC_SPC), KC_RGUI, KC_RALT),
 
     /* Layer LOWER

@@ -18,6 +18,10 @@ GRAVE_ESC_ENABLE = no
 # MAGIC_ENABLE = no
 
 SRC += serenity.c
+SRC += helpers.c
+SRC += long_press.c
+SRC += tapping.c
+SRC += rotary_encoder.c
 SRC += features/oneshot_mods.c
 SRC += features/custom_shift_keys.c
 SRC += features/magic_shift.c

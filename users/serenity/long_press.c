@@ -1,0 +1,75 @@
+// Tap / long-press keys: LT(0, kc) keys whose tap and hold each send a shortcut.
+// The keycodes are defined in shortcuts.h.
+#include "serenity.h"
+
+// On press, send `tap_keycode` if tapped or `hold_keycode` if held
+static bool tap_or_hold(keyrecord_t *record, uint16_t tap_keycode, uint16_t hold_keycode) {
+    if (record->event.pressed) {
+        tap_code16(record->tap.count > 0 ? tap_keycode : hold_keycode);
+    }
+    return false; // Skip default handling.
+}
+
+// Press a screenshot shortcut, then Space to switch it to window capture
+static void screenshot_window(uint16_t shortcut) {
+    tap_code16(shortcut);
+    wait_ms(100); // Give macOS time to show the screenshot cursor
+    tap_code(KC_SPC);
+}
+
+bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case QUOT_LP:
+            return process_tap_or_long_press_key(record, KC_DOUBLE_QUOTE);
+        case DOT_LP:
+            return process_tap_or_long_press_key(record, KC_COMM);
+
+        // Window management (Rectangle)
+        case WNDW_LP_FLLSCRN:
+            return tap_or_hold(record, WNDW_MAX, WNDW_RSTR);
+        case WNDW_LP_CNTR:
+            return tap_or_hold(record, WNDW_CNTR, WNDW_LWP);
+        case WNDW_LP_LEFT:
+            return tap_or_hold(record, WNDW_LFT_HLF, WNDW_LFT_FILL);
+        case WNDW_LP_RIGHT:
+            return tap_or_hold(record, WNDW_RGHT_HLF, WNDW_RGHT_FILL);
+        case WNDW_LP_VRT_MAX:
+            // Single tap: almost maximize. Double tap or hold: vertical maximize.
+            if (record->event.pressed) {
+                tap_code16(record->tap.count == 1 ? WNDW_ALMST_MAX : WNDW_VRT_MAX);
+            }
+            return false;
+
+        // Spaces: tap to switch, hold to tile the window into split view
+        case PRV_SPC_LP:
+            return tap_or_hold(record, OS_PRV_SPC, OS_TL_WNDW_L);
+        case NXT_SPC_LP:
+            return tap_or_hold(record, OS_NXT_SPC, OS_TL_WNDW_R);
+
+        // Screenshots: tap saves to file, hold copies to clipboard
+        case OS_LP_SCRN_SHT_FULL:
+            return tap_or_hold(record, OS_SCRN_SHT, OS_SCRN_SHT_CLP);
+        case OS_LP_SCRN_SHT_SLCT:
+            return tap_or_hold(record, OS_SCRN_SHT_SLCT, OS_SCRN_SHT_CLP_SLCT);
+        case OS_LP_SCRN_SHT_WNDW:
+            if (record->event.pressed) {
+                screenshot_window(record->tap.count > 0 ? OS_SCRN_SHT_SLCT : OS_SCRN_SHT_CLP_SLCT);
+            }
+            return false;
+
+        // Select the current word (tap) or line (hold)
+        case TGL_SELECT_LP:
+            if (record->event.pressed) {
+                tap_code(KC_RIGHT); // Fixes selection when the cursor is at the start of a word/line
+                if (record->tap.count > 0) {
+                    tap_code16(LALT(KC_LEFT));
+                    tap_code16(LALT(LSFT(KC_RGHT)));
+                } else {
+                    tap_code16(LGUI(KC_LEFT));
+                    tap_code16(LGUI(LSFT(KC_RGHT)));
+                }
+            }
+            return false;
+    }
+    return true;
+}

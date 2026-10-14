@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #include "mash_arrows.h"
-#include "wheredoesyourmindgo.h"
+#include "serenity.h"
 
 bool process_mash_arrows(uint16_t keycode, keyrecord_t* record) {
     if (!record->event.pressed) { return true; }

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #include "magic_shift.h"
-#include "wheredoesyourmindgo.h"
+#include "serenity.h"
 
 bool process_magic_shift(uint16_t keycode, keyrecord_t* record) {
 

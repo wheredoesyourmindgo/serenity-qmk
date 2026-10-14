@@ -1,5 +1,5 @@
 #include QMK_KEYBOARD_H
-#include "wheredoesyourmindgo.h"
+#include "serenity.h"
 
 #define BASE 0
 #define LOWER 1

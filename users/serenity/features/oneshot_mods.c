@@ -1,5 +1,5 @@
 #include "oneshot_mods.h"
-#include "wheredoesyourmindgo.h"
+#include "serenity.h"
 #include "print.h"
 
 // Global timeout control (defaults to 3s, overridable via set_oneshot_timeout or OSM_DEFAULT_TIMEOUT_MS)

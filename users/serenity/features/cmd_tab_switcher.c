@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #include "cmd_tab_switcher.h"
-#include "wheredoesyourmindgo.h"
+#include "serenity.h"
 
 bool is_cmd_tab_active = false;
 bool is_cmd_tab_held = false;

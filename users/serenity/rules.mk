@@ -1,4 +1,4 @@
-USER_NAME := wheredoesyourmindgo
+USER_NAME := serenity
 
 # LEADER_ENABLE = yes 		# + Leaders
 # TAP_DANCE_ENABLE = yes 		# + Tap Dance
@@ -24,7 +24,7 @@ CAPS_WORD_ENABLE = yes
 # WINDOW_MGT = yes
 
 ifneq ($(strip $(KEYBOARD)), binepad/bn003)
-	SRC += wheredoesyourmindgo.c
+	SRC += serenity.c
 # use caps word/sentence
 # SRC += features/caps_word.c
 # SRC += features/caps_sentence.c

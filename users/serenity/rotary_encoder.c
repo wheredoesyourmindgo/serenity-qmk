@@ -16,7 +16,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     }
 
     bool hrdwr = IS_LAYER_ON(HRDWR);
-    bool aux   = IS_LAYER_ON(AUX);
+    bool aux   = IS_LAYER_ON(ACTN);
 
     if (MODS_GUI) {
         // Use the cmd-tab switcher so double tap can close apps only while it's active

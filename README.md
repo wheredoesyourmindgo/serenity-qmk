@@ -4,6 +4,25 @@ My personal QMK firmware: a shared userspace (`users/serenity`) plus a keymap pe
 
 This repo holds only my code. QMK itself lives in a separate, unmodified clone.
 
+**Layout reference:** interactive diagrams of every layer, plus the feature list, are at [serenity-layout.fyi/firmware](https://www.serenity-layout.fyi/firmware) ([source](https://github.com/wheredoesyourmindgo/serenity-web)).
+
+## Layers
+
+The website uses friendlier names for some layers than the code does:
+
+| Code (`serenity.h`) | Website | Reached by |
+|---|---|---|
+| `BASE` | Base | default |
+| `QWRTY` | Qwerty | `TGL_LYT` on Hardware, or build with `-e QWERTY_BASE=yes` |
+| `NUMNAV` | Num/Nav | left thumb, beside Space |
+| `SYMBL` | Symbol | right thumb, beside Space |
+| `ACTN` | Action | left, beside Num/Nav |
+| `HRDWR` | Hardware | right, beside Symbol |
+| `OS` | OS | Num/Nav + Symbol (tri-layer) |
+| `FUNC` | Function | Action + Hardware (tri-layer) |
+| `MOUSE` | Mouse | hold Escape |
+| `BASE_L`, `BASE_R` | — | tap then hold Symbol / Num/Nav (temporary home-row mods) |
+
 ## Layout
 
 | Path | What |

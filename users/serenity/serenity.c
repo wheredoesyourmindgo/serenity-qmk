@@ -8,19 +8,12 @@
 //   features/         self-contained features (one-shot mods, cmd-tab switcher, ...)
 #include "serenity.h"
 #include "features/oneshot_mods.h"
-#include "features/custom_shift_keys.h"
 #include "features/magic_shift.h"
 #include "features/cmd_tab_switcher.h"
 #include "features/symbol_rolls.h"
 #include "features/mash_arrows.h"
 #include "features/mo_ext.h"
 #include "process_layer_lock.h" // QMK core Layer Lock (QK_LLCK)
-
-// Custom Shift Keys
-const custom_shift_key_t custom_shift_keys[] = {
-    {KC_BACKSPACE, KC_DELETE} // Shift Backspace is delete forward
-};
-uint8_t NUM_CUSTOM_SHIFT_KEYS = sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
 
 bool caps_word_press_user(uint16_t keycode) {
     switch (keycode) {
@@ -76,7 +69,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (keycode == KC_BACKSPACE && check_mods_sft_and_gui()) {
         if (record->event.pressed) {
             tap_code16_no_mod(LCTL(KC_K));
-            return false; // Skip custom shift keys below
+            return false;
         }
         // Mods are restored after tap_code16_no_mod(), so clear one-shot mods on release
         if (ONESHOT_MODS_ACTIVE) {
@@ -86,9 +79,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     // Feature order matters: each one can consume the key and stop the rest.
-    if (!IS_LAYER_ON(QWRTY) && !process_custom_shift_keys(keycode, record)) {
-        return false;
-    }
     // QMK also runs Layer Lock after this function, but by then the features below may have
     // consumed layer keys (MO/LT). Run it here first so those keys still unlock a locked layer.
     if (!process_layer_lock(keycode, record)) {

@@ -32,6 +32,12 @@
 // #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 
+// Custom Shift Keys (getreuer/custom_shift_keys community module, table in shift_keys.c)
+// Skip when GUI is held, so Shift+GUI+Backspace reaches process_record_user (delete to end of line)
+#define CUSTOM_SHIFT_KEYS_NEGMODS MOD_MASK_GUI
+// Apply on every layer except QWRTY (layer 1), so Shift+Backspace stays standard on QWERTY
+#define CUSTOM_SHIFT_KEYS_LAYER_MASK (~(1 << 1))
+
 // #define LEADER_PER_KEY_TIMING
 // #define LEADER_TIMEOUT 250
 

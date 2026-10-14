@@ -1,5 +1,5 @@
 #include QMK_KEYBOARD_H
-#include "wheredoesyourmindgo.h"
+#include "serenity.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT(
@@ -69,3 +69,4 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_SPC, KC_SPC, KC_NO, KC_NO, KC_RGUI, XOSM_RALT, KC_RCTL
     ),
 };
+

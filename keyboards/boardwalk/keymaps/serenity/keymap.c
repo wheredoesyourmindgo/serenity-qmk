@@ -1,5 +1,5 @@
 #include QMK_KEYBOARD_H
-#include "wheredoesyourmindgo.h"
+#include "serenity.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_ortho_2x2u(

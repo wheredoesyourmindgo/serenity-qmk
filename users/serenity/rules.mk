@@ -23,12 +23,14 @@ SRC += long_press.c
 SRC += tapping.c
 SRC += rotary_encoder.c
 SRC += features/oneshot_mods.c
-SRC += features/custom_shift_keys.c
 SRC += features/magic_shift.c
 SRC += features/cmd_tab_switcher.c
 SRC += features/symbol_rolls.c
 SRC += features/mash_arrows.c
 SRC += features/mo_ext.c
+
+# Custom Shift Keys table, compiled alongside each keymap (see shift_keys.c)
+INTROSPECTION_KEYMAP_C = shift_keys.c
 
 # Build with `-e QWERTY_BASE=yes` to start on the QWERTY layer
 ifeq ($(strip $(QWERTY_BASE)), yes)

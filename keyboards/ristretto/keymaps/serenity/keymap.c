@@ -28,26 +28,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL,           KC_LALT, KC_LGUI, MO(AUX), MO(NUMNAV), KC_SPC,        ENC_BTN,        KC_SPC, MO(SYMBL), LT(HRDWR, KC_LEFT), RGUI_T(KC_DOWN), RALT_T(KC_UP), RCTL_T(KC_RIGHT)
     ),
     [NUMNAV] = LAYOUT(
-        KC_TAB,  KC_1,      KC_2,      KC_3,      KC_4,      KC_5,                          KC_6,          KC_7,      KC_8,    KC_9,    KC_0,      KC_BSPC,
-        KC_ESC,  XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT, LLOCK,                         TGL_SELECT_LP, KC_LEFT,   KC_DOWN, KC_UP,   KC_RGHT,   KC_SCLN,
-        KC_LSFT, UNDO,      CUT,       COPY,      PASTE,     REDO,                          KC_CAPS,       KC_HOME,   KC_PGDN, KC_PGUP, KC_END,    KC_ENT,
-        KC_LCTL, KC_LALT,   KC_LGUI,   KC_NO,     KC_NO,     KC_SPC,        ENC_BTN,        KC_SPC,        MO(SYMBL), KC_NO,   KC_NO,   XOSM_RALT, KC_NO
+        KC_TAB,  KC_1,      KC_2,      KC_3,      KC_4,      KC_5,                           KC_6,          KC_7,      KC_8,    KC_9,    KC_0,      KC_BSPC,
+        KC_ESC,  XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT, QK_LLCK,                        TGL_SELECT_LP, KC_LEFT,   KC_DOWN, KC_UP,   KC_RGHT,   KC_SCLN,
+        KC_LSFT, UNDO,      CUT,       COPY,      PASTE,     REDO,                           KC_CAPS,       KC_HOME,   KC_PGDN, KC_PGUP, KC_END,    KC_ENT,
+        KC_LCTL, KC_LALT,   KC_LGUI,   KC_NO,     KC_NO,     KC_SPC,         ENC_BTN,        KC_SPC,        MO(SYMBL), KC_NO,   KC_NO,   XOSM_RALT, KC_NO
     ),
     [SYMBL] = LAYOUT(
         KC_TAB,  KC_EXLM,   KC_AT,   KC_HASH, KC_DLR,     KC_PERC,                        KC_CIRC, KC_AMPR,   KC_ASTR,   KC_LPRN,   KC_RPRN,   KC_BSPC,
-        KC_ESC,  KC_LBRC,   KC_RBRC, KC_EQL,  KC_SLSH,    KC_BSLS,                        LLOCK,   XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, KC_SCLN,
+        KC_ESC,  KC_LBRC,   KC_RBRC, KC_EQL,  KC_SLSH,    KC_BSLS,                        QK_LLCK, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, KC_SCLN,
         KC_LSFT, KC_LCBR,   KC_RCBR, KC_PLUS, KC_QUES,    KC_PIPE,                        KC_NO,   KC_TILDE,  KC_GRV,    KC_MINS,   KC_UNDS,   KC_ENT,
         KC_NO,   XOSM_RALT, KC_NO,   KC_NO,   MO(NUMNAV), KC_SPC,         ENC_BTN,        KC_SPC,  KC_NO,     KC_NO,     KC_RGUI,   KC_RALT,   KC_RCTL
     ),
     [AUX] = LAYOUT(
-        KC_TAB,  KC_PSCR,   KC_SCRL,   KC_PAUS,   KC_INS,     KC_APP,                        WNDW_LP_FLLSCRN, OS_PRV_TAB,   OS_PRV_APP_WNDW, OS_NXT_APP_WNDW, OS_NXT_TAB,    KC_BSPC,
-        KC_ESC,  XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT,  LLOCK,                         WNDW_LP_CNTR,    WNDW_LP_LEFT, WNDW_SMLLR,      WNDW_LRGR,       WNDW_LP_RIGHT, KC_SCLN,
-        KC_LSFT, KC_NO,     KC_NO,     KC_NO,     KC_NO,      KC_NO,                         WNDW_LP_VRT_MAX, WNDW_PRV_SPC, KC_NO,           KC_NO,           WNDW_NXT_SPC,  KC_ENT,
-        KC_LCTL, KC_LALT,   KC_LGUI,   KC_NO,     MO(NUMNAV), KC_SPC,        ENC_BTN,        KC_SPC,          MO(SYMBL),    MO(HRDWR),       KC_NO,           XOSM_RALT,     KC_NO
+        KC_TAB,  KC_PSCR,   KC_SCRL,   KC_PAUS,   KC_INS,     KC_APP,                         WNDW_LP_FLLSCRN, OS_PRV_TAB,   OS_PRV_APP_WNDW, OS_NXT_APP_WNDW, OS_NXT_TAB,    KC_BSPC,
+        KC_ESC,  XOSM_LCTL, XOSM_LALT, XOSM_LGUI, XOSM_LSFT,  QK_LLCK,                        WNDW_LP_CNTR,    WNDW_LP_LEFT, WNDW_SMLLR,      WNDW_LRGR,       WNDW_LP_RIGHT, KC_SCLN,
+        KC_LSFT, KC_NO,     KC_NO,     KC_NO,     KC_NO,      KC_NO,                          WNDW_LP_VRT_MAX, WNDW_PRV_SPC, KC_NO,           KC_NO,           WNDW_NXT_SPC,  KC_ENT,
+        KC_LCTL, KC_LALT,   KC_LGUI,   KC_NO,     MO(NUMNAV), KC_SPC,         ENC_BTN,        KC_SPC,          MO(SYMBL),    MO(HRDWR),       KC_NO,           XOSM_RALT,     KC_NO
     ),
     [HRDWR] = LAYOUT(
         KC_TAB,  KC_NO,     DISP_DIM, DISP_BRI, OS_DRKMD_TGL, UG_SPDU,                        UG_NEXT, UG_TOGG,   UG_HUEU,   UG_SATU,   UG_VALU,   KC_BSPC,
-        KC_ESC,  KC_NO,     KC_VOLD,  KC_VOLU,  KC_MUTE,      KC_NO,                          LLOCK,   XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, KC_SCLN,
+        KC_ESC,  KC_NO,     KC_VOLD,  KC_VOLU,  KC_MUTE,      KC_NO,                          QK_LLCK, XOSM_LSFT, XOSM_LGUI, XOSM_LALT, XOSM_LCTL, KC_SCLN,
         KC_LSFT, KC_NO,     KC_MRWD,  KC_MFFD,  KC_MPLY,      KC_NO,                          TGL_LYT, KC_NO,     KC_NO,     DB_TOGG,   QK_BOOT,   KC_ENT,
         KC_NO,   XOSM_RALT, KC_NO,    MO(AUX),  MO(NUMNAV),   KC_SPC,         ENC_BTN,        KC_SPC,  MO(SYMBL), KC_NO,     KC_RGUI,   KC_RALT,   KC_RCTL
     ),
@@ -64,10 +64,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LALT,             KC_LGUI,             KC_NO,               KC_NO,           KC_SPC,        ENC_BTN,        KC_SPC,          KC_NO,      KC_NO,       KC_RGUI,     KC_RALT, KC_RCTL
     ),
     [MOUSE] = LAYOUT(
-        KC_TAB,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                         MS_BTN5,     MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4,   OS_BSPC,
-        KC_ESC,  KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, LLOCK,                         QK_LOCK,     MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT,   KC_SCLN,
-        KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,                          SHAKE_MOUSE, MS_WHLR, MS_WHLU, MS_WHLD, MS_WHLL,   KC_ENT,
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_SPC,        ENC_BTN,        KC_SPC,      KC_NO,   KC_NO,   KC_RGUI, XOSM_RALT, KC_RCTL
+        KC_TAB,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                          MS_BTN5,     MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4,   OS_BSPC,
+        KC_ESC,  KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, QK_LLCK,                        QK_LOCK,     MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT,   KC_SCLN,
+        KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,                           SHAKE_MOUSE, MS_WHLR, MS_WHLU, MS_WHLD, MS_WHLL,   KC_ENT,
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_SPC,         ENC_BTN,        KC_SPC,      KC_NO,   KC_NO,   KC_RGUI, XOSM_RALT, KC_RCTL
     ),
 };
 // clang-format on

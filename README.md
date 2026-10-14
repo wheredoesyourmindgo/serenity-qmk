@@ -10,6 +10,7 @@ This repo holds only my code. QMK itself lives in a separate, unmodified clone.
 |---|---|
 | `users/serenity/` | Shared layers, custom keycodes and features used by every keyboard |
 | `keyboards/<kb>/keymaps/serenity/` | Per-keyboard layout (calls into the shared userspace) |
+| `scripts/format_keymaps.py` | Aligns each `LAYOUT(...)` into a split grid (`--check` to verify) |
 | `qmk.json` | List of keyboards to build (`qmk userspace-list`) |
 
 ## One-time setup
@@ -30,6 +31,8 @@ qmk flash -kb crkbd/rev1 -km serenity   # build + flash one keyboard
 ```
 
 Build options go after `-e`, e.g. `-e QWERTY_BASE=yes`.
+
+After editing a keymap, re-align its grid with `scripts/format_keymaps.py`.
 
 ## Updating QMK
 

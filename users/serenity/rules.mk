@@ -1,53 +1,32 @@
 USER_NAME := serenity
 
-# LEADER_ENABLE = yes 		# + Leaders
-# TAP_DANCE_ENABLE = yes 		# + Tap Dance
-TAP_DANCE_ENABLE = no 		# + Tap Dance
-MOUSEKEY_ENABLE = yes 		# + Mouse keys
-EXTRAKEY_ENABLE = yes 		# + Audio control and System control
-AUTO_SHIFT_ENABLE = no 		# - Auto Shift
-KEY_LOCK_ENABLE = yes 		# Key lock
+# Features
+MOUSEKEY_ENABLE = yes
+EXTRAKEY_ENABLE = yes    # Audio and system control
+KEY_LOCK_ENABLE = yes
+CAPS_WORD_ENABLE = yes
+TAP_DANCE_ENABLE = no
+AUTO_SHIFT_ENABLE = no
+COMMAND_ENABLE = no
+
+# Save space (the Ristretto is close to full)
 LTO_ENABLE = yes
-COMMAND_ENABLE = no			# - Command Mode
-# free up some space for ristretto
 SPACE_CADET_ENABLE = no
 GRAVE_ESC_ENABLE = no
-# If more space is needed consider the following option. See https://github.com/qmk/qmk_firmware/blob/develop/docs/squeezing_avr.md for more info.
+# If more space is needed, see https://docs.qmk.fm/squeezing_avr
 # MAGIC_ENABLE = no
-CAPS_WORD_ENABLE = yes
 
+SRC += serenity.c
+SRC += features/oneshot_mods.c
+SRC += features/custom_shift_keys.c
+SRC += features/magic_shift.c
+SRC += features/cmd_tab_switcher.c
+SRC += features/symbol_rolls.c
+SRC += features/mash_arrows.c
+SRC += features/layer_lock.c
+SRC += features/mo_ext.c
 
-# LTO_ENABLE = yes
-# CONSOLE_ENABLE = yes
-# COMBO_ENABLE = yes # Combos
-# SWAP_HANDS_ENABLE = yes # Swap Hands
-# WINDOW_MGT = yes
-
-ifneq ($(strip $(KEYBOARD)), binepad/bn003)
-	SRC += serenity.c
-# use caps word/sentence
-# SRC += features/caps_word.c
-# SRC += features/caps_sentence.c
-# use oneshot mods fix
-	SRC += features/oneshot_mods.c
-	SRC += features/custom_shift_keys.c
-# SRC += features/custom_gui_keys.c
-	SRC += features/magic_shift.c
-	SRC += features/cmd_tab_switcher.c
-	SRC += features/symbol_rolls.c
-	SRC += features/mash_arrows.c
-	SRC += features/layer_lock.c
-	SRC += features/mo_ext.c
-# SRC += features/hide_and_mute.c
-endif
-
-# ifeq ($(strip $(SWAP_HANDS_ENABLE)), yes)
-# 	SRC += swap_hands.c
-# endif
-
+# Build with `-e QWERTY_BASE=yes` to start on the QWERTY layer
 ifeq ($(strip $(QWERTY_BASE)), yes)
-  OPT_DEFS += -DQWERTY_BASE
+    OPT_DEFS += -DQWERTY_BASE
 endif
-
-
-

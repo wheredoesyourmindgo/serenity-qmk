@@ -19,7 +19,20 @@
 #define MODS_GUI (MODS_LGUI || MODS_RGUI)
 #define ONESHOT_MODS_ACTIVE (get_oneshot_mods())
 
-enum layers { BASE, QWRTY, NUMNAV, BASE_L, BASE_R, SYMBL, AUX, HRDWR, FUNC, OS, MOUSE };
+// Website names (serenity-layout.fyi/firmware) in comments where they differ
+enum layers {
+    BASE,
+    QWRTY,  // Qwerty
+    NUMNAV, // Num/Nav
+    BASE_L, // Base with left home-row mods (tap then hold Symbol)
+    BASE_R, // Base with right home-row mods (tap then hold Num/Nav)
+    SYMBL,  // Symbol
+    ACTN,   // Action
+    HRDWR,  // Hardware
+    FUNC,   // Function
+    OS,
+    MOUSE,
+};
 
 enum custom_keycodes {
     CMD_TAB_PRV = SAFE_RANGE,

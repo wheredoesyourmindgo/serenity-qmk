@@ -191,16 +191,16 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
         case BASE:
         case QWRTY:
-        case AUX:
+        case ACTN:
         case HRDWR:
-            break; // Keep them (AUX and HRDWR need them for function keys)
+            break; // Keep them (ACTN and HRDWR need them for function keys)
         default:
             cancel_oneshot_mods_if_active();
             break;
     }
 
     state = update_tri_layer_state(state, NUMNAV, SYMBL, OS);
-    state = update_tri_layer_state(state, HRDWR, AUX, FUNC);
+    state = update_tri_layer_state(state, HRDWR, ACTN, FUNC);
 
 #ifdef KEY_LOCK_ENABLE
     cancel_key_lock();

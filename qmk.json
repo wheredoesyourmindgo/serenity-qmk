@@ -1,0 +1,15 @@
+{
+    "userspace_version": "1.1",
+    "build_targets": [
+        ["boardsource/technik_o", "wheredoesyourmindgo"],
+        ["boardwalk", "wheredoesyourmindgo"],
+        ["crkbd/rev1", "wheredoesyourmindgo"],
+        ["dztech/dz60rgb_ansi", "wheredoesyourmindgo"],
+        ["foostan/cornelius", "wheredoesyourmindgo"],
+        ["hhkb/ansi/32u2", "wheredoesyourmindgo"],
+        ["planck/rev6", "wheredoesyourmindgo"],
+        ["ristretto", "wheredoesyourmindgo"],
+        ["signum/3_0/elitec", "wheredoesyourmindgo"],
+        ["vitamins_included/rev2", "wheredoesyourmindgo"]
+    ]
+}

@@ -5,6 +5,7 @@ MOUSEKEY_ENABLE = yes
 EXTRAKEY_ENABLE = yes    # Audio and system control
 KEY_LOCK_ENABLE = yes
 CAPS_WORD_ENABLE = yes
+LAYER_LOCK_ENABLE = yes
 TAP_DANCE_ENABLE = no
 AUTO_SHIFT_ENABLE = no
 COMMAND_ENABLE = no
@@ -23,7 +24,6 @@ SRC += features/magic_shift.c
 SRC += features/cmd_tab_switcher.c
 SRC += features/symbol_rolls.c
 SRC += features/mash_arrows.c
-SRC += features/layer_lock.c
 SRC += features/mo_ext.c
 
 # Build with `-e QWERTY_BASE=yes` to start on the QWERTY layer

@@ -8,9 +8,11 @@
 #include "features/cmd_tab_switcher.h"
 #include "features/symbol_rolls.h"
 #include "features/mash_arrows.h"
-#include "features/layer_lock.h"
 #include "features/mo_ext.h"
 // #include "features/hide_and_mute.h"
+
+// QMK core Layer Lock (QK_LLCK)
+#include "process_layer_lock.h"
 
 #ifdef CONSOLE_ENABLE
 #    include "print.h"
@@ -200,7 +202,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         }
     }
-    if (!process_layer_lock(keycode, record, LLOCK)) {
+    // QMK also runs Layer Lock after this function, but by then the features below may have
+    // consumed layer keys (MO/LT). Run it here first so those keys still unlock a locked layer.
+    if (!process_layer_lock(keycode, record)) {
         return false;
     }
     if (!process_magic_shift(keycode, record)) {

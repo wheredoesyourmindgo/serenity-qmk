@@ -1,9 +1,10 @@
 #include QMK_KEYBOARD_H
 #include "serenity.h"
 
-#define BASE 0
-#define LOWER 1
-#define RAISE 2
+// This board has two extra layers instead of the full Serenity set. They reuse Serenity layers
+// so the shared userspace code sees the right layer (BASE comes from serenity.h).
+#define LOWER NUMNAV // Navigation, one-shot mods, editing
+#define RAISE FUNC   // Function keys, media, bootloader
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {

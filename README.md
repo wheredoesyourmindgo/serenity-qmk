@@ -41,7 +41,7 @@ git clone https://github.com/qmk/qmk_firmware.git ~/Development/qmk_firmware
 cd ~/Development/qmk_firmware && make git-submodule
 qmk config user.qmk_home="$HOME/Development/qmk_firmware"
 qmk config user.overlay_dir="$HOME/Development/serenity-qmk"
-brew install avrdude dfu-util   # flashers (dfu-programmer is also needed)
+brew install avrdude dfu-util   # flashing tools (dfu-programmer is also needed)
 ```
 
 ## Everyday use
@@ -65,11 +65,11 @@ If a QMK change breaks the build, fix it here — there is nothing to merge.
 
 ## Updating Getreuer's modules
 
-`modules/getreuer` is a git submodule pinned to one commit of [getreuer/qmk-modules](https://github.com/getreuer/qmk-modules), so his changes only arrive when you pull them:
+`modules/getreuer` is a git submodule pinned to one commit of [getreuer/qmk-modules](https://github.com/getreuer/qmk-modules), so upstream changes only arrive when you pull them:
 
 ```sh
 cd ~/Development/serenity-qmk
-git submodule update --remote modules/getreuer   # fetch his latest
+git submodule update --remote modules/getreuer   # fetch the latest upstream
 git -C modules/getreuer log --oneline -5         # see what changed
 qmk userspace-compile                            # make sure everything still builds
 git commit -am "Update getreuer modules" && git push

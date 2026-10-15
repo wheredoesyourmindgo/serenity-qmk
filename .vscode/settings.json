@@ -11,5 +11,8 @@
         "**/*.bin": true,
         "**/*.uf2": true
     },
-    "clangd.arguments": ["--header-insertion=never"]
+    "clangd.arguments": [
+        "--header-insertion=never"
+    ],
+    "makefile.configureOnOpen": false
 }

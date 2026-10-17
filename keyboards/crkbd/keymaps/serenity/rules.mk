@@ -1,5 +1,2 @@
-RGB_MATRIX_ENABLE = no
-RGBLIGHT_ENABLE = no
-SPLIT_KEYBOARD = yes
-SPLIT_USB_DETECT = yes
-OLED_ENABLE = no # disabling OLED driver for hex build seems necessary for time being
+RGB_MATRIX_ENABLE = no # off on purpose: doesn't suit the case design
+OLED_ENABLE = no       # off on purpose: doesn't suit the case design

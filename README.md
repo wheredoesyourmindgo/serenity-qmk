@@ -30,6 +30,7 @@ The website uses friendlier names for some layers than the code does:
 | `users/serenity/` | Shared layers, custom keycodes and features used by every keyboard |
 | `keyboards/<kb>/keymaps/serenity/` | Per-keyboard layout (calls into the shared userspace) |
 | `modules/getreuer/` | [Getreuer's community modules](https://github.com/getreuer/qmk-modules) (git submodule); only `custom_shift_keys` is used |
+| `modules/wheredoesyourmindgo/` | My own community modules, [wheredoesyourmindgo/qmk-modules](https://github.com/wheredoesyourmindgo/qmk-modules) (git submodule); `instant_oneshot` provides the one-shot mod keys (`IO_LSFT` etc.) |
 | `vendor/foostan/corneliuskbd/` | foostan's Cornelius rev1/rev2 keyboard definitions (copied from [foostan/kbd_firmware](https://github.com/foostan/kbd_firmware); see [Cornelius](#cornelius)) |
 | `scripts/format_keymaps.py` | Aligns each `LAYOUT(...)` into a split grid (`--check` to verify) |
 | `scripts/update_foostan.sh`, `scripts/link_foostan.sh` | Refresh the Cornelius definitions; link them into the QMK clone |
@@ -97,6 +98,25 @@ To undo an update before committing, run `git submodule update modules/getreuer`
 If `modules/getreuer` is ever empty (e.g. after a plain `git clone`), run `git submodule update --init`.
 
 Custom Shift Keys is enabled by the `modules` entry in each keymap's `keymap.json`. Its key table is in `users/serenity/shift_keys.c` and its options are in `users/serenity/config.h`.
+
+## Editing my own modules
+
+`modules/wheredoesyourmindgo` is its own repo. Submodules check out a detached commit and clone over https, so before the first edit on a computer:
+
+```sh
+cd ~/Development/serenity-qmk/modules/wheredoesyourmindgo
+git switch main
+git remote set-url --push origin git@github-personal:wheredoesyourmindgo/qmk-modules.git
+```
+
+Then commit and push inside the module first, and commit the new pointer here:
+
+```sh
+git -C modules/wheredoesyourmindgo commit -am "..." && git -C modules/wheredoesyourmindgo push
+git commit -am "Update wheredoesyourmindgo modules" && git push
+```
+
+Instant One-Shot is enabled by the `modules` entry in each keymap's `keymap.json`; its options are documented in its [README](modules/wheredoesyourmindgo/instant_oneshot/README.md).
 
 ## Cornelius
 

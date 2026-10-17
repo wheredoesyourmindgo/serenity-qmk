@@ -7,7 +7,7 @@
 //   rotary_encoder.c  rotary encoder
 //   features/         self-contained features (one-shot mods, cmd-tab switcher, ...)
 #include "serenity.h"
-#include "features/oneshot_mods.h"
+#include "instant_oneshot.h"
 #include "features/magic_shift.h"
 #include "features/cmd_tab_switcher.h"
 #include "features/symbol_rolls.h"
@@ -38,7 +38,7 @@ bool caps_word_press_user(uint16_t keycode) {
 
 // Escape first cancels one-shot mods, then a locked layer. Returns true if it cancelled something.
 static bool escape_cancels_something(void) {
-    if (cancel_oneshot_mods_if_active()) {
+    if (instant_oneshot_cancel()) {
         return true;
     }
     const uint8_t layer = get_highest_layer(layer_state);
@@ -88,9 +88,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
     if (!process_cmd_tab_switcher(keycode, record)) {
-        return false;
-    }
-    if (!process_oneshot_mods(keycode, record)) {
         return false;
     }
     if (!process_symbol_rolls(keycode, record, SYMBL)) {
@@ -195,7 +192,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         case HRDWR:
             break; // Keep them (ACTN and HRDWR need them for function keys)
         default:
-            cancel_oneshot_mods_if_active();
+            instant_oneshot_cancel();
             break;
     }
 
@@ -211,5 +208,4 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 void matrix_scan_user(void) {
     cmd_tab_switcher_matrix_scan_user();
-    oneshot_mods_task(); // Enforce one-shot timeout
 }

@@ -20,7 +20,6 @@ SRC += helpers.c
 SRC += long_press.c
 SRC += tapping.c
 SRC += rotary_encoder.c
-SRC += features/oneshot_mods.c
 SRC += features/magic_shift.c
 SRC += features/cmd_tab_switcher.c
 SRC += features/symbol_rolls.c

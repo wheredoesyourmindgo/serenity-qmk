@@ -1,3 +1,6 @@
 [submodule "modules/getreuer"]
 	path = modules/getreuer
 	url = https://github.com/getreuer/qmk-modules.git
+[submodule "modules/wheredoesyourmindgo"]
+	path = modules/wheredoesyourmindgo
+	url = https://github.com/wheredoesyourmindgo/qmk-modules.git

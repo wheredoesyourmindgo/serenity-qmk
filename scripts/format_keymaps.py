@@ -30,7 +30,7 @@ ORTHO_12 = {"slots": {12: cols(range(12))}, "gaps": [5]}
 
 BOARDS = {
     "boardsource/technik_o": ORTHO_12,
-    "foostan/cornelius": ORTHO_12,
+    "foostan/corneliuskbd": ORTHO_12,
     "planck": ORTHO_12,
     "signum/3_0": ORTHO_12,
     "vitamins_included": ORTHO_12,

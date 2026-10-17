@@ -30,7 +30,9 @@ The website uses friendlier names for some layers than the code does:
 | `users/serenity/` | Shared layers, custom keycodes and features used by every keyboard |
 | `keyboards/<kb>/keymaps/serenity/` | Per-keyboard layout (calls into the shared userspace) |
 | `modules/getreuer/` | [Getreuer's community modules](https://github.com/getreuer/qmk-modules) (git submodule); only `custom_shift_keys` is used |
+| `vendor/foostan/corneliuskbd/` | foostan's Cornelius rev1/rev2 keyboard definitions (copied from [foostan/kbd_firmware](https://github.com/foostan/kbd_firmware); see [Cornelius](#cornelius)) |
 | `scripts/format_keymaps.py` | Aligns each `LAYOUT(...)` into a split grid (`--check` to verify) |
+| `scripts/update_foostan.sh`, `scripts/link_foostan.sh` | Refresh the Cornelius definitions; link them into the QMK clone |
 | `qmk.json` | List of keyboards to build (`qmk userspace-list`) |
 
 ## One-time setup
@@ -41,6 +43,7 @@ git clone https://github.com/qmk/qmk_firmware.git ~/Development/qmk_firmware
 cd ~/Development/qmk_firmware && make git-submodule
 qmk config user.qmk_home="$HOME/Development/qmk_firmware"
 qmk config user.overlay_dir="$HOME/Development/serenity-qmk"
+~/Development/serenity-qmk/scripts/link_foostan.sh   # makes the Cornelius buildable (see below)
 brew install avrdude dfu-util   # flashing tools (dfu-programmer is also needed)
 ```
 
@@ -81,13 +84,28 @@ If `modules/getreuer` is ever empty (e.g. after a plain `git clone`), run `git s
 
 Custom Shift Keys is enabled by the `modules` entry in each keymap's `keymap.json`. Its key table is in `users/serenity/shift_keys.c` and its options are in `users/serenity/config.h`.
 
-## Cornelius rev2
+## Cornelius
 
-Cornelius rev2 (RP2040) isn't in upstream QMK yet. The QMK clone carries it as one local commit on the `serenity` branch (`git pull` rebases it automatically). Because GitHub Actions builds against upstream QMK, rev2 is not in `qmk.json`; build it locally:
+Both Cornelius boards build from foostan's own definitions in [foostan/kbd_firmware](https://github.com/foostan/kbd_firmware), not upstream QMK's `foostan/cornelius`. Upstream has only rev1, and foostan's rev1 is newer (it turns NKRO on, for example).
+
+| Target | Board | Output | Flash |
+|---|---|---|---|
+| `foostan/corneliuskbd/rev1` | Cornelius (ATmega32u4) | `.hex` | `qmk flash -kb foostan/corneliuskbd/rev1 -km serenity` |
+| `foostan/corneliuskbd/rev2` | Cornelius Low-profile (RP2040) | `.uf2` | Hold the top-left key while plugging in, then copy the `.uf2` onto the `RPI-RP2` drive |
+
+QMK only reads keyboard definitions from its own tree, so `scripts/link_foostan.sh` links `vendor/foostan/corneliuskbd` into the QMK clone at `keyboards/foostan/corneliuskbd` and hides it from that clone's `git status`. Run it once per QMK clone (GitHub Actions runs it for you). If you see `Invalid keyboard: foostan/corneliuskbd/...`, run it again.
+
+The keyboard files are a copy rather than a submodule, because foostan's repo has its own QMK and Vial submodules that `--recurse-submodules` would download. `vendor/foostan/corneliuskbd/SOURCE` records which foostan commit they came from. To pick up foostan's changes:
 
 ```sh
-qmk compile -kb foostan/cornelius/rev2 -km serenity
+cd ~/Development/serenity-qmk
+scripts/update_foostan.sh                  # fetch foostan's latest definitions
+git diff vendor                            # see what changed
+qmk userspace-compile                      # make sure everything still builds
+git add vendor && git commit -m "Update foostan Cornelius definitions" && git push
 ```
+
+To undo an update before committing, run `git checkout vendor`.
 
 ## GitHub Actions
 

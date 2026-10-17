@@ -1,7 +1,6 @@
 #pragma once
 
 #define TAPPING_TERM 200
-#define OSM_TAPPING_TERM 300
 #define MO_EXT_TAPPING_TERM 300
 #define TAPPING_TERM_PER_KEY
 // #define TAPPING_TOGGLE 2

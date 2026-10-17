@@ -63,13 +63,14 @@ After editing a keymap, re-align its grid with `scripts/format_keymaps.py`.
 On each computer, after the one-time setup above:
 
 1. Accept VS Code's prompt to install the recommended extensions (includes clangd). If Microsoft's C/C++ extension is installed, leave it — its IntelliSense is disabled for this workspace so it won't conflict.
-2. Generate a compile database for the keyboard you're editing:
+2. Generate a compile database covering every keyboard in `qmk.json`:
 
    ```sh
-   qmk compile --compiledb -kb planck/rev6 -km serenity
+   scripts/compiledb.py                # all keyboards (builds each one)
+   scripts/compiledb.py crkbd/rev1     # refresh just one, keeping the rest
    ```
 
-`compile_commands.json` is gitignored and holds machine-specific paths, so every computer generates its own. Each run overwrites it, so re-run with a different `-kb` when you switch boards, then **clangd: Restart language server**. Shared code in `users/` and `modules/` works with any board's database.
+`compile_commands.json` is gitignored and holds machine-specific paths, so every computer generates its own. Re-run the script after adding a keyboard or changing a `rules.mk`/`config.h`, then **clangd: Restart language server**. (Plain `qmk compile --compiledb` only covers one keyboard and overwrites the merged database.)
 
 ## Updating QMK
 

@@ -1,5 +1,2 @@
-OPT_DEFS += -DVITAMINS_INCLUDED_KEYBOARD
-# KEY_LOCK_ENABLE = no
 AUDIO_ENABLE = no
-RGBLIGHT_ENABLE = no
-# NKRO_ENABLE = no
+RGBLIGHT_ENABLE = no # off on purpose: doesn't suit the case design

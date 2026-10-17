@@ -6,8 +6,6 @@ EXTRAKEY_ENABLE = yes    # Audio and system control
 KEY_LOCK_ENABLE = yes
 CAPS_WORD_ENABLE = yes
 LAYER_LOCK_ENABLE = yes
-TAP_DANCE_ENABLE = no
-AUTO_SHIFT_ENABLE = no
 COMMAND_ENABLE = no
 
 # Save space (the Ristretto is close to full)

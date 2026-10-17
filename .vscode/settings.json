@@ -23,5 +23,20 @@
                 "/\\b[A-Z][A-Z0-9_]*\\b/g"
             ]
         }
+    ],
+    "cSpell.words": [
+        "ACTN",
+        "compiledb",
+        "corneliuskbd",
+        "foostan",
+        "getreuer",
+        "HRDWR",
+        "keymap",
+        "keymap's",
+        "keymaps",
+        "NUMNAV",
+        "QWRTY",
+        "SYMBL",
+        "userspace"
     ]
 }

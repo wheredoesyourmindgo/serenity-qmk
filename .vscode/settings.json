@@ -15,5 +15,13 @@
     "clangd.arguments": [
         "--header-insertion=never"
     ],
-    "makefile.configureOnOpen": false
+    "makefile.configureOnOpen": false,
+    "cSpell.languageSettings": [
+        {
+            "languageId": "c",
+            "ignoreRegExpList": [
+                "/\\b[A-Z][A-Z0-9_]*\\b/g"
+            ]
+        }
+    ]
 }

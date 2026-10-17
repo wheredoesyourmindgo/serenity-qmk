@@ -60,13 +60,16 @@ After editing a keymap, re-align its grid with `scripts/format_keymaps.py`.
 
 ## Editor setup (VS Code + clangd)
 
-Install the recommended clangd extension, then generate a compile database for the keyboard you're editing:
+On each computer, after the one-time setup above:
 
-```sh
-qmk compile --compiledb -kb planck/rev6 -km serenity
-```
+1. Accept VS Code's prompt to install the recommended extensions (includes clangd). If Microsoft's C/C++ extension is installed, leave it — its IntelliSense is disabled for this workspace so it won't conflict.
+2. Generate a compile database for the keyboard you're editing:
 
-Each run overwrites `compile_commands.json` (gitignored), so re-run it with a different `-kb` when you switch boards, then **clangd: Restart language server**. Shared code in `users/` and `modules/` works with any board's database.
+   ```sh
+   qmk compile --compiledb -kb planck/rev6 -km serenity
+   ```
+
+`compile_commands.json` is gitignored and holds machine-specific paths, so every computer generates its own. Each run overwrites it, so re-run with a different `-kb` when you switch boards, then **clangd: Restart language server**. Shared code in `users/` and `modules/` works with any board's database.
 
 ## Updating QMK
 

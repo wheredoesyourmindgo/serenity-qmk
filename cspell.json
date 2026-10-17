@@ -1,0 +1,66 @@
+{
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+    "version": "0.2",
+    "language": "en",
+    "useGitignore": true,
+    "ignorePaths": [
+        "modules/getreuer/**",
+        "vendor/**",
+        "LICENSE",
+        ".clangd"
+    ],
+    "ignoreRegExpList": [
+        "/-D[A-Z][A-Z0-9_]*/g"
+    ],
+    "languageSettings": [
+        {
+            "languageId": "c,cpp,makefile",
+            "ignoreRegExpList": [
+                "/\\b[A-Z][A-Z0-9_]*\\b/g"
+            ]
+        }
+    ],
+    "words": [
+        "ACTN",
+        "amodio",
+        "avrdude",
+        "bierner",
+        "boardsource",
+        "compiledb",
+        "corneliuskbd",
+        "crkbd",
+        "donjayamanne",
+        "dztech",
+        "elitec",
+        "Exposé",
+        "foostan",
+        "getreuer",
+        "hhkb",
+        "HRDWR",
+        "Karabiner",
+        "keymap",
+        "keymap's",
+        "keymaps",
+        "LSFT",
+        "lshift",
+        "milc",
+        "NKRO",
+        "NUMNAV",
+        "OLED",
+        "oneline",
+        "oneshot",
+        "PROGMEM",
+        "QWRTY",
+        "RGBLIGHT",
+        "ristretto",
+        "rshift",
+        "signum",
+        "Siri",
+        "spacebars",
+        "SYMBL",
+        "technik",
+        "userspace",
+        "wheredoesyourmindgo",
+        "xaver"
+    ]
+}

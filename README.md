@@ -58,6 +58,16 @@ Build options go after `-e`, e.g. `-e QWERTY_BASE=yes`.
 
 After editing a keymap, re-align its grid with `scripts/format_keymaps.py`.
 
+## Editor setup (VS Code + clangd)
+
+Install the recommended clangd extension, then generate a compile database for the keyboard you're editing:
+
+```sh
+qmk compile --compiledb -kb planck/rev6 -km serenity
+```
+
+Each run overwrites `compile_commands.json` (gitignored), so re-run it with a different `-kb` when you switch boards, then **clangd: Restart language server**. Shared code in `users/` and `modules/` works with any board's database.
+
 ## Updating QMK
 
 ```sh

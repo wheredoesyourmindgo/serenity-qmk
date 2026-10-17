@@ -8,5 +8,8 @@
         "bierner.github-markdown-preview",
         "donjayamanne.git-extension-pack",
         "ms-vscode-remote.remote-containers"
+    ],
+    "unwantedRecommendations": [
+        "ms-vscode.cpptools"
     ]
 }

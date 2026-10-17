@@ -11,6 +11,7 @@
         "**/*.bin": true,
         "**/*.uf2": true
     },
+    "C_Cpp.intelliSenseEngine": "disabled",
     "clangd.arguments": [
         "--header-insertion=never"
     ],

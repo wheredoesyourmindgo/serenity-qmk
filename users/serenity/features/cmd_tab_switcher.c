@@ -32,7 +32,7 @@ void cmd_tab_switcher_layer_state(layer_state_t state) {
 
 void cmd_tab_switcher_matrix_scan_user(void) {
     if (is_cmd_tab_active) {
-        // RGUI mod will be active when encoder is in use so don't cancel cmd shift once it's starts programatically with cmd_tab_next/previous(). This works since RGUI is used by encoder and LGUI is used by cmd tab switcher.
+        // RGUI mod will be active when encoder is in use so don't cancel cmd shift once it's starts programmatically with cmd_tab_next/previous(). This works since RGUI is used by encoder and LGUI is used by cmd tab switcher.
         if (timer_elapsed(cmd_tab_timer) > cmd_tab_timer_timeout && !is_cmd_tab_held && !MODS_RGUI) {
             cancel_cmd_shift();
         }

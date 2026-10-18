@@ -20,13 +20,19 @@ SRC += helpers.c
 SRC += long_press.c
 SRC += tapping.c
 SRC += rotary_encoder.c
-SRC += features/magic_shift.c
 SRC += features/cmd_tab_switcher.c
 SRC += features/symbol_rolls.c
 SRC += features/mash_arrows.c
 
 # Custom Shift Keys table, compiled alongside each keymap (see shift_keys.c)
 INTROSPECTION_KEYMAP_C = shift_keys.c
+
+# Magic Shift (bottom-row Hyper chord). A keymap's rules.mk can set MAGIC_SHIFT_ENABLE = no
+MAGIC_SHIFT_ENABLE ?= yes
+ifeq ($(strip $(MAGIC_SHIFT_ENABLE)), yes)
+    SRC += features/magic_shift.c
+    OPT_DEFS += -DMAGIC_SHIFT_ENABLE
+endif
 
 # Build with `-e QWERTY_BASE=yes` to start on the QWERTY layer
 ifeq ($(strip $(QWERTY_BASE)), yes)

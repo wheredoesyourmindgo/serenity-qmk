@@ -17,7 +17,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [NUMNAV] = LAYOUT_ortho_4x12(
         KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,           KC_6,    KC_7,      KC_8,    KC_9,    KC_0,    KC_BSPC,
-        KC_ESC,  IO_LCTL, IO_LALT, IO_LGUI, IO_LSFT, QK_LLCK,        SELWORD, KC_LEFT,   KC_DOWN, KC_UP,   KC_RGHT, KC_DOT,
+        KC_ESC,  IO_LCTL, IO_LALT, IO_LGUI, IO_LSFT, QK_LLCK,        SELWORD, KC_LEFT,   KC_DOWN, KC_UP,   KC_RGHT, DOT_LP,
         KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,           KC_CAPS, KC_HOME,   KC_PGDN, KC_PGUP, KC_END,  KC_ENT,
         KC_LCTL, KC_LALT, KC_LGUI, KC_NO,   KC_NO,   KC_SPC,         KC_SPC,  MO(SYMBL), KC_NO,   IO_RGUI, IO_RALT, IO_RCTL
     ),
@@ -36,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [HRDWR] = LAYOUT_ortho_4x12(
         KC_TAB,  KC_NO,   DISP_DIM, DISP_BRI, OS_DRKMD_TGL, UG_SPDU,        UG_NEXT, UG_TOGG,   UG_HUEU, UG_SATU, UG_VALU, KC_BSPC,
         KC_ESC,  KC_NO,   KC_VOLD,  KC_VOLU,  KC_MUTE,      KC_NO,          QK_LLCK, IO_LSFT,   IO_LGUI, IO_LALT, IO_LCTL, KC_SCLN,
-        KC_LSFT, KC_NO,   KC_MRWD,  KC_MFFD,  KC_MPLY,      KC_NO,          TGL_LYT, KC_NO,     EE_CLR,  DB_TOGG, QK_BOOT, KC_ENT,
+        KC_LSFT, KC_NO,   KC_MRWD,  KC_MFFD,  KC_MPLY,      KC_NO,          TGL_LYT, KC_NO,     DB_TOGG, EE_CLR,  QK_BOOT, KC_ENT,
         IO_LCTL, IO_LALT, IO_LGUI,  MO(ACTN), MO(NUMNAV),   KC_SPC,         KC_SPC,  MO(SYMBL), KC_NO,   KC_RGUI, KC_RALT, KC_RCTL
     ),
     [FUNC] = LAYOUT_ortho_4x12(

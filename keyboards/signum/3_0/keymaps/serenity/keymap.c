@@ -28,10 +28,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL,           KC_LALT, KC_LGUI, MO(ACTN), MO(NUMNAV), KC_SPC,        KC_SPC, MO(SYMBL), LT(HRDWR, KC_LEFT), RGUI_T(KC_DOWN), RALT_T(KC_UP), RCTL_T(KC_RIGHT)
     ),
     [NUMNAV] = LAYOUT(
-        KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,           KC_6,          KC_7,      KC_8,    KC_9,    KC_0,    KC_BSPC,
-        KC_ESC,  IO_LCTL, IO_LALT, IO_LGUI, IO_LSFT, QK_LLCK,        SELWORD,       KC_LEFT,   KC_DOWN, KC_UP,   KC_RGHT, KC_SCLN,
-        KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,           KC_CAPS,       KC_HOME,   KC_PGDN, KC_PGUP, KC_END,  KC_ENT,
-        KC_LCTL, KC_LALT, KC_LGUI, KC_NO,   KC_NO,   KC_SPC,         KC_SPC,        MO(SYMBL), KC_NO,   KC_NO,   IO_RALT, KC_NO
+        KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,           KC_6,    KC_7,      KC_8,    KC_9,    KC_0,    KC_BSPC,
+        KC_ESC,  IO_LCTL, IO_LALT, IO_LGUI, IO_LSFT, QK_LLCK,        SELWORD, KC_LEFT,   KC_DOWN, KC_UP,   KC_RGHT, KC_SCLN,
+        KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,           KC_CAPS, KC_HOME,   KC_PGDN, KC_PGUP, KC_END,  KC_ENT,
+        KC_LCTL, KC_LALT, KC_LGUI, KC_NO,   KC_NO,   KC_SPC,         KC_SPC,  MO(SYMBL), KC_NO,   KC_NO,   IO_RALT, KC_NO
     ),
     [SYMBL] = LAYOUT(
         KC_TAB,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,     KC_PERC,        KC_CIRC, KC_AMPR,  KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
@@ -40,10 +40,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   IO_RALT, KC_NO,   KC_NO,   MO(NUMNAV), KC_SPC,         KC_SPC,  KC_NO,    KC_NO,   KC_RGUI, KC_RALT, KC_RCTL
     ),
     [ACTN] = LAYOUT(
-        KC_TAB,  KC_PSCR, KC_SCRL, KC_PAUS, KC_INS,     KC_APP,         WNDW_LP_FLLSCRN, OS_PRV_TAB,   OS_PRV_APP_WNDW, OS_NXT_APP_WNDW, OS_NXT_TAB,    KC_BSPC,
-        KC_ESC,  IO_LCTL, IO_LALT, IO_LGUI, IO_LSFT,    QK_LLCK,        WNDW_LP_CNTR,    WNDW_LP_LEFT, WNDW_SMLLR,      WNDW_LRGR,       WNDW_LP_RIGHT, KC_SCLN,
-        KC_LSFT, KC_NO,   KC_NO,   KC_NO,   KC_NO,      KC_NO,          WNDW_LP_VRT_MAX, WNDW_PRV_SPC, KC_NO,           KC_NO,           WNDW_NXT_SPC,  KC_ENT,
-        KC_LCTL, KC_LALT, KC_LGUI, KC_NO,   MO(NUMNAV), KC_SPC,         KC_SPC,          MO(SYMBL),    MO(HRDWR),       KC_NO,           IO_RALT,       KC_NO
+        KC_TAB,  KC_PSCR, KC_SCRL, KC_PAUS, KC_INS,     KC_APP,         WNDW_MAX_LP,     OS_PRV_TAB,   OS_PRV_APP_WNDW, OS_NXT_APP_WNDW, OS_NXT_TAB,   KC_BSPC,
+        KC_ESC,  IO_LCTL, IO_LALT, IO_LGUI, IO_LSFT,    QK_LLCK,        WNDW_CNTR_LP,    WNDW_LFT_LP,  WNDW_SMLLR,      WNDW_LRGR,       WNDW_RGHT_LP, KC_SCLN,
+        KC_LSFT, KC_NO,   KC_NO,   KC_NO,   KC_NO,      KC_NO,          WNDW_VRT_MAX_LP, WNDW_PRV_SPC, KC_NO,           KC_NO,           WNDW_NXT_SPC, KC_ENT,
+        KC_LCTL, KC_LALT, KC_LGUI, KC_NO,   MO(NUMNAV), KC_SPC,         KC_SPC,          MO(SYMBL),    MO(HRDWR),       KC_NO,           IO_RALT,      KC_NO
     ),
     [HRDWR] = LAYOUT(
         KC_TAB,  KC_NO,   DISP_DIM, DISP_BRI, OS_DRKMD_TGL, UG_SPDU,        UG_NEXT, UG_TOGG,   UG_HUEU, UG_SATU, UG_VALU, KC_BSPC,
@@ -58,10 +58,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LALT, KC_LGUI, KC_NO,  KC_NO,  KC_SPC,        KC_SPC, KC_NO,  KC_NO,  KC_RGUI, KC_RALT, KC_RCTL
     ),
     [OS] = LAYOUT(
-        KC_TAB,  OS_CLOSE,            OS_MIN,              OS_FLLSCRN,          KC_NO,           KC_NO,         OS_SPTLGHT_FNDR, OS_SPTLGHT, OS_LNCHPD,   OS_SIRI,     OS_SDBR, OS_BSPC,
-        KC_ESC,  OS_DSKTP,            OS_PRV_SPC,          OS_NXT_SPC,          OS_MSN_CNTRL,    KC_NO,         OS_DOCK,         OS_EXPOSE,  CMD_TAB_PRV, CMD_TAB_NXT, PRV_APP, KC_SCLN,
-        KC_LSFT, OS_LP_SCRN_SHT_FULL, OS_LP_SCRN_SHT_WNDW, OS_LP_SCRN_SHT_SLCT, OS_SCRN_SHT_OPT, KC_NO,         KC_NO,           KC_NO,      LGUI(KC_Q),  LGUI(KC_H),  KC_NO,   KC_ENT,
-        KC_LCTL, KC_LALT,             KC_LGUI,             KC_NO,               KC_NO,           KC_SPC,        KC_SPC,          KC_NO,      KC_NO,       KC_RGUI,     KC_RALT, KC_RCTL
+        KC_TAB,  OS_CLOSE,       OS_MIN,              OS_FLLSCRN,          KC_NO,           KC_NO,         OS_SPTLGHT_FNDR, OS_SPTLGHT, OS_LNCHPD,   OS_SIRI,     OS_SDBR,    OS_BSPC,
+        KC_ESC,  OS_DSKTP,       OS_PRV_SPC,          OS_NXT_SPC,          OS_MSN_CNTRL,    KC_NO,         OS_DOCK,         OS_EXPOSE,  CMD_TAB_PRV, CMD_TAB_NXT, OS_PRV_APP, KC_SCLN,
+        KC_LSFT, OS_SCRN_SHT_LP, OS_SCRN_SHT_WNDW_LP, OS_SCRN_SHT_SLCT_LP, OS_SCRN_SHT_OPT, KC_NO,         KC_NO,           KC_NO,      LGUI(KC_Q),  LGUI(KC_H),  KC_NO,      KC_ENT,
+        KC_LCTL, KC_LALT,        KC_LGUI,             KC_NO,               KC_NO,           KC_SPC,        KC_SPC,          KC_NO,      KC_NO,       KC_RGUI,     KC_RALT,    KC_RCTL
     ),
     [MOUSE] = LAYOUT(
         KC_TAB,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,          MS_BTN5,     MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4, OS_BSPC,

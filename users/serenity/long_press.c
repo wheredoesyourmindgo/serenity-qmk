@@ -25,15 +25,15 @@ bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
             return process_tap_or_long_press_key(record, KC_COMM);
 
         // Window management (Rectangle)
-        case WNDW_LP_FLLSCRN:
+        case WNDW_MAX_LP:
             return tap_or_hold(record, WNDW_MAX, WNDW_RSTR);
-        case WNDW_LP_CNTR:
+        case WNDW_CNTR_LP:
             return tap_or_hold(record, WNDW_CNTR, WNDW_LWP);
-        case WNDW_LP_LEFT:
+        case WNDW_LFT_LP:
             return tap_or_hold(record, WNDW_LFT_HLF, WNDW_LFT_FILL);
-        case WNDW_LP_RIGHT:
+        case WNDW_RGHT_LP:
             return tap_or_hold(record, WNDW_RGHT_HLF, WNDW_RGHT_FILL);
-        case WNDW_LP_VRT_MAX:
+        case WNDW_VRT_MAX_LP:
             // Single tap: almost maximize. Double tap or hold: vertical maximize.
             if (record->event.pressed) {
                 tap_code16(record->tap.count == 1 ? WNDW_ALMST_MAX : WNDW_VRT_MAX);
@@ -41,17 +41,17 @@ bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         // Spaces: tap to switch, hold to tile the window into split view
-        case PRV_SPC_LP:
+        case OS_PRV_SPC_LP:
             return tap_or_hold(record, OS_PRV_SPC, OS_TL_WNDW_L);
-        case NXT_SPC_LP:
+        case OS_NXT_SPC_LP:
             return tap_or_hold(record, OS_NXT_SPC, OS_TL_WNDW_R);
 
         // Screenshots: tap saves to file, hold copies to clipboard
-        case OS_LP_SCRN_SHT_FULL:
+        case OS_SCRN_SHT_LP:
             return tap_or_hold(record, OS_SCRN_SHT, OS_SCRN_SHT_CLP);
-        case OS_LP_SCRN_SHT_SLCT:
+        case OS_SCRN_SHT_SLCT_LP:
             return tap_or_hold(record, OS_SCRN_SHT_SLCT, OS_SCRN_SHT_CLP_SLCT);
-        case OS_LP_SCRN_SHT_WNDW:
+        case OS_SCRN_SHT_WNDW_LP:
             if (record->event.pressed) {
                 screenshot_window(record->tap.count > 0 ? OS_SCRN_SHT_SLCT : OS_SCRN_SHT_CLP_SLCT);
             }

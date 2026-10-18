@@ -22,6 +22,7 @@ SRC += tapping.c
 SRC += rotary_encoder.c
 SRC += features/magic_shift.c
 SRC += features/cmd_tab_switcher.c
+SRC += features/symbol_rolls.c
 SRC += features/mash_arrows.c
 SRC += features/mo_ext.c
 

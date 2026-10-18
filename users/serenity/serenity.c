@@ -170,20 +170,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case ENC_BTN: // Encoder push button
             if (record->event.pressed) {
-                if (MODS_SFT) {
+                // Held or tapped one-shot mods pick the action
+                const uint8_t mods = get_mods() | get_oneshot_mods();
+                if (mods & MOD_MASK_SHIFT) {
                     tap_code16_no_mod(OS_DRKMD_TGL);
-                } else if (MODS_CTRL) {
+                } else if (mods & MOD_MASK_CTRL) {
                     tap_code16_no_mod(ZOOM_RESET);
-                } else if (MODS_ALT) {
+                } else if (mods & MOD_MASK_ALT) {
                     tap_code16_no_mod(ZOOM_RESET_APP);
-                } else if (MODS_GUI) {
-                    tap_code16(KC_H); // Cmd-H: hide app
+                } else if (mods & MOD_MASK_GUI) {
+                    tap_code16_no_mod(LGUI(KC_H)); // Hide app
                 } else {
                     tap_code(KC_MUTE);
                 }
-                return false;
+                instant_oneshot_cancel(); // A tapped one-shot applies to this press only
             }
-            break;
+            return false;
         case SHAKE_MOUSE:
             if (record->event.pressed) {
                 shake_reports_left = SHAKE_SWINGS * SHAKE_REPORTS_PER_SWING;

@@ -52,19 +52,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO,   IO_RALT, KC_NO,    MO(ACTN), MO(NUMNAV),   KC_SPC,         ENC_BTN,        KC_SPC,  MO(SYMBL), KC_NO,   KC_RGUI, KC_RALT, KC_RCTL
     ),
     [FUNC] = LAYOUT(
-        KC_TAB,  KC_F1,   KC_F2,   KC_F3,  KC_F4,  KC_F5,                         KC_F6,  KC_F7,  KC_F8,  KC_F9,   KC_F10,  OS_BSPC,
+        KC_TAB,  KC_F1,   KC_F2,   KC_F3,  KC_F4,  KC_F5,                         KC_F6,  KC_F7,  KC_F8,  KC_F9,   KC_F10,  KC_BSPC,
         KC_ESC,  KC_F11,  KC_F12,  KC_F13, KC_F14, KC_F15,                        KC_F16, KC_F17, KC_F18, KC_F19,  KC_F20,  KC_SCLN,
         KC_LSFT, KC_F21,  KC_F22,  KC_F23, KC_F24, KC_NO,                         KC_NO,  KC_NO,  KC_NO,  KC_NO,   KC_NO,   KC_ENT,
         KC_LCTL, KC_LALT, KC_LGUI, KC_NO,  KC_NO,  KC_SPC,        ENC_BTN,        KC_SPC, KC_NO,  KC_NO,  KC_RGUI, KC_RALT, KC_RCTL
     ),
     [OS] = LAYOUT(
-        KC_TAB,  OS_CLOSE,       OS_MIN,              OS_FLLSCRN,          KC_NO,           KC_NO,                         OS_SPTLGHT_FNDR, OS_SPTLGHT, OS_LNCHPD,   OS_SIRI,     OS_SDBR,    OS_BSPC,
+        KC_TAB,  OS_CLOSE,       OS_MIN,              OS_FLLSCRN,          KC_NO,           KC_NO,                         OS_SPTLGHT_FNDR, OS_SPTLGHT, OS_LNCHPD,   OS_SIRI,     OS_SDBR,    KC_BSPC,
         KC_ESC,  OS_DSKTP,       OS_PRV_SPC,          OS_NXT_SPC,          OS_MSN_CNTRL,    KC_NO,                         OS_DOCK,         OS_EXPOSE,  CMD_TAB_PRV, CMD_TAB_NXT, OS_PRV_APP, KC_SCLN,
         KC_LSFT, OS_SCRN_SHT_LP, OS_SCRN_SHT_WNDW_LP, OS_SCRN_SHT_SLCT_LP, OS_SCRN_SHT_OPT, KC_NO,                         KC_NO,           KC_NO,      LGUI(KC_Q),  LGUI(KC_H),  KC_NO,      KC_ENT,
         KC_LCTL, KC_LALT,        KC_LGUI,             KC_NO,               KC_NO,           KC_SPC,        ENC_BTN,        KC_SPC,          KC_NO,      KC_NO,       KC_RGUI,     KC_RALT,    KC_RCTL
     ),
     [MOUSE] = LAYOUT(
-        KC_TAB,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                          MS_BTN5,     MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4, OS_BSPC,
+        KC_TAB,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                          MS_BTN5,     MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4, KC_BSPC,
         KC_ESC,  KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, QK_LLCK,                        QK_LOCK,     MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_SCLN,
         KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,                           SHAKE_MOUSE, MS_WHLR, MS_WHLU, MS_WHLD, MS_WHLL, KC_ENT,
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_SPC,         ENC_BTN,        KC_SPC,      KC_NO,   KC_NO,   KC_RGUI, IO_RALT, KC_RCTL

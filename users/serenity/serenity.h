@@ -38,8 +38,6 @@ enum custom_keycodes {
     CMD_TAB_PRV = SAFE_RANGE,
     TGL_LYT,
     CMD_TAB_NXT,
-    OS_BSPC,
-    OS_DEL,
     ENC_BTN,
     SHAKE_MOUSE,
 };

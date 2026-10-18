@@ -4,201 +4,101 @@
 #include "magic_shift.h"
 #include "serenity.h"
 
-bool process_magic_shift(uint16_t keycode, keyrecord_t* record) {
+// One side of the bottom row: its outer layer key and its Ctrl, Alt and GUI keys
+typedef struct {
+    uint8_t layer;
+    uint8_t shift;      // Shift bit this side holds
+    uint8_t mods;       // This side's Ctrl, Alt and GUI bits
+    bool    layer_held;  // Layer key is held (not tapped)
+    bool    shift_held;  // Layer key is acting as Shift
+    bool    shift_added; // Shift wasn't already held, so releasing it here is safe
+} bottom_row_side_t;
 
-  // Track whether alt-shift is being used so that we don't get stuck in NUMNAV/ACTN layers when using dedicated shift keys with mods
-  static bool alt_lshift_active = false;
-  static bool alt_rshift_active = false;
+static bottom_row_side_t left  = {ACTN, MOD_BIT(KC_LSFT), MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LGUI)};
+static bottom_row_side_t right = {HRDWR, MOD_BIT(KC_RSFT), MOD_BIT(KC_RCTL) | MOD_BIT(KC_RALT) | MOD_BIT(KC_RGUI)};
 
-  switch (keycode) {
-    // right half
-    case LT(HRDWR, KC_LEFT):
-      if (record->event.pressed) {
-        // Only on hold during LT(HRDWR, KC_LEFT)
-        if (!(record->tap.count > 0)) {
-          if (MODS_RCTRL || MODS_RALT || MODS_RGUI) {
-              layer_on(BASE);
-              alt_rshift_active = true;
-              register_mods(MOD_BIT(KC_RSFT));
-              // abort retro tapping
-              // retro_tapping_counter++;
-              return false;
-          }
-        }
-      } else {
-          if (MODS_RSFT && alt_rshift_active) {
-              alt_rshift_active = false;
-              unregister_mods(MOD_BIT(KC_RSFT));
-          }
-      }
-      break;
-    case KC_RGUI:
-        if (record->event.pressed) {
-            if (IS_LAYER_ON(HRDWR)) {
-                layer_off(HRDWR);
-                alt_rshift_active = true;
-                register_mods(MOD_BIT(KC_RSFT));
-            }
-        } else {
-            if (MODS_RSFT && !MODS_RCTRL && !MODS_RALT && MODS_RGUI && alt_rshift_active) {
-                alt_rshift_active = false;
-                unregister_mods(MOD_BIT(KC_RSFT));
-                layer_on(HRDWR);
-            }
-        }
-        break;
-    case RGUI_T(KC_DOWN):
-        if (record->event.pressed) {
-            // Only on hold during RGUI_T(KC_DOWN)
-            if (!(record->tap.count > 0)) {
-                if (IS_LAYER_ON(HRDWR)) {
-                    layer_off(HRDWR);
-                    alt_rshift_active = true;
-                    register_mods(MOD_BIT(KC_RSFT));
-                }
-            }
-        } else {
-            if (MODS_RSFT && !MODS_RCTRL && !MODS_RALT && MODS_RGUI && alt_rshift_active) {
-                alt_rshift_active = false;
-                unregister_mods(MOD_BIT(KC_RSFT));
-                layer_on(HRDWR);
-            }
-        }
-        break;
-    case KC_RALT:
-        if (record->event.pressed) {
-            if (IS_LAYER_ON(HRDWR)) {
-                layer_off(HRDWR);
-                alt_rshift_active = true;
-                register_mods(MOD_BIT(KC_RSFT));
-            }
-        } else {
-            if (MODS_RSFT && !MODS_RCTRL && MODS_RALT && !MODS_RGUI && alt_rshift_active) {
-                alt_rshift_active = false;
-                unregister_mods(MOD_BIT(KC_RSFT));
-                layer_on(HRDWR);
-            }
-        }
-        break;
-    case RALT_T(KC_UP):
-        if (record->event.pressed) {
-            // Only on hold during RALT_T(KC_UP)
-            if (!(record->tap.count > 0)) {
-                if (IS_LAYER_ON(HRDWR)) {
-                    layer_off(HRDWR);
-                    alt_rshift_active = true;
-                    register_mods(MOD_BIT(KC_RSFT));
-                }
-            }
-        } else {
-            if (MODS_RSFT && !MODS_RCTRL && MODS_RALT && !MODS_RGUI && alt_rshift_active) {
-                alt_rshift_active = false;
-                unregister_mods(MOD_BIT(KC_RSFT));
-                layer_on(HRDWR);
-            }
-        }
-        break;
-    case KC_RCTL:
-         if (record->event.pressed) {
-            if (IS_LAYER_ON(HRDWR)) {
-                layer_off(HRDWR);
-                alt_rshift_active = true;
-                register_mods(MOD_BIT(KC_RSFT));
-            }
-        } else {
-            if (MODS_RSFT && MODS_RCTRL && !MODS_RALT && !MODS_RGUI && alt_rshift_active) {
-                alt_rshift_active = false;
-                unregister_mods(MOD_BIT(KC_RSFT));
-                layer_on(HRDWR);
-            }
-        }
-        break;
-    case RCTL_T(KC_RIGHT):
-        if (record->event.pressed) {
-            // Only on hold during RCTL_T(KC_RIGHT)
-            if (!(record->tap.count > 0)) {
-                if (IS_LAYER_ON(HRDWR)) {
-                    layer_off(HRDWR);
-                    alt_rshift_active = true;
-                    register_mods(MOD_BIT(KC_RSFT));
-                }
-            }
-        } else {
-            if (MODS_RSFT && MODS_RCTRL && !MODS_RALT && !MODS_RGUI && alt_rshift_active) {
-                alt_rshift_active = false;
-                unregister_mods(MOD_BIT(KC_RSFT));
-                layer_on(HRDWR);
-            }
-        }
-        break;
+static void add_shift(bottom_row_side_t *side) {
+    side->shift_held  = true;
+    side->shift_added = !(get_mods() & side->shift);
+    register_mods(side->shift);
+}
 
-    // left half
-    case MO(ACTN):
-        if (record->event.pressed) {
-            // Only on hold during MO(ACTN)
-            if (!(record->tap.count > 0)) {
-                if (MODS_LCTRL || MODS_LALT || MODS_LGUI) {
-                    layer_on(BASE);
-                    alt_lshift_active = true;
-                    register_mods(MOD_BIT(KC_LSFT));
-                    // abort retro tapping
-                    // retro_tapping_counter++;
-                    return false;
-                }
-            }
-        } else {
-            if (MODS_LSFT && alt_lshift_active) {
-                alt_lshift_active = false;
-                unregister_mods(MOD_BIT(KC_LSFT));
-            }
-        }
-        break;
-    case KC_LGUI:
-        if (record->event.pressed) {
-            if (IS_LAYER_ON(ACTN)) {
-                layer_off(ACTN);
-                alt_lshift_active = true;
-                register_mods(MOD_BIT(KC_LSFT));
-            }
-        } else {
-            if (MODS_LSFT && !MODS_LCTRL && !MODS_LALT && MODS_LGUI && alt_lshift_active) {
-                alt_lshift_active = false;
-                unregister_mods(MOD_BIT(KC_LSFT));
-                layer_on(ACTN);
-            }
-        }
-      break;
-    case KC_LALT:
-      if (record->event.pressed) {
-          if (IS_LAYER_ON(ACTN)) {
-              layer_off(ACTN);
-              alt_lshift_active = true;
-              register_mods(MOD_BIT(KC_LSFT));
-          }
-      } else {
-          if (MODS_LSFT && !MODS_LCTRL && MODS_LALT && !MODS_LGUI && alt_lshift_active) {
-              alt_lshift_active = false;
-              unregister_mods(MOD_BIT(KC_LSFT));
-              layer_on(ACTN);
-          }
-      }
-      break;
-    case KC_LCTL:
-      if (record->event.pressed) {
-          if (IS_LAYER_ON(ACTN)) {
-              layer_off(ACTN);
-              alt_lshift_active = true;
-              register_mods(MOD_BIT(KC_LSFT));
-          }
-      } else {
-          if (MODS_LSFT && MODS_LCTRL && !MODS_LALT && !MODS_LGUI && alt_lshift_active) {
-              alt_lshift_active = false;
-              unregister_mods(MOD_BIT(KC_LSFT));
-              layer_on(ACTN);
-          }
-      }
-      break;
+static void remove_shift(bottom_row_side_t *side) {
+    side->shift_held = false;
+    if (side->shift_added) {
+        unregister_mods(side->shift);
+    }
+}
 
-  }
-  return true;
+// Layer key held or released. Returns false to hold Shift instead of turning on the layer.
+static bool process_layer_key(bottom_row_side_t *side, keyrecord_t *record) {
+    if (record->event.pressed) {
+        side->layer_held = true;
+        if (get_mods() & side->mods) { // Modifier first
+            add_shift(side);
+            return false;
+        }
+    } else {
+        side->layer_held = false;
+        if (side->shift_held) {
+            remove_shift(side);
+        }
+    }
+    return true;
+}
+
+// Ctrl, Alt or GUI (`mod`) held or released as a modifier
+static void process_mod_key(bottom_row_side_t *side, uint8_t mod, keyrecord_t *record) {
+    if (record->event.pressed) {
+        // Layer key first. Only on the layer itself, so e.g. Function (Action + Hardware) keeps its mods.
+        if (side->layer_held && !side->shift_held && get_highest_layer(layer_state) == side->layer) {
+            layer_off(side->layer);
+            add_shift(side);
+        }
+    } else if (side->shift_held && !(get_mods() & side->mods & ~mod)) {
+        // Last modifier released: back to the layer if its key is still held
+        remove_shift(side);
+        if (side->layer_held) {
+            layer_on(side->layer);
+        }
+    }
+}
+
+bool process_magic_shift(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case MO(ACTN):
+            return process_layer_key(&left, record);
+        case LT(HRDWR, KC_LEFT):
+            if (record->tap.count == 0) {
+                return process_layer_key(&right, record);
+            }
+            break;
+        case KC_LCTL:
+        case KC_LALT:
+        case KC_LGUI:
+            process_mod_key(&left, MOD_BIT(keycode), record);
+            break;
+        case KC_RCTL:
+        case KC_RALT:
+        case KC_RGUI:
+            process_mod_key(&right, MOD_BIT(keycode), record);
+            break;
+        // Arrow cluster mod-taps, when held
+        case RCTL_T(KC_RIGHT):
+            if (record->tap.count == 0) {
+                process_mod_key(&right, MOD_BIT(KC_RCTL), record);
+            }
+            break;
+        case RALT_T(KC_UP):
+            if (record->tap.count == 0) {
+                process_mod_key(&right, MOD_BIT(KC_RALT), record);
+            }
+            break;
+        case RGUI_T(KC_DOWN):
+            if (record->tap.count == 0) {
+                process_mod_key(&right, MOD_BIT(KC_RGUI), record);
+            }
+            break;
+    }
+    return true;
 }

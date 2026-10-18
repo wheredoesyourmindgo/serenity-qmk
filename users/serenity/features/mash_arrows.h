@@ -6,23 +6,17 @@
 #include QMK_KEYBOARD_H
 
 /**
- * Mash Arrows — directional taps that play nice with held mods/layers
+ * Mash Arrows: sloppy presses on the arrow cluster always type arrows
  *
- * Summary
- * -------
- * Allows arrow taps that intelligently clear conflicting held modifiers or a layer
- * (e.g., HRDWR) just for the tap, then performs the intended arrow key.
+ * The cluster is LT(HRDWR, KC_LEFT), RGUI_T(KC_DOWN), RALT_T(KC_UP) and RCTL_T(KC_RIGHT).
+ * Overlapping presses within the tapping term are handled by get_chordal_hold() in tapping.c.
+ * This covers an arrow held past the tapping term (so it became a modifier) when another
+ * arrow is tapped: both arrows are typed, and only that cluster modifier is released.
  *
- * Expected bindings
- * -----------------
- * - LT(HRDWR, KC_LEFT) : when tapped, send ← and clear RALT/RGUI/RCTRL as needed
- * - RALT_T(KC_UP)      : when tapped, send ↑ and clear RGUI/RCTRL/HRDWR as needed
- * - RGUI_T(KC_DOWN)    : when tapped, send ↓ and clear RALT/RCTRL/HRDWR as needed
- * - RCTL_T(KC_RIGHT)   : when tapped, send → and clear RALT/RGUI/HRDWR as needed
+ * Skipped while Dual-Role Shift (magic_shift.c) holds Right Shift, since the cluster
+ * modifiers are then used on purpose.
  *
- * Wiring
- * ------
- * Call from your `process_record_user` and return its result:
+ * Call from `process_record_user` and return its result:
  *   if (!process_mash_arrows(keycode, record)) { return false; }
  */
 

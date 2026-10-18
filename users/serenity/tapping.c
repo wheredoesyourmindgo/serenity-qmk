@@ -13,16 +13,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Right Shift and the arrow-cluster mod-taps switch to hold as soon as another key is
 // tapped (permissive hold) or pressed (hold on other key press), so they can be used quickly.
 static bool is_quick_hold_key(uint16_t keycode) {
-    switch (keycode) {
-        case RSFT_T(KC_ENT):
-        case LT(HRDWR, KC_LEFT):
-        case RGUI_T(KC_DOWN):
-        case RALT_T(KC_UP):
-        case RCTL_T(KC_RIGHT):
-            return true;
-        default:
-            return false;
-    }
+    return keycode == RSFT_T(KC_ENT) || is_arrow_cluster_key(keycode);
+}
+
+// Arrow cluster: pressing another arrow while one is still undecided doesn't make it a hold.
+// What comes next decides: releasing an arrow types them all as arrows, while pressing any
+// other key (or holding past the tapping term) makes them modifiers and the Hardware layer.
+bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, uint16_t other_keycode, keyrecord_t *other_record) {
+    return !(is_arrow_cluster_key(tap_hold_keycode) && is_arrow_cluster_key(other_keycode));
 }
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {

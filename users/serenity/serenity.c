@@ -93,7 +93,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_symbol_rolls(keycode, record, SYMBL)) {
         return false;
     }
-    if (IS_LAYER_ON(BASE) && !process_mash_arrows(keycode, record)) {
+    if (!process_mash_arrows(keycode, record)) {
         return false;
     }
     if (!process_mo_ext(keycode, record)) {

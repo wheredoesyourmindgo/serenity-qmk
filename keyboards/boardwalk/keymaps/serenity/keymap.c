@@ -76,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MOUSE] = LAYOUT_ortho_2x2u(
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,        KC_NO,  KC_NO,       KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_DEL,
         KC_TAB,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,        KC_NO,  MS_BTN5,     MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4, KC_BSPC,
-        KC_ESC,  KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, QK_LLCK, KC_NO,        KC_NO,  QK_LOCK,     MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_SCLN,
+        KC_ESC,  IO_LCTL, IO_LALT, IO_LGUI, IO_LSFT, QK_LLCK, KC_NO,        KC_NO,  QK_LOCK,     MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_SCLN,
         KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,    KC_NO,        KC_NO,  SHAKE_MOUSE, MS_WHLR, MS_WHLU, MS_WHLD, MS_WHLL, KC_ENT,
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_SPC,                KC_SPC,              KC_NO,   KC_NO,   KC_RGUI, IO_RALT, KC_RCTL
     ),

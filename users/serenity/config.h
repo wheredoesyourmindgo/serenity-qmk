@@ -26,6 +26,8 @@
 #define QUICK_TAP_TERM_PER_KEY
 #define RETRO_TAPPING_PER_KEY
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+// Only used to keep overlapping arrow-cluster presses as arrows (get_chordal_hold() in tapping.c)
+#define CHORDAL_HOLD
 
 // Caps Word, using RSFT_T(KC_ENT) so both shifts is not ideal, use double tap left shift instead
 // #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD

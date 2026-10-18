@@ -1,6 +1,19 @@
 // Small helpers shared by the userspace features.
 #include "serenity.h"
 
+// The bottom-right arrow cluster: Left (Hardware on hold) and three right-hand mod-taps
+bool is_arrow_cluster_key(uint16_t keycode) {
+    switch (keycode) {
+        case LT(HRDWR, KC_LEFT):
+        case RGUI_T(KC_DOWN):
+        case RALT_T(KC_UP):
+        case RCTL_T(KC_RIGHT):
+            return true;
+        default:
+            return false;
+    }
+}
+
 // Helper for implementing tap vs. long-press keys. Given a tap-hold
 // key event, replaces the hold function with `long_press_keycode`.
 bool process_tap_or_long_press_key(keyrecord_t *record, uint16_t long_press_keycode) {

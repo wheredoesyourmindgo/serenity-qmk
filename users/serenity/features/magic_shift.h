@@ -5,4 +5,18 @@
 
 #include QMK_KEYBOARD_H
 
+/**
+ * Dual-Role Layer Holds: Shift on the bottom row
+ *
+ * With the hand down on the bottom row, the outer layer key on each side (Action on the
+ * left, Hardware on the right) acts as Shift when used with that side's Ctrl, Alt or GUI.
+ *
+ * - Modifier first: the layer key holds Shift instead of turning on its layer.
+ * - Layer key first: pressing a modifier turns the layer off and adds Shift. Releasing the
+ *   last modifier removes Shift and turns the layer back on if its key is still held.
+ *
+ * Call from `process_record_user` and return its result:
+ *   if (!process_magic_shift(keycode, record)) { return false; }
+ */
+
 bool process_magic_shift(uint16_t keycode, keyrecord_t* record);

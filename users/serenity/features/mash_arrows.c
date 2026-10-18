@@ -4,92 +4,27 @@
 #include "mash_arrows.h"
 #include "serenity.h"
 
+// The cluster's mod-taps: the modifier each one holds and the arrow it types
+static const struct {
+    uint8_t mod;
+    uint8_t arrow;
+} cluster_mod_taps[] = {
+    {MOD_BIT(KC_RGUI), KC_DOWN},
+    {MOD_BIT(KC_RALT), KC_UP},
+    {MOD_BIT(KC_RCTL), KC_RIGHT},
+};
+
 bool process_mash_arrows(uint16_t keycode, keyrecord_t* record) {
-    if (!record->event.pressed) { return true; }
-
-    switch (keycode) {
-         case LT(HRDWR, KC_LEFT):
-            if (record->tap.count > 0) {
-                  if (MODS_RALT || MODS_RGUI || MODS_RCTRL) {
-                    // Un-register mods
-                    if (MODS_RALT) {
-                        tap_code16_unset_mod(KC_UP);
-                    }
-                    if (MODS_RGUI) {
-                      tap_code16_unset_mod(KC_DOWN);
-                    }
-                    if (MODS_RCTRL) {
-                        tap_code16_unset_mod(KC_RIGHT);
-                    }
-                    // No need to to call tap_code_unset_mod or tap_code_no_mod since mods unset above
-                    tap_code(KC_LEFT);
-                  } else {
-                      return true;
-                  }
-                  return false;
-            }
-            break;
-        case RALT_T(KC_UP):
-            if (record->tap.count > 0) {
-                  if (MODS_RGUI || MODS_RCTRL || IS_LAYER_ON(HRDWR)) {
-                    if (MODS_RGUI) {
-                      tap_code16_unset_mod(KC_DOWN);
-                    }
-                    if (MODS_RCTRL) {
-                        tap_code16_unset_mod(KC_RIGHT);
-                    }
-                    if (IS_LAYER_ON(HRDWR)) {
-                        layer_off(HRDWR);
-                        tap_code(KC_LEFT);
-                    }
-                    tap_code(KC_UP);
-                  } else {
-                      return true;
-                  }
-                  return false;
-            }
-            break;
-        case RGUI_T(KC_DOWN):
-            if (record->tap.count > 0) {
-                  if (MODS_RALT || MODS_RCTRL || IS_LAYER_ON(HRDWR)) {
-                    if (MODS_RALT) {
-                      tap_code16_unset_mod(KC_UP);
-                    }
-                    if (MODS_RCTRL) {
-                        tap_code16_unset_mod(KC_RIGHT);
-                    }
-                    if (IS_LAYER_ON(HRDWR)) {
-                        layer_off(HRDWR);
-                        tap_code(KC_LEFT);
-                    }
-                    tap_code(KC_DOWN);
-                  } else {
-                      return true;
-                   }
-                  return false;
-            }
-            break;
-        case RCTL_T(KC_RIGHT):
-            if (record->tap.count > 0) {
-                if (MODS_RALT || MODS_RGUI || IS_LAYER_ON(HRDWR)) {
-                    if (MODS_RALT) {
-                        tap_code16_unset_mod(KC_UP);
-                    }
-                    if (MODS_RGUI) {
-                        tap_code16_unset_mod(KC_DOWN);
-                    }
-                    if (IS_LAYER_ON(HRDWR)) {
-                        layer_off(HRDWR);
-                        tap_code(KC_LEFT);
-                    }
-                    tap_code(KC_RIGHT);
-                } else {
-                    return true;
-                }
-                return false;
-            }
-            break;
+    // Only arrow taps, and not while Dual-Role Shift is held (cluster modifiers are deliberate then)
+    if (!is_arrow_cluster_key(keycode) || !record->event.pressed || record->tap.count == 0 || MODS_RSFT) {
+        return true;
     }
-
-  return true;
+    // Type the arrow of each cluster key held as a modifier, leaving other modifiers alone
+    for (uint8_t i = 0; i < ARRAY_SIZE(cluster_mod_taps); ++i) {
+        if (get_mods() & cluster_mod_taps[i].mod) {
+            del_mods(cluster_mod_taps[i].mod);
+            tap_code(cluster_mod_taps[i].arrow);
+        }
+    }
+    return true; // QMK types this key's arrow
 }

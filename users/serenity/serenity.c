@@ -158,18 +158,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
-        case TGL_LYT: // Switch the default layer between Serenity and QWERTY
+        case TGL_LYT: // Switch the default layer between Serenity and QWERTY (resets on unplug)
             if (record->event.pressed) {
-                layer_off(HRDWR);
-                if (IS_LAYER_ON(BASE)) {
-                    layer_off(BASE);
-                    layer_on(QWRTY);
-                    default_layer_set(QWRTY);
-                } else {
-                    layer_off(QWRTY);
-                    layer_on(BASE);
-                    default_layer_set(BASE);
-                }
+                set_single_default_layer(get_highest_layer(default_layer_state) == BASE ? QWRTY : BASE);
             }
             return false;
         case LSFT(LGUI(KC_BSPC)):
@@ -215,9 +206,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 void keyboard_post_init_user(void) {
 #ifdef QWERTY_BASE
-    layer_off(BASE);
-    layer_on(QWRTY);
-    default_layer_set(QWRTY);
+    set_single_default_layer(QWRTY);
 #endif
 }
 
@@ -227,7 +216,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // Cancel one-shot mods when moving to most layers
     switch (get_highest_layer(state)) {
         case BASE:
-        case QWRTY:
         case ACTN:
         case HRDWR:
             break; // Keep them (ACTN and HRDWR need them for function keys)

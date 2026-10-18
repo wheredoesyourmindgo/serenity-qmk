@@ -34,11 +34,7 @@ bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
         case WNDW_RGHT_LP:
             return tap_or_hold(record, WNDW_RGHT_HLF, WNDW_RGHT_FILL);
         case WNDW_VRT_MAX_LP:
-            // Single tap: almost maximize. Double tap or hold: vertical maximize.
-            if (record->event.pressed) {
-                tap_code16(record->tap.count == 1 ? WNDW_ALMST_MAX : WNDW_VRT_MAX);
-            }
-            return false;
+            return tap_or_hold(record, WNDW_ALMST_MAX, WNDW_VRT_MAX);
 
         // Screenshots: tap saves to file, hold copies to clipboard
         case OS_SCRN_SHT_LP:

@@ -24,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [SYMBL] = LAYOUT_ortho_4x12(
         KC_TAB,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,     KC_PERC,        KC_CIRC, KC_AMPR,  KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
         KC_ESC,  KC_LBRC, KC_RBRC, KC_EQL,  KC_SLSH,    KC_BSLS,        QK_LLCK, IO_LSFT,  IO_LGUI, IO_LALT, IO_LCTL, KC_SCLN,
-        KC_LSFT, KC_LCBR, KC_RCBR, KC_PLUS, KC_QUES,    KC_PIPE,        KC_NO,   KC_TILDE, KC_GRV,  KC_LABK, KC_RABK, KC_ENT,
+        KC_LSFT, KC_LCBR, KC_RCBR, KC_PLUS, KC_QUES,    KC_PIPE,        KC_COLN, KC_TILDE, KC_GRV,  KC_LABK, KC_RABK, KC_ENT,
         IO_LCTL, IO_LALT, IO_LGUI, KC_NO,   MO(NUMNAV), KC_SPC,         KC_SPC,  KC_NO,    KC_NO,   KC_RGUI, KC_RALT, KC_RCTL
     ),
     [ACTN] = LAYOUT_ortho_4x12(
@@ -52,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LALT,        KC_LGUI,             KC_NO,               KC_NO,           KC_SPC,        KC_SPC,          KC_NO,      KC_NO,       KC_RGUI,     KC_RALT,    KC_RCTL
     ),
     [MOUSE] = LAYOUT_ortho_4x12(
-        KC_TAB,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,          MS_BTN5,     MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4, KC_BSPC,
+        KC_TAB,  KC_NO,   MS_ACL0, MS_ACL1, MS_ACL2, KC_NO,          KC_NO,       OS_BACK, MS_BTN3, KC_NO,   OS_FWD,  KC_BSPC,
         KC_ESC,  IO_LCTL, IO_LALT, IO_LGUI, IO_LSFT, QK_LLCK,        QK_LOCK,     MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_SCLN,
         KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,           SHAKE_MOUSE, MS_WHLR, MS_WHLU, MS_WHLD, MS_WHLL, KC_ENT,
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_SPC,         KC_SPC,      MS_BTN1, MS_BTN2, IO_RGUI, IO_RALT, IO_RCTL

@@ -38,6 +38,8 @@
 #define OS_PRV_APP_WNDW LGUI(KC_TILD)       // Previous (Same)App Window
 #define OS_NXT_TAB LCTL(KC_TAB)             // Next Tab
 #define OS_PRV_TAB LSFT(LCTL(KC_TAB))       // Previous Tab
+#define OS_BACK LGUI(KC_LBRC)               // Back (Safari ignores mouse button 4)
+#define OS_FWD LGUI(KC_RBRC)                // Forward (Safari ignores mouse button 5)
 #define OS_FLLSCRN LCTL(LGUI(KC_F))         // Fullscreen (green button)
 #define OS_MIN LGUI(KC_M)                   // Minimize (yellow button)
 #define OS_CLOSE LGUI(KC_W)                 // Close active app

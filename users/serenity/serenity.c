@@ -73,6 +73,55 @@ static void shake_mouse_scan(void) {
     host_mouse_send(&report);
 }
 
+#ifdef KEY_LOCK_ENABLE
+// QMK's cancel_key_lock() forgets locked keys without releasing them, so a drag-lock (Key Lock
+// then a mouse button) would stay pressed after leaving the Mouse layer. Mirror which keys Key
+// Lock is holding so a layer change can release them.
+#define MAX_LOCKED_KEYS 4
+
+static bool    key_lock_watching = false;
+static uint8_t locked_keys[MAX_LOCKED_KEYS];
+static uint8_t locked_key_count = 0;
+
+static bool forget_locked_key(uint8_t code) {
+    for (uint8_t i = 0; i < locked_key_count; i++) {
+        if (locked_keys[i] == code) {
+            locked_keys[i] = locked_keys[--locked_key_count];
+            return true;
+        }
+    }
+    return false;
+}
+
+// Runs before Key Lock sees the press, following the same rules as process_key_lock()
+bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!record->event.pressed) {
+        return true;
+    }
+    if (keycode == QK_LOCK) {
+        key_lock_watching = !key_lock_watching;
+    } else if (keycode > 0xFF) {
+        key_lock_watching = false; // Key Lock only locks basic keycodes
+    } else if (key_lock_watching) {
+        key_lock_watching = false;
+        if (locked_key_count < MAX_LOCKED_KEYS) {
+            locked_keys[locked_key_count++] = keycode;
+        }
+    } else {
+        forget_locked_key(keycode); // Pressing a locked key again unlocks it
+    }
+    return true;
+}
+
+static void release_locked_keys(void) {
+    cancel_key_lock();
+    key_lock_watching = false;
+    while (locked_key_count > 0) {
+        unregister_code(locked_keys[--locked_key_count]);
+    }
+}
+#endif
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // Shift + GUI + Backspace deletes to end of line (Ctrl-K)
     if (keycode == KC_BACKSPACE && check_mods_sft_and_gui()) {
@@ -195,7 +244,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     state = update_tri_layer_state(state, HRDWR, ACTN, FUNC);
 
 #ifdef KEY_LOCK_ENABLE
-    cancel_key_lock();
+    release_locked_keys();
 #endif
 
     return state;

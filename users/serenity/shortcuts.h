@@ -1,7 +1,7 @@
 // Named macOS / app shortcuts used by the keymaps and userspace code.
 #pragma once
 
-// F14-F15 are used with display brightness below (set in macOS preferences)
+// F14-F15 are used with display brightness below (macOS's default shortcuts)
 // F19-F24 are reserved for use with other devices
 
 // Editing
@@ -20,7 +20,8 @@
 #define ZOOM_RESET_APP LGUI(KC_P0)     // Zoom reset app
 
 // Display brightness
-// Issue with External LG Monitor/display. Karabiner seems to block Control-brightness. Easiest workaround is to map display brightness controls in macOS system preferences to a function key.
+// F14/F15 are macOS's default brightness shortcuts (Keyboard Shortcuts > Display), so no setup is
+// needed. Used instead of Control-brightness, which Karabiner blocked on an external LG display.
 #define DISP_DIM KC_F14  // Dim Display
 #define DISP_BRI KC_F15  // Brighten Display
 

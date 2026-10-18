@@ -12,7 +12,6 @@
 #include "features/cmd_tab_switcher.h"
 #include "features/symbol_rolls.h"
 #include "features/mash_arrows.h"
-#include "features/mo_ext.h"
 #include "process_layer_lock.h" // QMK core Layer Lock (QK_LLCK)
 
 bool caps_word_press_user(uint16_t keycode) {
@@ -152,9 +151,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
     if (!process_mash_arrows(keycode, record)) {
-        return false;
-    }
-    if (!process_mo_ext(keycode, record)) {
         return false;
     }
     if (!process_long_press_keys(keycode, record)) {

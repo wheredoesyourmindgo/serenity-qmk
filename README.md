@@ -21,7 +21,6 @@ The website uses friendlier names for some layers than the code does:
 | `OS` | OS | Num/Nav + Symbol (tri-layer) |
 | `FUNC` | Function | Action + Hardware (tri-layer) |
 | `MOUSE` | Mouse | hold Escape |
-| `BASE_L`, `BASE_R` | — | tap then hold Symbol / Num/Nav (temporary home-row mods) |
 
 ## Layout
 

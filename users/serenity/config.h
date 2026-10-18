@@ -38,8 +38,6 @@
 // Must be a number, not MOD_MASK_GUI: the module tests it with #if, where QMK's MOD_BIT_* enum
 // values read as 0 and the check silently disappears. 0x88 is MOD_MASK_GUI (checked in shift_keys.c).
 #define CUSTOM_SHIFT_KEYS_NEGMODS 0x88
-// Apply on every layer except QWRTY (layer 1), so Shift+Backspace stays standard on QWERTY
-#define CUSTOM_SHIFT_KEYS_LAYER_MASK (~(1 << 1))
 
 // Select Word (getreuer/select_word community module): send macOS word and line selection hotkeys
 #define SELECT_WORD_OS_MAC

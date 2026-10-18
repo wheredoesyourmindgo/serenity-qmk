@@ -26,7 +26,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [QWRTY] = LAYOUT_ortho_2x2u(
         KC_LCTL,           KC_1,    KC_2,    KC_3,     KC_4,       KC_5,   KC_EQL,         KC_BSLS, KC_6, KC_7,      KC_8,               KC_9,    KC_0,    KC_RCTL,
-        KC_TAB,            KC_Q,    KC_W,    KC_E,     KC_R,       KC_T,   KC_LBRC,        KC_RBRC, KC_Y, KC_U,      KC_I,               KC_O,    KC_P,    OS_BSPC,
+        KC_TAB,            KC_Q,    KC_W,    KC_E,     KC_R,       KC_T,   KC_LBRC,        KC_RBRC, KC_Y, KC_U,      KC_I,               KC_O,    KC_P,    KC_BSPC,
         LT(MOUSE, KC_ESC), KC_A,    KC_S,    KC_D,     KC_F,       KC_G,   KC_HOME,        KC_PGUP, KC_H, KC_J,      KC_K,               KC_L,    KC_SCLN, KC_QUOT,
         KC_LSFT,           KC_Z,    KC_X,    KC_C,     KC_V,       KC_B,   KC_END,         KC_PGDN, KC_N, KC_M,      KC_COMM,            KC_DOT,  KC_SLSH, RSFT_T(KC_ENT),
         KC_LCTL,           KC_LALT, KC_LGUI, MO(ACTN), MO(NUMNAV), KC_SPC,                 KC_SPC,        MO(SYMBL), LT(HRDWR, KC_LEFT), KC_RGUI, KC_RALT, KC_RCTL
@@ -61,21 +61,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [FUNC] = LAYOUT_ortho_2x2u(
         KC_NO,   KC_NO,   KC_NO,   KC_NO,  KC_NO,  KC_NO,  KC_NO,        KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,   KC_NO,   KC_DEL,
-        KC_TAB,  KC_F1,   KC_F2,   KC_F3,  KC_F4,  KC_F5,  KC_NO,        KC_NO,  KC_F6,  KC_F7,  KC_F8,  KC_F9,   KC_F10,  OS_BSPC,
+        KC_TAB,  KC_F1,   KC_F2,   KC_F3,  KC_F4,  KC_F5,  KC_NO,        KC_NO,  KC_F6,  KC_F7,  KC_F8,  KC_F9,   KC_F10,  KC_BSPC,
         KC_ESC,  KC_F11,  KC_F12,  KC_F13, KC_F14, KC_F15, KC_NO,        KC_NO,  KC_F16, KC_F17, KC_F18, KC_F19,  KC_F20,  KC_SCLN,
         KC_LSFT, KC_F21,  KC_F22,  KC_F23, KC_F24, KC_NO,  KC_NO,        KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,   KC_NO,   KC_ENT,
         KC_LCTL, KC_LALT, KC_LGUI, KC_NO,  KC_NO,  KC_SPC,               KC_SPC,         KC_NO,  KC_NO,  KC_RGUI, KC_RALT, KC_RCTL
     ),
     [OS] = LAYOUT_ortho_2x2u(
         KC_NO,   KC_NO,          KC_NO,               KC_NO,               KC_NO,           KC_NO,  KC_NO,        KC_NO,  KC_NO,           KC_NO,      KC_NO,       KC_NO,       KC_NO,      KC_DEL,
-        KC_TAB,  OS_CLOSE,       OS_MIN,              OS_FLLSCRN,          KC_NO,           KC_NO,  KC_NO,        KC_NO,  OS_SPTLGHT_FNDR, OS_SPTLGHT, OS_LNCHPD,   OS_SIRI,     OS_SDBR,    OS_BSPC,
+        KC_TAB,  OS_CLOSE,       OS_MIN,              OS_FLLSCRN,          KC_NO,           KC_NO,  KC_NO,        KC_NO,  OS_SPTLGHT_FNDR, OS_SPTLGHT, OS_LNCHPD,   OS_SIRI,     OS_SDBR,    KC_BSPC,
         KC_ESC,  OS_DSKTP,       OS_PRV_SPC,          OS_NXT_SPC,          OS_MSN_CNTRL,    KC_NO,  KC_NO,        KC_NO,  OS_DOCK,         OS_EXPOSE,  CMD_TAB_PRV, CMD_TAB_NXT, OS_PRV_APP, KC_SCLN,
         KC_LSFT, OS_SCRN_SHT_LP, OS_SCRN_SHT_WNDW_LP, OS_SCRN_SHT_SLCT_LP, OS_SCRN_SHT_OPT, KC_NO,  KC_NO,        KC_NO,  KC_NO,           KC_NO,      LGUI(KC_Q),  LGUI(KC_H),  KC_NO,      KC_ENT,
         KC_LCTL, KC_LALT,        KC_LGUI,             KC_NO,               KC_NO,           KC_SPC,               KC_SPC,                  KC_NO,      KC_NO,       KC_RGUI,     KC_RALT,    KC_RCTL
     ),
     [MOUSE] = LAYOUT_ortho_2x2u(
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,        KC_NO,  KC_NO,       KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_DEL,
-        KC_TAB,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,        KC_NO,  MS_BTN5,     MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4, OS_BSPC,
+        KC_TAB,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,        KC_NO,  MS_BTN5,     MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4, KC_BSPC,
         KC_ESC,  KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, QK_LLCK, KC_NO,        KC_NO,  QK_LOCK,     MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_SCLN,
         KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,    KC_NO,        KC_NO,  SHAKE_MOUSE, MS_WHLR, MS_WHLU, MS_WHLD, MS_WHLL, KC_ENT,
         KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_SPC,                KC_SPC,              KC_NO,   KC_NO,   KC_RGUI, IO_RALT, KC_RCTL

@@ -29,7 +29,7 @@ The website uses friendlier names for some layers than the code does:
 |---|---|
 | `users/serenity/` | Shared layers, custom keycodes and features used by every keyboard |
 | `keyboards/<kb>/keymaps/serenity/` | Per-keyboard layout (calls into the shared userspace) |
-| `modules/getreuer/` | [Getreuer's community modules](https://github.com/getreuer/qmk-modules) (git submodule); only `custom_shift_keys` is used |
+| `modules/getreuer/` | [Getreuer's community modules](https://github.com/getreuer/qmk-modules) (git submodule); `custom_shift_keys` and `select_word` are used |
 | `modules/wheredoesyourmindgo/` | My own community modules, [wheredoesyourmindgo/qmk-modules](https://github.com/wheredoesyourmindgo/qmk-modules) (git submodule); `instant_oneshot` provides the one-shot mod keys (`IO_LSFT` etc.) |
 | `vendor/foostan/corneliuskbd/` | foostan's Cornelius rev1/rev2 keyboard definitions (copied from [foostan/kbd_firmware](https://github.com/foostan/kbd_firmware); see [Cornelius](#cornelius)) |
 | `scripts/format_keymaps.py` | Aligns each `LAYOUT(...)` into a split grid (`--check` to verify) |
@@ -98,6 +98,8 @@ To undo an update before committing, run `git submodule update modules/getreuer`
 If `modules/getreuer` is ever empty (e.g. after a plain `git clone`), run `git submodule update --init`.
 
 Custom Shift Keys is enabled by the `modules` entry in each keymap's `keymap.json`. Its key table is in `users/serenity/shift_keys.c` and its options are set in `users/serenity/config.h`; they're documented in its [README](modules/getreuer/custom_shift_keys/README.md).
+
+Select Word is enabled the same way and provides the `SELWORD` key on the Num/Nav layer. It's set to macOS hotkeys in `users/serenity/config.h`; its keys and options are documented in its [README](modules/getreuer/select_word/README.md).
 
 ## Editing my own modules
 

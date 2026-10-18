@@ -1,3 +1,3 @@
 {
-    "modules": ["getreuer/custom_shift_keys", "wheredoesyourmindgo/instant_oneshot"]
+    "modules": ["getreuer/custom_shift_keys", "wheredoesyourmindgo/instant_oneshot", "getreuer/select_word"]
 }

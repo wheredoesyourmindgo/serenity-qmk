@@ -138,7 +138,6 @@
 #define WNDW_LP_LGR LT(0, KC_6)
 #define PRV_SPC_LP LT(0, KC_7)
 #define NXT_SPC_LP LT(0, KC_8)
-#define TGL_SELECT_LP LT(0, KC_9)
 #define OS_LP_SCRN_SHT_FULL LT(0, KC_A)
 #define OS_LP_SCRN_SHT_SLCT LT(0, KC_B)
 #define OS_LP_SCRN_SHT_WNDW LT(0, KC_C)

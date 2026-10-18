@@ -16,18 +16,18 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     }
 
     bool hrdwr = IS_LAYER_ON(HRDWR);
-    bool aux   = IS_LAYER_ON(ACTN);
+    bool actn  = IS_LAYER_ON(ACTN);
 
     if (MODS_GUI) {
         // Use the cmd-tab switcher so double tap can close apps only while it's active
         clockwise ? cmd_tab_next() : cmd_tab_previous();
-    } else if (MODS_SFT && !hrdwr && !aux) {
+    } else if (MODS_SFT && !hrdwr && !actn) {
         tap_code16_no_mod(clockwise ? DISP_BRI : DISP_DIM);
     } else if (MODS_CTRL) {
         tap_code16_no_mod(clockwise ? ZOOM_IN : ZOOM_OUT);
     } else if (MODS_ALT) {
         tap_code16_no_mod(clockwise ? ZOOM_IN_APP : ZOOM_OUT_APP);
-    } else if (aux) {
+    } else if (actn) {
         if (MODS_SFT) {
             tap_code16_no_mod(clockwise ? REDO : UNDO);
         } else {

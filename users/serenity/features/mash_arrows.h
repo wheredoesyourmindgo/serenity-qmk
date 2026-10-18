@@ -13,7 +13,7 @@
  * This covers an arrow held past the tapping term (so it became a modifier) when another
  * arrow is tapped: both arrows are typed, and only that cluster modifier is released.
  *
- * Skipped while Dual-Role Shift (magic_shift.c) holds Right Shift, since the cluster
+ * Skipped while Mod Row Shift (mod_row_shift.c) holds Right Shift, since the cluster
  * modifiers are then used on purpose.
  *
  * Call from `process_record_user` and return its result:

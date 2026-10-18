@@ -1,7 +1,7 @@
 // Copyright 2021 Google LLC.
 // SPDX-License-Identifier: Apache-2.0
 
-#include "magic_shift.h"
+#include "mod_row_shift.h"
 #include "serenity.h"
 
 // One side of the bottom row: its outer layer key and its Ctrl, Alt and GUI keys
@@ -64,7 +64,7 @@ static void process_mod_key(bottom_row_side_t *side, uint8_t mod, keyrecord_t *r
     }
 }
 
-bool process_magic_shift(uint16_t keycode, keyrecord_t *record) {
+bool process_mod_row_shift(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case MO(ACTN):
             return process_layer_key(&left, record);

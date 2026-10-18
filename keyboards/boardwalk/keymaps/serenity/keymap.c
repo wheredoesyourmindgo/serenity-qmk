@@ -2,17 +2,11 @@
 #include "serenity.h"
 
 // Two builds share this keymap, written for the full bottom row (LAYOUT_ortho_2x2u):
-//   serenity              HHKB-style case: the two bottom 1.5u corners are blocked, so they're
-//                         dropped (LAYOUT_ortho_hhkb), and with no room for the arrow cluster the
-//                         bottom-right keys are plain Hardware and mods
-//   serenity_full_bottom  open case: every key, with the arrow cluster like the other boards
-#ifdef SERENITY_FULL_BOTTOM_ROW
-#    define LAYOUT_serenity LAYOUT_ortho_2x2u
-#    define BR_HRDWR LT(HRDWR, KC_LEFT)
-#    define BR_RGUI RGUI_T(KC_DOWN)
-#    define BR_RALT RALT_T(KC_UP)
-#    define BR_RCTL RCTL_T(KC_RIGHT)
-#else
+//   serenity        open case: every key, with the arrow cluster like the other boards
+//   serenity_hhkb   HHKB-style case: the two bottom 1.5u corners are blocked, so they're dropped
+//                   (LAYOUT_ortho_hhkb), and with no room for the arrow cluster the bottom-right
+//                   keys are plain Hardware and mods
+#ifdef SERENITY_HHKB
 // clang-format off
 #    define LAYOUT_serenity( \
         k000, k001, k002, k003, k004, k005, k006, k007, k008, k009, k010, k011, k012, k013, \
@@ -32,6 +26,12 @@
 #    define BR_RGUI KC_RGUI
 #    define BR_RALT KC_RALT
 #    define BR_RCTL KC_RCTL // Blocked corner, dropped
+#else
+#    define LAYOUT_serenity LAYOUT_ortho_2x2u
+#    define BR_HRDWR LT(HRDWR, KC_LEFT)
+#    define BR_RGUI RGUI_T(KC_DOWN)
+#    define BR_RALT RALT_T(KC_UP)
+#    define BR_RCTL RCTL_T(KC_RIGHT)
 #endif
 
 // clang-format off

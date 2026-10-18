@@ -24,8 +24,6 @@ enum layers {
     BASE,
     QWRTY,  // Qwerty
     NUMNAV, // Num/Nav
-    BASE_L, // Base with left home-row mods (tap then hold Symbol)
-    BASE_R, // Base with right home-row mods (tap then hold Num/Nav)
     SYMBL,  // Symbol
     ACTN,   // Action
     HRDWR,  // Hardware

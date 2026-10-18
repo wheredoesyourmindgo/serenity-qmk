@@ -4,6 +4,7 @@
         ["boardsource/technik_o", "serenity"],
         ["boardsource/technik_o", "serenity_underglow"],
         ["boardwalk", "serenity"],
+        ["boardwalk", "serenity_full_bottom"],
         ["crkbd/rev1", "serenity"],
         ["dztech/dz60rgb_ansi", "serenity"],
         ["foostan/corneliuskbd/rev1", "serenity"],

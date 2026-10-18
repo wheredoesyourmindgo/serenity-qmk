@@ -97,7 +97,7 @@ To undo an update before committing, run `git submodule update modules/getreuer`
 
 If `modules/getreuer` is ever empty (e.g. after a plain `git clone`), run `git submodule update --init`.
 
-Custom Shift Keys is enabled by the `modules` entry in each keymap's `keymap.json`. Its key table is in `users/serenity/shift_keys.c` and its options are in `users/serenity/config.h`.
+Custom Shift Keys is enabled by the `modules` entry in each keymap's `keymap.json`. Its key table is in `users/serenity/shift_keys.c` and its options are set in `users/serenity/config.h`; they're documented in its [README](modules/getreuer/custom_shift_keys/README.md).
 
 ## Editing my own modules
 

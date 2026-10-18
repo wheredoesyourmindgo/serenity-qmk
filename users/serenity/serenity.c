@@ -8,8 +8,8 @@
 //   features/         self-contained features (one-shot mods, cmd-tab switcher, ...)
 #include "serenity.h"
 #include "instant_oneshot.h"
-#ifdef MAGIC_SHIFT_ENABLE
-#    include "features/magic_shift.h"
+#ifdef MOD_ROW_SHIFT_ENABLE
+#    include "features/mod_row_shift.h"
 #endif
 #include "features/cmd_tab_switcher.h"
 #include "features/symbol_rolls.h"
@@ -143,8 +143,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_layer_lock(keycode, record)) {
         return false;
     }
-#ifdef MAGIC_SHIFT_ENABLE
-    if (!process_magic_shift(keycode, record)) {
+#ifdef MOD_ROW_SHIFT_ENABLE
+    if (!process_mod_row_shift(keycode, record)) {
         return false;
     }
 #endif

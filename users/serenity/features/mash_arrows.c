@@ -15,7 +15,7 @@ static const struct {
 };
 
 bool process_mash_arrows(uint16_t keycode, keyrecord_t* record) {
-    // Only arrow taps, and not while Dual-Role Shift is held (cluster modifiers are deliberate then)
+    // Only arrow taps, and not while Mod Row Shift is held (cluster modifiers are deliberate then)
     if (!is_arrow_cluster_key(keycode) || !record->event.pressed || record->tap.count == 0 || MODS_RSFT) {
         return true;
     }

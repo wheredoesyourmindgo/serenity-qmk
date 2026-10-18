@@ -19,6 +19,17 @@ static void screenshot_window(uint16_t shortcut) {
 
 bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case DOT_LP: // Num/Nav: tap for a decimal point, hold for a thousands separator
+            // Shift is ignored, so this key never types > or <
+            if (record->event.pressed) {
+                const uint8_t shift = get_mods() & MOD_MASK_SHIFT;
+                del_mods(shift);
+                tap_code16(record->tap.count > 0 ? KC_DOT : KC_COMM);
+                add_mods(shift);
+                send_keyboard_report();
+            }
+            return false;
+
         // Window management (Rectangle)
         case WNDW_MAX_LP:
             return tap_or_hold(record, WNDW_MAX, WNDW_RSTR);

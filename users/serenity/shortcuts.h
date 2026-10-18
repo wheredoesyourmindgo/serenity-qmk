@@ -74,10 +74,8 @@
 #define WNDW_PRV_SPC HYPR(KC_LEFT)               // Previous Space
 #define WNDW_NXT_SPC HYPR(KC_RIGHT)              // Next Space
 
-// Tap / long-press keys, handled in long_press.c
-#define QUOT_LP LT(0, KC_QUOT)
-#define DOT_LP LT(0, KC_DOT)
-// The long press on these sends a non-basic keycode, so process_tap_or_long_press_key() can't be used.
+// Tap / long-press keys, handled in long_press.c. Tap and long press each send a shortcut, so the
+// key inside LT(0, ...) is only a placeholder that keeps each keycode distinct.
 // See https://getreuer.info/posts/keyboards/triggers/index.html#tap-vs.-long-press
 #define OS_SCRN_SHT_LP LT(0, KC_A)
 #define OS_SCRN_SHT_SLCT_LP LT(0, KC_B)

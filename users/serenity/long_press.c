@@ -19,11 +19,6 @@ static void screenshot_window(uint16_t shortcut) {
 
 bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case QUOT_LP:
-            return process_tap_or_long_press_key(record, KC_DOUBLE_QUOTE);
-        case DOT_LP:
-            return process_tap_or_long_press_key(record, KC_COMM);
-
         // Window management (Rectangle)
         case WNDW_MAX_LP:
             return tap_or_hold(record, WNDW_MAX, WNDW_RSTR);

@@ -14,18 +14,6 @@ bool is_arrow_cluster_key(uint16_t keycode) {
     }
 }
 
-// Helper for implementing tap vs. long-press keys. Given a tap-hold
-// key event, replaces the hold function with `long_press_keycode`.
-bool process_tap_or_long_press_key(keyrecord_t *record, uint16_t long_press_keycode) {
-    if (record->tap.count == 0) { // Key is being held.
-        if (record->event.pressed) {
-            tap_code16(long_press_keycode);
-        }
-        return false; // Skip default handling.
-    }
-    return true; // Continue default handling.
-}
-
 // True when both Shift and GUI are held or one-shot
 bool check_mods_sft_and_gui(void) {
     uint8_t mods         = get_mods();

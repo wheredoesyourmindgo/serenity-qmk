@@ -40,12 +40,6 @@ bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        // Spaces: tap to switch, hold to tile the window into split view
-        case OS_PRV_SPC_LP:
-            return tap_or_hold(record, OS_PRV_SPC, OS_TL_WNDW_L);
-        case OS_NXT_SPC_LP:
-            return tap_or_hold(record, OS_NXT_SPC, OS_TL_WNDW_R);
-
         // Screenshots: tap saves to file, hold copies to clipboard
         case OS_SCRN_SHT_LP:
             return tap_or_hold(record, OS_SCRN_SHT, OS_SCRN_SHT_CLP);

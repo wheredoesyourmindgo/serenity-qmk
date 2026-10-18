@@ -69,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [OS] = LAYOUT_ortho_2x2u(
         KC_NO,   KC_NO,          KC_NO,               KC_NO,               KC_NO,           KC_NO,  KC_NO,        KC_NO,  KC_NO,           KC_NO,      KC_NO,       KC_NO,       KC_NO,      KC_DEL,
         KC_TAB,  OS_CLOSE,       OS_MIN,              OS_FLLSCRN,          KC_NO,           KC_NO,  KC_NO,        KC_NO,  OS_SPTLGHT_FNDR, OS_SPTLGHT, OS_LNCHPD,   OS_SIRI,     OS_SDBR,    OS_BSPC,
-        KC_ESC,  OS_DSKTP,       OS_PRV_SPC_LP,       OS_NXT_SPC_LP,       OS_MSN_CNTRL,    KC_NO,  KC_NO,        KC_NO,  OS_DOCK,         OS_EXPOSE,  CMD_TAB_PRV, CMD_TAB_NXT, OS_PRV_APP, KC_SCLN,
+        KC_ESC,  OS_DSKTP,       OS_PRV_SPC,          OS_NXT_SPC,          OS_MSN_CNTRL,    KC_NO,  KC_NO,        KC_NO,  OS_DOCK,         OS_EXPOSE,  CMD_TAB_PRV, CMD_TAB_NXT, OS_PRV_APP, KC_SCLN,
         KC_LSFT, OS_SCRN_SHT_LP, OS_SCRN_SHT_WNDW_LP, OS_SCRN_SHT_SLCT_LP, OS_SCRN_SHT_OPT, KC_NO,  KC_NO,        KC_NO,  KC_NO,           KC_NO,      LGUI(KC_Q),  LGUI(KC_H),  KC_NO,      KC_ENT,
         KC_LCTL, KC_LALT,        KC_LGUI,             KC_NO,               KC_NO,           KC_SPC,               KC_SPC,                  KC_NO,      KC_NO,       KC_RGUI,     KC_RALT,    KC_RCTL
     ),

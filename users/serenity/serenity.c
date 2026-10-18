@@ -49,19 +49,28 @@ static bool escape_cancels_something(void) {
     return false;
 }
 
-// Wiggle the mouse pointer in a small zig-zag so macOS enlarges it
-static void shake_mouse(void) {
-    const int distance = 4;
-    register_code16(MS_ACL1);
-    for (int i = 0; i < distance; ++i) tap_code(MS_LEFT);
-    for (int u = 0; u < 6; ++u) {
-        for (int i = 0; i < distance; ++i) { tap_code(MS_RGHT); tap_code(MS_UP); }
-        for (int i = 0; i < distance; ++i) { tap_code(MS_RGHT); tap_code(MS_DOWN); }
-        for (int i = 0; i < distance; ++i) { tap_code(MS_LEFT); tap_code(MS_DOWN); }
-        for (int i = 0; i < distance; ++i) { tap_code(MS_LEFT); tap_code(MS_UP); }
+// Shake the pointer left and right so macOS's "Shake mouse pointer to locate" enlarges it.
+// Runs from matrix_scan_user() so the keyboard keeps working while it shakes.
+#define SHAKE_SWINGS 8           // Even, so the pointer ends about where it started
+#define SHAKE_REPORTS_PER_SWING 3
+#define SHAKE_INTERVAL_MS 10
+#define SHAKE_DELTA 80
+
+static uint8_t  shake_reports_left = 0;
+static uint16_t shake_timer;
+
+static void shake_mouse_scan(void) {
+    if (shake_reports_left == 0 || timer_elapsed(shake_timer) < SHAKE_INTERVAL_MS) {
+        return;
     }
-    for (int i = 0; i < distance; ++i) tap_code(MS_RGHT);
-    unregister_code16(MS_ACL1);
+    shake_timer = timer_read();
+    shake_reports_left--;
+    uint8_t swing = shake_reports_left / SHAKE_REPORTS_PER_SWING;
+    // Keep any held mouse buttons in the report
+    report_mouse_t report = mousekey_get_report();
+    report.x              = (swing % 2) ? SHAKE_DELTA : -SHAKE_DELTA;
+    report.y              = 0;
+    host_mouse_send(&report);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -141,7 +150,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case SHAKE_MOUSE:
             if (record->event.pressed) {
-                shake_mouse();
+                shake_reports_left = SHAKE_SWINGS * SHAKE_REPORTS_PER_SWING;
+                shake_timer        = timer_read();
             }
             break;
         case KC_ESC:
@@ -193,4 +203,5 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 void matrix_scan_user(void) {
     cmd_tab_switcher_matrix_scan_user();
+    shake_mouse_scan();
 }

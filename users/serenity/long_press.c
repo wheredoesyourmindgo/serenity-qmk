@@ -56,20 +56,6 @@ bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
                 screenshot_window(record->tap.count > 0 ? OS_SCRN_SHT_SLCT : OS_SCRN_SHT_CLP_SLCT);
             }
             return false;
-
-        // Select the current word (tap) or line (hold)
-        case TGL_SELECT_LP:
-            if (record->event.pressed) {
-                tap_code(KC_RIGHT); // Fixes selection when the cursor is at the start of a word/line
-                if (record->tap.count > 0) {
-                    tap_code16(LALT(KC_LEFT));
-                    tap_code16(LALT(LSFT(KC_RGHT)));
-                } else {
-                    tap_code16(LGUI(KC_LEFT));
-                    tap_code16(LGUI(LSFT(KC_RGHT)));
-                }
-            }
-            return false;
     }
     return true;
 }

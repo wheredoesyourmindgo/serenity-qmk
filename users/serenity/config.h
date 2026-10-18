@@ -39,6 +39,9 @@
 // Apply on every layer except QWRTY (layer 1), so Shift+Backspace stays standard on QWERTY
 #define CUSTOM_SHIFT_KEYS_LAYER_MASK (~(1 << 1))
 
+// Select Word (getreuer/select_word community module): send macOS word and line selection hotkeys
+#define SELECT_WORD_OS_MAC
+
 // #define LEADER_PER_KEY_TIMING
 // #define LEADER_TIMEOUT 250
 

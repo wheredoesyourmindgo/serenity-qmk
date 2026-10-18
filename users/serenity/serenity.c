@@ -10,7 +10,6 @@
 #include "instant_oneshot.h"
 #include "features/magic_shift.h"
 #include "features/cmd_tab_switcher.h"
-#include "features/symbol_rolls.h"
 #include "features/mash_arrows.h"
 #include "features/mo_ext.h"
 #include "process_layer_lock.h" // QMK core Layer Lock (QK_LLCK)
@@ -88,9 +87,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
     if (!process_cmd_tab_switcher(keycode, record)) {
-        return false;
-    }
-    if (!process_symbol_rolls(keycode, record, SYMBL)) {
         return false;
     }
     if (IS_LAYER_ON(BASE) && !process_mash_arrows(keycode, record)) {

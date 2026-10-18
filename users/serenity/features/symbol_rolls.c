@@ -7,7 +7,9 @@ bool process_symbol_rolls(uint16_t keycode, keyrecord_t* record, uint8_t sym_lay
     if (!record->event.pressed) { return true; }
     if (!IS_LAYER_ON(sym_layer)) { return true; }
 
-    // Immediately un-register (shift) mods (don't wait for keypress release). This will specifically prevent shifted symbols from happening during fast rolls on low(symbol) layer for keys that require a shift press followed by a key that doesn't, eg. /, \, [, and ].
+    // Tap these shifted symbols on press instead of holding them until release. Each shares a key
+    // with an unshifted symbol (eg. { and [), so in a fast roll the second press would otherwise be
+    // lost while the first is still held.
     switch (keycode) {
         case KC_TILDE:              // ~
         case KC_LT:                 // <
@@ -17,9 +19,11 @@ bool process_symbol_rolls(uint16_t keycode, keyrecord_t* record, uint8_t sym_lay
         case KC_QUESTION:           // ?
         case KC_PIPE:               // |
             tap_code16(keycode);
-            uint8_t mod_state;
-            mod_state = get_mods();
-            unregister_mods(mod_state);
+            // Skipping QMK's handling also skips using up a one-shot mod, so do it here. Held mods stay held.
+            if (get_oneshot_mods()) {
+                clear_oneshot_mods();
+                send_keyboard_report();
+            }
             return false;
     }
 

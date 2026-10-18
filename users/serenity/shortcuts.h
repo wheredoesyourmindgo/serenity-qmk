@@ -56,8 +56,6 @@
 #define OS_LNCHPD HYPR(KC_L)        // Launchpad
 #define OS_SDBR HYPR(KC_N)          // Sidebar
 #define OS_DRKMD_TGL HYPR(KC_D)     // Toggle Dark Mode via AppleScript
-#define OS_TL_WNDW_L HYPR(KC_LBRC)  // Tile Window Left (split screen)
-#define OS_TL_WNDW_R HYPR(KC_RBRC)  // Tile Window Right (split screen)
 
 // Window Management (Rectangle)
 #define WNDW_LFT_HLF LCTL(LALT(LGUI(KC_LEFT)))   // Left half
@@ -80,8 +78,6 @@
 #define DOT_LP LT(0, KC_DOT)
 // The long press on these sends a non-basic keycode, so process_tap_or_long_press_key() can't be used.
 // See https://getreuer.info/posts/keyboards/triggers/index.html#tap-vs.-long-press
-#define OS_PRV_SPC_LP LT(0, KC_7)
-#define OS_NXT_SPC_LP LT(0, KC_8)
 #define OS_SCRN_SHT_LP LT(0, KC_A)
 #define OS_SCRN_SHT_SLCT_LP LT(0, KC_B)
 #define OS_SCRN_SHT_WNDW_LP LT(0, KC_C)

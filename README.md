@@ -38,14 +38,19 @@ The website uses friendlier names for some layers than the code does:
 ## One-time setup
 
 ```sh
+brew install uv
+curl -fsSL https://install.qmk.fm | sh -s -- --skip-uv   # QMK CLI (via uv), compilers, and flashing tools
 git clone --recurse-submodules https://github.com/wheredoesyourmindgo/serenity-qmk.git ~/Development/serenity-qmk
 git clone https://github.com/qmk/qmk_firmware.git ~/Development/qmk_firmware
 cd ~/Development/qmk_firmware && make git-submodule
 qmk config user.qmk_home="$HOME/Development/qmk_firmware"
 qmk config user.overlay_dir="$HOME/Development/serenity-qmk"
 ~/Development/serenity-qmk/scripts/link_foostan.sh   # makes the Cornelius buildable (see below)
-brew install avrdude dfu-util   # flashing tools (dfu-programmer is also needed)
 ```
+
+`--skip-uv` keeps the installer from adding its own copy of `uv` alongside Homebrew's. The installer puts the compilers and flashing tools (avrdude, dfu-util, dfu-programmer, …) in `~/Library/Application Support/qmk`, so they don't need to be installed with Homebrew; `qmk` adds that folder to its PATH when it runs.
+
+The installer deletes and recreates that folder, and on macOS the QMK CLI keeps its settings (`qmk.ini`) there too. Re-running it (for example to update the compilers) erases `qmk_home` and `overlay_dir`, and `qmk` drops back to only `config`, `clone`, `console`, `env`, and `setup`. Run the two `qmk config` lines again afterwards.
 
 ## Everyday use
 

@@ -29,7 +29,7 @@ The website uses friendlier names for some layers than the code does:
 | `users/serenity/` | Shared layers, custom keycodes and features used by every keyboard |
 | `keyboards/<kb>/keymaps/serenity/` | Per-keyboard layout (calls into the shared userspace) |
 | `modules/getreuer/` | [Getreuer's community modules](https://github.com/getreuer/qmk-modules) (git submodule); `custom_shift_keys` and `select_word` are used |
-| `modules/wheredoesyourmindgo/` | My own community modules, [wheredoesyourmindgo/qmk-modules](https://github.com/wheredoesyourmindgo/qmk-modules) (git submodule); `instant_oneshot` provides the one-shot mod keys (`IO_LSFT` etc.) |
+| `modules/wheredoesyourmindgo/` | My own community modules, [wheredoesyourmindgo/qmk-modules](https://github.com/wheredoesyourmindgo/qmk-modules) (git submodule); `stackable_oneshot` provides the one-shot mod keys (`SOSM_LS` etc.) |
 | `vendor/foostan/corneliuskbd/` | foostan's Cornelius rev1/rev2 keyboard definitions (copied from [foostan/kbd_firmware](https://github.com/foostan/kbd_firmware); see [Cornelius](#cornelius)) |
 | `scripts/format_keymaps.py` | Aligns each `LAYOUT(...)` into a split grid (`--check` to verify) |
 | `scripts/update_foostan.sh`, `scripts/link_foostan.sh` | Refresh the Cornelius definitions; link them into the QMK clone |
@@ -122,7 +122,7 @@ git -C modules/wheredoesyourmindgo commit -am "..." && git -C modules/wheredoesy
 git commit -am "Update wheredoesyourmindgo modules" && git push
 ```
 
-Instant One-Shot is enabled by the `modules` entry in each keymap's `keymap.json`; its options are documented in its [README](modules/wheredoesyourmindgo/instant_oneshot/README.md).
+Stackable One-Shot is enabled by the `modules` entry in each keymap's `keymap.json`; its options are documented in its [README](modules/wheredoesyourmindgo/stackable_oneshot/README.md).
 
 ## Cornelius
 

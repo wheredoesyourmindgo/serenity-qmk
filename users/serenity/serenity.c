@@ -7,7 +7,7 @@
 //   rotary_encoder.c  rotary encoder
 //   features/         self-contained features (one-shot mods, cmd-tab switcher, ...)
 #include "serenity.h"
-#include "instant_oneshot.h"
+#include "stackable_oneshot.h"
 #ifdef MOD_ROW_SHIFT_ENABLE
 #    include "features/mod_row_shift.h"
 #endif
@@ -41,7 +41,7 @@ bool caps_word_press_user(uint16_t keycode) {
 
 // Escape first cancels one-shot mods, then a locked layer. Returns true if it cancelled something.
 static bool escape_cancels_something(void) {
-    if (instant_oneshot_cancel()) {
+    if (stackable_oneshot_cancel()) {
         return true;
     }
     const uint8_t layer = get_highest_layer(layer_state);
@@ -189,7 +189,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else {
                     tap_code(KC_MUTE);
                 }
-                instant_oneshot_cancel(); // A tapped one-shot applies to this press only
+                stackable_oneshot_cancel(); // A tapped one-shot applies to this press only
             }
             return false;
         case SHAKE_MOUSE:
@@ -228,7 +228,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         case HRDWR:
             break; // Keep them (ACTN and HRDWR need them for function keys)
         default:
-            instant_oneshot_cancel();
+            stackable_oneshot_cancel();
             break;
     }
 

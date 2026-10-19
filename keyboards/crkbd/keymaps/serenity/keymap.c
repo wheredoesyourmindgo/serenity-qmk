@@ -17,25 +17,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [NUMNAV] = LAYOUT_split_3x6_3(
         KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,           KC_6,    KC_7,      KC_8,    KC_9,    KC_0,    KC_BSPC,
-        KC_ESC,  IO_LCTL, IO_LALT, IO_LGUI, IO_LSFT, QK_LLCK,        SELWORD, KC_LEFT,   KC_DOWN, KC_UP,   KC_RGHT, DOT_LP,
+        KC_ESC,  SOSM_LC, SOSM_LA, SOSM_LG, SOSM_LS, QK_LLCK,        SELWORD, KC_LEFT,   KC_DOWN, KC_UP,   KC_RGHT, DOT_LP,
         KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,           KC_CAPS, KC_HOME,   KC_PGDN, KC_PGUP, KC_END,  KC_ENT,
                                    KC_NO,   KC_NO,   KC_SPC,         KC_SPC,  MO(SYMBL), KC_NO
     ),
     [SYMBL] = LAYOUT_split_3x6_3(
         KC_TAB,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,     KC_PERC,        KC_CIRC, KC_AMPR,  KC_ASTR, KC_LPRN, KC_RPRN, KC_BSPC,
-        KC_ESC,  KC_LBRC, KC_RBRC, KC_EQL,  KC_SLSH,    KC_BSLS,        QK_LLCK, IO_LSFT,  IO_LGUI, IO_LALT, IO_LCTL, KC_SCLN,
+        KC_ESC,  KC_LBRC, KC_RBRC, KC_EQL,  KC_SLSH,    KC_BSLS,        QK_LLCK, SOSM_LS,  SOSM_LG, SOSM_LA, SOSM_LC, KC_SCLN,
         KC_LSFT, KC_LCBR, KC_RCBR, KC_PLUS, KC_QUES,    KC_PIPE,        KC_COLN, KC_TILDE, KC_GRV,  KC_LABK, KC_RABK, KC_ENT,
                                    KC_NO,   MO(NUMNAV), KC_SPC,         KC_SPC,  KC_NO,    KC_NO
     ),
     [ACTN] = LAYOUT_split_3x6_3(
         KC_TAB,  KC_PSCR, KC_SCRL, KC_PAUS, KC_INS,     KC_APP,         WNDW_MAX_LP,     OS_PRV_TAB,   OS_PRV_APP_WNDW, OS_NXT_APP_WNDW, OS_NXT_TAB,   KC_BSPC,
-        KC_ESC,  IO_LCTL, IO_LALT, IO_LGUI, IO_LSFT,    QK_LLCK,        WNDW_CNTR_LP,    WNDW_LFT_LP,  WNDW_SMLLR,      WNDW_LRGR,       WNDW_RGHT_LP, KC_SCLN,
+        KC_ESC,  SOSM_LC, SOSM_LA, SOSM_LG, SOSM_LS,    QK_LLCK,        WNDW_CNTR_LP,    WNDW_LFT_LP,  WNDW_SMLLR,      WNDW_LRGR,       WNDW_RGHT_LP, KC_SCLN,
         KC_LSFT, KC_NO,   KC_NO,   KC_NO,   KC_NO,      KC_NO,          WNDW_VRT_MAX_LP, WNDW_PRV_SPC, KC_NO,           KC_NO,           WNDW_NXT_SPC, KC_ENT,
                                    KC_NO,   MO(NUMNAV), KC_SPC,         KC_SPC,          MO(SYMBL),    MO(HRDWR)
     ),
     [HRDWR] = LAYOUT_split_3x6_3(
         KC_TAB,  KC_NO, DISP_DIM, DISP_BRI, OS_DRKMD_TGL, UG_SPDU,        UG_NEXT, UG_TOGG,   UG_HUEU, UG_SATU, UG_VALU, KC_BSPC,
-        KC_ESC,  KC_NO, KC_VOLD,  KC_VOLU,  KC_MUTE,      KC_NO,          QK_LLCK, IO_LSFT,   IO_LGUI, IO_LALT, IO_LCTL, KC_SCLN,
+        KC_ESC,  KC_NO, KC_VOLD,  KC_VOLU,  KC_MUTE,      KC_NO,          QK_LLCK, SOSM_LS,   SOSM_LG, SOSM_LA, SOSM_LC, KC_SCLN,
         KC_LSFT, KC_NO, KC_MRWD,  KC_MFFD,  KC_MPLY,      KC_NO,          TGL_LYT, KC_NO,     DB_TOGG, EE_CLR,  QK_BOOT, KC_ENT,
                                   MO(ACTN), MO(NUMNAV),   KC_SPC,         KC_SPC,  MO(SYMBL), KC_NO
     ),
@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [MOUSE] = LAYOUT_split_3x6_3(
         KC_TAB,  KC_NO,   MS_ACL0, MS_ACL1, MS_ACL2, KC_NO,          KC_NO,       OS_BACK, MS_BTN3, KC_NO,   OS_FWD,  KC_BSPC,
-        KC_ESC,  IO_LCTL, IO_LALT, IO_LGUI, IO_LSFT, QK_LLCK,        QK_LOCK,     MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_SCLN,
+        KC_ESC,  SOSM_LC, SOSM_LA, SOSM_LG, SOSM_LS, QK_LLCK,        QK_LOCK,     MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_SCLN,
         KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,           SHAKE_MOUSE, MS_WHLR, MS_WHLU, MS_WHLD, MS_WHLL, KC_ENT,
                                    KC_NO,   KC_NO,   KC_SPC,         KC_SPC,      MS_BTN1, MS_BTN2
     ),

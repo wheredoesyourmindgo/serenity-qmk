@@ -9,6 +9,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case EE_CLR_LP:
         case QK_BOOT_LP:
         case UG_TOGG_LP:
+        case TGL_LYT_LP:
             return 800;
         default:
             return TAPPING_TERM;

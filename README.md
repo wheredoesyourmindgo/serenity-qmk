@@ -13,7 +13,7 @@ The website uses friendlier names for some layers than the code does:
 | Code (`serenity.h`) | Website | Reached by |
 |---|---|---|
 | `BASE` | Base | default |
-| `QWRTY` | Qwerty | `TGL_LYT` on Hardware, or build with `-e QWERTY_BASE=yes` |
+| `QWRTY` | Qwerty | hold `TGL_LYT_LP` on Hardware, or build with `-e QWERTY_BASE=yes` |
 | `NUMNAV` | Num/Nav | left thumb, beside Space |
 | `SYMBL` | Symbol | right thumb, beside Space |
 | `ACTN` | Action | left, beside Num/Nav |

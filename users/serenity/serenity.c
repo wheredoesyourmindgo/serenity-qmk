@@ -164,11 +164,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
-        case TGL_LYT: // Switch the default layer between Serenity and QWERTY (resets on unplug)
-            if (record->event.pressed) {
-                set_single_default_layer(get_highest_layer(default_layer_state) == BASE ? QWRTY : BASE);
-            }
-            return false;
         case LSFT(LGUI(KC_BSPC)):
             if (record->event.pressed) {
                 tap_code16(LCTL(KC_K)); // Delete to end of line

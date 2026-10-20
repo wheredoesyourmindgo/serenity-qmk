@@ -46,9 +46,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    KC_NO,   KC_NO,   KC_SPC,        KC_SPC, KC_NO,   KC_NO
     ),
     [OS] = LAYOUT_split_3x6_3(
-        KC_TAB,  OS_FRC_QUIT,    OS_CLOSE,            OS_MIN,              OS_FLLSCRN,      OS_LOCK_SCRN,  KC_NO,           OS_SPTLGHT_LP, OS_LNCHPD,   OS_SIRI,     OS_SDBR,        KC_BSPC,
-        KC_ESC,  OS_DSKTP,       OS_PRV_SPC,          OS_NXT_SPC,          OS_MSN_CNTRL,    OS_STG_MNGR,   OS_DOCK,         OS_EXPOSE,     CMD_TAB_PRV, CMD_TAB_NXT, OS_PRV_APP,     KC_SCLN,
-        KC_LSFT, OS_SCRN_SHT_LP, OS_SCRN_SHT_WNDW_LP, OS_SCRN_SHT_SLCT_LP, OS_SCRN_SHT_OPT, OS_STOP_REC,   KC_NO,           KC_NO,         LGUI(KC_Q),  LGUI(KC_H),  OS_HIDE_OTHERS, KC_ENT,
+        KC_TAB,  OS_LOCK_SCRN,   OS_CLOSE,            OS_MIN,              OS_FLLSCRN,      KC_NO,         KC_NO,           OS_HIDE_OTHERS, LGUI(KC_H),  LGUI(KC_Q),  OS_FRC_QUIT,    KC_BSPC,
+        KC_ESC,  OS_DSKTP,       OS_PRV_SPC,          OS_NXT_SPC,          OS_MSN_CNTRL,    OS_STG_MNGR,   OS_DOCK,         OS_EXPOSE,      CMD_TAB_PRV, CMD_TAB_NXT, OS_PRV_APP,     KC_SCLN,
+        KC_LSFT, OS_SCRN_SHT_LP, OS_SCRN_SHT_WNDW_LP, OS_SCRN_SHT_SLCT_LP, OS_SCRN_SHT_OPT, OS_STOP_REC,   KC_NO,           OS_SPTLGHT_LP,  OS_LNCHPD,   OS_SIRI,     OS_SDBR,        KC_ENT,
                                                       KC_NO,               KC_NO,           KC_SPC,        KC_SPC,          KC_NO,         KC_NO
     ),
     [MOUSE] = LAYOUT_split_3x6_3(

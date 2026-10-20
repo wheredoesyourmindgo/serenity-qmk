@@ -87,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [OS] = LAYOUT_serenity(
         KC_LCTL, KC_NO,          KC_NO,               KC_NO,               KC_NO,           KC_NO,        KC_NO,        KC_NO,  KC_NO,           KC_NO,         KC_NO,       KC_NO,       KC_NO,          KC_RCTL,
-        KC_TAB,  OS_LOCK_SCRN,   OS_CLOSE,            OS_MIN,              OS_FLLSCRN,      KC_NO,        KC_NO,        KC_NO,  KC_NO,           OS_HIDE_OTHERS, LGUI(KC_H),  LGUI(KC_Q),  OS_FRC_QUIT,    KC_BSPC,
+        KC_TAB,  OS_LOCK_SCRN,   OS_CLOSE,            OS_MIN,              OS_FLLSCRN,      KC_NO,        KC_NO,        KC_NO,  OS_SHOW_ALL,     OS_HIDE_OTHERS, LGUI(KC_H),  LGUI(KC_Q),  OS_FRC_QUIT,    KC_BSPC,
         KC_ESC,  OS_DSKTP,       OS_PRV_SPC,          OS_NXT_SPC,          OS_MSN_CNTRL,    OS_STG_MNGR,  KC_NO,        KC_NO,  OS_DOCK,         OS_EXPOSE,      CMD_TAB_PRV, CMD_TAB_NXT, OS_PRV_APP,     KC_SCLN,
         KC_LSFT, OS_SCRN_SHT_LP, OS_SCRN_SHT_WNDW_LP, OS_SCRN_SHT_SLCT_LP, OS_SCRN_SHT_OPT, OS_STOP_REC,  KC_NO,        KC_NO,  KC_NO,           OS_SPTLGHT_LP,  OS_LNCHPD,   OS_SIRI,     OS_SDBR,        KC_ENT,
         KC_LCTL, KC_LALT,        KC_LGUI,             KC_NO,               KC_NO,           KC_SPC,                     KC_SPC,                  KC_NO,         KC_NO,       KC_RGUI,     KC_RALT,        KC_RCTL

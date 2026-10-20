@@ -174,6 +174,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(LCTL(KC_K)); // Delete to end of line
             }
             break;
+        case NUM_DOT: // Num/Nav dot. Shifted, the Custom Shift Keys module sends a comma instead
+            if (record->event.pressed) {
+                register_code(KC_DOT);
+            } else {
+                unregister_code(KC_DOT);
+            }
+            return false;
         case ENC_BTN: // Encoder push button
             if (record->event.pressed) {
                 // Held or tapped one-shot mods pick the action

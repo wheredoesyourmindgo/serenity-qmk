@@ -79,7 +79,6 @@
 // Tap / long-press keys, handled in long_press.c. Tap and long press each send a shortcut, so the
 // key inside LT(0, ...) is only a placeholder that keeps each keycode distinct.
 // See https://getreuer.info/posts/keyboards/triggers/index.html#tap-vs.-long-press
-#define DOT_LP LT(0, KC_DOT)
 #define OS_SCRN_SHT_LP LT(0, KC_A)
 #define OS_SCRN_SHT_SLCT_LP LT(0, KC_B)
 #define OS_SCRN_SHT_WNDW_LP LT(0, KC_C)

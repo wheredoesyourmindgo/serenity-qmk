@@ -38,6 +38,7 @@ enum custom_keycodes {
     CMD_TAB_NXT,
     ENC_BTN,
     SHAKE_MOUSE,
+    NUM_DOT, // Num/Nav dot: Shift turns it into a comma (shift_keys.c)
 };
 
 // helpers.c

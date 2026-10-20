@@ -34,9 +34,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LALT, KC_LGUI, KC_NO,   MO(NUMNAV), KC_SPC,         KC_SPC,          MO(SYMBL),    MO(HRDWR),       SOSM_RG,         SOSM_RA,      SOSM_RC
     ),
     [HRDWR] = LAYOUT_ortho_4x12(
-        KC_TAB,  KC_NO,       DISP_DIM, DISP_BRI, OS_DRKMD_TGL, UG_SPDU,        UG_NEXT, UG_TOGG,   UG_HUEU,    UG_SATU,   UG_VALU,    KC_BSPC,
-        KC_ESC,  OS_MIC_MUTE, KC_VOLD,  KC_VOLU,  KC_MUTE,      OS_DND,         QK_LLCK, SOSM_LS,   SOSM_LG,    SOSM_LA,   SOSM_LC,    KC_SCLN,
-        KC_LSFT, KC_NO,       KC_MRWD,  KC_MFFD,  KC_MPLY,      KC_NO,          TGL_LYT, KC_NO,     DB_TOGG_LP, EE_CLR_LP, QK_BOOT_LP, KC_ENT,
+        KC_TAB,  KC_NO,       DISP_DIM, DISP_BRI, OS_DRKMD_TGL, KC_NO,          UG_SPDU, UG_NEXT,    UG_HUEU,    UG_SATU,   UG_VALU,    KC_BSPC,
+        KC_ESC,  OS_MIC_MUTE, KC_VOLD,  KC_VOLU,  KC_MUTE,      OS_DND,         QK_LLCK, SOSM_LS,    SOSM_LG,    SOSM_LA,   SOSM_LC,    KC_SCLN,
+        KC_LSFT, KC_NO,       KC_MRWD,  KC_MFFD,  KC_MPLY,      KC_NO,          TGL_LYT, UG_TOGG_LP, DB_TOGG_LP, EE_CLR_LP, QK_BOOT_LP, KC_ENT,
         SOSM_LC, SOSM_LA,     SOSM_LG,  MO(ACTN), MO(NUMNAV),   KC_SPC,         KC_SPC,  MO(SYMBL), KC_NO,      KC_RGUI,   KC_RALT,    KC_RCTL
     ),
     [FUNC] = LAYOUT_ortho_4x12(

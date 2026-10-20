@@ -51,7 +51,7 @@ bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        // Keyboard settings: hold-only, doing what DB_TOGG, EE_CLR and QK_BOOT do
+        // Keyboard settings: hold-only, doing what DB_TOGG, EE_CLR, QK_BOOT and UG_TOGG do
         case DB_TOGG_LP:
             if (is_hold_press(record)) {
                 debug_enable ^= 1;
@@ -66,6 +66,16 @@ bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
         case QK_BOOT_LP:
             if (is_hold_press(record)) {
                 reset_keyboard();
+            }
+            return false;
+        case UG_TOGG_LP: // UG_TOGG can't be tapped from code, so toggle the lights directly
+            if (is_hold_press(record)) {
+#if defined(RGBLIGHT_ENABLE)
+                rgblight_toggle();
+#endif
+#if defined(RGB_MATRIX_ENABLE)
+                rgb_matrix_toggle();
+#endif
             }
             return false;
     }

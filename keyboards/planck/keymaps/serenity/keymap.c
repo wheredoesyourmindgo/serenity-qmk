@@ -34,22 +34,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LALT, KC_LGUI, KC_NO,   MO(NUMNAV), KC_SPC,         KC_SPC,          MO(SYMBL),    MO(HRDWR),       SOSM_RG,         SOSM_RA,      SOSM_RC
     ),
     [HRDWR] = LAYOUT_ortho_4x12(
-        KC_TAB,  KC_NO,   DISP_DIM, DISP_BRI, OS_DRKMD_TGL, UG_SPDU,        UG_NEXT, UG_TOGG,   UG_HUEU, UG_SATU, UG_VALU, KC_BSPC,
-        KC_ESC,  KC_NO,   KC_VOLD,  KC_VOLU,  KC_MUTE,      KC_NO,          QK_LLCK, SOSM_LS,   SOSM_LG, SOSM_LA, SOSM_LC, KC_SCLN,
-        KC_LSFT, KC_NO,   KC_MRWD,  KC_MFFD,  KC_MPLY,      KC_NO,          TGL_LYT, KC_NO,     DB_TOGG, EE_CLR,  QK_BOOT, KC_ENT,
-        SOSM_LC, SOSM_LA, SOSM_LG,  MO(ACTN), MO(NUMNAV),   KC_SPC,         KC_SPC,  MO(SYMBL), KC_NO,   KC_RGUI, KC_RALT, KC_RCTL
+        KC_TAB,  KC_NO,       DISP_DIM, DISP_BRI, OS_DRKMD_TGL, UG_SPDU,        UG_NEXT, UG_TOGG,   UG_HUEU,    UG_SATU,   UG_VALU,    KC_BSPC,
+        KC_ESC,  OS_MIC_MUTE, KC_VOLD,  KC_VOLU,  KC_MUTE,      OS_DND,         QK_LLCK, SOSM_LS,   SOSM_LG,    SOSM_LA,   SOSM_LC,    KC_SCLN,
+        KC_LSFT, KC_NO,       KC_MRWD,  KC_MFFD,  KC_MPLY,      KC_NO,          TGL_LYT, KC_NO,     DB_TOGG_LP, EE_CLR_LP, QK_BOOT_LP, KC_ENT,
+        SOSM_LC, SOSM_LA,     SOSM_LG,  MO(ACTN), MO(NUMNAV),   KC_SPC,         KC_SPC,  MO(SYMBL), KC_NO,      KC_RGUI,   KC_RALT,    KC_RCTL
     ),
     [FUNC] = LAYOUT_ortho_4x12(
-        KC_TAB,  KC_F1,   KC_F2,   KC_F3,  KC_F4,  KC_F5,         KC_F6,  KC_F7,  KC_F8,  KC_F9,   KC_F10,  KC_BSPC,
-        KC_ESC,  KC_F11,  KC_F12,  KC_F13, KC_F14, KC_F15,        KC_F16, KC_F17, KC_F18, KC_F19,  KC_F20,  KC_SCLN,
-        KC_LSFT, KC_F21,  KC_F22,  KC_F23, KC_F24, KC_NO,         KC_NO,  KC_NO,  KC_NO,  KC_NO,   KC_NO,   KC_ENT,
-        KC_LCTL, KC_LALT, KC_LGUI, KC_NO,  KC_NO,  KC_SPC,        KC_SPC, KC_NO,  KC_NO,  KC_RGUI, KC_RALT, KC_RCTL
+        KC_TAB,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,         KC_F6,  KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_BSPC,
+        KC_ESC,  SOSM_LC, SOSM_LA, SOSM_LG, SOSM_LS, KC_NO,         KC_NO,  SOSM_LS, SOSM_LG, SOSM_LA, SOSM_LC, KC_SCLN,
+        KC_LSFT, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,        KC_F16, KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_ENT,
+        KC_LCTL, KC_LALT, KC_LGUI, KC_NO,   KC_NO,   KC_SPC,        KC_SPC, KC_NO,   KC_NO,   KC_RGUI, KC_RALT, KC_RCTL
     ),
     [OS] = LAYOUT_ortho_4x12(
-        KC_TAB,  OS_CLOSE,       OS_MIN,              OS_FLLSCRN,          KC_NO,           KC_NO,         OS_SPTLGHT_FNDR, OS_SPTLGHT, OS_LNCHPD,   OS_SIRI,     OS_SDBR,    KC_BSPC,
-        KC_ESC,  OS_DSKTP,       OS_PRV_SPC,          OS_NXT_SPC,          OS_MSN_CNTRL,    KC_NO,         OS_DOCK,         OS_EXPOSE,  CMD_TAB_PRV, CMD_TAB_NXT, OS_PRV_APP, KC_SCLN,
-        KC_LSFT, OS_SCRN_SHT_LP, OS_SCRN_SHT_WNDW_LP, OS_SCRN_SHT_SLCT_LP, OS_SCRN_SHT_OPT, KC_NO,         KC_NO,           KC_NO,      LGUI(KC_Q),  LGUI(KC_H),  KC_NO,      KC_ENT,
-        KC_LCTL, KC_LALT,        KC_LGUI,             KC_NO,               KC_NO,           KC_SPC,        KC_SPC,          KC_NO,      KC_NO,       KC_RGUI,     KC_RALT,    KC_RCTL
+        KC_TAB,  OS_FRC_QUIT,    OS_CLOSE,            OS_MIN,              OS_FLLSCRN,      OS_LOCK_SCRN,  KC_NO,           OS_SPTLGHT_LP, OS_LNCHPD,   OS_SIRI,     OS_SDBR,        KC_BSPC,
+        KC_ESC,  OS_DSKTP,       OS_PRV_SPC,          OS_NXT_SPC,          OS_MSN_CNTRL,    OS_STG_MNGR,   OS_DOCK,         OS_EXPOSE,     CMD_TAB_PRV, CMD_TAB_NXT, OS_PRV_APP,     KC_SCLN,
+        KC_LSFT, OS_SCRN_SHT_LP, OS_SCRN_SHT_WNDW_LP, OS_SCRN_SHT_SLCT_LP, OS_SCRN_SHT_OPT, OS_STOP_REC,   KC_NO,           KC_NO,         LGUI(KC_Q),  LGUI(KC_H),  OS_HIDE_OTHERS, KC_ENT,
+        KC_LCTL, KC_LALT,        KC_LGUI,             KC_NO,               KC_NO,           KC_SPC,        KC_SPC,          KC_NO,         KC_NO,       KC_RGUI,     KC_RALT,        KC_RCTL
     ),
     [MOUSE] = LAYOUT_ortho_4x12(
         KC_TAB,  KC_NO,   MS_ACL0, MS_ACL1, MS_ACL2, KC_NO,          KC_NO,       OS_BACK, MS_BTN3, KC_NO,   OS_FWD,  KC_BSPC,

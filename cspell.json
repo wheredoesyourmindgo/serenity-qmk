@@ -1,71 +1,33 @@
 {
-    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-    "version": "0.2",
-    "language": "en",
-    "useGitignore": true,
-    "ignorePaths": [
-        "modules/getreuer/**",
-        "vendor/**",
-        "LICENSE",
-        ".clangd"
-    ],
-    "ignoreRegExpList": [
-        "/-D[A-Z][A-Z0-9_]*/g"
-    ],
-    "languageSettings": [
-        {
-            "languageId": "c,cpp,makefile",
-            "ignoreRegExpList": [
-                "/\\b[A-Z][A-Z0-9_]*\\b/g"
-            ]
-        }
-    ],
-    "words": [
-        "ACTN",
-        "amodio",
-        "avrdude",
-        "bierner",
-        "boardsource",
-        "clangd",
-        "compiledb",
-        "corneliuskbd",
-        "crkbd",
-        "donjayamanne",
-        "dztech",
-        "elitec",
-        "Exposé",
-        "foostan",
-        "getreuer",
-        "hhkb",
-        "HRDWR",
-        "Karabiner",
-        "keymap",
-        "keymap's",
-        "keymaps",
-        "LSFT",
-        "lshift",
-        "milc",
-        "NKRO",
-        "NUMNAV",
-        "OLED",
-        "oneline",
-        "oneshot",
-        "PROGMEM",
-        "QWRTY",
-        "RGBLIGHT",
-        "ristretto",
-        "rshift",
-        "SELWORD",
-        "signum",
-        "Siri",
-        "SOSM",
-        "spacebars",
-        "stackable",
-        "SYMBL",
-        "technik",
-        "underglow",
-        "userspace",
-        "wheredoesyourmindgo",
-        "xaver"
-    ]
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "language": "en",
+  "useGitignore": true,
+  "ignorePaths": [
+    "modules/getreuer/**",
+    "vendor/**",
+    "LICENSE",
+    ".clangd"
+  ],
+  "ignoreRegExpList": [
+    "/-D[A-Z][A-Z0-9_]*/g"
+  ],
+  "languageSettings": [
+    {
+      "languageId": "c,cpp,makefile",
+      "ignoreRegExpList": [
+        "/\\b[A-Z][A-Z0-9_]*\\b/g"
+      ]
+    }
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "project-words",
+      "path": "./project-words.txt",
+      "addWords": true
+    }
+  ],
+  "dictionaries": [
+    "project-words"
+  ]
 }

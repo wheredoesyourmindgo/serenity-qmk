@@ -68,6 +68,7 @@
 #define OS_MIC_MUTE HYPR(KC_I)      // Toggle Mic Mute via Shortcuts (I for input)
 #define OS_DND HYPR(KC_F)           // Toggle Do Not Disturb (Focus)
 #define OS_STG_MNGR HYPR(KC_T)      // Toggle Stage Manager via Shortcuts
+#define OS_SHOW_ALL HYPR(KC_A)      // Show All (App Shortcuts menu title "Show All")
 
 // Window Management (Rectangle)
 #define WNDW_LFT_HLF LCTL(LALT(LGUI(KC_LEFT)))   // Left half

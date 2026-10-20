@@ -34,7 +34,6 @@ enum layers {
 
 enum custom_keycodes {
     CMD_TAB_PRV = SAFE_RANGE,
-    TGL_LYT,
     CMD_TAB_NXT,
     ENC_BTN,
     SHAKE_MOUSE,

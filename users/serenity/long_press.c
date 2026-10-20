@@ -78,6 +78,11 @@ bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
 #endif
             }
             return false;
+        case TGL_LYT_LP: // Switch the default layer between Serenity and QWERTY (resets on unplug)
+            if (is_hold_press(record)) {
+                set_single_default_layer(get_highest_layer(default_layer_state) == BASE ? QWRTY : BASE);
+            }
+            return false;
     }
     return true;
 }

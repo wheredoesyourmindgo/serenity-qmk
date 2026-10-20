@@ -104,3 +104,4 @@
 #define EE_CLR_LP LT(0, KC_I)
 #define QK_BOOT_LP LT(0, KC_J)
 #define UG_TOGG_LP LT(0, KC_L)
+#define TGL_LYT_LP LT(0, KC_M)

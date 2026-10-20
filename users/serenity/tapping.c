@@ -8,6 +8,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case DB_TOGG_LP: // Hold-only keyboard settings: a little under a second, so a brush can't fire them
         case EE_CLR_LP:
         case QK_BOOT_LP:
+        case UG_TOGG_LP:
             return 800;
         default:
             return TAPPING_TERM;

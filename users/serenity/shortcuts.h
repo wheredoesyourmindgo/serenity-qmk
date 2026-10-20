@@ -103,3 +103,4 @@
 #define DB_TOGG_LP LT(0, KC_H)
 #define EE_CLR_LP LT(0, KC_I)
 #define QK_BOOT_LP LT(0, KC_J)
+#define UG_TOGG_LP LT(0, KC_L)

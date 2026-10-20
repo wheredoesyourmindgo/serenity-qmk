@@ -5,10 +5,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_LSFT: // Longer window for double-tap Shift to turn on Caps Word
             return 300;
-        case DB_TOGG_LP: // Hold-only keyboard settings: a full second, so a brush can't fire them
+        case DB_TOGG_LP: // Hold-only keyboard settings: a little under a second, so a brush can't fire them
         case EE_CLR_LP:
         case QK_BOOT_LP:
-            return 1000;
+            return 800;
         default:
             return TAPPING_TERM;
     }

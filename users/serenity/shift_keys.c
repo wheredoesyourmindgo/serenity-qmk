@@ -8,4 +8,5 @@ _Static_assert(CUSTOM_SHIFT_KEYS_NEGMODS == MOD_MASK_GUI, "CUSTOM_SHIFT_KEYS_NEG
 
 const custom_shift_key_t custom_shift_keys[] = {
     {KC_BACKSPACE, KC_DELETE}, // Shift Backspace is delete forward
+    {NUM_DOT, KC_COMM},        // Num/Nav: Shift dot is a thousands separator, never >
 };

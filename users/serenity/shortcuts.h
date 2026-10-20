@@ -25,6 +25,9 @@
 #define DISP_DIM KC_F14  // Dim Display
 #define DISP_BRI KC_F15  // Brighten Display
 
+// System (macOS)
+#define OS_LOCK_SCRN LCTL(LGUI(KC_Q))  // Lock Screen
+
 // Spaces & Mission Control (macOS)
 #define OS_PRV_SPC LCTL(KC_LEFT)  // Previous Space
 #define OS_NXT_SPC LCTL(KC_RGHT)  // Next Space
@@ -34,6 +37,7 @@
 
 // Apps, windows & tabs (macOS)
 #define OS_PRV_APP LGUI(KC_TAB)             // Previous App
+#define OS_HIDE_OTHERS LALT(LGUI(KC_H))     // Hide Others
 #define OS_NXT_APP_WNDW LGUI(KC_GRV)        // Next (Same)App Window
 #define OS_PRV_APP_WNDW LGUI(KC_TILD)       // Previous (Same)App Window
 #define OS_NXT_TAB LCTL(KC_TAB)             // Next Tab
@@ -42,7 +46,8 @@
 #define OS_FWD LGUI(KC_RBRC)                // Forward (Safari ignores mouse button 5)
 #define OS_FLLSCRN LCTL(LGUI(KC_F))         // Fullscreen (green button)
 #define OS_MIN LGUI(KC_M)                   // Minimize (yellow button)
-#define OS_CLOSE LGUI(KC_W)                 // Close active app
+#define OS_CLOSE LGUI(KC_W)                 // Close Window (red button)
+#define OS_FRC_QUIT LALT(LGUI(KC_ESC))      // Force Quit dialog
 #define OS_DOCK LCTL(KC_F3)                 // Focus Dock
 #define OS_SPTLGHT LGUI(KC_SPC)             // Spotlight
 #define OS_SPTLGHT_FNDR LALT(LGUI(KC_SPC))  // Spotlight in new Finder window
@@ -53,12 +58,16 @@
 #define OS_SCRN_SHT_SLCT SGUI(KC_4)            // Screenshot of selected area
 #define OS_SCRN_SHT_CLP_SLCT LCTL(SGUI(KC_4))  // Screenshot of selected area to clipboard
 #define OS_SCRN_SHT_OPT SGUI(KC_5)             // Screenshot Options
+#define OS_STOP_REC LCTL(LGUI(KC_ESC))         // Stop Screen Recording
 
 // Custom (non-default) macOS shortcuts, set in macOS preferences
 #define OS_SIRI HYPR(KC_S)          // Siri
 #define OS_LNCHPD HYPR(KC_L)        // Launchpad
 #define OS_SDBR HYPR(KC_N)          // Sidebar
 #define OS_DRKMD_TGL HYPR(KC_D)     // Toggle Dark Mode via AppleScript
+#define OS_MIC_MUTE HYPR(KC_I)      // Toggle Mic Mute via Shortcuts (I for input)
+#define OS_DND HYPR(KC_F)           // Toggle Do Not Disturb (Focus)
+#define OS_STG_MNGR HYPR(KC_T)      // Toggle Stage Manager via Shortcuts
 
 // Window Management (Rectangle)
 #define WNDW_LFT_HLF LCTL(LALT(LGUI(KC_LEFT)))   // Left half
@@ -87,3 +96,9 @@
 #define WNDW_CNTR_LP LT(0, KC_E)
 #define WNDW_LFT_LP LT(0, KC_F)
 #define WNDW_RGHT_LP LT(0, KC_G)
+#define OS_SPTLGHT_LP LT(0, KC_K)
+
+// Hold-only keys, also handled in long_press.c: a tap does nothing, so they can't fire by accident
+#define DB_TOGG_LP LT(0, KC_H)
+#define EE_CLR_LP LT(0, KC_I)
+#define QK_BOOT_LP LT(0, KC_J)

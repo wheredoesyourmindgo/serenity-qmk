@@ -10,6 +10,11 @@ static bool tap_or_hold(keyrecord_t *record, uint16_t tap_keycode, uint16_t hold
     return false; // Skip default handling.
 }
 
+// True on the press that becomes a hold (taps return false)
+static bool is_hold_press(keyrecord_t *record) {
+    return record->event.pressed && record->tap.count == 0;
+}
+
 // Press a screenshot shortcut, then Space to switch it to window capture
 static void screenshot_window(uint16_t shortcut) {
     tap_code16(shortcut);
@@ -31,6 +36,10 @@ bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
         case WNDW_VRT_MAX_LP:
             return tap_or_hold(record, WNDW_ALMST_MAX, WNDW_VRT_MAX);
 
+        // Spotlight: tap searches, hold searches in a new Finder window
+        case OS_SPTLGHT_LP:
+            return tap_or_hold(record, OS_SPTLGHT, OS_SPTLGHT_FNDR);
+
         // Screenshots: tap saves to file, hold copies to clipboard
         case OS_SCRN_SHT_LP:
             return tap_or_hold(record, OS_SCRN_SHT, OS_SCRN_SHT_CLP);
@@ -39,6 +48,24 @@ bool process_long_press_keys(uint16_t keycode, keyrecord_t *record) {
         case OS_SCRN_SHT_WNDW_LP:
             if (record->event.pressed) {
                 screenshot_window(record->tap.count > 0 ? OS_SCRN_SHT_SLCT : OS_SCRN_SHT_CLP_SLCT);
+            }
+            return false;
+
+        // Keyboard settings: hold-only, doing what DB_TOGG, EE_CLR and QK_BOOT do
+        case DB_TOGG_LP:
+            if (is_hold_press(record)) {
+                debug_enable ^= 1;
+            }
+            return false;
+        case EE_CLR_LP:
+            if (is_hold_press(record)) {
+                eeconfig_disable();
+                soft_reset_keyboard();
+            }
+            return false;
+        case QK_BOOT_LP:
+            if (is_hold_press(record)) {
+                reset_keyboard();
             }
             return false;
     }

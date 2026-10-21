@@ -55,8 +55,8 @@ The installer deletes and recreates that folder, and on macOS the QMK CLI keeps 
 ## Everyday use
 
 ```sh
-qmk userspace-compile                   # build every keyboard in qmk.json
-qmk flash -kb crkbd/rev1 -km serenity   # build + flash one keyboard
+qmk userspace-compile                                 # build every keyboard in qmk.json
+qmk flash -kb foostan/corneliuskbd/rev1 -km serenity  # build + flash one keyboard
 ```
 
 Build options go after `-e`, e.g. `-e QWERTY_BASE=yes`.
@@ -71,8 +71,8 @@ On each computer, after the one-time setup above:
 2. Generate a compile database covering every keyboard in `qmk.json`:
 
    ```sh
-   scripts/compiledb.py                # all keyboards (builds each one)
-   scripts/compiledb.py crkbd/rev1     # refresh just one, keeping the rest
+   scripts/compiledb.py                            # all keyboards (builds each one)
+   scripts/compiledb.py foostan/corneliuskbd/rev1  # refresh just one, keeping the rest
    ```
 
 `compile_commands.json` is gitignored and holds machine-specific paths, so every computer generates its own. Re-run the script after adding a keyboard or changing a `rules.mk`/`config.h`, then **clangd: Restart language server**. (Plain `qmk compile --compiledb` only covers one keyboard and overwrites the merged database.)

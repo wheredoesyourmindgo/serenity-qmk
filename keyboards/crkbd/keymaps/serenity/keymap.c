@@ -52,10 +52,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                       KC_NO,               KC_NO,           KC_SPC,        KC_SPC,          KC_NO,         KC_NO
     ),
     [MOUSE] = LAYOUT_split_3x6_3(
-        KC_TAB,  KC_NO,   MS_ACL0, MS_ACL1, MS_ACL2, KC_NO,          KC_NO,       OS_BACK, MS_BTN3, KC_NO,   OS_FWD,  KC_BSPC,
-        KC_ESC,  SOSM_LC, SOSM_LA, SOSM_LG, SOSM_LS, QK_LLCK,        QK_LOCK,     MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_SCLN,
-        KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,           SHAKE_MOUSE, MS_WHLR, MS_WHLU, MS_WHLD, MS_WHLL, KC_ENT,
-                                   KC_NO,   KC_NO,   KC_SPC,         KC_SPC,      MS_BTN1, MS_BTN2
+        KC_TAB,  KC_NO,   MS_ACL0, MS_ACL1, MS_ACL2, KC_NO,          KC_NO,       OS_BACK, ZOOM_OUT_APP, ZOOM_IN_APP, OS_FWD,  KC_BSPC,
+        KC_ESC,  SOSM_LC, SOSM_LA, SOSM_LG, SOSM_LS, QK_LLCK,        QK_LOCK,     MS_LEFT, MS_DOWN,      MS_UP,       MS_RGHT, KC_SCLN,
+        KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,           SHAKE_MOUSE, MS_WHLR, MS_WHLU,      MS_WHLD,     MS_WHLL, KC_ENT,
+                                   KC_NO,   MS_BTN1, KC_SPC,         KC_SPC,      MS_BTN2, MS_BTN3
     ),
 };
 // clang-format on

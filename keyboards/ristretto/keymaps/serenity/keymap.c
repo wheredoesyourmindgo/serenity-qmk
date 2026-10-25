@@ -52,10 +52,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LALT,        KC_LGUI,             KC_NO,               KC_NO,           KC_SPC,        ENC_BTN,        KC_SPC,          KC_NO,         KC_NO,       KC_RGUI,     KC_RALT,        KC_RCTL
     ),
     [MOUSE] = LAYOUT(
-        KC_TAB,  KC_NO,   MS_ACL0, MS_ACL1, MS_ACL2, KC_NO,                          KC_NO,       OS_BACK, ZOOM_OUT_APP, ZOOM_IN_APP, OS_FWD,  KC_BSPC,
-        KC_ESC,  SOSM_LC, SOSM_LA, SOSM_LG, SOSM_LS, QK_LLCK,                        QK_LOCK,     MS_LEFT, MS_DOWN,      MS_UP,       MS_RGHT, KC_SCLN,
-        KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,                           SHAKE_MOUSE, MS_WHLR, MS_WHLU,      MS_WHLD,     MS_WHLL, KC_ENT,
-        KC_NO,   KC_NO,   KC_NO,   KC_NO,   MS_BTN1, KC_SPC,         ENC_BTN,        KC_SPC,      MS_BTN2, MS_BTN3,      SOSM_RG,     SOSM_RA, SOSM_RC
+        KC_TAB,  KC_NO,   MS_ACL0, MS_ACL1, MS_ACL2, KC_NO,                          ZOOM_RESET_APP, OS_BACK, ZOOM_OUT_APP, ZOOM_IN_APP, OS_FWD,  KC_BSPC,
+        KC_ESC,  SOSM_LC, SOSM_LA, SOSM_LG, SOSM_LS, QK_LLCK,                        QK_LOCK,        MS_LEFT, MS_DOWN,      MS_UP,       MS_RGHT, KC_SCLN,
+        KC_LSFT, UNDO,    CUT,     COPY,    PASTE,   REDO,                           SHAKE_MOUSE,    MS_WHLR, MS_WHLU,      MS_WHLD,     MS_WHLL, KC_ENT,
+        KC_NO,   KC_NO,   KC_NO,   KC_NO,   MS_BTN1, KC_SPC,         ENC_BTN,        KC_SPC,         MS_BTN2, MS_BTN3,      SOSM_RG,     SOSM_RA, SOSM_RC
     ),
 };
 // clang-format on
